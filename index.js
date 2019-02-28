@@ -3,7 +3,7 @@ let svg = d3.select('#app')
 const letters = 'ABCDEFGHhIJKLMNOPQRSTUVWXYZ'.split('').map(v=>v==='h'?'Ha':v)
 
 const selectedColor = '#77cc77';
-const invalidColor = '#77cc77';
+const invalidColor = '#cc7777';
 const activatedColor = '#333333';
 const ignoredColor = '#dddddd';
 
@@ -33,7 +33,7 @@ refs
 .attr('markerunits', 'strokeWidth')
 .append('path')
 .attr('d', 'M0,0 L0,4 L6,2 z')
-.attr('fill', selectedColor)
+.attr('fill', invalidColor)
 
 refs
 .append('marker')
@@ -88,7 +88,9 @@ let arrowData = circleData.map((v,i) => {
       xm,
       ym,
       activated: false,
-      filled: false,
+      selected: false,
+      from: i-1,
+      to: i,
     }
   }
 }).filter((v,i) => i>0 )
@@ -203,15 +205,7 @@ circleG.selectAll('text')
 .attr('font','serif')
 .text(d=>d.letter)
 
-arrowG.selectAll('path')
-.data(arrowData)
-.enter()
-.append('path')
-.attr('d', d=> `M ${d.x1} ${d.y1} A ${r} ${r} 0 0 1 ${d.x2} ${d.y2}`)
-.attr('stroke', d=>d.activated? d.selected ? selectedColor : invalidColor : ignoredColor)
-.attr('stroke-width', 3)
-.attr('fill', 'none')
-.attr('marker-end', d=>`url(#${d.activated? d.selected ? 'selectedArrow' : 'invalidArrow' : 'ignoredArrow'})`)
+
 
 partG.selectAll('circle')
 .data(arrowData)
@@ -224,6 +218,27 @@ partG.selectAll('circle')
 .attr('stroke-width', 1)
 .attr('fill', 'white')
 .attr('class', 'part')
+.on("click", (d,i) => {
+  if (graph[d.from][d.to] === 1) {
+    graph[d.from][d.to] = oriGraph[d.from][d.to];
+  } else {
+    graph[d.from][d.to] = 1;
+  }
+  console.log(graph);
+  nodeChain = dj(graph);
+  refreshGraph(nodeChain, graph, arrowData, shortcuts);
+})
+
+arrowG.selectAll('path')
+.data(arrowData)
+.enter()
+.append('path')
+.attr('d', d=> `M ${d.x1} ${d.y1} A ${r} ${r} 0 0 1 ${d.x2} ${d.y2}`)
+.attr('stroke', d=>d.activated? d.selected ? selectedColor : invalidColor : ignoredColor)
+.attr('stroke-width', 3)
+.attr('fill', 'none')
+.attr('marker-end', d=>`url(#${d.activated? d.selected ? 'selectedArrow' : 'invalidArrow' : 'ignoredArrow'})`)
+.attr('class', d=> `path-${d.from}-${d.to}`)
 
 
 shortcutG.selectAll('path')
@@ -236,6 +251,7 @@ shortcutG.selectAll('path')
 .attr('stroke', d=> d.activated? activatedColor : ignoredColor)
 .attr('stroke-width', 3)
 .attr('fill', 'none')
+.attr('class', d=>`shortcut-${d.from}-${d.to}`)
 
 shortcutG2.selectAll('path')
 .data(shortcuts)
@@ -246,4 +262,120 @@ shortcutG2.selectAll('path')
 // .attr('fill', d=>d.color)
 .attr('fill', d=>d.activated? activatedColor : ignoredColor)
 .attr('transform',d=>`rotate(${d.rg}, ${d.x2}, ${d.y2})`)
+.attr('class', d=>`shortcut-${d.from}-${d.to}`)
+
+
+const stdWeight = 0x8000000; // 2^27 because the maximum safe int in JS is 2^53
+
+// graph
+const graph = circleData.map((v,i) => circleData.map((w,j) => (
+  (j === i + 1 ? stdWeight : undefined)
+  )));
+shortcuts.forEach(shortcut => {
+  const d = shortcut.distance;
+  const w = stdWeight;
+  graph[shortcut.from][shortcut.to] = d*w - d*d; 
+})
+
+// console.log(graph);
+
+const oriGraph = JSON.parse(JSON.stringify(graph));
+
+
+function dj (graph) {
+  const pathChain = circleData.map(v=>({d: Math.floor(Number.MAX_SAFE_INTEGER/circleData.length), prev: undefined}));
+  pathChain[0].d = 0;
+  let p = 0;
+  const nodeArray = [p];
+  let nodeIdx = 0;
+  while(nodeIdx < nodeArray.length) {
+    p = nodeArray[nodeIdx];
+    graph[p].forEach( (v,i) => {
+      if(graph[p][i]>0) {
+        // console.log(`${p} vs ${i}`)
+        const l = graph[p][i] + pathChain[p].d;
+        // console.log(`${l} vs ${pathChain[i].d}`)
+        if (l < pathChain[i].d) {
+          pathChain[i].d = l;
+          pathChain[i].prev = p;
+          const loc = nodeArray.indexOf(i)
+          // if(loc === -1) {
+            nodeArray.push(i);
+          // } else {
+            // nodeArray[loc] = i;
+          // }
+          // console.log(`push ${i}, nodeArray=${nodeArray}`)
+        }
+      }
+    })
+    nodeIdx++;
+    // console.log(`${p} << ${nodeArray}`)
+  }
+  // console.log(pathChain)
+  // put last node
+  nodeIdx = pathChain.length - 1;
+  const re = [];
+  while (nodeIdx !== undefined) {
+    re.unshift(nodeIdx);
+    nodeIdx = pathChain[nodeIdx].prev;
+  }
+  console.log(pathChain);
+  return re;
+}
+
+let nodeChain = dj(graph);
+// console.log(nodeChain);
+
+function refreshGraph(nodeChain, graph, arrowData, shortcuts) {
+  shortcuts.forEach(v=> v.activated = false);
+  arrowData.forEach(v=> v.activated = false);
+  for (let i=1;i< nodeChain.length ;i++) {
+    const from = nodeChain[i-1];
+    const to = nodeChain[i];
+    if (graph[from][to] === stdWeight) {
+      arrowData[from].activated = true;
+      arrowData[from].selected = false;
+    } else if (graph[from][to] === 1) {
+      arrowData[from].activated = true;
+      arrowData[from].selected = true;
+    } else {
+      shortcuts.filter(v => v.from === from && v.to === to).forEach(v=> v.activated = true);
+    }
+  }
+
+partG.selectAll('circle')
+.data(arrowData)
+// .attr('stroke', d=> d.selected ? selectedColor : invalidColor)
+.attr('stroke', d=>d.activated? d.selected ? selectedColor : invalidColor : 'black')
+.attr('fill', d=>d.activated? d.selected ? '#ccffcc' : '#ffcccc' : '#fff')
+
+arrowG.selectAll('path')
+.data(arrowData)
+.attr('stroke', d=>d.activated? d.selected ? selectedColor : invalidColor : ignoredColor)
+.attr('marker-end', d=>`url(#${d.activated? d.selected ? 'selectedArrow' : 'invalidArrow' : 'ignoredArrow'})`)
+
+shortcuts.sort((a,b)=>a.activated ? 1: -1);
+
+shortcutG.selectAll('path')
+.data(shortcuts)
+.attr('d', d => `M ${d.x1} ${d.y1} Q ${d.xm} ${d.ym} ${d.xa} ${d.ya}`)
+.attr('stroke', d=> d.activated? activatedColor : ignoredColor)
+.attr('stroke-width', 3)
+.attr('fill', 'none')
+.attr('class', d=>`shortcut-${d.from}-${d.to}`)
+
+shortcutG2.selectAll('path')
+.data(shortcuts)
+.attr('d', d => `M ${d.x2} ${d.y2} L ${d.x2-18} ${d.y2+6} L ${d.x2-18} ${d.y2-6} Z`)
+.attr('stroke-width', 0)
+.attr('fill', d=>d.activated? activatedColor : ignoredColor)
+.attr('transform',d=>`rotate(${d.rg}, ${d.x2}, ${d.y2})`)
+.attr('class', d=>`shortcut-${d.from}-${d.to}`)
+
+}
+
+refreshGraph(nodeChain, graph, arrowData, shortcuts);
+
+
+
 
