@@ -224,7 +224,7 @@ partG.selectAll('circle')
   } else {
     graph[d.from][d.to] = 1;
   }
-  console.log(graph);
+  // console.log(graph);
   nodeChain = dj(graph);
   refreshGraph(nodeChain, graph, arrowData, shortcuts);
 })
@@ -319,7 +319,7 @@ function dj (graph) {
     re.unshift(nodeIdx);
     nodeIdx = pathChain[nodeIdx].prev;
   }
-  console.log(pathChain);
+  // console.log(pathChain);
   return re;
 }
 
