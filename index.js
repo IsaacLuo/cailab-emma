@@ -1,3 +1,32 @@
+const partNames = [
+  ['5`/3` Homology arm', '5`/3` LTR', 'RRS'],
+  ['Insulator', 'RRS'],
+  ['Promoter'],
+  ['RNA stability sequence'],
+  ['5`/3` UTR'],
+  ['Kozak-ATG', 'Protein Tag'],
+  ['CDS'],
+  ['p2A', 'Peptide Linker', 'Protein Tag'],
+  ['IRES'],
+  ['CDS'],
+  ['5`/3` UTR', '5`/3` LTR'],
+  ['Terminator'],
+  ['Insulator'],
+  ['RRS'],
+  ['Promoter'],
+  ['CDS'],
+  ['Terminator'],
+  ['RRS'],
+  ['Promoter'],
+  ['CDS'],
+  ['p2A','Peptide Linker', 'IRES', 'Protein Tag'],
+  ['CDS'],
+  ['Terminator'],
+  ['Insulator'],
+  ['5`/3` Homology arm', 'RRS'],
+  ['Origin of replication'],
+]
+
 let svg = d3.select('#app')
 
 const letters = 'ABCDEFGHhIJKLMNOPQRSTUVWXYZ'.split('').map(v=>v==='h'?'Ha':v)
@@ -53,11 +82,11 @@ let y = 100;
 let r = 500;
 const littleR = 10;
 const partR = 15;
-let centerCX = 600;
-let centerCY = 600;
+let centerCX = 100;
+let centerCY = 400;
 let circleData = letters.map((v,i)=>{
-  const y = centerCY - r * Math.cos((i+1)*Math.PI * 2 / (letters.length + 1))
-  const x = centerCX + r * Math.sin((i+1)*Math.PI * 2 / (letters.length + 1))
+  const y = centerCY
+  const x = centerCX + i * 100
   return {
     letter: v,
     x,
@@ -77,8 +106,8 @@ let arrowData = circleData.map((v,i) => {
     // const xm = (x1+x2)/2;
     // const ym = (y1+y2)/2;
 
-    const ym = centerCY - r * Math.cos((i+0.45)*Math.PI * 2 / (letters.length + 1))
-    const xm = centerCX + r * Math.sin((i+0.45)*Math.PI * 2 / (letters.length + 1))
+    const ym = centerCY 
+    const xm = centerCX + (i-0.51)*100
 
     return {
       x1,
@@ -136,9 +165,9 @@ let shortcuts = [
   const from = letters.indexOf(v[0]);
   const to = letters.indexOf(v[1]);
 
-  const rd = r-(to-from)*50;
-  const xm = centerCX + (rd) * Math.sin( (((from+to)/2)+1) * Math.PI * 2 / (letters.length + 1))
-  const ym = centerCY - (rd) * Math.cos( (((from+to)/2)+1) * Math.PI * 2 / (letters.length + 1))
+  const rd = (to-from)*50;
+  const xm = centerCX + ((from+to)/2) * 100
+  const ym = centerCY - (rd)
 
   const x1b = circleData[from].x;
   const y1b = circleData[from].y;
@@ -178,6 +207,7 @@ let shortcutG2 = svg.append('g')
 let circleG = svg.append('g')
 
 let partG = svg.append('g')
+let partTextG = svg.append('g')
 
 
 circleG.selectAll('circle')
@@ -229,11 +259,32 @@ partG.selectAll('circle')
   refreshGraph(nodeChain, graph, arrowData, shortcuts);
 })
 
+const partTextCount = 0;
+partTextG.selectAll('g')
+.data(partNames)
+.enter()
+.append('g')
+.attr('class', (d,i) =>`part-text-g-${i}`)
+
+partNames.forEach((v,i)=> {
+  const g = svg.select(`.part-text-g-${i}`);
+  g.selectAll('text')
+  .data(v)
+  .enter()
+  .append('text')
+  .attr('x', d=> centerCX + i * 100 + 50)
+  .attr('y', (d, j)=> centerCY + (i%2 === 0 ? 40: 60) + j*20).text(d=>d)
+  .attr('text-anchor', 'middle')
+})
+
+
+
 arrowG.selectAll('path')
 .data(arrowData)
 .enter()
 .append('path')
-.attr('d', d=> `M ${d.x1} ${d.y1} A ${r} ${r} 0 0 1 ${d.x2} ${d.y2}`)
+// .attr('d', d=> `M ${d.x1} ${d.y1} A ${r} ${r} 0 0 1 ${d.x2} ${d.y2}`)
+.attr('d', d=> `M ${d.x1} ${d.y1} L ${d.x2} ${d.y2}`)
 .attr('stroke', d=>d.activated? d.selected ? selectedColor : invalidColor : ignoredColor)
 .attr('stroke-width', 3)
 .attr('fill', 'none')
