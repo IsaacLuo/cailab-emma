@@ -82,7 +82,7 @@ let y = 100;
 let r = 500;
 const littleR = 10;
 const partR = 15;
-let centerCX = 100;
+let centerCX = 20;
 let centerCY = 400;
 let circleData = letters.map((v,i)=>{
   const y = centerCY

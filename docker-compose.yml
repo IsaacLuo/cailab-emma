@@ -4,5 +4,7 @@ services:
     build: .
     ports:
       - "8180:80"
+    volumes:
+      - .:/usr/share/nginx/html
     command: ['nginx', '-g', 'daemon off;']
     network_mode: bridge
