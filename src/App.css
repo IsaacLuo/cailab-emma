@@ -31,3 +31,7 @@
     transform: rotate(360deg);
   }
 }
+
+rect.clickable:hover {
+  fill: rgba(0,175,255,0.2)
+}

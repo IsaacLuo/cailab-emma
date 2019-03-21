@@ -1,6 +1,23 @@
 import * as React from 'react'
 import * as d3 from 'd3'
 
+import SVGUTR35 from '../icons/5-3-UTR.svg'
+import SVGITR35 from '../icons/5-3-ITR.svg'
+import SVGLTR35 from '../icons/5-3-LTR.svg'
+import SVGInsulator from '../icons/insulator.svg'
+import SVGIRES from '../icons/IRES.svg'
+import SVGKozakATG from '../icons/Kozak-ATG.svg'
+import SVGOrigin from '../icons/Origin of repliction.svg'
+import SVGp2A from '../icons/p2A.svg'
+import SVGPeptide from '../icons/Peptide linker.svg'
+import SVGpromoter from '../icons/promoter.svg'
+import SVGProteinTag from '../icons/Protein Tag.svg'
+import SVGRecombinase from '../icons/recombinase-recognition-sequence.svg'
+import SVGRNA from '../icons/RNA-stability-sequence.svg'
+import SVGTerminator from '../icons/Terminator.svg'
+import SVGCDS from '../icons/CDS.svg'
+
+
 interface IArrowData {
   x1: number,
   y1: number,
@@ -50,33 +67,61 @@ export default class PartSelector extends React.Component<IProps, IState> {
   private activatedColor = '#333333';
   private ignoredColor = '#dddddd';
   private partNames = [
-  ['5`/3` Homology arm', '5`/3` LTR', 'RRS'],
-  ['Insulator', 'RRS'],
-  ['Promoter'],
-  ['RNA stability sequence'],
-  ['5`/3` UTR'],
-  ['Kozak-ATG', 'Protein Tag'],
-  ['CDS'],
-  ['p2A', 'Peptide Linker', 'Protein Tag'],
-  ['IRES'],
-  ['CDS'],
-  ['5`/3` UTR', '5`/3` LTR'],
-  ['Terminator'],
-  ['Insulator'],
-  ['RRS'],
-  ['Promoter'],
-  ['CDS'],
-  ['Terminator'],
-  ['RRS'],
-  ['Promoter'],
-  ['CDS'],
-  ['p2A','Peptide Linker', 'IRES', 'Protein Tag'],
-  ['CDS'],
-  ['Terminator'],
-  ['Insulator'],
-  ['5`/3` Homology arm', 'RRS'],
-  ['Origin of replication'],
+    [SVGITR35, SVGLTR35, SVGRecombinase],
+    [SVGInsulator, SVGRecombinase],
+    [SVGpromoter],
+    [SVGRNA],
+    [SVGUTR35],
+    [SVGKozakATG, SVGProteinTag],
+    [SVGCDS],
+    [SVGp2A, SVGPeptide, SVGProteinTag],
+    [SVGIRES],
+    [SVGCDS],
+    [SVGUTR35, SVGLTR35],
+    [SVGTerminator],
+    [SVGInsulator],
+    [SVGRecombinase],
+    [SVGpromoter],
+    [SVGCDS],
+    [SVGTerminator],
+    [SVGRecombinase],
+    [SVGpromoter],
+    [SVGCDS],
+    [SVGp2A, SVGPeptide, SVGIRES, SVGProteinTag],
+    [SVGCDS],
+    [SVGTerminator],
+    [SVGInsulator],
+    [SVGITR35, SVGRecombinase],
+    [SVGOrigin],
+
   ];
+  // ['5`/3` Homology arm', '5`/3` LTR', 'RRS'],
+  // ['Insulator', 'RRS'],
+  // ['Promoter'],
+  // ['RNA stability sequence'],
+  // ['5`/3` UTR'],
+  // ['Kozak-ATG', 'Protein Tag'],
+  // ['CDS'],
+  // ['p2A', 'Peptide Linker', 'Protein Tag'],
+  // ['IRES'],
+  // ['CDS'],
+  // ['5`/3` UTR', '5`/3` LTR'],
+  // ['Terminator'],
+  // ['Insulator'],
+  // ['RRS'],
+  // ['Promoter'],
+  // ['CDS'],
+  // ['Terminator'],
+  // ['RRS'],
+  // ['Promoter'],
+  // ['CDS'],
+  // ['p2A','Peptide Linker', 'IRES', 'Protein Tag'],
+  // ['CDS'],
+  // ['Terminator'],
+  // ['Insulator'],
+  // ['5`/3` Homology arm', 'RRS'],
+  // ['Origin of replication'],
+  // ];
 
   private baseX = 100;
   private baseY = 400;
@@ -212,6 +257,7 @@ export default class PartSelector extends React.Component<IProps, IState> {
   }
   public componentDidMount() {
     this.drawSVG();
+    this.calcPath();
   }
   public componentDidUpdate() {
     // this.drawSVG();
@@ -262,7 +308,7 @@ export default class PartSelector extends React.Component<IProps, IState> {
           />
         </marker>
       </defs>
-      <g>
+      <g transform={`translate(${this.baseX},${this.baseY})`}>
         {this.genParts()}
       </g>
       <g>
@@ -274,26 +320,41 @@ export default class PartSelector extends React.Component<IProps, IState> {
 
   private genParts() {
     const w = 50;
-    let x = this.baseX-w;
-    return this.jointPoints.map((v,i) => <rect
-      key={i}
-      x={x+=w}
-      y={this.baseY}
-      width={w}
-      height={w}
-      fill='none'
-      stroke='black'
-      stroke-width='1'
-      />)
+    // let x = this.baseX-w;
+    return this.partNames.map((partGroup,i) =>
+      <g
+        key={i}
+      >
+        {
+          partGroup.map((part, j) => 
+          <image
+            x={w*i+10}
+            y={j*50+10}
+            width="30" height="30" xlinkHref={part} 
+          />)
+        }
+        <rect
+          x={w*i}
+          y={0}
+          width={w}
+          height={w*partGroup.length}
+          fill='rgba(255,255,255,0.1)'
+          stroke='black'
+          strokeWidth='1'
+          style={{cursor:'pointer'}}
+          className='clickable'
+        />
+      </g>
+      )
   }
 
   private genShortcuts() {
     const {shortcuts} = this.state;
-    return shortcuts.map(d=> <g>
+    return shortcuts.map((d,i)=> <g key={i}>
         <path
           d={`M ${d.x1} ${d.y1-2} Q ${d.xm} ${d.ym} ${d.xa-3} ${d.ya-5}`}
           stroke={d.activated? this.activatedColor : this.ignoredColor}
-          stroke-width='3'
+          strokeWidth='3'
           fill='none'
           className={`shortcut-${d.from}-${d.to}`}
         />
@@ -367,6 +428,7 @@ export default class PartSelector extends React.Component<IProps, IState> {
         shortcuts.filter((v:any) => v.from === from && v.to === to).forEach((v:any)=> v.activated = true);
       }
     }
+    this.forceUpdate();
   }
 
   private drawSVG () {
