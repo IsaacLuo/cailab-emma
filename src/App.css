@@ -33,5 +33,7 @@
 }
 
 rect.clickable:hover {
-  fill: rgba(0,175,255,0.2)
+  /* fill: rgba(0,175,255,0.2) */
+  stroke-width:3;
+  stroke:"red";
 }

@@ -326,7 +326,7 @@ export default class PartSelector extends React.Component<IProps, IState> {
     // let x = this.baseX-w;
     if (partsProp.find(v=>v.activated && !v.selected)) {
       return  <g>
-        <text x="0" y="0">some parts has to be chosen</text>
+        <text x="0" y="0">need to choose more parts</text>
       </g>
     }
     return this.partNames.filter((v,i)=>partsProp[i].activated && partsProp[i].selected).map((partGroup,i) =>
