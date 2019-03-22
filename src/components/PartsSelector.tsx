@@ -53,7 +53,7 @@ interface IShortcut {
   }
 
 interface IProps {
-
+  onNewPathGenerated?: ()=>void
 }
 interface IState {
   shortcuts: IShortcut[],
@@ -256,7 +256,6 @@ export default class PartSelector extends React.Component<IProps, IState> {
     }
   }
   public componentDidMount() {
-    this.drawSVG();
     this.calcPath();
   }
   public componentDidUpdate() {
@@ -314,11 +313,52 @@ export default class PartSelector extends React.Component<IProps, IState> {
       <g>
         {this.genShortcuts()}
       </g>
+      <g transform={`translate(${this.baseX},${this.baseY+300})`}>
+        {this.genSelectedParts()}
+      </g>
       <g id="part-selector" />
     </svg>
   }
 
+  private genSelectedParts() {
+    const {partsProp} = this.state;
+    const w = 50;
+    // let x = this.baseX-w;
+    if (partsProp.find(v=>v.activated && !v.selected)) {
+      return  <g>
+        <text x="0" y="0">some parts has to be chosen</text>
+      </g>
+    }
+    return this.partNames.filter((v,i)=>partsProp[i].activated && partsProp[i].selected).map((partGroup,i) =>
+      <g
+        key={i}
+      >
+        {
+          partGroup.map((part, j) => 
+          <image
+            x={w*i+10}
+            y={j*50+10}
+            width="30" height="30" xlinkHref={part} 
+          />)
+        }
+        <rect
+          x={w*i}
+          y={0}
+          width={w}
+          height={w*partGroup.length}
+          fill="#00ff0033"
+          stroke="black"
+          strokeWidth='1'
+          style={{cursor:'pointer'}}
+          className='clickable'
+          onClick={this.clickPart.bind(this, i)}
+        />
+      </g>
+      )
+  }
+
   private genParts() {
+    const {partsProp} = this.state;
     const w = 50;
     // let x = this.baseX-w;
     return this.partNames.map((partGroup,i) =>
@@ -338,11 +378,12 @@ export default class PartSelector extends React.Component<IProps, IState> {
           y={0}
           width={w}
           height={w*partGroup.length}
-          fill='rgba(255,255,255,0.1)'
-          stroke='black'
+          fill={partsProp[i].activated? (partsProp[i].selected ? '#00ff0033' : '#ffff0033') : '#ffffff01'}
+          stroke="black"
           strokeWidth='1'
           style={{cursor:'pointer'}}
           className='clickable'
+          onClick={this.clickPart.bind(this, i)}
         />
       </g>
       )
@@ -350,13 +391,14 @@ export default class PartSelector extends React.Component<IProps, IState> {
 
   private genShortcuts() {
     const {shortcuts} = this.state;
-    return shortcuts.map((d,i)=> <g key={i}>
+    return shortcuts.sort((a,b)=>(a.activated?1:0) - (b.activated?1:0)).map((d,i)=> <g key={i}>
         <path
           d={`M ${d.x1} ${d.y1-2} Q ${d.xm} ${d.ym} ${d.xa-3} ${d.ya-5}`}
           stroke={d.activated? this.activatedColor : this.ignoredColor}
           strokeWidth='3'
           fill='none'
           className={`shortcut-${d.from}-${d.to}`}
+          
         />
         <path
           d={`M ${d.x2} ${d.y2} L ${d.x2-18} ${d.y2+6} L ${d.x2-18} ${d.y2-6} Z`}
@@ -429,6 +471,17 @@ export default class PartSelector extends React.Component<IProps, IState> {
       }
     }
     this.forceUpdate();
+  }
+
+  private clickPart = (index:number) => {
+    const {graph, partsProp} = this.state;
+    const d = partsProp[index];
+    if (graph[d.from][d.to] === 1) {
+      graph[d.from][d.to] = this.oriGraph[d.from][d.to];
+    } else {
+      graph[d.from][d.to] = 1;
+    }
+    this.calcPath();
   }
 
   private drawSVG () {
