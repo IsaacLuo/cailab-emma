@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {Dropdown} from 'react-bootstrap';
+import {Dropdown, Button} from 'react-bootstrap';
 import {SHORTCUTS} from '../graphElements';
 import styled from 'styled-components';
 
@@ -19,6 +19,7 @@ const SVGIcon = styled.div`
 
 interface IProps {
   parts: any[],
+  onClickNext?: (selectedParts:any)=>void,
 }
 interface IState {
   selectedParts: any[],
@@ -77,11 +78,21 @@ export default class PartsDropDown extends React.Component<IProps, IState> {
           </Dropdown>
         </SelectionRow>
       )}
+      {selectedParts.every(v=>v.selected) && 
+        <div>
+          <Button variant="primary" size="lg" onClick={this.onClickNext}>next</Button>
+        </div>
+      }
     </Panel>
   }
   private onClickSelectedPart = (slot:number, idx:number, part:any) => {
     console.log(idx, part);
     this.state.selectedParts[slot].selected = part;
     this.forceUpdate();
+  }
+  private onClickNext = () => {
+    if(this.props.onClickNext){
+      this.props.onClickNext(this.state.selectedParts);
+    }
   }
 }
