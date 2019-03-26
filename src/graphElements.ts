@@ -30,4 +30,3 @@ export const SHORTCUTS = [
       ['W', 'Z'],
       ['Y', 'Z'],
     ];
-

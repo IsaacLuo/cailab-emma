@@ -3,6 +3,8 @@ import {Dropdown} from 'react-bootstrap';
 import {SHORTCUTS} from '../graphElements';
 import styled from 'styled-components';
 
+import {STORE_PARTS} from '../parts';
+
 const Panel = styled.div`
   margin:100px;
   text-align:left;
@@ -16,14 +18,23 @@ const SVGIcon = styled.div`
 `;
 
 interface IProps {
-    parts: any[],
+  parts: any[],
 }
 interface IState {
+  selectedParts: any[],
 }
 
 export default class PartsDropDown extends React.Component<IProps, IState> {
   constructor (props:IProps) {
-    super(props);    
+    super(props);
+    this.state = {
+      selectedParts: props.parts.map(v=>({ctype: v}))
+    }
+  }
+  public componentWillReceiveProps(newProps: IProps) {
+    this.setState({
+      selectedParts: newProps.parts.map(v=>({ctype: v}))
+    })
   }
   public componentDidMount() {
     
@@ -34,12 +45,13 @@ export default class PartsDropDown extends React.Component<IProps, IState> {
   public render() {
     console.log(this.props.parts);
     const {parts} = this.props;
+    const {selectedParts} = this.state;
     return <Panel>
-      {parts.map((v,i)=>
+      {selectedParts.map((v,i)=>
         <SelectionRow key={i}>
           <SVGIcon>
             {
-              v.svg.map((vv:any, j:number)=>
+              v.ctype.svg.map((vv:any, j:number)=>
                 <img
                   style={{width:50, height:50}}
                   key={`${i}.${j}`} src={vv}
@@ -49,17 +61,27 @@ export default class PartsDropDown extends React.Component<IProps, IState> {
           </SVGIcon>
           <Dropdown>
             <Dropdown.Toggle variant="success" id="dropdown-basic">
-              Select
+              {v.selected ? v.selected.name : 'select'}
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-              <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-              <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+              {STORE_PARTS[v.ctype.idx].parts.map((part,j) => 
+                <Dropdown.Item
+                  key={j}
+                  onClick={this.onClickSelectedPart.bind(this, i, v.ctype.idx, part)}
+                >
+                  {part.name}
+                </Dropdown.Item>)}
+              
             </Dropdown.Menu>
           </Dropdown>
         </SelectionRow>
       )}
     </Panel>
+  }
+  private onClickSelectedPart = (slot:number, idx:number, part:any) => {
+    console.log(idx, part);
+    this.state.selectedParts[slot].selected = part;
+    this.forceUpdate();
   }
 }

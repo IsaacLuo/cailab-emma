@@ -13,7 +13,8 @@ const CenterDiv = styled.div`
   align-items: center;
 `
 
-const testString = `[{"idx":18,"svg":["/static/media/promoter.09f6b508.svg"]},{"idx":19,"svg":["/static/media/CDS.8af00582.svg"]},{"idx":20,"svg":["/static/media/p2A.77a9cf6a.svg","/static/media/Peptide linker.0fb922eb.svg","/static/media/IRES.c6b22784.svg","/static/media/Protein Tag.87a2ad06.svg"]},{"idx":21,"svg":["/static/media/CDS.8af00582.svg"]},{"idx":22,"svg":["/static/media/Terminator.f105c70e.svg"]}]`
+// const testString = `[{"idx":18,"svg":["/static/media/promoter.09f6b508.svg"]},{"idx":19,"svg":["/static/media/CDS.8af00582.svg"]},{"idx":20,"svg":["/static/media/p2A.77a9cf6a.svg","/static/media/Peptide linker.0fb922eb.svg","/static/media/IRES.c6b22784.svg","/static/media/Protein Tag.87a2ad06.svg"]},{"idx":21,"svg":["/static/media/CDS.8af00582.svg"]},{"idx":22,"svg":["/static/media/Terminator.f105c70e.svg"]}]`
+const testString = `[]`
 
 class App extends Component<any, any> {
   constructor(props:any) {
