@@ -3,7 +3,7 @@ import {Dropdown, Button} from 'react-bootstrap';
 import {SHORTCUTS} from '../graphElements';
 import styled from 'styled-components';
 
-import {STORE_PARTS} from '../parts';
+import STORE_PARTS from '../parts.json';
 
 const Panel = styled.div`
   margin:100px;
@@ -44,6 +44,7 @@ export default class PartsDropDown extends React.Component<IProps, IState> {
     
   }
   public render() {
+    const storeParts:any = STORE_PARTS;
     console.log(this.props.parts);
     const {parts} = this.props;
     const {selectedParts} = this.state;
@@ -66,7 +67,7 @@ export default class PartsDropDown extends React.Component<IProps, IState> {
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              {STORE_PARTS[v.ctype.idx].parts.map((part,j) => 
+              {storeParts[v.ctype.idx].parts.map((part:any,j:number) => 
                 <Dropdown.Item
                   key={j}
                   onClick={this.onClickSelectedPart.bind(this, i, v.ctype.idx, part)}

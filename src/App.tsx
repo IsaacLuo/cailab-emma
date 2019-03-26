@@ -20,21 +20,35 @@ class App extends Component<any, any> {
   constructor(props:any) {
     super(props);
     this.state = {
-      selectedParts: JSON.parse(testString),
+      selectedSlots: JSON.parse(testString),
+      selectedParts: [],
     }
   }
 
   public render() {
+    const {selectedParts} = this.state;
+    if(selectedParts.length > 0 ) {
+      return (
+        <div className="App">
+          {selectedParts.map((v:any, i:number)=><div key={i}>
+            {v.selected.name}
+          </div>)}
+        </div>
+      )
+    }
     return (
       <div className="App">
         <CenterDiv>
           {
-            this.state.selectedParts.length > 0 
+            this.state.selectedSlots.length > 0 
             ?
-            <PartsDropDown parts={this.state.selectedParts}/>
+            <PartsDropDown
+              parts={this.state.selectedSlots}
+              onClickNext={this.onFinishStep2}
+            />
             :
             <PartSelector
-            onClickNext={this.onClickNext}
+              onClickNext={this.onFinishStep1}
           />
           }
         </CenterDiv>
@@ -42,8 +56,13 @@ class App extends Component<any, any> {
     );
   }
 
-  private onClickNext = (result:any) => {
+  private onFinishStep1 = (result:any) => {
     const {parts, shortcuts} = result;
+    this.setState({selectedSlots: parts});
+  }
+
+  private onFinishStep2 = (result:any) => {
+    const parts = result;
     this.setState({selectedParts: parts});
   }
 }
