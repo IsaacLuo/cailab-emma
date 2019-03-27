@@ -6,6 +6,7 @@ import './bootstrap.css';
 import PartSelector from './components/PartsSelector'
 import styled from 'styled-components'
 import PartsDropDown from './components/PartsDropDown';
+import Assemble from './components/Assemble';
 const CenterDiv = styled.div`
   display:flex;
   flex-direction: column;
@@ -22,14 +23,19 @@ class App extends Component<any, any> {
     this.state = {
       selectedSlots: JSON.parse(testString),
       selectedParts: [],
+      selectedShortcuts: [],
     }
   }
 
   public render() {
-    const {selectedParts} = this.state;
+    const {selectedParts, selectedShortcuts} = this.state;
     if(selectedParts.length > 0 ) {
       return (
         <div className="App">
+          <Assemble
+            selectedParts={selectedParts}
+            selectedShortcuts={selectedShortcuts}
+          />
           {selectedParts.map((v:any, i:number)=><div key={i}>
             {v.selected.name}
           </div>)}
@@ -58,7 +64,7 @@ class App extends Component<any, any> {
 
   private onFinishStep1 = (result:any) => {
     const {parts, shortcuts} = result;
-    this.setState({selectedSlots: parts});
+    this.setState({selectedSlots: parts, selectedShortcuts: shortcuts});
   }
 
   private onFinishStep2 = (result:any) => {
