@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {Dropdown, Button} from 'react-bootstrap';
+import {Dropdown, Button, Table} from 'react-bootstrap';
 import styled from 'styled-components';
 
 import CONNECTORS from '../connectors.json'
@@ -14,6 +14,10 @@ const SelectionRow = styled.div`
 `;
 const SVGIcon = styled.div`
   width:220px;
+`;
+
+const RedSpan = styled.span`
+  color:red;
 `;
 
 interface IProps {
@@ -69,10 +73,31 @@ export default class Assemble extends React.Component<IProps, IState> {
 
 
     return <Panel>
-      {re.map((v,i)=><div key={i}>
-      <div>{v.name}</div>
-      <div>{v.sequence}</div>
-      </div>)}
+      <Table striped={true} bordered={true} hover={true}>
+        <thead>
+          <tr>
+            <th>name</th>
+            <th>sequence</th>
+          </tr>
+        </thead>
+        <tbody>
+          {re.map((v,i)=>
+              <tr key={i}>
+                <td>{v.name}</td>
+                <td>
+                  <RedSpan>
+                    {v.sequence.substr(0,4)}
+                  </RedSpan>
+                  {v.sequence.substring(4, v.sequence.length-4)}
+                  <RedSpan>
+                    {v.sequence.substr(v.sequence.length-4,4)}
+                  </RedSpan>
+                  </td>
+              </tr>)}
+          <tr>
+          </tr>
+        </tbody>
+      </Table>
     </Panel>
   }
 }
