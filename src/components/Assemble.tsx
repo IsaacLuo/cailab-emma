@@ -124,7 +124,7 @@ export default class Assemble extends React.Component<IProps, IState> {
 
       dnaSeq.sequence += sequence;
       dnaSeq.features.push({
-        from: begin,
+        from: begin+4,
         to: begin + sequence.length,
         strand: '.',
         ctype: 'misc_feature',
