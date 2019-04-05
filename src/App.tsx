@@ -21,6 +21,7 @@ class App extends Component<any, any> {
   constructor(props:any) {
     super(props);
     this.state = {
+      username: 'guest',
       selectedSlots: JSON.parse(testString),
       selectedParts: [],
       selectedShortcuts: [],
@@ -28,10 +29,11 @@ class App extends Component<any, any> {
   }
 
   public render() {
-    const {selectedParts, selectedShortcuts} = this.state;
+    const {selectedParts, selectedShortcuts, username} = this.state;
     if(selectedParts.length > 0 ) {
       return (
         <div className="App">
+         
           <Assemble
             selectedParts={selectedParts}
             selectedShortcuts={selectedShortcuts}
@@ -45,6 +47,7 @@ class App extends Component<any, any> {
     return (
       <div className="App">
         <CenterDiv>
+        {username === 'guest' && <button onClick={this.clickLogin}>log in</button>}
           {
             this.state.selectedSlots.length > 0 
             ?
@@ -70,6 +73,10 @@ class App extends Component<any, any> {
   private onFinishStep2 = (result:any) => {
     const parts = result;
     this.setState({selectedParts: parts});
+  }
+
+  private clickLogin = (event: any) => {
+    window.open('https://auth.cailab.org');
   }
 }
 
