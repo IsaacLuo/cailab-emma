@@ -76,7 +76,17 @@ class App extends Component<any, any> {
   }
 
   private clickLogin = (event: any) => {
-    window.open('https://auth.cailab.org');
+    const width=400;
+    const height=560;
+    const top = (screen.availHeight / 2) - (height / 2);
+    const left = (screen.availWidth / 2) - (width / 2);
+    const subWindow = window.open(
+      'https://auth.cailab.org/login',
+      'cailablogin',
+      `toolbar=no, location=no, status=no,menubar=no,scrollbar=yes,resizable=yes,width=${width},height=${height},top=${top},left=${left}`
+    );
+    window.addEventListener('message', receive)
+    
   }
 }
 
