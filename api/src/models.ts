@@ -19,9 +19,14 @@ export interface IUserModel extends IUser, Document{
 export const User:Model<IUserModel> = mongoose.model('User', UserSchema, 'users');
 
 export const ProjectSchema = new Schema({
+  _uuid: String,
   name: String,
   version: String,
-  data: Schema.Types.Mixed,
+  parts: [{
+    activated: Boolean,
+    selected: Boolean,
+    selectedKey: String,
+  }],
   owner: {
     type: Schema.Types.ObjectId,
     ref: 'User',
@@ -30,3 +35,5 @@ export const ProjectSchema = new Schema({
   updatedAt: Date,
   histroy: [Schema.Types.Mixed],
 });
+
+export const Project:Model<IUserModel> = mongoose.model('Project', ProjectSchema, 'projects');

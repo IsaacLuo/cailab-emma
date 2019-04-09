@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
+    "target": "esnext",
     "lib": [
       "dom",
       "dom.iterable",
@@ -20,6 +20,9 @@
     "jsx": "preserve"
   },
   "include": [
-    "src"
+    "src",
+  ],
+  "exclude": [
+    "**/*.spec.ts"
   ]
 }
