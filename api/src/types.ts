@@ -28,3 +28,19 @@ export interface ICustomState {
   user?: ITokenContent,
   data?: any,
 }
+
+export interface ISelectedPart {
+  activated: boolean;
+  selected: boolean;
+  selectedKey?: string;
+}
+
+export interface IProject {
+  _id: any;
+  name: string;
+  version: string,
+  parts: ISelectedPart[];
+  history: IProject[];
+  createdAt: Date;
+  updatedAt: Date;
+}

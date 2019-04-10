@@ -12,7 +12,10 @@ export interface ISelectedPart {
 
 export interface IProject {
   _id?: string;
-  _uuid: string;
   name: string;
+  version: string;
   parts: ISelectedPart[];
+  history: IProject[];
+  createdAt: Date;
+  updatedAt: Date;
 }

@@ -1,4 +1,7 @@
-import { IUser } from './types';
+import { 
+  IUser,
+  IProject, 
+} from './types';
 import mongoose, { Model, Document } from 'mongoose'
 import {Schema} from 'mongoose'
 
@@ -18,22 +21,24 @@ export interface IUserModel extends IUser, Document{
 
 export const User:Model<IUserModel> = mongoose.model('User', UserSchema, 'users');
 
+export const PartsSchema = new Schema({
+  activated: Boolean,
+  selected: Boolean,
+  selectedKey: String,
+}, {_id:false});
+
 export const ProjectSchema = new Schema({
-  _uuid: String,
   name: String,
   version: String,
-  parts: [{
-    activated: Boolean,
-    selected: Boolean,
-    selectedKey: String,
-  }],
-  owner: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-  },
+  parts: [PartsSchema],
+  owner: Schema.Types.ObjectId,
   createdAt: Date,
   updatedAt: Date,
-  histroy: [Schema.Types.Mixed],
+  history: [Schema.Types.Mixed],
 });
 
-export const Project:Model<IUserModel> = mongoose.model('Project', ProjectSchema, 'projects');
+export interface IProjectModel extends IProject, Document{
+
+}
+
+export const Project:Model<IProjectModel> = mongoose.model('Project', ProjectSchema, 'projects');
