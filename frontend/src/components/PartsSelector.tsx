@@ -312,7 +312,6 @@ export default class PartSelector extends React.Component<IProps, IState> {
       });
     } else {
       project = {
-        _uuid: this.props.projectId,
         name: this.state.projectName,
         parts: this.state.partsProp.map((part) => ({activated: part.activated, selected: part.selected})),
       };

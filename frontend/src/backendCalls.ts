@@ -8,6 +8,11 @@ export async function getProjectById(projectId: string) {
 }
 
 export async function saveProject(project: IProject) {
-  const response = await axios.put(conf.serverURL + `/api/project/${project._uuid}`, project, {withCredentials: true});
+  const response = await axios.put(conf.serverURL + `/api/project/${project._id}`, project, {withCredentials: true});
+  return response.data;
+}
+
+export async function listMyProjects() {
+  const response = await axios.get(conf.serverURL + `/api/projects/`, {withCredentials: true});
   return response.data;
 }

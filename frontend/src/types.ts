@@ -13,9 +13,9 @@ export interface ISelectedPart {
 export interface IProject {
   _id?: string;
   name: string;
-  version: string;
+  version?: string;
   parts: ISelectedPart[];
-  history: IProject[];
-  createdAt: Date;
-  updatedAt: Date;
+  history?: IProject[];
+  createdAt?: Date;
+  updatedAt?: Date;
 }
