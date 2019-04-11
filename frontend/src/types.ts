@@ -19,3 +19,20 @@ export interface IProject {
   createdAt?: Date;
   updatedAt?: Date;
 }
+
+export interface IAction {
+  type: string;
+  data: any;
+}
+
+
+export interface IAppState {
+  // the app is initializing(fetching data from server first time)
+  currentUser: IUserInfo;
+  myProjects: IProject[];
+  currentProject: IProject;
+}
+
+export interface IStoreState {
+  app: IAppState;
+}

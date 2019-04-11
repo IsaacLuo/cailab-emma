@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import './bootstrap.css';
 
+import { Provider } from 'react-redux';
+
 import PartSelector from './components/PartsSelector';
 import styled from 'styled-components';
 import PartsDropDown from './components/PartsDropDown';
@@ -15,6 +17,10 @@ import ChooseProject from './components/ChooseProject';
 import { IUserInfo } from './types';
 import { RouteComponentProps } from 'react-router-dom';
 import ProjectLoader from './components/ProjectLoader';
+import UserBar from './components/UserBar';
+import store from './redux/store';
+import {detect} from 'detect-browser';
+
 
 const CenterDiv = styled.div`
   display:flex;
@@ -30,8 +36,8 @@ interface IState {
   selectedShortcuts: any[];
 }
 
-class App extends Component<{}, IState> {
-  constructor(props: {}) {
+class App extends Component<any, IState> {
+  constructor(props: any) {
     super(props);
     this.state = {
       currentUser: {
@@ -43,42 +49,39 @@ class App extends Component<{}, IState> {
       selectedParts: [],
       selectedShortcuts: [],
     };
-
-    // try to login automatically using cookie
-    this.verifyIdentity();
   }
 
   public render() {
     const { selectedParts, selectedShortcuts} = this.state;
+    const browser = detect();
+    if (browser && browser.name !== 'chrome') {
+      return (<h1>
+        your browser {browser.name} on {browser.os} is not supported right now.
+        <a href='https://www.google.com/chrome/'>download chrome here</a>
+        </h1>);
+    }
 
-    return <Router>
-      {
-        this.state.currentUser._id === ''
-        ?
-        <Button variant='primary' onClick={this.clickLogin}>login</Button>
-        :
-        <p>user: {this.state.currentUser.fullName}</p>
-      }
+    return (
+      <Provider store={store}>
+    <Router>
+      <UserBar/>
 
-      <Route path='/' exact={true} render={(props: any) =>
-        <ChooseProject
-          {...props}
-          currentUser={this.state.currentUser}
-        />}
-      />
+      <Route path='/' exact={true} component = {ChooseProject}/>
 
       <Route
-        path='/project/:uuid'
-        render={(props: RouteComponentProps) =>
-            <ProjectLoader
-              {...props}
-              currentUser={this.state.currentUser}
-              projectId={(props.match.params as any).uuid}
-            />
-          }
+        path='/project/:id'
+        component = {ProjectLoader}
+        // render={(props: RouteComponentProps) =>
+        //     <ProjectLoader
+        //       {...props}
+        //       currentUser={this.state.currentUser}
+        //       projectId={(props.match.params as any).uuid}
+        //     />
+        //   }
       />
 
-    </Router>;
+    </Router>
+    </Provider>);
 
     // if (selectedParts.length > 0) {
     //   return (
@@ -124,44 +127,12 @@ class App extends Component<{}, IState> {
     this.setState({ selectedParts: parts });
   }
 
-  private clickLogin = (event: any) => {
-    const width = 400;
-    const height = 560;
-    const top = (screen.availHeight / 2) - (height / 2);
-    const left = (screen.availWidth / 2) - (width / 2);
+  private onNewProject = () => {
 
-    window.addEventListener('message', this.onLogginWindowClosed, false);
-    const subWindow = window.open(
-      'https://auth.cailab.org/login',
-      'cailablogin',
-// tslint:disable-next-line: max-line-length
-      `toolbar=no,location=no,status=no,menubar=no,scrollbar=yes,resizable=yes,width=${width},height=${height},top=${top},left=${left}`,
-    );
   }
 
-  private onLogginWindowClosed = (messageEvent: MessageEvent) => {
-    const {origin, data} = messageEvent;
-    if (data.event === 'closed' && data.success === true) {
-      console.log('login');
-      this.verifyIdentity();
-    }
-    window.removeEventListener('message', this.onLogginWindowClosed);
-  }
 
-  private async verifyIdentity() {
-    try {
-      const serverRes = await axios.get(conf.serverURL + '/api/user/current', {withCredentials: true});
-      const currentUser = serverRes.data.user;
-      this.setState({currentUser});
-    } catch (error) {
-      this.setState({
-        currentUser: {
-          _id: '',
-          fullName: 'guest',
-          groups: ['guest'],
-        }});
-    }
-  }
+
 }
 
 export default App;

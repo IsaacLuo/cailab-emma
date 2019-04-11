@@ -18,9 +18,18 @@ import SVGTerminator from '../icons/Terminator.svg';
 import SVGCDS from '../icons/CDS.svg';
 import Button from 'react-bootstrap/Button';
 import {SHORTCUTS} from '../graphElements';
-import { IProject } from '../types';
+import { IProject, IStoreState } from '../types';
 import { active } from 'd3';
 import { saveProject } from '../backendCalls';
+
+import { RouteComponentProps, withRouter, Redirect } from 'react-router-dom';
+import { Dispatch } from 'redux';
+import {connect} from 'react-redux';
+import {
+  SHOW_LOGIN_WINDOW,
+  LOGOUT,
+  GET_CURENT_USER,
+} from '../redux/actions';
 
 interface IArrowData {
   x1: number;
@@ -58,9 +67,8 @@ interface IPathChainNode {
     prev?: number;
   }
 
-interface IProps {
-  projectId: string;
-  preloadedProject?: IProject;
+interface IProps extends RouteComponentProps {
+  preloadedProject: IProject;
   onNewPathGenerated?: (newPath: any) => void;
   onClickNext?: (newPath: any) => void;
 }
@@ -71,8 +79,15 @@ interface IState {
   pathValid: boolean;
   projectName: string;
 }
+const mapStateToProps = (state: IStoreState) => ({
+  preloadedProject: state.app.currentProject,
+});
 
-export default class PartSelector extends React.Component<IProps, IState> {
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+
+});
+
+class PartSelector extends React.Component<IProps, IState> {
   private selectedColor = '#77cc77';
   private invalidColor = '#cc7777';
   private activatedColor = '#333333';
@@ -554,3 +569,5 @@ export default class PartSelector extends React.Component<IProps, IState> {
     this.calcPath();
   }
 }
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PartSelector));

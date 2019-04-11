@@ -14,5 +14,8 @@ export async function saveProject(project: IProject) {
 
 export async function listMyProjects() {
   const response = await axios.get(conf.serverURL + `/api/projects/`, {withCredentials: true});
-  return response.data;
+  const projects = response.data.map(
+    (v: any) => ({...v, createdAt: new Date(v.createdAt), updatedAt: new Date(v.updatedAt)}),
+  );
+  return projects as IProject[];
 }

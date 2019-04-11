@@ -15,49 +15,19 @@ const Panel = styled.div`
 `;
 
 interface IProps extends RouteComponentProps {
-  currentUser: IUserInfo;
-  projectId: string;
-  onProjectLoaded?: (project: any) => void;
 }
 interface IState {
-  project: any;
 }
 
 class ProjectLodader extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
-    this.state = {
-      project: undefined,
-    };
   }
 
   public render() {
-    if (this.state.project === undefined) {
-      return (
-        <div> loading </div>
-      );
-    } else {
-      return (
-        <PartSelector projectId={this.props.projectId}/>
-      );
-    }
-  }
-
-  public async componentDidMount() {
-    if (this.props.projectId) {
-      try {
-        const project = await getProjectById(this.props.projectId);
-        this.setState({project});
-        if (this.props.onProjectLoaded) {
-          this.props.onProjectLoaded(project);
-        }
-      } catch (error) {
-        this.setState({project: {}});
-        if (this.props.onProjectLoaded) {
-          this.props.onProjectLoaded({});
-        }
-      }
-    }
+    return (
+      <PartSelector/>
+    );
   }
 }
 
