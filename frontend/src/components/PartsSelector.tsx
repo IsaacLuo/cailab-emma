@@ -29,6 +29,7 @@ import {
   SHOW_LOGIN_WINDOW,
   LOGOUT,
   GET_CURENT_USER,
+  GET_PROJECT,
 } from '../redux/actions';
 
 interface IArrowData {
@@ -71,6 +72,7 @@ interface IProps extends RouteComponentProps {
   preloadedProject: IProject;
   onNewPathGenerated?: (newPath: any) => void;
   onClickNext?: (newPath: any) => void;
+  onLoadProject: (projectId: string) => void;
 }
 interface IState {
   shortcuts: IShortcut[];
@@ -84,10 +86,22 @@ const mapStateToProps = (state: IStoreState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-
+  onLoadProject: (projectId: string) => dispatch({type: GET_PROJECT, data: projectId}),
 });
 
 class PartSelector extends React.Component<IProps, IState> {
+  public static getDerivedStateFromProps(props: IProps, state: IState): IState|null {
+    if (props.preloadedProject) {
+      const project: IProject = props.preloadedProject;
+      project.parts.forEach((part, idx) => {
+        state.partsProp[idx].activated = part.activated;
+        state.partsProp[idx].selected = part.selected;
+      });
+      return state;
+    }
+    return null;
+  }
+
   private selectedColor = '#77cc77';
   private invalidColor = '#cc7777';
   private activatedColor = '#333333';
@@ -226,7 +240,11 @@ class PartSelector extends React.Component<IProps, IState> {
     };
 
     // load project
-    this.loadProject();
+    // this.loadProject();
+    const projectId = (this.props.match.params as any).id;
+    if (projectId && projectId !== 'new') {
+      this.props.onLoadProject(projectId);
+    }
   }
   public componentDidMount() {
     this.calcPath();

@@ -71,8 +71,10 @@ class ChooseProject extends React.Component<IProps, IState> {
         <div>
           {this.props.projects.map((v, i) =>
           <div key={i}>
-            <span>{v.name}</span>
-            {v.updatedAt && <span style={{color: '#777', fontSize: '80%'}}> {v.updatedAt.toLocaleDateString()}</span>}
+            <Button variant='link' onClick={this.onClickOpenProject.bind(this, v)}>
+              <span>{v.name}</span>
+              {v.updatedAt && <span style={{color: '#777', fontSize: '80%'}}> {v.updatedAt.toLocaleDateString()}</span>}
+            </Button>
           </div>,
           )}
         </div>
@@ -90,6 +92,11 @@ class ChooseProject extends React.Component<IProps, IState> {
   private onClickNewProject = () => {
     this.props.onNewProject();
     this.props.history.push(`/project/new`);
+  }
+
+  private onClickOpenProject = (project: IProject) => {
+    // this.props.onLoadProject(project);
+    this.props.history.push(`/project/${project._id}`);
   }
 
   private async getProjectList() {
