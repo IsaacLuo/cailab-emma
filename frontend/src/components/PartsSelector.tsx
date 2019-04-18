@@ -17,6 +17,8 @@ import SVGRNA from '../icons/RNA-stability-sequence.svg';
 import SVGTerminator from '../icons/Terminator.svg';
 import SVGCDS from '../icons/CDS.svg';
 import Button from 'react-bootstrap/Button';
+import InputGroup from 'react-bootstrap/InputGroup';
+import FormControl, { FormControlProps } from 'react-bootstrap/FormControl';
 import {SHORTCUTS} from '../graphElements';
 import { IProject, IStoreState } from '../types';
 import { active } from 'd3';
@@ -31,6 +33,8 @@ import {
   GET_CURENT_USER,
   GET_PROJECT,
 } from '../redux/actions';
+
+import IconLegend from './IconLegend';
 
 interface IArrowData {
   x1: number;
@@ -236,7 +240,7 @@ class PartSelector extends React.Component<IProps, IState> {
       partsProp,
       graph,
       pathValid: false,
-      projectName: new Date().toLocaleString(),
+      projectName: props.preloadedProject ? props.preloadedProject.name : new Date().toISOString(),
     };
 
     // load project
@@ -311,6 +315,21 @@ class PartSelector extends React.Component<IProps, IState> {
       <g id='part-selector' />
     </svg>
 
+    <IconLegend/>
+    <div style={{maxWidth: 400}}>
+      <InputGroup className='mb-3'>
+        <FormControl
+          placeholder='filename'
+          aria-label='filename'
+          aria-describedby='filename'
+          value={this.state.projectName}
+          onChange={this.onChangeFileName}
+        />
+        <InputGroup.Append>
+          <Button variant='outline-secondary'>Save</Button>
+        </InputGroup.Append>
+      </InputGroup>
+    </div>
     <Button variant='primary' size='lg' onClick={this.onClickSave}>save</Button>
 
       {this.state.pathValid ?
@@ -323,6 +342,10 @@ class PartSelector extends React.Component<IProps, IState> {
       }
 
     </div>;
+  }
+  private onChangeFileName = (event: React.FormEvent<FormControlProps>) => {
+    const projectName = (event.target as FormControlProps).value!;
+    this.setState({projectName});
   }
 
   private loadProject() {
