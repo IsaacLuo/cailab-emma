@@ -35,6 +35,7 @@ import {
 } from '../redux/actions';
 
 import IconLegend from './IconLegend';
+import { Breadcrumb } from 'react-bootstrap';
 
 interface IArrowData {
   x1: number;
@@ -84,6 +85,7 @@ interface IState {
   partsProp: IArrowData[];
   pathValid: boolean;
   projectName: string;
+  currentProjectId?: string;
 }
 const mapStateToProps = (state: IStoreState) => ({
   preloadedProject: state.app.currentProject,
@@ -95,12 +97,16 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 class PartSelector extends React.Component<IProps, IState> {
   public static getDerivedStateFromProps(props: IProps, state: IState): IState|null {
-    if (props.preloadedProject) {
+    if (props.preloadedProject && state.currentProjectId !== props.preloadedProject._id) {
       const project: IProject = props.preloadedProject;
       project.parts.forEach((part, idx) => {
         state.partsProp[idx].activated = part.activated;
         state.partsProp[idx].selected = part.selected;
+        if (part.selected) {
+          state.graph[idx][idx + 1] = 1;
+        }
       });
+      state.currentProjectId = props.preloadedProject._id;
       return state;
     }
     return null;
@@ -191,6 +197,14 @@ class PartSelector extends React.Component<IProps, IState> {
       // }
     });
 
+    if (props.preloadedProject) {
+      const project: IProject = props.preloadedProject;
+      project.parts.forEach((part, idx) => {
+        partsProp[idx].activated = part.activated;
+        partsProp[idx].selected = part.selected;
+      });
+    }
+
     const shortcuts: IShortcut[] = SHORTCUTS.map((v, i) => {
       const from = jointPoints.indexOf(v[0]);
       const to = jointPoints.indexOf(v[1]);
@@ -240,7 +254,7 @@ class PartSelector extends React.Component<IProps, IState> {
       partsProp,
       graph,
       pathValid: false,
-      projectName: props.preloadedProject ? props.preloadedProject.name : new Date().toISOString(),
+      projectName: `My Project at ${new Date().toLocaleString()}`,
     };
 
     // load project
@@ -250,6 +264,15 @@ class PartSelector extends React.Component<IProps, IState> {
       this.props.onLoadProject(projectId);
     }
   }
+
+  public shouldComponentUpdate(np: IProps, ns: IState) {
+    if (np.preloadedProject._id !== this.props.preloadedProject._id) {
+      this.calcPath();
+      console.debug('calcPath');
+    }
+    return true;
+  }
+
   public componentDidMount() {
     this.calcPath();
   }
@@ -258,6 +281,10 @@ class PartSelector extends React.Component<IProps, IState> {
   }
   public render() {
     return <div>
+      <Breadcrumb>
+      <Breadcrumb.Item href='/'>Home</Breadcrumb.Item>
+      <Breadcrumb.Item active>Design a template</Breadcrumb.Item>
+    </Breadcrumb>
     <svg width='1500' height='1000'>
       <defs>
         <marker
@@ -316,6 +343,7 @@ class PartSelector extends React.Component<IProps, IState> {
     </svg>
 
     <IconLegend/>
+
     <div style={{maxWidth: 400}}>
       <InputGroup className='mb-3'>
         <FormControl
@@ -326,11 +354,10 @@ class PartSelector extends React.Component<IProps, IState> {
           onChange={this.onChangeFileName}
         />
         <InputGroup.Append>
-          <Button variant='outline-secondary'>Save</Button>
+          <Button variant='outline-secondary' onClick={this.onClickSaveAs}>Save as</Button>
         </InputGroup.Append>
       </InputGroup>
     </div>
-    <Button variant='primary' size='lg' onClick={this.onClickSave}>save</Button>
 
       {this.state.pathValid ?
       <div>
@@ -358,7 +385,7 @@ class PartSelector extends React.Component<IProps, IState> {
     }
   }
 
-  private onClickSave = () => {
+  private onClickSaveAs = () => {
     let project: IProject;
     if (this.props.preloadedProject) {
       project = this.props.preloadedProject;
