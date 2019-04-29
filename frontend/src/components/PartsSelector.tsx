@@ -22,7 +22,7 @@ import FormControl, { FormControlProps } from 'react-bootstrap/FormControl';
 import {SHORTCUTS} from '../graphElements';
 import { IProject, IStoreState } from '../types';
 import { active } from 'd3';
-import { saveProject } from '../backendCalls';
+import { saveProjectAs } from '../backendCalls';
 
 import { RouteComponentProps, withRouter, Redirect } from 'react-router-dom';
 import { Dispatch } from 'redux';
@@ -36,6 +36,12 @@ import {
 
 import IconLegend from './IconLegend';
 import { Breadcrumb } from 'react-bootstrap';
+import styled from 'styled-components';
+
+const MyDocument = styled.div`
+  margin-left:50px;
+  margin-right:50px;
+`;
 
 interface IArrowData {
   x1: number;
@@ -145,8 +151,8 @@ class PartSelector extends React.Component<IProps, IState> {
     [SVGOrigin],
   ];
 
-  private baseX = 100;
-  private baseY = 400;
+  private baseX = 50;
+  private baseY = 120;
   private jointPoints = 'ABCDEFGHhIJKLMNOPQRSTUVWXYZ'.split('').map((v) => v === 'h' ? 'Ha' : v);
   private stdWeight = 0x8000000; // 2^27 because the maximum safe int in JS is 2^53
   private oriGraph: any;
@@ -282,92 +288,96 @@ class PartSelector extends React.Component<IProps, IState> {
   public render() {
     return <div>
       <Breadcrumb>
-      <Breadcrumb.Item href='/'>Home</Breadcrumb.Item>
-      <Breadcrumb.Item active>Design a template</Breadcrumb.Item>
-    </Breadcrumb>
-    <svg width='1500' height='1000'>
-      <defs>
-        <marker
-          id='selected-arrow'
-          markerWidth='10'
-          markerHeight='9'
-          refX='9'
-          refY='2'
-          orient='auto'
-          markerUnits='strokeWidth'
-        >
-          <path
-            d='M0,0 L0,4 L6,2 z'
-            fill={this.selectedColor}
-          />
-        </marker>
-        <marker
-          id='invalid-arrow'
-          markerWidth='10'
-          markerHeight='9'
-          refX='9'
-          refY='2'
-          orient='auto'
-          markerUnits='strokeWidth'
-        >
-          <path
-            d='M0,0 L0,4 L6,2 z'
-            fill={this.invalidColor}
-          />
-        </marker>
-        <marker
-          id='ignored-arrow'
-          markerWidth='10'
-          markerHeight='9'
-          refX='9'
-          refY='2'
-          orient='auto'
-          markerUnits='strokeWidth'
-        >
-          <path
-            d='M0,0 L0,4 L6,2 z'
-            fill={this.ignoredColor}
-          />
-        </marker>
-      </defs>
-      <g>
-        {this.genShortcuts()}
-      </g>
-      <g transform={`translate(${this.baseX},${this.baseY})`}>
-        {this.genParts()}
-      </g>
-      <g transform={`translate(${this.baseX},${this.baseY + 300})`}>
-        {this.genSelectedParts()}
-      </g>
-      <g id='part-selector' />
-    </svg>
+        <Breadcrumb.Item href='/'>Home</Breadcrumb.Item>
+        <Breadcrumb.Item active>Design a template ({this.props.preloadedProject.name})</Breadcrumb.Item>
+      </Breadcrumb>
 
-    <IconLegend/>
 
-    <div style={{maxWidth: 400}}>
-      <InputGroup className='mb-3'>
-        <FormControl
-          placeholder='filename'
-          aria-label='filename'
-          aria-describedby='filename'
-          value={this.state.projectName}
-          onChange={this.onChangeFileName}
-        />
-        <InputGroup.Append>
-          <Button variant='outline-secondary' onClick={this.onClickSaveAs}>Save as</Button>
-        </InputGroup.Append>
-      </InputGroup>
-    </div>
+      <MyDocument>
+        <h1>{this.props.preloadedProject.name}</h1>
+      </MyDocument>
 
-      {this.state.pathValid ?
-      <div>
-        <Button variant='primary' size='lg' onClick={this.onClickNext}>next</Button>
-      </div>
-      :
-      <div style={{textAlign: 'left'}}>
-      </div>
-      }
-
+      <svg width='1500' height='650'>
+        <defs>
+          <marker
+            id='selected-arrow'
+            markerWidth='10'
+            markerHeight='9'
+            refX='9'
+            refY='2'
+            orient='auto'
+            markerUnits='strokeWidth'
+          >
+            <path
+              d='M0,0 L0,4 L6,2 z'
+              fill={this.selectedColor}
+            />
+          </marker>
+          <marker
+            id='invalid-arrow'
+            markerWidth='10'
+            markerHeight='9'
+            refX='9'
+            refY='2'
+            orient='auto'
+            markerUnits='strokeWidth'
+          >
+            <path
+              d='M0,0 L0,4 L6,2 z'
+              fill={this.invalidColor}
+            />
+          </marker>
+          <marker
+            id='ignored-arrow'
+            markerWidth='10'
+            markerHeight='9'
+            refX='9'
+            refY='2'
+            orient='auto'
+            markerUnits='strokeWidth'
+          >
+            <path
+              d='M0,0 L0,4 L6,2 z'
+              fill={this.ignoredColor}
+            />
+          </marker>
+        </defs>
+        <g>
+          {this.genShortcuts()}
+        </g>
+        <g transform={`translate(${this.baseX},${this.baseY})`}>
+          {this.genParts()}
+        </g>
+        <g transform={`translate(${this.baseX},${this.baseY + 300})`}>
+          {this.genSelectedParts()}
+        </g>
+        <g id='part-selector' />
+      </svg>
+      <MyDocument>
+        <IconLegend/>
+        <div style={{maxWidth: 400}}>
+          <InputGroup className='mb-3'>
+            <FormControl
+              placeholder='filename'
+              aria-label='filename'
+              aria-describedby='filename'
+              value={this.state.projectName}
+              onChange={this.onChangeFileName}
+            />
+            <InputGroup.Append>
+              <Button variant='outline-secondary' onClick={this.onClickSaveAs}>Save as</Button>
+            </InputGroup.Append>
+          </InputGroup>
+        </div>
+        {this.state.pathValid ?
+        <div>
+          <Button variant='primary' size='lg' onClick={this.onClickNext}>next</Button>
+        </div>
+        :
+        <div style={{textAlign: 'left'}}>
+        </div>
+        }
+      </MyDocument>
     </div>;
   }
   private onChangeFileName = (event: React.FormEvent<FormControlProps>) => {
@@ -386,21 +396,12 @@ class PartSelector extends React.Component<IProps, IState> {
   }
 
   private onClickSaveAs = () => {
-    let project: IProject;
-    if (this.props.preloadedProject) {
-      project = this.props.preloadedProject;
-      this.state.partsProp.forEach((part, i) => {
-        project.parts[i].activated = part.activated;
-        project.parts[i].selected = part.selected;
-      });
-    } else {
-      project = {
+    const project: IProject = {
         name: this.state.projectName,
         parts: this.state.partsProp.map((part) => ({activated: part.activated, selected: part.selected})),
       };
-    }
     // save
-    saveProject(project);
+    saveProjectAs(project);
   }
 
   private onClickNext = () => {

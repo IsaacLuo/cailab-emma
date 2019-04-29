@@ -12,6 +12,12 @@ export async function saveProject(project: IProject) {
   return response.data;
 }
 
+export async function saveProjectAs(project: IProject) {
+  delete project._id
+  const response = await axios.post(conf.serverURL + `/api/projects/`, project, {withCredentials: true});
+  return response.data;
+}
+
 export async function listMyProjects() {
   const response = await axios.get(conf.serverURL + `/api/projects/`, {withCredentials: true});
   const projects = response.data.map(
