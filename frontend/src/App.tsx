@@ -79,6 +79,10 @@ class App extends Component<any, IState> {
         //     />
         //   }
       />
+      <Route
+        path='/project/:id/step2'
+        component = {PartsDropDown}
+      />
 
     </Router>
     </Provider>);

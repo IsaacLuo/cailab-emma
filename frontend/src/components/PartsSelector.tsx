@@ -24,7 +24,7 @@ import { IProject, IStoreState } from '../types';
 import { active } from 'd3';
 import { saveProjectAs } from '../backendCalls';
 
-import { RouteComponentProps, withRouter, Redirect } from 'react-router-dom';
+import { RouteComponentProps, withRouter, Redirect, Link } from 'react-router-dom';
 import { Dispatch } from 'redux';
 import {connect} from 'react-redux';
 import {
@@ -32,6 +32,8 @@ import {
   LOGOUT,
   GET_CURENT_USER,
   GET_PROJECT,
+  SAVE_PROJECT_HISTORY,
+  SET_CURRENT_PROJECT,
 } from '../redux/actions';
 
 import IconLegend from './IconLegend';
@@ -84,6 +86,8 @@ interface IProps extends RouteComponentProps {
   onNewPathGenerated?: (newPath: any) => void;
   onClickNext?: (newPath: any) => void;
   onLoadProject: (projectId: string) => void;
+  saveProjectHistory: (project: IProject) => void;
+  onNewValidProjectGenerated: (project: IProject) => void;
 }
 interface IState {
   shortcuts: IShortcut[];
@@ -99,6 +103,8 @@ const mapStateToProps = (state: IStoreState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   onLoadProject: (projectId: string) => dispatch({type: GET_PROJECT, data: projectId}),
+  saveProjectHistory: (project: IProject) => dispatch({type:SAVE_PROJECT_HISTORY, data: project}),
+  onNewValidProjectGenerated: (project: IProject) => dispatch({type:SET_CURRENT_PROJECT, data: project}),
 });
 
 class PartSelector extends React.Component<IProps, IState> {
@@ -371,7 +377,9 @@ class PartSelector extends React.Component<IProps, IState> {
         </div>
         {this.state.pathValid ?
         <div>
-          <Button variant='primary' size='lg' onClick={this.onClickNext}>next</Button>
+          <Link to={`/project/${(this.props.match.params as any).id}/step2`}>
+            <Button variant='primary' size='lg' onClick={this.onClickNext}>next</Button>
+          </Link>
         </div>
         :
         <div style={{textAlign: 'left'}}>
@@ -380,6 +388,13 @@ class PartSelector extends React.Component<IProps, IState> {
       </MyDocument>
     </div>;
   }
+
+  public componentWillUnmount() {
+    // save history
+    console.log('component umount, saving history');
+    this.saveProjectHistory();
+  }
+
   private onChangeFileName = (event: React.FormEvent<FormControlProps>) => {
     const projectName = (event.target as FormControlProps).value!;
     this.setState({projectName});
@@ -395,6 +410,23 @@ class PartSelector extends React.Component<IProps, IState> {
     }
   }
 
+  private saveProjectHistory = () => {
+    const project: IProject = {
+        name: this.state.projectName,
+        parts: this.state.partsProp.map((part) => ({activated: part.activated, selected: part.selected})),
+      };
+    // save
+    this.props.saveProjectHistory(project);
+  }
+
+  private onNewValidProjectGenerated = () => {
+    const project: IProject = {
+        name: this.state.projectName,
+        parts: this.state.partsProp.map((part) => ({activated: part.activated, selected: part.selected})),
+      };
+      this.props.onNewValidProjectGenerated(project);
+  }
+
   private onClickSaveAs = () => {
     const project: IProject = {
         name: this.state.projectName,
@@ -405,13 +437,7 @@ class PartSelector extends React.Component<IProps, IState> {
   }
 
   private onClickNext = () => {
-
-    if (this.props.onClickNext) {
-      this.props.onClickNext({
-        parts: this.state.partsProp.map((v, i) => v.activated ? {idx: i, svg: v.svg} : undefined).filter((v) => v !== undefined),
-        shortcuts: this.state.shortcuts.map((v, i) => v.activated ? {name: v.name, idx: i} : undefined).filter((v) => v !== undefined),
-        });
-    }
+    this.saveProjectHistory();
   }
 
   private genSelectedParts() {
@@ -622,6 +648,10 @@ class PartSelector extends React.Component<IProps, IState> {
     }
     if (partCount === 0) {
       pathValid = false;
+    } 
+
+    if (pathValid) {
+      this.onNewValidProjectGenerated();
     }
     this.setState({pathValid});
     this.forceUpdate();

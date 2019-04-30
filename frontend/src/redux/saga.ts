@@ -10,6 +10,7 @@ GET_MY_PROJECTS,
 SET_MY_PROJECTS,
 GET_PROJECT,
 SET_CURRENT_PROJECT,
+SAVE_PROJECT_HISTORY,
 } from './actions';
 
 import {IAction, IStoreState, IUserInfo} from '../types';
@@ -61,23 +62,34 @@ export function* getMyProjects(action: IAction) {
 export function* getProject(action: IAction) {
   try {
     const response = yield call(axios.get, conf.serverURL + `/api/project/${action.data}`, {withCredentials: true});
-    const projects: IProject[] = {
+    const project: IProject = {
       ...response.data,
       createdAt: new Date(response.data.createdAt),
       updatedAt: new Date(response.data.updatedAt),
       };
-    yield put({type: SET_CURRENT_PROJECT, data: projects});
+    yield put({type: SET_CURRENT_PROJECT, data: project});
   } catch (error) {
     console.warn('unable to logout');
   }
 }
 
 
+export function* saveProjectHistory(action: IAction) {
+  try {
+    const project:IProject = action.data;
+    const response = yield call(axios.put, conf.serverURL + `/api/project/${project._id}`, project, {withCredentials: true});
+    console.log(response);
+  } catch (error) {
+    console.warn('unable to logout');
+  }
+}
+
 export function* watchUsers() {
   yield takeLatest(GET_CURENT_USER, getCurrentUser);
   yield takeLatest(LOGOUT, logout);
   yield takeLatest(GET_MY_PROJECTS, getMyProjects);
   yield takeLatest(GET_PROJECT, getProject);
+  yield takeLatest(SAVE_PROJECT_HISTORY, saveProjectHistory);
 }
 
 export default function* rootSaga() {

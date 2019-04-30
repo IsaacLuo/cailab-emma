@@ -78,35 +78,35 @@ router.put('/api/project/:id', async (ctx:koa.ParameterizedContext<ICustomState,
     const now = new Date();
     const projectCount = await Project.countDocuments({_id:ctx.query.id, owner: {$ne:user._id}}).exec();
     if (projectCount>0) {
-      ctx.throw(401, 'unable to modify others project');
+      ctx.throw(401, 'unable to modify projects of other users');
     }
     const {name, parts} = ctx.request.body;
     
     const project = await Project.findOne({
       _id:ctx.params.id,
     }).exec();
-    
-    if (name === project.name && JSON.stringify(parts) === JSON.stringify(project.parts)) {
-      ctx.body = {message:'not saved'};
-    } else {
-      const projectHistory: IProject = {
-        _id: project._id,
-        name: project.name,
-        version: project.version,
-        parts: project.parts,
-        createdAt: project.createdAt,
-        updatedAt: project.updatedAt,
-        history: [],
-      };
-      project.history.unshift(projectHistory);
-      project.history = project.history.slice(0,100);
-      // save original to history
-      project.name = name;
-      project.parts = parts;
-      project.updatedAt= now;
-      project.save();
-      ctx.body = {message:'OK'};
+
+    if (!project) {
+      ctx.throw(404);
     }
+    
+    const projectHistory: IProject = {
+      _id: project._id,
+      name: project.name,
+      version: project.version,
+      parts: project.parts,
+      createdAt: project.createdAt,
+      updatedAt: project.updatedAt,
+      history: [],
+    };
+    project.history.unshift(projectHistory);
+    project.history = project.history.slice(0,100);
+    // save original to history
+    project.name = name;
+    project.parts = parts;
+    project.updatedAt= now;
+    project.save();
+    ctx.body = {message:'OK'};
   } else {
     ctx.throw(401);
   }
