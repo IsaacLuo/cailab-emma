@@ -70,6 +70,7 @@ class App extends Component<any, IState> {
 
       <Route
         path='/project/:id'
+        exact={true}
         component = {ProjectLoader}
         // render={(props: RouteComponentProps) =>
         //     <ProjectLoader

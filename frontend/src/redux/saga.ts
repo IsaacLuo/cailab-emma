@@ -1,5 +1,5 @@
 import {
-  IProject,
+  IProject, IPartDetail,
 } from '../types';
 import {
   LOGIN,
@@ -12,6 +12,8 @@ GET_PROJECT,
 SET_CURRENT_PROJECT,
 SAVE_PROJECT_HISTORY,
 } from './actions';
+
+import STORE_PARTS from '../parts.json';
 
 import {IAction, IStoreState, IUserInfo} from '../types';
 // redux saga
@@ -47,12 +49,27 @@ export function* logout(action: IAction) {
     console.warn('unable to logout');
   }
 }
+
+function fillProjectDetail(project:IProject) {
+  project.parts.forEach((part, i) => {
+    if (part.partName) {
+      const storeParts = STORE_PARTS[i].parts as IPartDetail[];
+      part.partDetail = storeParts.find(v=>v.name === part.partName)
+    }
+  });
+}
+
 export function* getMyProjects(action: IAction) {
   try {
     const response = yield call(axios.get, conf.serverURL + `/api/projects/`, {withCredentials: true});
     const projects: IProject[] = response.data.map(
-      (v: any) => ({...v, createdAt: new Date(v.createdAt), updatedAt: new Date(v.updatedAt)}),
+      (v: any) => ({
+        ...v, 
+        createdAt: new Date(v.createdAt), 
+        updatedAt: new Date(v.updatedAt),
+        }),
     );
+    projects.forEach(v=>fillProjectDetail(v));
     yield put({type: SET_MY_PROJECTS, data: projects});
   } catch (error) {
     console.warn('unable to logout');
@@ -67,6 +84,7 @@ export function* getProject(action: IAction) {
       createdAt: new Date(response.data.createdAt),
       updatedAt: new Date(response.data.updatedAt),
       };
+    fillProjectDetail(project);
     yield put({type: SET_CURRENT_PROJECT, data: project});
   } catch (error) {
     console.warn('unable to logout');

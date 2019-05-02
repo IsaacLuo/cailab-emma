@@ -1,27 +1,12 @@
 import * as React from 'react';
 import * as d3 from 'd3';
 
-import SVGUTR35 from '../icons/5-3-UTR.svg';
-import SVGITR35 from '../icons/5-3-ITR.svg';
-import SVGLTR35 from '../icons/5-3-LTR.svg';
-import SVGInsulator from '../icons/insulator.svg';
-import SVGIRES from '../icons/IRES.svg';
-import SVGKozakATG from '../icons/Kozak-ATG.svg';
-import SVGOrigin from '../icons/Origin of repliction.svg';
-import SVGp2A from '../icons/p2A.svg';
-import SVGPeptide from '../icons/Peptide linker.svg';
-import SVGpromoter from '../icons/promoter.svg';
-import SVGProteinTag from '../icons/Protein Tag.svg';
-import SVGRecombinase from '../icons/recombinase-recognition-sequence.svg';
-import SVGRNA from '../icons/RNA-stability-sequence.svg';
-import SVGTerminator from '../icons/Terminator.svg';
-import SVGCDS from '../icons/CDS.svg';
+
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl, { FormControlProps } from 'react-bootstrap/FormControl';
 import {SHORTCUTS} from '../graphElements';
 import { IProject, IStoreState } from '../types';
-import { active } from 'd3';
 import { saveProjectAs } from '../backendCalls';
 
 import { RouteComponentProps, withRouter, Redirect, Link } from 'react-router-dom';
@@ -39,6 +24,8 @@ import {
 import IconLegend from './IconLegend';
 import { Breadcrumb } from 'react-bootstrap';
 import styled from 'styled-components';
+
+import PART_NAMES from '../partNames';
 
 const MyDocument = styled.div`
   margin-left:50px;
@@ -128,34 +115,7 @@ class PartSelector extends React.Component<IProps, IState> {
   private invalidColor = '#cc7777';
   private activatedColor = '#333333';
   private ignoredColor = '#f0f0f0';
-  private partNames = [
-    [SVGITR35, SVGLTR35, SVGRecombinase],
-    [SVGInsulator, SVGRecombinase],
-    [SVGpromoter],
-    [SVGRNA],
-    [SVGUTR35],
-    [SVGKozakATG, SVGProteinTag],
-    [SVGCDS],
-    [SVGp2A, SVGPeptide, SVGProteinTag],
-    [SVGIRES],
-    [SVGCDS],
-    [SVGUTR35, SVGLTR35],
-    [SVGTerminator],
-    [SVGInsulator],
-    [SVGRecombinase],
-    [SVGpromoter],
-    [SVGCDS],
-    [SVGTerminator],
-    [SVGRecombinase],
-    [SVGpromoter],
-    [SVGCDS],
-    [SVGp2A, SVGPeptide, SVGIRES, SVGProteinTag],
-    [SVGCDS],
-    [SVGTerminator],
-    [SVGInsulator],
-    [SVGITR35, SVGRecombinase],
-    [SVGOrigin],
-  ];
+  private partNames = PART_NAMES;
 
   private baseX = 50;
   private baseY = 120;
@@ -460,7 +420,7 @@ class PartSelector extends React.Component<IProps, IState> {
               key={`${i}.${j}`}
               x={w * i + 10}
               y={j * 50 + 10}
-              width='30' height='30' xlinkHref={part}
+              width='30' height='30' xlinkHref={part.icon}
             />)
           }
           <rect
@@ -501,7 +461,7 @@ class PartSelector extends React.Component<IProps, IState> {
               key={`${i}.${j}`}
               x={w * i + 10}
               y={j * 50 + 10}
-              width='30' height='30' xlinkHref={part}
+              width='30' height='30' xlinkHref={part.icon}
             />)
           }
           <rect
@@ -533,7 +493,7 @@ class PartSelector extends React.Component<IProps, IState> {
             key={`${i}.${j}`}
             x={w * i + 10}
             y={j * 50 + 10}
-            width='30' height='30' xlinkHref={part}
+            width='30' height='30' xlinkHref={part.icon}
           />)
         }
         <rect

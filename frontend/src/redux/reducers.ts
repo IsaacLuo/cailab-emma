@@ -13,6 +13,7 @@ import {
   LOGOUT,
   SET_MY_PROJECTS,
   SET_CURRENT_PROJECT,
+  SET_PART_DETAIL,
 } from './actions';
 
 const defaultUser: IUserInfo = {
@@ -42,6 +43,16 @@ function appReducer(state: IAppState = DEFAULT_STATE, action: IAction) {
       return {...state, myProjects: action.data};
     case SET_CURRENT_PROJECT:
       return {...state, currentProject: action.data};
+    case SET_PART_DETAIL:
+      const {position, detail} = action.data;
+      const currentProject = {
+        ...state.currentProject,
+        parts: [...state.currentProject.parts],
+      }
+      const {name, comment} = detail;
+      currentProject.parts[position].partDetail = {name, comment};
+      currentProject.parts[position].partName = name;
+      return {...state, currentProject}
   }
   return state;
 }

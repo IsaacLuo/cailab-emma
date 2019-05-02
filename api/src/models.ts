@@ -24,7 +24,7 @@ export const User:Model<IUserModel> = mongoose.model('User', UserSchema, 'users'
 export const PartsSchema = new Schema({
   activated: Boolean,
   selected: Boolean,
-  selectedKey: String,
+  partName: String,
 }, {_id:false});
 
 export const ProjectSchema = new Schema({

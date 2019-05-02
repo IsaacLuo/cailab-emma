@@ -4,10 +4,21 @@ export interface IUserInfo {
   groups: string[];
 }
 
+export interface IPartDetail {
+  name: string,
+  // labName: string,
+  // category: string,
+  // subCategory: string,
+  comment: string,
+  // sequnece: string,
+}
+
 export interface ISelectedPart {
   activated: boolean;
   selected: boolean;
   selectedKey?: string;
+  partName?: string;
+  partDetail?: IPartDetail;
 }
 
 export interface IProject {
