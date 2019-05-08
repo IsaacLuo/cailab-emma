@@ -83,6 +83,7 @@ interface IState {
   pathValid: boolean;
   projectName: string;
   currentProjectId?: string;
+  isProjectDirty: boolean;
 }
 const mapStateToProps = (state: IStoreState) => ({
   preloadedProject: state.app.currentProject,
@@ -227,6 +228,7 @@ class PartSelector extends React.Component<IProps, IState> {
       graph,
       pathValid: false,
       projectName: `My Project at ${new Date().toLocaleString()}`,
+      isProjectDirty: false,
     };
 
     // load project
@@ -371,20 +373,24 @@ class PartSelector extends React.Component<IProps, IState> {
   }
 
   private saveProjectHistory = () => {
-    const project: IProject = {
-        name: this.state.projectName,
-        parts: this.state.partsProp.map((part) => ({activated: part.activated, selected: part.selected})),
-      };
-    // save
-    this.props.saveProjectHistory(project);
+    // save history only when project is dirty
+    if(this.state.isProjectDirty) {
+      const project: IProject = {
+          _id: this.state.currentProjectId,
+          name: this.state.projectName,
+          parts: this.state.partsProp.map((part) => ({activated: part.activated, selected: part.selected})),
+        };
+      // save
+      this.setState({isProjectDirty:false});
+      this.props.saveProjectHistory(project); 
+    }
   }
 
   private onNewValidProjectGenerated = () => {
-    const project: IProject = {
-        name: this.state.projectName,
-        parts: this.state.partsProp.map((part) => ({activated: part.activated, selected: part.selected})),
-      };
-      this.props.onNewValidProjectGenerated(project);
+    
+    this.saveProjectHistory();
+    
+
   }
 
   private onClickSaveAs = () => {
@@ -625,6 +631,7 @@ class PartSelector extends React.Component<IProps, IState> {
     } else {
       graph[d.from][d.to] = 1;
     }
+    this.setState({isProjectDirty: true});
     this.calcPath();
   }
 }
