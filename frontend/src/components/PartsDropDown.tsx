@@ -19,6 +19,7 @@ import styled from 'styled-components';
 
 import STORE_PARTS from '../parts.json';
 import PART_NAMES from '../partNames';
+import { Link } from 'react-router-dom';
 
 
 
@@ -157,7 +158,9 @@ class PartsDropDown extends React.Component<IProps, IState> {
       )}
       {this.state.nextButtonVisible &&
         <div>
+          <Link to="">
           <Button variant="primary" size="lg" onClick={this.onClickNext}>next</Button>
+          </Link>
         </div>
       }
     </Panel>
