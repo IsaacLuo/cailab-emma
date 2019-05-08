@@ -5,6 +5,10 @@ import styled from 'styled-components';
 import CONNECTORS from '../connectors.json'
 import {IFeature, DNASeq} from '../gbGenerator';
 import vectorReceiver from '../vectorReceiver.json';
+import { withRouter, RouteComponentProps } from 'react-router';
+import { connect } from 'react-redux';
+import { IStoreState, IPartDetail, IProject } from '../types.js';
+import { Dispatch } from 'redux';
 
 const Panel = styled.div`
   margin:100px;
@@ -22,17 +26,25 @@ const RedSpan = styled.span`
   color:red;
 `;
 
-interface IProps {
+interface IProps extends RouteComponentProps {
   selectedParts: any[],
   selectedShortcuts: any[],
   onClickNext?: (selectedParts:any)=>void,
+  project: IProject;
 }
 interface IState {
   finalParts: any[],
   genbank: string,
 }
 
-export default class Assemble extends React.Component<IProps, IState> {
+const mapStateToProps = (state: IStoreState) => ({
+  project: state.app.currentProject,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+});
+
+class Assemble extends React.Component<IProps, IState> {
   constructor (props:IProps) {
     super(props); 
   }
@@ -47,7 +59,7 @@ export default class Assemble extends React.Component<IProps, IState> {
 
     return <Panel>
       <Table striped={true} bordered={true} hover={true}>
-        <thead>
+        {/* <thead>
           <tr>
             <th>name</th>
             <th>sequence</th>
@@ -69,7 +81,7 @@ export default class Assemble extends React.Component<IProps, IState> {
               </tr>)}
           <tr>
           </tr>
-        </tbody>
+        </tbody> */}
       </Table>
       <div>
         <Button variant="primary" size="lg" onClick={this.downloadGenbank}>download genbank</Button>
@@ -78,36 +90,36 @@ export default class Assemble extends React.Component<IProps, IState> {
   }
 
   private mergeParts () {
-    const shortCuts = this.props.selectedShortcuts.map(v=>CONNECTORS[v.idx]);
-    const {selectedParts} = this.props;
+    // const shortCuts = this.props.project.parts.map(v=>CONNECTORS[v.idx]);
+    // const {selectedParts} = this.props;
 
-    // merge sort
-    let i=0;
-    let j=0;
-    const re = [];
+    // // merge sort
+    // let i=0;
+    // let j=0;
+    // const re = [];
 
-    while(i<shortCuts.length && j<selectedParts.length) {
-      const idxI = shortCuts[i].pos[0];
-      const idxJ = selectedParts[j].ctype.idx;
-      if (idxI < idxJ) {
-        re.push({name: shortCuts[i].name, sequence: shortCuts[i].sequence})
-        i++;
-      } else {
-        re.push({name: selectedParts[j].selected.name, sequence: selectedParts[j].selected.sequence})
-        j++;
-      }
-    }
+    // while(i<shortCuts.length && j<selectedParts.length) {
+    //   const idxI = shortCuts[i].pos[0];
+    //   const idxJ = selectedParts[j].ctype.idx;
+    //   if (idxI < idxJ) {
+    //     re.push({name: shortCuts[i].name, sequence: shortCuts[i].sequence})
+    //     i++;
+    //   } else {
+    //     re.push({name: selectedParts[j].selected.name, sequence: selectedParts[j].selected.sequence})
+    //     j++;
+    //   }
+    // }
 
-    while(i<shortCuts.length) {
-      re.push({name: shortCuts[i].name, sequence: shortCuts[i].sequence})
-      i++;
-    }
-    while(j<selectedParts.length) {
-      re.push({name: selectedParts[j].selected.name, sequence: selectedParts[j].selected.sequence})
-      j++;
-    }
+    // while(i<shortCuts.length) {
+    //   re.push({name: shortCuts[i].name, sequence: shortCuts[i].sequence})
+    //   i++;
+    // }
+    // while(j<selectedParts.length) {
+    //   re.push({name: selectedParts[j].selected.name, sequence: selectedParts[j].selected.sequence})
+    //   j++;
+    // }
 
-    this.setState({finalParts: re, genbank: this.generateGenbank(re)});
+    // this.setState({finalParts: re, genbank: this.generateGenbank(re)});
     
   }
 
@@ -150,3 +162,5 @@ export default class Assemble extends React.Component<IProps, IState> {
     document.body.removeChild(a);
   }
 }
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Assemble));
