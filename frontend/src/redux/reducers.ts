@@ -25,6 +25,7 @@ const defaultUser: IUserInfo = {
 const defaultCurrentProject: IProject = {
     name: `newProject_${new Date().toISOString()}`,
     parts: Array(26).fill({activated: false, selected: false}),
+    connectorIndexes: [],
   };
 
 const DEFAULT_STATE: IAppState = {

@@ -55,7 +55,6 @@ class Assemble extends React.Component<IProps, IState> {
     this.mergeParts();
   }
   public render() {
-    const {finalParts} = this.state;
 
     return <Panel>
       <Table striped={true} bordered={true} hover={true}>

@@ -375,10 +375,17 @@ class PartSelector extends React.Component<IProps, IState> {
   private saveProjectHistory = () => {
     // save history only when project is dirty
     if(this.state.isProjectDirty) {
+      const connectorIndexes:number[] = [];
+      this.state.shortcuts.forEach((v,i)=>{
+        if (v.activated) {
+          connectorIndexes.push(i);
+        }
+      })
       const project: IProject = {
           _id: this.state.currentProjectId,
           name: this.state.projectName,
           parts: this.state.partsProp.map((part) => ({activated: part.activated, selected: part.selected})),
+          connectorIndexes,
         };
       // save
       this.setState({isProjectDirty:false});
@@ -394,9 +401,16 @@ class PartSelector extends React.Component<IProps, IState> {
   }
 
   private onClickSaveAs = () => {
+      const connectorIndexes:number[] = [];
+      this.state.shortcuts.forEach((v,i)=>{
+        if (v.activated) {
+          connectorIndexes.push(i);
+        }
+      })
     const project: IProject = {
         name: this.state.projectName,
         parts: this.state.partsProp.map((part) => ({activated: part.activated, selected: part.selected})),
+        connectorIndexes,
       };
     // save
     saveProjectAs(project);

@@ -40,6 +40,7 @@ export interface IProject {
   name: string;
   version: string,
   parts: ISelectedPart[];
+  connectorIndexes: number[];
   history: IProject[];
   createdAt: Date;
   updatedAt: Date;

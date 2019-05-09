@@ -31,6 +31,7 @@ export const ProjectSchema = new Schema({
   name: String,
   version: String,
   parts: [PartsSchema],
+  connectorIndexes: [Number],
   owner: Schema.Types.ObjectId,
   createdAt: Date,
   updatedAt: Date,
