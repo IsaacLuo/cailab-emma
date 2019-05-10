@@ -97,7 +97,7 @@ class ChooseProject extends React.Component<IProps, IState> {
   }
 
   private onClickNewProject = () => {
-    this.props.onNewProject('123', this.props.history);
+    this.props.onNewProject(this.state.projectName, this.props.history);
     // this.props.history.push(`/project/new`);
   }
 

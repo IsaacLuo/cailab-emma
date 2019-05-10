@@ -57,6 +57,7 @@ class Assemble extends React.Component<IProps, IState> {
   public render() {
 
     return <Panel>
+      <div>{JSON.stringify(this.props)}</div>
       <Table striped={true} bordered={true} hover={true}>
         <thead>
           <tr>

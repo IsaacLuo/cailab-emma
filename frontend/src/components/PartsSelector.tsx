@@ -323,7 +323,7 @@ class PartSelector extends React.Component<IProps, IState> {
       </svg>
       <MyDocument>
         <IconLegend/>
-        <div style={{maxWidth: 400}}>
+        {/* <div style={{maxWidth: 400}}>
           <InputGroup className='mb-3'>
             <FormControl
               placeholder='filename'
@@ -336,7 +336,7 @@ class PartSelector extends React.Component<IProps, IState> {
               <Button variant='outline-secondary' onClick={this.onClickSaveAs}>Save as</Button>
             </InputGroup.Append>
           </InputGroup>
-        </div>
+        </div> */}
         {this.state.pathValid ?
         <div>
           <Link to={`/project/${(this.props.match.params as any).id}/step2`}>
