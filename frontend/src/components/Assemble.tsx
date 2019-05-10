@@ -58,14 +58,14 @@ class Assemble extends React.Component<IProps, IState> {
 
     return <Panel>
       <Table striped={true} bordered={true} hover={true}>
-        {/* <thead>
+        <thead>
           <tr>
             <th>name</th>
             <th>sequence</th>
           </tr>
         </thead>
         <tbody>
-          {finalParts.map((v,i)=>
+          {/* {this.props.project.connectorIndexes.map((v,i)=>
               <tr key={i}>
                 <td>{v.name}</td>
                 <td>
@@ -77,10 +77,10 @@ class Assemble extends React.Component<IProps, IState> {
                     {v.sequence.substr(v.sequence.length-4,4)}
                   </RedSpan>
                   </td>
-              </tr>)}
+              </tr>)} */}
           <tr>
           </tr>
-        </tbody> */}
+        </tbody>
       </Table>
       <div>
         <Button variant="primary" size="lg" onClick={this.downloadGenbank}>download genbank</Button>
@@ -89,8 +89,11 @@ class Assemble extends React.Component<IProps, IState> {
   }
 
   private mergeParts () {
-    // const shortCuts = this.props.project.parts.map(v=>CONNECTORS[v.idx]);
-    // const {selectedParts} = this.props;
+    const shortCuts = this.props.project.connectorIndexes.map(v=>CONNECTORS[v]);
+    const selectedParts = this.props.project.parts.filter(part=>{
+      if(part.selected) {
+      }
+    })
 
     // // merge sort
     // let i=0;

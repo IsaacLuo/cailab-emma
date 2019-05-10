@@ -384,7 +384,7 @@ class PartSelector extends React.Component<IProps, IState> {
       const project: IProject = {
           _id: this.state.currentProjectId,
           name: this.state.projectName,
-          parts: this.state.partsProp.map((part) => ({activated: part.activated, selected: part.selected})),
+          parts: this.state.partsProp.map((part, position) => ({activated: part.activated, selected: part.selected, position})),
           connectorIndexes,
         };
       // save
@@ -409,7 +409,7 @@ class PartSelector extends React.Component<IProps, IState> {
       })
     const project: IProject = {
         name: this.state.projectName,
-        parts: this.state.partsProp.map((part) => ({activated: part.activated, selected: part.selected})),
+        parts: this.state.partsProp.map((part, position) => ({activated: part.activated, selected: part.selected, position})),
         connectorIndexes,
       };
     // save
@@ -623,6 +623,8 @@ class PartSelector extends React.Component<IProps, IState> {
         partsProp[from].selected = true;
         partCount++;
       } else {
+        partsProp[from].activated = false;
+        partsProp[from].selected = false;
         shortcuts.filter((v: any) => v.from === from && v.to === to).forEach((v: any) => v.activated = true);
       }
     }
@@ -645,8 +647,9 @@ class PartSelector extends React.Component<IProps, IState> {
     } else {
       graph[d.from][d.to] = 1;
     }
-    this.setState({isProjectDirty: true});
-    this.calcPath();
+    this.setState({isProjectDirty: true}, ()=>{
+      this.calcPath();
+    });
   }
 }
 

@@ -11,6 +11,7 @@ SET_MY_PROJECTS,
 GET_PROJECT,
 SET_CURRENT_PROJECT,
 SAVE_PROJECT_HISTORY,
+CREATE_PROJECT,
 } from './actions';
 
 import STORE_PARTS from '../parts.json';
@@ -24,6 +25,8 @@ import {call, all, fork, put, takeLatest, select} from 'redux-saga/effects';
 import axios from 'axios';
 import conf from '../conf';
 import { eventChannel } from 'redux-saga';
+
+
 
 export function* getCurrentUser(action: IAction) {
   try {
@@ -91,6 +94,18 @@ export function* getProject(action: IAction) {
   }
 }
 
+export function* createProject(action:IAction) {
+  try {
+    const {name, history} = action.data;
+    const response = yield call(axios.post, conf.serverURL + `/api/project`, {name,}, {withCredentials: true});
+    const {project} = response.data;
+    yield put({type: SET_CURRENT_PROJECT, data: project});
+    history.push(`/project/${project._id}`);
+  } catch (error) {
+    console.warn('unable to logout');
+  }
+}
+
 
 export function* saveProjectHistory(action: IAction) {
   try {
@@ -107,6 +122,7 @@ export function* watchUsers() {
   yield takeLatest(LOGOUT, logout);
   yield takeLatest(GET_MY_PROJECTS, getMyProjects);
   yield takeLatest(GET_PROJECT, getProject);
+  yield takeLatest(CREATE_PROJECT, createProject);
   yield takeLatest(SAVE_PROJECT_HISTORY, saveProjectHistory);
 }
 

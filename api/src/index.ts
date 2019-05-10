@@ -54,21 +54,25 @@ router.get('/api/project/:id', async (ctx:koa.ParameterizedContext<ICustomState,
   }
 });
 
-router.post('/api/projects/', async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> {
+router.post('/api/project', async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> {
   const user = ctx.state.user;
   if (user) {
+    const name = ctx.request.body.name;
     const now = new Date();
     const project = await Project.create(
       {
-        ...ctx.request.body,
+        name,
         version: '1.0',
+        parts: [],
+        connetorIndexes: [],
         owner: user._id,
         createdAt: now,
         updatedAt: now,
+        history: [],
       });
     ctx.body = {message:'OK', project: project};
   } else {
-    ctx.throw(401);
+    ctx.throw(401, user);
   }
 });
 

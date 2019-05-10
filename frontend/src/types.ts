@@ -14,6 +14,7 @@ export interface IPartDetail {
 }
 
 export interface ISelectedPart {
+  position: number;
   activated: boolean;
   selected: boolean;
   selectedKey?: string;

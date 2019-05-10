@@ -5,9 +5,9 @@ import {connect} from 'react-redux';
 import styled from 'styled-components';
 import { RouteComponentProps, withRouter, Redirect } from 'react-router-dom';
 import { IUserInfo, IProject, IStoreState } from '../types';
-import {Button} from 'react-bootstrap';
+import {Button, InputGroup, FormControl, FormControlProps} from 'react-bootstrap';
 import { listMyProjects } from '../backendCalls';
-import { SET_CURRENT_PROJECT } from '../redux/actions';
+import { SET_CURRENT_PROJECT, CREATE_PROJECT, GET_MY_PROJECTS } from '../redux/actions';
 
 const Panel = styled.div`
   margin:100px;
@@ -17,10 +17,12 @@ const Panel = styled.div`
 interface IProps extends RouteComponentProps {
   currentUser: IUserInfo;
   projects: IProject[];
-  onNewProject: () => void;
+  getMyProjects: ()=>void;
+  onNewProject: (name:string, history:any) => void;
   onLoadProject: (project: IProject) => void;
 }
 interface IState {
+  projectName: string;
 }
 
 const mapStateToProps = (state: IStoreState) => ({
@@ -29,11 +31,8 @@ const mapStateToProps = (state: IStoreState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onNewProject: () => dispatch({type: SET_CURRENT_PROJECT, data: {
-    name: `newProject ${new Date().toLocaleString()}`,
-    parts: (new Array(26).map((v) => ({activated: false, selected: false}))),
-    history: [],
-  }}),
+  getMyProjects: () => dispatch({type:GET_MY_PROJECTS}),
+  onNewProject: (name:string, history:any) => dispatch({type: CREATE_PROJECT, data:{name, history}}),
   onLoadProject: (project: IProject) => dispatch({type: SET_CURRENT_PROJECT, data: project}),
 });
 
@@ -46,7 +45,7 @@ class ChooseProject extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
-      projectList: [],
+      projectName: `project ${new Date().toLocaleString()}`,
     };
   }
 
@@ -67,7 +66,18 @@ class ChooseProject extends React.Component<IProps, IState> {
   public render() {
     return (
       <div>
-        <Button variant='primary' onClick={this.onClickNewProject}>new project</Button>
+        <InputGroup style={{width:600}}>
+            <FormControl
+              placeholder='filename'
+              aria-label='filename'
+              aria-describedby='filename'
+              value={this.state.projectName}
+              onChange={this.onChangeFileName}
+            />
+            <InputGroup.Append>
+              <Button variant='outline-secondary' onClick={this.onClickNewProject}>new project</Button>
+            </InputGroup.Append>
+          </InputGroup>
         <div>
           {this.props.projects.map((v, i) =>
           <div key={i}>
@@ -75,6 +85,7 @@ class ChooseProject extends React.Component<IProps, IState> {
               <span>{v.name}</span>
               {v.updatedAt && <span style={{color: '#777', fontSize: '80%'}}> {v.updatedAt.toLocaleDateString()}</span>}
             </Button>
+
           </div>,
           )}
         </div>
@@ -83,15 +94,11 @@ class ChooseProject extends React.Component<IProps, IState> {
   }
 
   public componentWillUnmount() {
-    console.debug('component ChooseProject unmount');
-    this.setState({
-      projectList: [],
-    });
   }
 
   private onClickNewProject = () => {
-    this.props.onNewProject();
-    this.props.history.push(`/project/new`);
+    this.props.onNewProject('123', this.props.history);
+    // this.props.history.push(`/project/new`);
   }
 
   private onClickOpenProject = (project: IProject) => {
@@ -99,13 +106,17 @@ class ChooseProject extends React.Component<IProps, IState> {
     this.props.history.push(`/project/${project._id}`);
   }
 
+  private onChangeFileName = (event: React.FormEvent<FormControlProps>) => {
+    const projectName = (event.target as FormControlProps).value!;
+    this.setState({projectName});
+  }
   private async getProjectList() {
-      try {
-        const projectList = await listMyProjects();
-        this.setState({projectList});
-      } catch (error) {
+    this.props.getMyProjects();
+      // try {
+      //   const projectList = await listMyProjects();
+      // } catch (error) {
 
-      }
+      // }
   }
 }
 

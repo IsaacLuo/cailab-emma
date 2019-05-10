@@ -13,7 +13,7 @@ import {
   SET_CURRENT_PROJECT,
   SET_PART_DETAIL,
 } from '../redux/actions';
-import {Dropdown, Button} from 'react-bootstrap';
+import {Dropdown, Button, Breadcrumb} from 'react-bootstrap';
 import {SHORTCUTS} from '../graphElements';
 import styled from 'styled-components';
 
@@ -109,7 +109,12 @@ class PartsDropDown extends React.Component<IProps, IState> {
     const storeParts:any = STORE_PARTS;
     // console.log(this.props.parts);
     const {parts} = this.props.project;
-    return <Panel>
+    return <React.Fragment>
+            <Breadcrumb>
+        <Breadcrumb.Item href='/'>Home</Breadcrumb.Item>
+        <Breadcrumb.Item active>select parts</Breadcrumb.Item>
+      </Breadcrumb>
+      <Panel>
       {parts.map((part,i)=>
       <React.Fragment key={i}>
         {part.selected &&
@@ -158,12 +163,13 @@ class PartsDropDown extends React.Component<IProps, IState> {
       )}
       {this.state.nextButtonVisible &&
         <div>
-          <Link to="">
+          <Link to={`/project/${(this.props.match.params as any).id}/step3`}>
           <Button variant="primary" size="lg" onClick={this.onClickNext}>next</Button>
           </Link>
         </div>
       }
     </Panel>
+      </React.Fragment>
   }
 
   public componentDidUpdate () {

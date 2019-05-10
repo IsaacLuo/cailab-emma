@@ -52,7 +52,6 @@ export default function middleware (app:koa) {
   // log
   app.use( async (ctx:koa.ParameterizedContext<any, {}>, next: ()=>Promise<any>)=> {
     logger.info('request=', ctx.method, ctx.URL.pathname);
-    // ctx.throw(401);
     await next();
   });
 
