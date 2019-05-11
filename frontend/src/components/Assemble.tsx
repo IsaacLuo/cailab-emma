@@ -9,6 +9,7 @@ import { withRouter, RouteComponentProps } from 'react-router';
 import { connect } from 'react-redux';
 import { IStoreState, IPartDetail, IProject } from '../types.js';
 import { Dispatch } from 'redux';
+import { GET_PROJECT } from '../redux/actions';
 
 const Panel = styled.div`
   margin:100px;
@@ -29,6 +30,7 @@ const RedSpan = styled.span`
 interface IProps extends RouteComponentProps {
   selectedParts: any[],
   selectedShortcuts: any[],
+  onLoadProject: (projectId: string) => void,
   onClickNext?: (selectedParts:any)=>void,
   project: IProject;
 }
@@ -42,11 +44,18 @@ const mapStateToProps = (state: IStoreState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  onLoadProject: (projectId: string) => dispatch({type: GET_PROJECT, data: projectId}),
 });
 
 class Assemble extends React.Component<IProps, IState> {
   constructor (props:IProps) {
     super(props); 
+
+    const projectId = (this.props.match.params as any).id;
+    if (projectId) {
+      this.props.onLoadProject(projectId);
+    }
+
   }
   public componentWillMount() {
     this.mergeParts();
@@ -57,7 +66,8 @@ class Assemble extends React.Component<IProps, IState> {
   public render() {
 
     return <Panel>
-      <div>{JSON.stringify(this.props)}</div>
+      <div>{JSON.stringify(this.props.project.connectorIndexes)}</div>
+      <div>{JSON.stringify(this.props.project.parts)}</div>
       <Table striped={true} bordered={true} hover={true}>
         <thead>
           <tr>
@@ -91,27 +101,24 @@ class Assemble extends React.Component<IProps, IState> {
 
   private mergeParts () {
     const shortCuts = this.props.project.connectorIndexes.map(v=>CONNECTORS[v]);
-    const selectedParts = this.props.project.parts.filter(part=>{
-      if(part.selected) {
+    const selectedParts = this.props.project.parts.filter(part=>part.selected);
+
+    // merge sort
+    let i=0;
+    let j=0;
+    const re = [];
+
+    while(i<shortCuts.length && j<selectedParts.length) {
+      const idxI = shortCuts[i].pos[0];
+      const idxJ = selectedParts[j].position;
+      if (idxI < idxJ) {
+        re.push({name: shortCuts[i].name, sequence: shortCuts[i].sequence})
+        i++;
+      } else {
+        re.push({name: selectedParts[j].partName, sequence: ''})
+        j++;
       }
-    })
-
-    // // merge sort
-    // let i=0;
-    // let j=0;
-    // const re = [];
-
-    // while(i<shortCuts.length && j<selectedParts.length) {
-    //   const idxI = shortCuts[i].pos[0];
-    //   const idxJ = selectedParts[j].ctype.idx;
-    //   if (idxI < idxJ) {
-    //     re.push({name: shortCuts[i].name, sequence: shortCuts[i].sequence})
-    //     i++;
-    //   } else {
-    //     re.push({name: selectedParts[j].selected.name, sequence: selectedParts[j].selected.sequence})
-    //     j++;
-    //   }
-    // }
+    }
 
     // while(i<shortCuts.length) {
     //   re.push({name: shortCuts[i].name, sequence: shortCuts[i].sequence})

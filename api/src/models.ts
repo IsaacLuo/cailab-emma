@@ -21,11 +21,18 @@ export interface IUserModel extends IUser, Document{
 
 export const User:Model<IUserModel> = mongoose.model('User', UserSchema, 'users');
 
+export const PartDetailSchema = new Schema({
+  name: String,
+  comment: String,
+}, {_id:false});
+
+
 export const PartsSchema = new Schema({
   position: Number,
   activated: Boolean,
   selected: Boolean,
   partName: String,
+  partDetail: PartDetailSchema,
 }, {_id:false});
 
 export const ProjectSchema = new Schema({

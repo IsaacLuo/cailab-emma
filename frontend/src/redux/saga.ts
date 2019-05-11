@@ -26,8 +26,6 @@ import axios from 'axios';
 import conf from '../conf';
 import { eventChannel } from 'redux-saga';
 
-
-
 export function* getCurrentUser(action: IAction) {
   try {
     const res = yield call(axios.get, conf.authServerURL + '/api/user/current', {withCredentials: true});
@@ -111,7 +109,8 @@ export function* saveProjectHistory(action: IAction) {
   try {
     const project:IProject = action.data;
     const response = yield call(axios.put, conf.serverURL + `/api/project/${project._id}`, project, {withCredentials: true});
-    console.log(response);
+    console.log(response.data);
+    yield put({type: SET_CURRENT_PROJECT, data: response.data.project});
   } catch (error) {
     console.warn('unable to logout');
   }

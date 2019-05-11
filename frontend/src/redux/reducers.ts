@@ -23,8 +23,8 @@ const defaultUser: IUserInfo = {
         };
 
 const defaultCurrentProject: IProject = {
-    name: `newProject_${new Date().toISOString()}`,
-    parts: Array(26).fill({activated: false, selected: false}),
+    name: `empty project`,
+    parts: Array(26).fill(undefined).map((v,i)=>({activated: false, selected: false, position:i})),
     connectorIndexes: [],
   };
 

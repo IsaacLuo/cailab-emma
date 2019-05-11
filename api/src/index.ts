@@ -84,7 +84,7 @@ router.put('/api/project/:id', async (ctx:koa.ParameterizedContext<ICustomState,
     if (projectCount>0) {
       ctx.throw(401, 'unable to modify projects of other users');
     }
-    const {name, parts} = ctx.request.body;
+    const {name, parts, connectorIndexes} = ctx.request.body;
     
     const project = await Project.findOne({
       _id:ctx.params.id,
@@ -109,9 +109,10 @@ router.put('/api/project/:id', async (ctx:koa.ParameterizedContext<ICustomState,
     // save original to history
     project.name = name;
     project.parts = parts;
+    project.connectorIndexes = connectorIndexes;
     project.updatedAt= now;
     project.save();
-    ctx.body = {message:'OK'};
+    ctx.body = {message:'OK', project};
   } else {
     ctx.throw(401);
   }

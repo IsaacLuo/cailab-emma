@@ -384,20 +384,20 @@ class PartSelector extends React.Component<IProps, IState> {
       const project: IProject = {
           _id: this.state.currentProjectId,
           name: this.state.projectName,
-          parts: this.state.partsProp.map((part, position) => ({activated: part.activated, selected: part.selected, position})),
+          parts: this.state.partsProp
+            .map((part, position) => ({activated: part.activated, selected: part.selected, position}))
+            .filter((part)=>part.selected),
           connectorIndexes,
         };
       // save
+      console.log('saving project', project);
       this.setState({isProjectDirty:false});
       this.props.saveProjectHistory(project); 
     }
   }
 
   private onNewValidProjectGenerated = () => {
-    
     this.saveProjectHistory();
-    
-
   }
 
   private onClickSaveAs = () => {
