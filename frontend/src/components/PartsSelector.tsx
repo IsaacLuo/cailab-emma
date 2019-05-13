@@ -22,10 +22,11 @@ import {
 } from '../redux/actions';
 
 import IconLegend from './IconLegend';
-import { Breadcrumb } from 'react-bootstrap';
+import { Breadcrumb, Row, Col } from 'react-bootstrap';
 import styled from 'styled-components';
 
 import PART_NAMES from '../partNames';
+import ProjectHistory from './ProjectHistory';
 
 const MyDocument = styled.div`
   margin-left:50px;
@@ -322,7 +323,16 @@ class PartSelector extends React.Component<IProps, IState> {
         <g id='part-selector' />
       </svg>
       <MyDocument>
-        <IconLegend/>
+      <Row>
+        <Col>
+          <IconLegend/>
+        </Col>
+        <Col>
+          <ProjectHistory/>
+        </Col>
+      </Row>
+        
+        
         {/* <div style={{maxWidth: 400}}>
           <InputGroup className='mb-3'>
             <FormControl

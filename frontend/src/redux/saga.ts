@@ -12,6 +12,7 @@ GET_PROJECT,
 SET_CURRENT_PROJECT,
 SAVE_PROJECT_HISTORY,
 CREATE_PROJECT,
+DELETE_HISTORY,
 } from './actions';
 
 import STORE_PARTS from '../parts.json';
@@ -123,6 +124,7 @@ export function* watchUsers() {
   yield takeLatest(GET_PROJECT, getProject);
   yield takeLatest(CREATE_PROJECT, createProject);
   yield takeLatest(SAVE_PROJECT_HISTORY, saveProjectHistory);
+  yield takeLatest(DELETE_HISTORY, ()=>{});
 }
 
 export default function* rootSaga() {
