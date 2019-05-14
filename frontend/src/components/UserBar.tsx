@@ -14,9 +14,15 @@ import {
   GET_CURENT_USER,
 } from '../redux/actions';
 
-const Panel = styled.div`
-  margin:100px;
-  text-align:left;
+const UserBar = styled.div`
+  background-color: #e9ecef;
+`;
+
+const PortraitImg = styled.img`
+  margin:5px;
+  margin-right:15px;
+  border-radius: 50px;
+  border: solid 1px #77f;
 `;
 
 interface IProps extends RouteComponentProps {
@@ -47,18 +53,19 @@ class MyComponent extends React.Component<IProps, IState> {
   public render() {
     const {currentUser} = this.props;
     return (
-      <div>
+      <UserBar>
         {
           currentUser._id === ''
         ?
         <Button variant='primary' onClick={this.onClickLogin}>login</Button>
         :
-        <p>
-          user: {currentUser.fullName}
+        <div>
+          <PortraitImg src='https://api.auth.cailab.org/api/user/current/portrait/s/profile.jpg'/>
+          {currentUser.fullName}
           <Button variant='link' onClick={this.onClickLogout}>logout</Button>
-          </p>
+        </div>
       }
-      </div>
+      </UserBar>
     );
   }
   private onClickLogout = (evnet: any) => {

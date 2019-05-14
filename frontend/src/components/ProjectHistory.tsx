@@ -54,28 +54,29 @@ class ProjectHistory extends React.Component<IProps, IState> {
       <h3>Project History</h3>
       {history && history.map((his:IProject, i:number)=>
       <HistoryCard key={i}>
-      {/* <div> */}
-        <HistoryLink variant="text">
+        <HistoryLink variant="text" onClick={this.onClickLoadProjectHistory.bind(this,i)}>
           {his.updatedAt ? new Date(his.updatedAt).toLocaleString() : 'unknown date'}
-        </HistoryLink>
-        <CloseButton variant="danger" size="sm" onClick={this.deleteHistory.bind(this, i)}>X</CloseButton>
-      {/* </div> */}
-      {/* <div>
+        
         {his.parts.map((vv, j)=>
-        <svg width="30" height="100">
+        <svg width="15" height="50" key={j}>
         {partNames[vv.position].map((vvv, k)=>
             <image
               key={`${j}.${k}`}
               x={0}
               y={k * 20 + 10}
-              width='30' height='30' xlinkHref={vvv.icon}
+              width='15' height='15' xlinkHref={vvv.icon}
             />)
         }
         </svg>
         )}
-      </div> */}
+        </HistoryLink>
+        <CloseButton variant="danger" size="sm" onClick={this.deleteHistory.bind(this, i)}>X</CloseButton>
       </HistoryCard>)}
     </div>;
+  }
+
+  private onClickLoadProjectHistory(index:number) {
+    console.log(index);
   }
 
   private deleteHistory(index:number) {

@@ -43,7 +43,13 @@ function appReducer(state: IAppState = DEFAULT_STATE, action: IAction) {
     case SET_MY_PROJECTS:
       return {...state, myProjects: action.data};
     case SET_CURRENT_PROJECT:
-      return {...state, currentProject: action.data};
+      {
+        const project:IProject = action.data;
+        const compactedParts = project.parts;
+        project.parts = Array(26).fill(undefined).map((v,i)=>({activated: false, selected: false, position:i})),
+        compactedParts.forEach((v)=>project.parts[v.position] = v);
+        return {...state, currentProject: project};
+      }
     case SET_PART_DETAIL:
       const {position, detail} = action.data;
       const currentProject = {
