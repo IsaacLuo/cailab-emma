@@ -14,6 +14,7 @@ import {
   SET_MY_PROJECTS,
   SET_CURRENT_PROJECT,
   SET_PART_DETAIL,
+  LOAD_HISTORY,
 } from './actions';
 
 const defaultUser: IUserInfo = {
@@ -60,6 +61,18 @@ function appReducer(state: IAppState = DEFAULT_STATE, action: IAction) {
       currentProject.parts[position].partDetail = {name, comment};
       currentProject.parts[position].partName = name;
       return {...state, currentProject}
+    case LOAD_HISTORY: 
+      {
+        if (state.currentProject.history) {
+          const history = state.currentProject.history;
+          const index:number = action.data;
+          const currentProject = {
+            ...state.currentProject.history[index],
+            history,
+          }
+          return {...state, currentProject}
+        }
+      }
   }
   return state;
 }

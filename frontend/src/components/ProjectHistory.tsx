@@ -4,7 +4,8 @@ import { RouteComponentProps, withRouter, Redirect, Link } from 'react-router-do
 import { Dispatch } from 'redux';
 import {connect} from 'react-redux';
 import {
-  DELETE_HISTORY
+  LOAD_HISTORY,
+  DELETE_HISTORY,
 } from '../redux/actions';
 import styled from 'styled-components';
 import { IStoreState, IProject } from '../types';
@@ -24,6 +25,7 @@ const CloseButton = styled(Button)`
 
 interface IProps extends RouteComponentProps {
   project: IProject;
+  loadHistory: (index:number)=>void;
   deleteHistory: (index:number)=>void;
 }
 interface IState {
@@ -33,6 +35,7 @@ const mapStateToProps = (state: IStoreState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  loadHistory: (index:number)=>dispatch({type:LOAD_HISTORY, data:index}),
   deleteHistory: (index:number)=>dispatch({type:DELETE_HISTORY, data:index}),
 });
 
