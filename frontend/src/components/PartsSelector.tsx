@@ -370,6 +370,30 @@ class PartSelector extends React.Component<IProps, IState> {
         <g id='part-selector' />
       </svg>
       <MyDocument>
+        {/* <div style={{maxWidth: 400}}>
+        <InputGroup className='mb-3'>
+          <FormControl
+            placeholder='filename'
+            aria-label='filename'
+            aria-describedby='filename'
+            value={this.state.projectName}
+            onChange={this.onChangeFileName}
+          />
+          <InputGroup.Append>
+            <Button variant='outline-secondary' onClick={this.onClickSaveAs}>Save as</Button>
+          </InputGroup.Append>
+        </InputGroup>
+      </div> */}
+      {this.state.pathValid ?
+      <div>
+        <Link to={`/project/${(this.props.match.params as any).id}/step2`}>
+          <Button variant='primary' size='lg' onClick={this.onClickNext}>next</Button>
+        </Link>
+      </div>
+      :
+      <div style={{textAlign: 'left'}}>
+      </div>
+      }
       <Row>
         <Col>
           <IconLegend/>
@@ -378,32 +402,6 @@ class PartSelector extends React.Component<IProps, IState> {
           <ProjectHistory/>
         </Col>
       </Row>
-        
-        
-        {/* <div style={{maxWidth: 400}}>
-          <InputGroup className='mb-3'>
-            <FormControl
-              placeholder='filename'
-              aria-label='filename'
-              aria-describedby='filename'
-              value={this.state.projectName}
-              onChange={this.onChangeFileName}
-            />
-            <InputGroup.Append>
-              <Button variant='outline-secondary' onClick={this.onClickSaveAs}>Save as</Button>
-            </InputGroup.Append>
-          </InputGroup>
-        </div> */}
-        {this.state.pathValid ?
-        <div>
-          <Link to={`/project/${(this.props.match.params as any).id}/step2`}>
-            <Button variant='primary' size='lg' onClick={this.onClickNext}>next</Button>
-          </Link>
-        </div>
-        :
-        <div style={{textAlign: 'left'}}>
-        </div>
-        }
       </MyDocument>
     </div>;
   }
@@ -411,7 +409,7 @@ class PartSelector extends React.Component<IProps, IState> {
   public componentWillUnmount() {
     // save history
     console.log('component umount, saving history');
-    this.saveProjectHistory();
+    // this.saveProjectHistory();
   }
 
   private onChangeFileName = (event: React.FormEvent<FormControlProps>) => {
@@ -430,6 +428,7 @@ class PartSelector extends React.Component<IProps, IState> {
   }
 
   private saveProjectHistory = () => {
+    console.debug('save history')
     // save history only when project is dirty
     if(this.state.isProjectDirty) {
       const connectorIndexes:number[] = [];
@@ -438,6 +437,7 @@ class PartSelector extends React.Component<IProps, IState> {
           connectorIndexes.push(i);
         }
       })
+      console.log(this.state.partsProp);
       const project: IProject = {
           _id: this.state.currentProjectId,
           name: this.state.projectName,
@@ -455,7 +455,7 @@ class PartSelector extends React.Component<IProps, IState> {
   }
 
   private onNewValidProjectGenerated = () => {
-    this.saveProjectHistory();
+    // this.saveProjectHistory();
   }
 
   private onClickSaveAs = () => {
@@ -665,7 +665,7 @@ class PartSelector extends React.Component<IProps, IState> {
     const {partsProp, shortcuts, graph} = this.state;
     const nodeChain = this.dj(graph);
     shortcuts.forEach((v: any) => v.activated = false);
-    partsProp.forEach((v: any) => v.activated = false);
+    partsProp.forEach((v: any) => v.activated = v.selected = false);
 
     let pathValid = true;
     let partCount = 0;
