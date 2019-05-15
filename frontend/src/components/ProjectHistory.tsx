@@ -79,7 +79,7 @@ class ProjectHistory extends React.Component<IProps, IState> {
   }
 
   private onClickLoadProjectHistory(index:number) {
-    console.log(index);
+    this.props.loadHistory(index);
   }
 
   private deleteHistory(index:number) {

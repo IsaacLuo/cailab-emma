@@ -98,7 +98,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 class PartSelector extends React.Component<IProps, IState> {
   public static getDerivedStateFromProps(props: IProps, state: IState): IState|null {
-    if (props.preloadedProject && state.currentProjectId !== props.preloadedProject._id) {
+    if (props.preloadedProject && (state.currentProjectId !== props.preloadedProject._id)) {
       const project: IProject = props.preloadedProject;
       project.parts.forEach((part, idx) => {
         state.partsProp[idx].activated = part.activated;
@@ -244,6 +244,10 @@ class PartSelector extends React.Component<IProps, IState> {
     if (np.preloadedProject._id !== this.props.preloadedProject._id) {
       this.calcPath();
       console.debug('calcPath');
+    }
+    if(this.props.preloadedProject !== np.preloadedProject) {
+      this.setState({currentProjectId:undefined});
+      return false;
     }
     return true;
   }
