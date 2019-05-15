@@ -13,7 +13,9 @@ import partNames from '../partNames';
 import { Button } from 'react-bootstrap';
 
 const HistoryCard = styled.div`
-  
+  &:hover {
+    background: #eef;
+  }
 `;
 
 const HistoryLink = styled(Button)`
@@ -27,6 +29,7 @@ interface IProps extends RouteComponentProps {
   project: IProject;
   loadHistory: (index:number)=>void;
   deleteHistory: (index:number)=>void;
+
 }
 interface IState {
 }
@@ -45,6 +48,7 @@ class ProjectHistory extends React.Component<IProps, IState> {
   // }
   constructor(props: IProps) {
     super(props);
+    
   }
 
   public shouldComponentUpdate(np: IProps, ns: IState) {
@@ -73,7 +77,7 @@ class ProjectHistory extends React.Component<IProps, IState> {
         </svg>
         )}
         </HistoryLink>
-        <CloseButton variant="danger" size="sm" onClick={this.deleteHistory.bind(this, i)}>X</CloseButton>
+        <CloseButton variant="text" size="sm" onClick={this.deleteHistory.bind(this, i)}>X</CloseButton>
       </HistoryCard>)}
     </div>;
   }

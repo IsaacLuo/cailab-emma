@@ -72,7 +72,7 @@ function appReducer(state: IAppState = DEFAULT_STATE, action: IAction) {
           }
           const compactedParts = currentProject.parts;
           currentProject.parts = Array(26).fill(undefined).map((v,i)=>({activated: false, selected: false, position:i})),
-          compactedParts.forEach((v)=>currentProject.parts[v.position] = v);
+          compactedParts.forEach((v)=>currentProject.parts[v.position] = v);          
           return {...state, currentProject}
         }
       }

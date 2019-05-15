@@ -70,6 +70,7 @@ interface IPathChainNode {
   }
 
 interface IProps extends RouteComponentProps {
+  // key:any;
   preloadedProject: IProject;
   onNewPathGenerated?: (newPath: any) => void;
   onClickNext?: (newPath: any) => void;
@@ -84,10 +85,12 @@ interface IState {
   pathValid: boolean;
   projectName: string;
   currentProjectId?: string;
+  currentProjectUpdatedAt?: Date;
   isProjectDirty: boolean;
 }
 const mapStateToProps = (state: IStoreState) => ({
   preloadedProject: state.app.currentProject,
+  // key: state.app.currentProject.updatedAt,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -97,21 +100,22 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 class PartSelector extends React.Component<IProps, IState> {
-  public static getDerivedStateFromProps(props: IProps, state: IState): IState|null {
-    if (props.preloadedProject && (state.currentProjectId !== props.preloadedProject._id)) {
-      const project: IProject = props.preloadedProject;
-      project.parts.forEach((part, idx) => {
-        state.partsProp[idx].activated = part.activated;
-        state.partsProp[idx].selected = part.selected;
-        if (part.selected) {
-          state.graph[idx][idx + 1] = 1;
-        }
-      });
-      state.currentProjectId = props.preloadedProject._id;
-      return state;
-    }
-    return null;
-  }
+  // public static getDerivedStateFromProps(props: IProps, state: IState): IState|null {
+  //   if (props.preloadedProject && (state.currentProjectUpdatedAt !== props.preloadedProject.updatedAt)) {
+  //     const project: IProject = props.preloadedProject;
+  //     project.parts.forEach((part, idx) => {
+  //       state.partsProp[idx].activated = part.activated;
+  //       state.partsProp[idx].selected = part.selected;
+  //       if (part.selected) {
+  //         state.graph[idx][idx + 1] = 1;
+  //       }
+  //     });
+  //     state.currentProjectId = props.preloadedProject._id;
+  //     state.currentProjectUpdatedAt = props.preloadedProject.updatedAt;
+  //     return state;
+  //   }
+  //   return null;
+  // }
 
   private selectedColor = '#77cc77';
   private invalidColor = '#cc7777';
@@ -240,15 +244,54 @@ class PartSelector extends React.Component<IProps, IState> {
     }
   }
 
+
+  public UNSAFE_componentWillReceiveProps(np: IProps) {
+    if (np.preloadedProject && (this.state.currentProjectUpdatedAt !== np.preloadedProject.updatedAt)) {
+    
+      const project: IProject = np.preloadedProject;
+      const partsProp = this.state.partsProp;
+      const graph = JSON.parse(JSON.stringify(this.oriGraph));
+
+      // partsProp.forEach(part=> part.activated = part.selected = false);
+
+      project.parts.forEach((part, idx) => {
+        partsProp[idx].activated = part.activated;
+        partsProp[idx].selected = part.selected;
+    
+        if (part.selected) {
+          graph[idx][idx + 1] = 1;
+        }
+      });
+      this.setState({
+        currentProjectId: np.preloadedProject._id,
+        currentProjectUpdatedAt: np.preloadedProject.updatedAt,
+        partsProp,
+        graph,
+      },()=>{
+        this.calcPath();
+      });
+
+    }
+  }
+
   public shouldComponentUpdate(np: IProps, ns: IState) {
-    if (np.preloadedProject._id !== this.props.preloadedProject._id) {
-      this.calcPath();
-      console.debug('calcPath');
-    }
-    if(this.props.preloadedProject !== np.preloadedProject) {
-      this.setState({currentProjectId:undefined});
-      return false;
-    }
+    // if (np.preloadedProject._id !== this.props.preloadedProject._id) {
+    //   this.calcPath();
+    //   console.debug('calcPath');
+    // }
+    // if(this.props.preloadedProject !== np.preloadedProject) {
+    //   // const project: IProject = np.preloadedProject;
+    //   // project.parts.forEach((part, idx) => {
+    //   //   ns.partsProp[idx].activated = part.activated;
+    //   //   ns.partsProp[idx].selected = part.selected;
+    //   //   if (part.selected) {
+    //   //     ns.graph[idx][idx + 1] = 1;
+    //   //   }
+    //   // });
+    //   // this.calcPath();
+    //   this.setState({currentProjectId:undefined});
+    //   return false;
+    // }
     return true;
   }
 
@@ -402,6 +445,7 @@ class PartSelector extends React.Component<IProps, IState> {
             .map((part, position) => ({activated: part.activated, selected: part.selected, position}))
             .filter((part)=>part.selected),
           connectorIndexes,
+          updatedAt: new Date(),
         };
       // save
       console.log('saving project', project);
@@ -616,6 +660,7 @@ class PartSelector extends React.Component<IProps, IState> {
   }
 
   private calcPath() {
+    console.debug('calcPath');
     const {stdWeight} = this;
     const {partsProp, shortcuts, graph} = this.state;
     const nodeChain = this.dj(graph);
