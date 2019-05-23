@@ -48,60 +48,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 class Assemble extends React.Component<IProps, IState> {
-  constructor (props:IProps) {
-    super(props); 
-
-    const projectId = (this.props.match.params as any).id;
-    if (projectId) {
-      this.props.onLoadProject(projectId);
-    }
-
-  }
-  public componentWillMount() {
-    this.mergeParts();
-  }
-  public componentWillUpdate() {
-    this.mergeParts();
-  }
-  public render() {
-
-    return <Panel>
-      <div>{JSON.stringify(this.props.project.connectorIndexes)}</div>
-      <div>{JSON.stringify(this.props.project.parts)}</div>
-      <Table striped={true} bordered={true} hover={true}>
-        <thead>
-          <tr>
-            <th>name</th>
-            <th>sequence</th>
-          </tr>
-        </thead>
-        <tbody>
-          {/* {this.props.project.connectorIndexes.map((v,i)=>
-              <tr key={i}>
-                <td>{v.name}</td>
-                <td>
-                  <RedSpan>
-                    {v.sequence.substr(0,4)}
-                  </RedSpan>
-                  {v.sequence.substring(4, v.sequence.length-4)}
-                  <RedSpan>
-                    {v.sequence.substr(v.sequence.length-4,4)}
-                  </RedSpan>
-                  </td>
-              </tr>)} */}
-          <tr>
-          </tr>
-        </tbody>
-      </Table>
-      <div>
-        <Button variant="primary" size="lg" onClick={this.downloadGenbank}>download genbank</Button>
-      </div>
-    </Panel>
-  }
-
-  private mergeParts () {
-    const shortCuts = this.props.project.connectorIndexes.map(v=>CONNECTORS[v]);
-    const selectedParts = this.props.project.parts.filter(part=>part.selected);
+  public static getDerivedStateFromProps(props:IProps, state:IState) {
+    const shortCuts = props.project.connectorIndexes.map(v=>CONNECTORS[v]);
+    const selectedParts = props.project.parts.filter(part=>part.selected);
 
     // merge sort
     let i=0;
@@ -115,22 +64,62 @@ class Assemble extends React.Component<IProps, IState> {
         re.push({name: shortCuts[i].name, sequence: shortCuts[i].sequence})
         i++;
       } else {
-        re.push({name: selectedParts[j].partName, sequence: ''})
+        re.push({name: selectedParts[j].partName, sequence: selectedParts[j].partDetail!.sequence})
         j++;
       }
     }
 
-    // while(i<shortCuts.length) {
-    //   re.push({name: shortCuts[i].name, sequence: shortCuts[i].sequence})
-    //   i++;
-    // }
-    // while(j<selectedParts.length) {
-    //   re.push({name: selectedParts[j].selected.name, sequence: selectedParts[j].selected.sequence})
-    //   j++;
-    // }
+    console.log(re, shortCuts, selectedParts, props.project);
+    return {finalParts: re};
+  }
+  constructor (props:IProps) {
+    super(props); 
 
-    // this.setState({finalParts: re, genbank: this.generateGenbank(re)});
-    
+    const projectId = (this.props.match.params as any).id;
+    if (projectId) {
+      this.props.onLoadProject(projectId);
+    }
+
+    this.state = {
+      finalParts: [],
+      genbank: '',
+    }
+
+  }
+  public render() {
+
+    return <Panel>
+      {/* <div>{JSON.stringify(this.props.project.connectorIndexes)}</div>
+      <div>{JSON.stringify(this.props.project.parts)}</div> */}
+      <Table striped={true} bordered={true} hover={true}>
+        <thead>
+          <tr>
+            <th>name</th>
+            <th>sequence</th>
+          </tr>
+        </thead>
+        <tbody>
+          {this.state.finalParts.map((v,i)=>
+              <tr key={i}>
+                <td>{v.name}</td>
+                <td style={{wordBreak: 'break-all'}}>
+                  <RedSpan>
+                    {v.sequence.substr(0,4)}
+                  </RedSpan>
+                  {v.sequence.substring(4, v.sequence.length-4)}
+                  <RedSpan>
+                    {v.sequence.substr(v.sequence.length-4,4)}
+                  </RedSpan>
+                  </td>
+              </tr>)}
+          <tr>
+          </tr>
+        </tbody>
+      </Table>
+      <div>
+        <Button variant="primary" size="lg" onClick={this.downloadGenbank}>download genbank</Button>
+      </div>
+    </Panel>
   }
 
   private generateGenbank (parts:any[]) {
@@ -159,7 +148,7 @@ class Assemble extends React.Component<IProps, IState> {
   }
 
   private downloadGenbank = () => {
-    const {genbank} = this.state;
+    const genbank = this.generateGenbank(this.state.finalParts);
     const a = window.document.createElement('a');
     a.href = window.URL.createObjectURL(new Blob([genbank], {type: 'text/plain'}));
     a.download = 'result.gb';

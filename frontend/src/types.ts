@@ -10,7 +10,7 @@ export interface IPartDetail {
   // category: string,
   // subCategory: string,
   comment: string,
-  // sequnece: string,
+  sequence?: string,
 }
 
 export interface ISelectedPart {
