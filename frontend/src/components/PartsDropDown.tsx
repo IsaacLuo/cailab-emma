@@ -112,7 +112,8 @@ class PartsDropDown extends React.Component<IProps, IState> {
     return <React.Fragment>
             <Breadcrumb>
         <Breadcrumb.Item href='/'>Home</Breadcrumb.Item>
-        <Breadcrumb.Item active>select parts</Breadcrumb.Item>
+        <Breadcrumb.Item href={`/project/${this.props.project._id}`}>step 1</Breadcrumb.Item>
+        <Breadcrumb.Item active>step 2: select parts</Breadcrumb.Item>
       </Breadcrumb>
       <Panel>
       {parts.map((part,i)=>

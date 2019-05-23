@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {Dropdown, Button, Table} from 'react-bootstrap';
+import {Dropdown, Button, Table, Breadcrumb} from 'react-bootstrap';
 import styled from 'styled-components';
 
 import CONNECTORS from '../connectors.json'
@@ -88,7 +88,16 @@ class Assemble extends React.Component<IProps, IState> {
   }
   public render() {
 
-    return <Panel>
+    return <React.Fragment>
+      <Breadcrumb>
+        <Breadcrumb.Item href='/'>Home</Breadcrumb.Item>
+        <Breadcrumb.Item href={`/project/${this.props.project._id}`}>step 1</Breadcrumb.Item>
+        <Breadcrumb.Item href={`/project/${this.props.project._id}/step2`}>step 2</Breadcrumb.Item>
+        <Breadcrumb.Item active>step 3: generate genbank ({this.props.project.name})</Breadcrumb.Item>
+      </Breadcrumb>
+    <Panel>
+
+
       {/* <div>{JSON.stringify(this.props.project.connectorIndexes)}</div>
       <div>{JSON.stringify(this.props.project.parts)}</div> */}
       <Table striped={true} bordered={true} hover={true}>
@@ -120,6 +129,7 @@ class Assemble extends React.Component<IProps, IState> {
         <Button variant="primary" size="lg" onClick={this.downloadGenbank}>download genbank</Button>
       </div>
     </Panel>
+    </React.Fragment>
   }
 
   private generateGenbank (parts:any[]) {

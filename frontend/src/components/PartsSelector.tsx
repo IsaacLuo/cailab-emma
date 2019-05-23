@@ -305,13 +305,13 @@ class PartSelector extends React.Component<IProps, IState> {
     return <div>
       <Breadcrumb>
         <Breadcrumb.Item href='/'>Home</Breadcrumb.Item>
-        <Breadcrumb.Item active>Design a template ({this.props.preloadedProject.name})</Breadcrumb.Item>
+        <Breadcrumb.Item active>step 1: Design a template ({this.props.preloadedProject.name})</Breadcrumb.Item>
       </Breadcrumb>
 
 
-      <MyDocument>
+      {/* <MyDocument>
         <h1>{this.props.preloadedProject.name}</h1>
-      </MyDocument>
+      </MyDocument> */}
 
       <svg width='1500' height='650'>
         <defs>
