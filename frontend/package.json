@@ -17,6 +17,7 @@
     "@types/uuid": "^3.4.4",
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
+    "cross-env": "^5.2.0",
     "d3": "^5.9.2",
     "detect-browser": "^4.3.0",
     "react": "^16.8.6",
@@ -33,11 +34,11 @@
     "uuid": "^3.3.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "cross-env NODE_ENV=development react-scripts start",
+    "build": "cross-env NODE_ENV=production react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "prod": "react-scripts build && serve -s build"
+    "prod": "cross-env NODE_ENV=production react-scripts build && serve -s build"
   },
   "eslintConfig": {
     "extends": "react-app"
