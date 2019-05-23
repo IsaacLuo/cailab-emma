@@ -1,5 +1,5 @@
 const conf = {
-  serverURL: 'https://api.lims.cailab.org',
+  serverURL: 'https://api.emma-dev.cailab.org',
   authServerURL: 'https://api.auth.cailab.org',
 };
 

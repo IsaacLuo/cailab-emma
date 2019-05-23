@@ -18,10 +18,10 @@ import {
 } from './actions';
 
 const defaultUser: IUserInfo = {
-          _id: '',
-          fullName: 'guest',
-          groups: ['guest'],
-        };
+    _id: '',
+    fullName: 'guest',
+    groups: ['guest'],
+  };
 
 const defaultCurrentProject: IProject = {
     name: `empty project`,

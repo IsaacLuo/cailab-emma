@@ -1,0 +1,24 @@
+version: '3.0'
+services:
+  api:
+    container_name: cailab-emma-api
+    build: ./api
+    working_dir: /app
+    command: ['yarn', 'run', 'production']
+    restart: always
+    volumes:
+      - /shared/cailab-emma/logs:/app/logs
+    extra_hosts:
+      - "mongodb.cailab.org:192.168.110.110"
+    network_mode: bridge
+
+  frontend:
+    container_name: cailab-emma-frontend
+    build: ./frontend
+    restart: always
+    links:
+      - api
+    depends_on:
+      - api
+    network_mode: bridge
+    command: ['nginx', '-g', 'daemon off;']

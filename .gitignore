@@ -6,3 +6,4 @@
 /tools
 /api/secret.ts
 /api/logs/access.log*
+/_gsdata_
