@@ -40,7 +40,7 @@ function appReducer(state: IAppState = DEFAULT_STATE, action: IAction) {
     case SET_CURRENT_USER:
       return {...state, currentUser: action.data};
     case LOGOUT:
-      return {...state, currentUser: defaultUser};
+      return DEFAULT_STATE;
     case SET_MY_PROJECTS:
       return {...state, myProjects: action.data};
     case SET_CURRENT_PROJECT:

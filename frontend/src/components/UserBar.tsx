@@ -70,6 +70,7 @@ class MyComponent extends React.Component<IProps, IState> {
   }
   private onClickLogout = (evnet: any) => {
     this.props.logout();
+    this.props.history.push('/');
   }
 
   private onClickLogin = (event: any) => {

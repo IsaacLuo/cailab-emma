@@ -12,7 +12,6 @@ import axios from 'axios';
 import conf from './conf';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import {Button} from 'react-bootstrap';
-import LoginPanel from './pages/LoginPanel';
 import ChooseProject from './components/ChooseProject';
 import { IUserInfo } from './types';
 import { RouteComponentProps } from 'react-router-dom';
