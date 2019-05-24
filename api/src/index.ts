@@ -105,7 +105,7 @@ router.put('/api/project/:id', async (ctx:koa.ParameterizedContext<ICustomState,
       history: [],
     };
     let projectHistoryValid = true;
-    if(!project.parts.find(v=>v.selected)) {
+    if(!parts.find(v=>v.selected)) {
       // empty Project dont save
       projectHistoryValid = false;
     } else if(JSON.stringify(project.parts) === JSON.stringify(parts)) {

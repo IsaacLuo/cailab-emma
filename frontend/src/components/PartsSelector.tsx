@@ -234,7 +234,7 @@ class PartSelector extends React.Component<IProps, IState> {
       partsProp,
       graph,
       pathValid: false,
-      projectName: `My Project at ${new Date().toLocaleString()}`,
+      projectName: props.preloadedProject.name || `My Project at ${new Date().toLocaleString()}`,
       isProjectDirty: false,
     };
 
@@ -269,6 +269,7 @@ class PartSelector extends React.Component<IProps, IState> {
         currentProjectUpdatedAt: np.preloadedProject.updatedAt,
         partsProp,
         graph,
+        projectName: np.preloadedProject.name,
       },()=>{
         this.calcPath();
       });

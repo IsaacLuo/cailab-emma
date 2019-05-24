@@ -68,8 +68,19 @@ class Assemble extends React.Component<IProps, IState> {
         j++;
       }
     }
+    if (i===shortCuts.length) {
+      while (j < selectedParts.length) {
+        re.push({name: selectedParts[j].partName, sequence: selectedParts[j].partDetail!.sequence})
+        j++;
+      }
+    } else {
+      while (i<shortCuts.length) {
+        re.push({name: shortCuts[i].name, sequence: shortCuts[i].sequence})
+        i++;
+      }
+    }
 
-    console.log(re, shortCuts, selectedParts, props.project);
+    // console.log({re, shortCuts, selectedParts, project:props.project});
     return {finalParts: re};
   }
   constructor (props:IProps) {
@@ -109,6 +120,7 @@ class Assemble extends React.Component<IProps, IState> {
         </thead>
         <tbody>
           {this.state.finalParts.map((v,i)=>
+            v.sequence ?
               <tr key={i}>
                 <td>{v.name}</td>
                 <td style={{wordBreak: 'break-all'}}>
@@ -120,7 +132,9 @@ class Assemble extends React.Component<IProps, IState> {
                     {v.sequence.substr(v.sequence.length-4,4)}
                   </RedSpan>
                   </td>
-              </tr>)}
+              </tr>
+            : <tr key={i}><td>{v.name}</td><td>no sequence</td></tr>
+            )}
           <tr>
           </tr>
         </tbody>
@@ -161,7 +175,7 @@ class Assemble extends React.Component<IProps, IState> {
     const genbank = this.generateGenbank(this.state.finalParts);
     const a = window.document.createElement('a');
     a.href = window.URL.createObjectURL(new Blob([genbank], {type: 'text/plain'}));
-    a.download = 'result.gb';
+    a.download = `${this.props.project.name}.gb`;
 
     // Append anchor to body.
     document.body.appendChild(a);

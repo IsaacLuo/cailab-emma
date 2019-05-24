@@ -96,7 +96,7 @@ class PartsDropDown extends React.Component<IProps, IState> {
     super(props);
 
     const projectId = (this.props.match.params as any).id;
-    if (projectId && projectId !== 'new') {
+    if (projectId && this.props.project._id !== projectId) {
       this.props.onLoadProject(projectId);
     }
     this.state = {
@@ -113,7 +113,7 @@ class PartsDropDown extends React.Component<IProps, IState> {
             <Breadcrumb>
         <Breadcrumb.Item href='/'>Home</Breadcrumb.Item>
         <Breadcrumb.Item href={`/project/${this.props.project._id}`}>step 1</Breadcrumb.Item>
-        <Breadcrumb.Item active>step 2: select parts</Breadcrumb.Item>
+        <Breadcrumb.Item active>step 2: select parts ({this.props.project.name})</Breadcrumb.Item>
       </Breadcrumb>
       <Panel>
       {parts.map((part,i)=>
