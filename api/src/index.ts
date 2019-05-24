@@ -114,7 +114,7 @@ router.put('/api/project/:id', async (ctx:koa.ParameterizedContext<ICustomState,
     }
     if(projectHistoryValid) {
       project.history.unshift(projectHistory);
-      project.history = project.history.slice(0,100);
+      project.history = project.history.slice(0,10);
       // save original to history
       project.name = name;
       project.parts = parts;
