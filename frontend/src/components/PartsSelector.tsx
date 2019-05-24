@@ -72,6 +72,7 @@ interface IPathChainNode {
 interface IProps extends RouteComponentProps {
   // key:any;
   preloadedProject: IProject;
+  resetCount: number;
   onNewPathGenerated?: (newPath: any) => void;
   onClickNext?: (newPath: any) => void;
   onLoadProject: (projectId: string) => void;
@@ -91,6 +92,7 @@ interface IState {
 const mapStateToProps = (state: IStoreState) => ({
   preloadedProject: state.app.currentProject,
   // key: state.app.currentProject.updatedAt,
+  resetCount: state.partSelector.resetCount,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -246,7 +248,7 @@ class PartSelector extends React.Component<IProps, IState> {
 
 
   public UNSAFE_componentWillReceiveProps(np: IProps) {
-    if (np.preloadedProject && (this.state.currentProjectUpdatedAt !== np.preloadedProject.updatedAt)) {
+    if (np.preloadedProject && (this.props.resetCount !== np.resetCount || this.state.currentProjectUpdatedAt !== np.preloadedProject.updatedAt)) {
     
       const project: IProject = np.preloadedProject;
       const partsProp = this.state.partsProp;

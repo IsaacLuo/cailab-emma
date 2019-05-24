@@ -1,4 +1,4 @@
-import { IUserInfo } from './../types';
+import { IUserInfo, IPartSelectorState } from './../types';
 import {combineReducers} from 'redux';
 
 import {
@@ -15,6 +15,11 @@ import {
   SET_CURRENT_PROJECT,
   SET_PART_DETAIL,
   LOAD_HISTORY,
+  SET_REMOVED_HISTORY,
+  RESET_PROJECT,
+  RESET_HISTORY_0,
+  SAVE_PROJECT_HISTORY,
+  STASH_HISTORY,
 } from './actions';
 
 const defaultUser: IUserInfo = {
@@ -33,6 +38,7 @@ const DEFAULT_STATE: IAppState = {
   currentUser: defaultUser,
   myProjects: [],
   currentProject: defaultCurrentProject,
+  stashHistory: undefined,
 };
 
 function appReducer(state: IAppState = DEFAULT_STATE, action: IAction) {
@@ -49,8 +55,13 @@ function appReducer(state: IAppState = DEFAULT_STATE, action: IAction) {
         const compactedParts = project.parts;
         project.parts = Array(26).fill(undefined).map((v,i)=>({activated: false, selected: false, position:i})),
         compactedParts.forEach((v)=>project.parts[v.position] = v);
-        return {...state, currentProject: project};
+        const stashHistory = state.stashHistory === undefined ? {...project, history:[]} :state.stashHistory;
+        return {...state, currentProject: project, stashHistory};
       }
+    case STASH_HISTORY: {
+      const stashHistory = action.data;
+      return {...state, stashHistory};
+    }
     case SET_PART_DETAIL:
       const {position, detail} = action.data;
       const currentProject = {
@@ -66,6 +77,7 @@ function appReducer(state: IAppState = DEFAULT_STATE, action: IAction) {
         if (state.currentProject.history) {
           const history = state.currentProject.history;
           const index:number = action.data;
+
           const currentProject = {
             ...state.currentProject.history[index],
             history,
@@ -73,13 +85,46 @@ function appReducer(state: IAppState = DEFAULT_STATE, action: IAction) {
           const compactedParts = currentProject.parts;
           currentProject.parts = Array(26).fill(undefined).map((v,i)=>({activated: false, selected: false, position:i})),
           compactedParts.forEach((v)=>currentProject.parts[v.position] = v);          
-          return {...state, currentProject}
+          return {...state, currentProject,};
+        }
+      }
+    case SET_REMOVED_HISTORY:
+      {
+        if(state.currentProject.history) {
+          const history = [...state.currentProject.history];
+          history.splice(action.data,1);
+          return {...state, currentProject: {...state.currentProject, history}}
+        }
+      }
+    case RESET_PROJECT:
+      {
+        return {...state, currentProject: {...state.currentProject}}
+      }
+    case RESET_HISTORY_0:
+      {
+        if (state.stashHistory) {
+          return {...state, currentProject: {...state.stashHistory, history: state.currentProject.history}}
+        } else {
+          return {...state, currentProject: {...state.currentProject}, stashHistory: {...state.currentProject, history:[]}}
         }
       }
   }
   return state;
 }
 
+const DEFAULT_PART_SELECTOR_STATE: IPartSelectorState = {
+  resetCount: 0,
+}
+
+function partSelectorReducer(state: IPartSelectorState = DEFAULT_PART_SELECTOR_STATE, action: IAction) {
+  switch (action.type) {
+    case RESET_PROJECT:
+      return {...state, resetCount: state.resetCount+1};
+  }
+  return state;
+}
+
 export default combineReducers({
   app: appReducer,
+  partSelector: partSelectorReducer,
 });

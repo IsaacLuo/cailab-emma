@@ -44,8 +44,14 @@ export interface IAppState {
   currentUser: IUserInfo;
   myProjects: IProject[];
   currentProject: IProject;
+  stashHistory?: IProject;
+}
+export interface IPartSelectorState {
+  resetCount: number;
 }
 
 export interface IStoreState {
   app: IAppState;
+  partSelector: IPartSelectorState;
 }
+

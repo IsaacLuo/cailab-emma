@@ -13,6 +13,8 @@ SET_CURRENT_PROJECT,
 SAVE_PROJECT_HISTORY,
 CREATE_PROJECT,
 DELETE_HISTORY,
+SET_REMOVED_HISTORY,
+STASH_HISTORY,
 } from './actions';
 
 import STORE_PARTS from '../parts.json';
@@ -112,6 +114,18 @@ export function* saveProjectHistory(action: IAction) {
     const response = yield call(axios.put, conf.serverURL + `/api/project/${project._id}`, project, {withCredentials: true});
     console.log(response.data);
     yield put({type: SET_CURRENT_PROJECT, data: response.data.project});
+    yield put({type: STASH_HISTORY, data:response.data.project});
+  } catch (error) {
+    console.warn('unable to logout');
+  }
+}
+
+export function* deleteHistory(action: IAction) {
+  try {
+    const {projectId, historyIndex, historyTimeStamp} = action.data;
+    const response = yield call(axios.delete, conf.serverURL + `/api/project/${projectId}/history/${historyIndex}?time=${historyTimeStamp}`, {withCredentials: true});
+    // yield put({type: SET_CURRENT_PROJECT, data: response.data.project});
+    yield put({type: SET_REMOVED_HISTORY, data: historyIndex});
   } catch (error) {
     console.warn('unable to logout');
   }
@@ -124,7 +138,7 @@ export function* watchUsers() {
   yield takeLatest(GET_PROJECT, getProject);
   yield takeLatest(CREATE_PROJECT, createProject);
   yield takeLatest(SAVE_PROJECT_HISTORY, saveProjectHistory);
-  yield takeLatest(DELETE_HISTORY, ()=>{});
+  yield takeLatest(DELETE_HISTORY, deleteHistory);
 }
 
 export default function* rootSaga() {

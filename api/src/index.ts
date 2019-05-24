@@ -104,18 +104,45 @@ router.put('/api/project/:id', async (ctx:koa.ParameterizedContext<ICustomState,
       updatedAt: project.updatedAt,
       history: [],
     };
-    project.history.unshift(projectHistory);
-    project.history = project.history.slice(0,100);
-    // save original to history
-    project.name = name;
-    project.parts = parts;
-    project.connectorIndexes = connectorIndexes;
-    project.updatedAt= now;
-    project.save();
-    ctx.body = {message:'OK', project};
+    let projectHistoryValid = true;
+    if(!project.parts.find(v=>v.selected)) {
+      // empty Project dont save
+      projectHistoryValid = false;
+    } else if(JSON.stringify(project.parts) === JSON.stringify(parts)) {
+      // same history layout, dont save
+      projectHistoryValid = false;
+    }
+    if(projectHistoryValid) {
+      project.history.unshift(projectHistory);
+      project.history = project.history.slice(0,100);
+      // save original to history
+      project.name = name;
+      project.parts = parts;
+      project.connectorIndexes = connectorIndexes;
+      project.updatedAt= now;
+      project.save();
+      ctx.body = {message:'OK', project};
+    } else {
+      ctx.body = {message:'OK, but nothing saved', project};
+    }
   } else {
     ctx.throw(401);
   }
+});
+
+router.delete('/api/project/:id/history/:index', async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> {
+  const {id, index} = ctx.params;
+  const {time} = ctx.request.query;
+  const project = await Project.findById(id).exec();
+  const history = project.history[index]
+  if(history && history.updatedAt.getTime()===new Date(time).getTime()) {
+    project.history.splice(index,1);
+    await project.save();
+    ctx.body={project};
+  } else {
+    ctx.throw(404);
+  }
+
 });
 
 
