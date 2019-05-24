@@ -19,6 +19,7 @@ import ProjectLoader from './components/ProjectLoader';
 import UserBar from './components/UserBar';
 import store from './redux/store';
 import {detect} from 'detect-browser';
+import MainPage from './components/MainPage';
 
 
 const CenterDiv = styled.div`
@@ -62,32 +63,30 @@ class App extends Component<any, IState> {
 
     return (
       <Provider store={store}>
-    <Router>
-      <UserBar/>
+      <Router>
+      <Route path='/' exact={true} component = {MainPage}/>
+      <Route path='/:anything' render={()=>
+        <React.Fragment>
+          <UserBar/>
+          <Route path='/projects' exact={true} component = {ChooseProject}/>
+          <Route
+            path='/project/:id'
+            exact={true}
+            component = {ProjectLoader}
+          />
+          <Route
+            path='/project/:id/step2'
+            component = {PartsDropDown}
+          />
 
-      <Route path='/' exact={true} component = {ChooseProject}/>
-
-      <Route
-        path='/project/:id'
-        exact={true}
-        component = {ProjectLoader}
-        // render={(props: RouteComponentProps) =>
-        //     <ProjectLoader
-        //       {...props}
-        //       currentUser={this.state.currentUser}
-        //       projectId={(props.match.params as any).uuid}
-        //     />
-        //   }
-      />
-      <Route
-        path='/project/:id/step2'
-        component = {PartsDropDown}
-      />
-
-      <Route
-        path='/project/:id/step3'
-        component = {Assemble}
-      />
+          <Route
+            path='/project/:id/step3'
+            component = {Assemble}
+          />
+        </React.Fragment>
+      }/>
+      
+      
 
     </Router>
     </Provider>);

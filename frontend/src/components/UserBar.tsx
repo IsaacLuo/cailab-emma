@@ -14,6 +14,8 @@ import {
   GET_CURENT_USER,
 } from '../redux/actions';
 
+const GUEST_ID = '4e7020cb7cac81af7136236b';
+
 const UserBar = styled.div`
   background-color: #e9ecef;
 `;
@@ -52,10 +54,13 @@ class MyComponent extends React.Component<IProps, IState> {
   }
   public render() {
     const {currentUser} = this.props;
+    if(currentUser._id==='') {
+      return <Redirect to='/'/>
+    }
     return (
       <UserBar>
         {
-          currentUser._id === ''
+          currentUser._id === '' || currentUser._id === GUEST_ID
         ?
         <Button variant='primary' onClick={this.onClickLogin}>login</Button>
         :
@@ -70,7 +75,7 @@ class MyComponent extends React.Component<IProps, IState> {
   }
   private onClickLogout = (evnet: any) => {
     this.props.logout();
-    this.props.history.push('/');
+    // this.props.history.push('/');
   }
 
   private onClickLogin = (event: any) => {

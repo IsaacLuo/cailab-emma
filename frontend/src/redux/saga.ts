@@ -15,6 +15,7 @@ CREATE_PROJECT,
 DELETE_HISTORY,
 SET_REMOVED_HISTORY,
 STASH_HISTORY,
+LOGOUT_DONE,
 } from './actions';
 
 import STORE_PARTS from '../parts.json';
@@ -49,6 +50,7 @@ export function* getCurrentUser(action: IAction) {
 export function* logout(action: IAction) {
   try {
     yield call(axios.delete, conf.authServerURL + '/api/session', {withCredentials: true});
+    yield put({type: LOGOUT_DONE});
   } catch (error) {
     console.warn('unable to logout');
   }

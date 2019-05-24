@@ -20,11 +20,12 @@ import {
   RESET_HISTORY_0,
   SAVE_PROJECT_HISTORY,
   STASH_HISTORY,
+  LOGOUT_DONE,
 } from './actions';
 
 const defaultUser: IUserInfo = {
     _id: '',
-    fullName: 'guest',
+    fullName: '',
     groups: ['guest'],
   };
 
@@ -45,7 +46,7 @@ function appReducer(state: IAppState = DEFAULT_STATE, action: IAction) {
   switch (action.type) {
     case SET_CURRENT_USER:
       return {...state, currentUser: action.data};
-    case LOGOUT:
+    case LOGOUT_DONE:
       return DEFAULT_STATE;
     case SET_MY_PROJECTS:
       return {...state, myProjects: action.data};
