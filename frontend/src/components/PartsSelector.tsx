@@ -307,7 +307,7 @@ class PartSelector extends React.Component<IProps, IState> {
   public render() {
     return <div>
       <Breadcrumb>
-        <Breadcrumb.Item href='/'>Home</Breadcrumb.Item>
+        <Breadcrumb.Item href='/projects'>Home</Breadcrumb.Item>
         <Breadcrumb.Item active>step 1: Design a template ({this.props.preloadedProject.name})</Breadcrumb.Item>
       </Breadcrumb>
 

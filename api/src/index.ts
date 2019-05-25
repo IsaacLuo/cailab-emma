@@ -147,7 +147,7 @@ async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> 
       history: [],
     };
     let projectHistoryValid = true;
-    if(!parts.find(v=>v.selected)) {
+    if(!project.parts.find(v=>v.selected)) {
       // empty Project dont save
       projectHistoryValid = false;
     } else if(JSON.stringify(project.parts) === JSON.stringify(parts)) {
@@ -165,7 +165,12 @@ async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> 
       project.save();
       ctx.body = {message:'OK', project};
     } else {
-      ctx.body = {message:'OK, but nothing saved', project};
+      project.name = name;
+      project.parts = parts;
+      project.connectorIndexes = connectorIndexes;
+      project.updatedAt= now;
+      project.save();
+      ctx.body = {message:'OK, but no history saved', project};
     }
   } else {
     ctx.throw(401);

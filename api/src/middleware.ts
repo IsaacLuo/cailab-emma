@@ -49,11 +49,7 @@ export default function middleware (app:koa) {
     }
   });
 
-  // log
-  app.use( async (ctx:koa.ParameterizedContext<any, {}>, next: ()=>Promise<any>)=> {
-    logger.info('request=', ctx.method, ctx.URL.pathname);
-    await next();
-  });
+
 
   // mongodb
   app.use( async (ctx:koa.ParameterizedContext<any, {}>, next: ()=>Promise<any>)=> {
@@ -112,6 +108,12 @@ export default function middleware (app:koa) {
         exp: Math.floor(Date.now()/1000)+86400,
       };
     }
+    await next();
+  });
+
+  // log
+  app.use( async (ctx:koa.ParameterizedContext<any, {}>, next: ()=>Promise<any>)=> {
+    logger.info(ctx.state.user.fullName, ctx.method, ctx.URL.pathname);
     await next();
   });
 

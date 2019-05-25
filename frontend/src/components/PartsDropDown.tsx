@@ -111,7 +111,7 @@ class PartsDropDown extends React.Component<IProps, IState> {
     const {parts} = this.props.project;
     return <React.Fragment>
             <Breadcrumb>
-        <Breadcrumb.Item href='/'>Home</Breadcrumb.Item>
+        <Breadcrumb.Item href='/projects'>Home</Breadcrumb.Item>
         <Breadcrumb.Item href={`/project/${this.props.project._id}`}>step 1</Breadcrumb.Item>
         <Breadcrumb.Item active>step 2: select parts ({this.props.project.name})</Breadcrumb.Item>
       </Breadcrumb>
