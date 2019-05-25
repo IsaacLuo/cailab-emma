@@ -14,7 +14,7 @@ import {
   GET_CURENT_USER,
 } from '../redux/actions';
 
-const GUEST_ID = '4e7020cb7cac81af7136236b';
+const GUEST_ID = '000000000000000000000000';
 
 const UserBar = styled.div`
   background-color: #e9ecef;
@@ -54,9 +54,9 @@ class MyComponent extends React.Component<IProps, IState> {
   }
   public render() {
     const {currentUser} = this.props;
-    if(currentUser._id==='') {
-      return <Redirect to='/'/>
-    }
+    // if(currentUser._id==='') {
+    //   return <Redirect to='/'/>
+    // }
     return (
       <UserBar>
         {

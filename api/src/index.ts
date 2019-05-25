@@ -10,12 +10,38 @@ import {Project} from './models';
 import jwt from 'jsonwebtoken';
 import cors from 'koa-cors';
 
+const GUEST_ID = conf.GUEST_ID;
+
 const app = new koa();
 const router = new Router();
 
 app.use(cors({credentials: true}));
 app.use(koaBody());
 middleware(app);
+
+function userMust (...args: Array<(ctx:koa.ParameterizedContext<any, {}>, next:()=>Promise<any>)=>boolean>) {
+  const arg = arguments;
+  return async (ctx:koa.ParameterizedContext<any, {}>, next:()=>Promise<any>)=> {
+    if (Array.prototype.some.call(arg, f=>f(ctx))) {
+      await next();
+    } else {
+      ctx.throw(401);
+    }
+  };
+}
+
+function beUser (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>) {
+  return ctx.state.user && ctx.state.user.groups.indexOf('emma/users')>=0;
+}
+
+function beAdmin (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>) {
+  return ctx.state.user && (ctx.state.user.groups.indexOf('administrators')>=0 || ctx.state.user.groups.indexOf('emma/administrators')>=0);
+}
+
+function beGuest (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>) {
+  return ctx.state.user === undefined || ctx.state.user._id === '000000000000000000000000';
+}
+
 
 router.get('/', async (ctx:koa.ParameterizedContext<any, {}>)=> {
   ctx.body={message:'server: cailab-emma'};
@@ -31,17 +57,29 @@ router.get('/api/user/current', async (ctx:koa.ParameterizedContext<ICustomState
   }
 });
 
-router.get('/api/projects/', async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> {
+router.get('/api/projects/', 
+async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> {
+  const user = ctx.state.user;
+  if (user._id === '000000000000000000000000') {
+    ctx.body = [];
+  } else {
+    await next();
+  }
+},
+userMust(beUser),
+async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> {
   const user = ctx.state.user;
   if (user) {
-    const project = await Project.find({owner: user._id}).exec();
-    ctx.body = project;
+    const projects = await Project.find({owner: user._id}).exec();
+    ctx.body = projects;
   } else {
     ctx.throw(401);
   }
 });
 
-router.get('/api/project/:id', async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> {
+router.get('/api/project/:id',
+userMust(beUser, beGuest),
+async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> {
   const user = ctx.state.user;
   if (user) {
     const project = await Project.findOne({_id:ctx.params.id, owner: user._id}).exec();
@@ -54,7 +92,9 @@ router.get('/api/project/:id', async (ctx:koa.ParameterizedContext<ICustomState,
   }
 });
 
-router.post('/api/project', async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> {
+router.post('/api/project',
+userMust(beUser, beGuest),
+async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> {
   const user = ctx.state.user;
   if (user) {
     const name = ctx.request.body.name;
@@ -76,7 +116,9 @@ router.post('/api/project', async (ctx:koa.ParameterizedContext<ICustomState, {}
   }
 });
 
-router.put('/api/project/:id', async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> {
+router.put('/api/project/:id',
+userMust(beUser, beGuest),
+async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> {
   const user = ctx.state.user;
   if (user) {
     const now = new Date();
@@ -130,7 +172,9 @@ router.put('/api/project/:id', async (ctx:koa.ParameterizedContext<ICustomState,
   }
 });
 
-router.delete('/api/project/:id/history/:index', async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> {
+router.delete('/api/project/:id/history/:index',
+userMust(beUser, beGuest),
+async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> {
   const {id, index} = ctx.params;
   const {time} = ctx.request.query;
   const project = await Project.findById(id).exec();

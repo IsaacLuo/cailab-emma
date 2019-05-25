@@ -89,10 +89,30 @@ export default function middleware (app:koa) {
   app.use(koaJwt({
     secret: conf.secret.jwt.key,
     cookie: 'token',
+    passthrough: true,
   }).unless({
     path: [
       '/',
     ]
   }));
+
+  /**
+   * if user is undefined, create a guest user
+   */
+  app.use(async (ctx:koa.ParameterizedContext<any, {}>, next: ()=>Promise<any>)=> {
+    if(ctx.state.user === undefined) {
+      ctx.state.user = {
+        _id: '000000000000000000000000',
+        fullName: 'guest',
+        email: '',
+        groups: [
+            'guest'
+        ],
+        iat: Math.floor(Date.now()/1000),
+        exp: Math.floor(Date.now()/1000)+86400,
+      };
+    }
+    await next();
+  });
 
 }

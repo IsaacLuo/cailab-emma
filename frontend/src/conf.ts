@@ -1,6 +1,7 @@
 const conf = {
   serverURL: 'https://api.emma-dev.cailab.org',
   authServerURL: 'https://api.auth.cailab.org',
+  GUEST_ID: '000000000000000000000000',
 };
 
 if (process.env.NODE_ENV === 'development') {
