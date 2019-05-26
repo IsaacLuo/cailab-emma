@@ -20,6 +20,7 @@ import UserBar from './components/UserBar';
 import store from './redux/store';
 import {detect} from 'detect-browser';
 import MainPage from './components/MainPage';
+import ProjectWizard from './components/ProjectWizard';
 
 
 const CenterDiv = styled.div`
@@ -83,6 +84,12 @@ class App extends Component<any, IState> {
             path='/project/:id/step3'
             component = {Assemble}
           />
+
+          <Route
+            path='/projectWizard'
+            component = {ProjectWizard}
+          />
+
         </React.Fragment>
       }/>
       

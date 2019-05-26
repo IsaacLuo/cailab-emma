@@ -99,8 +99,8 @@ export function* getProject(action: IAction) {
 
 export function* createProject(action:IAction) {
   try {
-    const {name, history} = action.data;
-    const response = yield call(axios.post, conf.serverURL + `/api/project`, {name,}, {withCredentials: true});
+    const {name, presetIndexes, history} = action.data;
+    const response = yield call(axios.post, conf.serverURL + `/api/project`, {name, presetIndexes}, {withCredentials: true});
     const {project} = response.data;
     yield put({type: SET_CURRENT_PROJECT, data: project});
     history.push(`/project/${project._id}`);

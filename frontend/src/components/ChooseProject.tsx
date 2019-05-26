@@ -8,6 +8,7 @@ import { IUserInfo, IProject, IStoreState } from '../types';
 import {Button, InputGroup, FormControl, FormControlProps} from 'react-bootstrap';
 import { listMyProjects } from '../backendCalls';
 import { SET_CURRENT_PROJECT, CREATE_PROJECT, GET_MY_PROJECTS } from '../redux/actions';
+import ProjectWizard from './ProjectWizard';
 
 const Panel = styled.div`
   margin:100px;

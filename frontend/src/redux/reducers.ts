@@ -21,6 +21,7 @@ import {
   SAVE_PROJECT_HISTORY,
   STASH_HISTORY,
   LOGOUT_DONE,
+  PRE_SET_PARTS,
 } from './actions';
 
 const defaultUser: IUserInfo = {

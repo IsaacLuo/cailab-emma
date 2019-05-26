@@ -97,13 +97,18 @@ userMust(beUser, beGuest),
 async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> {
   const user = ctx.state.user;
   if (user) {
-    const name = ctx.request.body.name;
+    const {name, presetIndexes} = ctx.request.body;
+
     const now = new Date();
+    let parts = [];
+    if(presetIndexes) {
+      parts = presetIndexes.map(v=>({selected:true, activated:true, position:v}));
+    }
     const project = await Project.create(
       {
         name,
         version: '1.0',
-        parts: [],
+        parts,
         connetorIndexes: [],
         owner: user._id,
         createdAt: now,
