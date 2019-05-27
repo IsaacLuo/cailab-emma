@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { IStoreState, IUserInfo, IProject} from '../types.js';
 import { Dispatch } from 'redux';
 import { CREATE_PROJECT } from '../redux/actions';
+import queryString from 'query-string';
 
 type Selected0 = 'Transient transfection'|'Stable transfection';
 type Selected1 = 'Plasmid Based vectors'|'Episomal vectors'|'AAVs vectors'|'BacMam Baculovirus vectors'|'Targeting vector'|'Transposon based vector'|'Lentivirus'|'RCME'|'Episomal (+ selection)'|'Linear DNA – random integration';
@@ -52,6 +53,7 @@ interface IState {
   finish: boolean,
   step: number,
   currentStep: StepType,
+  projectName: string,
 }
 
 const mapStateToProps = (state: IStoreState) => ({
@@ -218,10 +220,13 @@ class ProjectWizard extends React.Component<IProps, IState> {
 
   constructor (props:IProps) {
     super(props);
+    const parsed = queryString.parse(props.location.search);
+    console.log(parsed);
     this.state = {
       finish:false,
       step: 0,
       currentStep:'EMMA expression vectors',
+      projectName: typeof parsed.name === 'string' ? parsed.name : 'new project',
     };
   }
 
@@ -239,7 +244,7 @@ class ProjectWizard extends React.Component<IProps, IState> {
       return <div>{JSON.stringify(this.state)}</div>
     }
     return <div>
-      <h1>Project Wizard</h1>
+      <h1>Project Wizard ({this.state.projectName})</h1>
       <h2>{this.state.currentStep}</h2>
       {currentSelect.options.map((v,i)=><div key={i} onClick={this.onClickOption.bind(this, v)}>
         <li>{v.title}</li>
@@ -281,48 +286,48 @@ class ProjectWizard extends React.Component<IProps, IState> {
       if (selected2 === 1) {
         if (selected4 === 'Single protein') {
           presetParts = [2,3,4,5,6,7,10,11];
-            predefMaps = {7:[2], 8:[], 9:[], 10:[0]};
+            predefMaps = {7:[0], 8:[], 9:[], 10:[0]};
         } else if (selected4 === 'Fusion protein') {
-          presetParts = [2,3,4,5,6,7,9,10,11];
-            predefMaps = {7:[1], 8:[],10:[0]};
+          presetParts = [2,3,4,5,6,7,8,9,10,11];
+            predefMaps = {7:[2], 8:[1],10:[0]};
         } else if (selected4 === 'p2A') {
-          presetParts = [2,3,4,5,6,7,9,10,11];
-            predefMaps = {7:[0], 8:[],10:[0]};
+          presetParts = [2,3,4,5,6,7,8,9,10,11];
+            predefMaps = {7:[1], 8:[1],10:[0]};
         } else {
           presetParts = [2,3,4,5,6,7,8,9,10,11];
-            predefMaps = {7:[2], 8:[0],10:[0]};
+            predefMaps = {7:[0], 8:[0],10:[0]};
         }
       } else {
         if (selected4 === 'Single protein' && selected7 === 'Single protein') {
           presetParts = [1,2,3,4,5,6,7,10,11,12,18,19,20,22];
-            predefMaps = {1:[0],7:[2], 8:[], 9:[], 10:[0], 20:[2], 21:[]};
+            predefMaps = {1:[0],7:[0], 8:[], 9:[], 10:[0], 20:[2], 21:[]};
         } else if (selected4 === 'Fusion protein' && selected7 === 'Fusion protein') {
-          presetParts = [1,2,3,4,5,6,7,9,10,11,12,18,19,20,21,22];
-            predefMaps = {1:[0],7:[1], 8:[], 10:[0], 20:[1]};
+          presetParts = [1,2,3,4,5,6,7,8,9,10,11,12,18,19,20,21,22];
+            predefMaps = {1:[0],7:[2], 8:[1], 10:[0], 20:[1]};
         } else if (selected4 === 'Single protein' && selected7 === 'Fusion protein') {
           presetParts = [1,2,3,4,5,6,7,10,11,12,18,19,20,21,22];
-            predefMaps = {1:[0], 7:[2], 8:[], 9:[], 10:[0], 20:[1]};
+            predefMaps = {1:[0], 7:[0], 8:[], 9:[], 10:[0], 20:[1]};
         } else if (selected4 === 'Fusion protein' && selected7 === 'Single protein') {
-          presetParts = [1,2,3,4,5,6,7,9,10,11,12,18,19,20,22];
-            predefMaps = {1:[0],7:[1], 8:[], 10:[0], 20:[2], 21:[]};
+          presetParts = [1,2,3,4,5,6,7,8,9,10,11,12,18,19,20,22];
+            predefMaps = {1:[0],7:[2], 8:[1], 10:[0], 20:[2], 21:[]};
         } else if (selected4 === 'p2A' && selected7 === 'Single protein') {
-          presetParts = [1,2,3,4,5,6,7,9,10,11,12,18,19,20,22];
-            predefMaps = {1:[0],7:[0], 8:[], 10:[0], 20:[2], 21:[]};
+          presetParts = [1,2,3,4,5,6,7,8,9,10,11,12,18,19,20,22];
+            predefMaps = {1:[0],7:[1], 8:[1], 10:[0], 20:[2], 21:[]};
         } else if (selected4 === 'p2A' && selected7 === 'Fusion protein') {
-          presetParts = [1,2,3,4,5,6,7,9,10,11,12,18,19,20,21,22];
-            predefMaps = {1:[0],7:[0], 8:[], 10:[0], 20:[1]};
+          presetParts = [1,2,3,4,5,6,7,8,9,10,11,12,18,19,20,21,22];
+            predefMaps = {1:[0],7:[1], 8:[1], 10:[0], 20:[1]};
         } else if (selected4 === 'IRES' && selected7 === 'Single protein') {
           presetParts = [1,2,3,4,5,6,7,8,9,10,11,12,18,19,20,22];
-            predefMaps = {1:[0],7:[2], 8:[0], 10:[0], 20:[1]};
+            predefMaps = {1:[0],7:[0], 8:[0], 10:[0], 20:[1]};
         } else if (selected4 === 'IRES' && selected7 === 'Fusion protein') {
           presetParts = [1,2,3,4,5,6,7,8,9,10,11,12,18,19,20,21,22];
-            predefMaps = {1:[0], 7:[2], 8:[0], 10:[0], 20:[2], 21:[]};
+            predefMaps = {1:[0], 7:[0], 8:[0], 10:[0], 20:[2], 21:[]};
         } else if (selected4 === 'Fusion protein' && selected7 === 'p2A') {
-          presetParts = [1,2,3,4,5,6,7,9,10,11,12,18,19,20,21,22];
-            predefMaps = {1:[0],7:[1], 8:[], 10:[0], 20:[0]};
+          presetParts = [1,2,3,4,5,6,7,8,9,10,11,12,18,19,20,21,22];
+            predefMaps = {1:[0],7:[2], 8:[1], 10:[0], 20:[0]};
         } else if (selected4 === 'Fusion protein' && selected7 === 'IRES') {
-          presetParts = [1,2,3,4,5,6,7,9,10,11,12,18,19,20,21,22];
-            predefMaps = {1:[0],7:[1], 8:[], 10:[0], 20:[2]};
+          presetParts = [1,2,3,4,5,6,7,8,9,10,11,12,18,19,20,21,22];
+            predefMaps = {1:[0],7:[2], 8:[1], 10:[0], 20:[2]};
         } else {
           alert('no project tempate (yet)');
         }

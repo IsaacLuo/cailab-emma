@@ -3,7 +3,7 @@ import { Dispatch } from 'redux';
 import {connect} from 'react-redux';
 
 import styled from 'styled-components';
-import { RouteComponentProps, withRouter, Redirect } from 'react-router-dom';
+import { RouteComponentProps, withRouter, Redirect, Link } from 'react-router-dom';
 import { IUserInfo, IProject, IStoreState } from '../types';
 import {Button, InputGroup, FormControl, FormControlProps} from 'react-bootstrap';
 import { listMyProjects } from '../backendCalls';
@@ -68,17 +68,19 @@ class ChooseProject extends React.Component<IProps, IState> {
     return (
       <div>
         <InputGroup style={{width:600}}>
-            <FormControl
-              placeholder='filename'
-              aria-label='filename'
-              aria-describedby='filename'
-              value={this.state.projectName}
-              onChange={this.onChangeFileName}
-            />
-            <InputGroup.Append>
-              <Button variant='outline-secondary' onClick={this.onClickNewProject}>new project</Button>
-            </InputGroup.Append>
-          </InputGroup>
+          <FormControl
+            placeholder='filename'
+            aria-label='filename'
+            aria-describedby='filename'
+            value={this.state.projectName}
+            onChange={this.onChangeFileName}
+          />
+          <InputGroup.Append>
+            <Button variant='primary' onClick={this.onClickNewProject}>new project</Button>
+            <Link to={`/projectWizard?name=${this.state.projectName}`}><Button variant='outline-secondary'>use wizard</Button></Link>
+          </InputGroup.Append>
+        </InputGroup>
+        
         <div>
           {this.props.projects.map((v, i) =>
           <div key={i}>
@@ -90,6 +92,7 @@ class ChooseProject extends React.Component<IProps, IState> {
           </div>,
           )}
         </div>
+        
       </div>
     );
   }

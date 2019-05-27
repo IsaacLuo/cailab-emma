@@ -1,4 +1,4 @@
-import { IUserInfo, IPartSelectorState } from './../types';
+import { IUserInfo, IPartSelectorState, IWizardState } from './../types';
 import {combineReducers} from 'redux';
 
 import {
@@ -21,7 +21,6 @@ import {
   SAVE_PROJECT_HISTORY,
   STASH_HISTORY,
   LOGOUT_DONE,
-  PRE_SET_PARTS,
 } from './actions';
 
 const defaultUser: IUserInfo = {
@@ -126,7 +125,16 @@ function partSelectorReducer(state: IPartSelectorState = DEFAULT_PART_SELECTOR_S
   return state;
 }
 
+// function wizardReducer(state: IWizardState = {projectName:'new project'}, action: IAction) {
+//   switch (action.type) {
+//     case SET_WIZARD_PROJECT_NAME:
+//       return {...state, projectName: action.data};
+//   }
+//   return state;
+// }
+
 export default combineReducers({
   app: appReducer,
   partSelector: partSelectorReducer,
+  // wizard: wizardReducer,
 });

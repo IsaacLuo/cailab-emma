@@ -49,9 +49,14 @@ export interface IAppState {
 export interface IPartSelectorState {
   resetCount: number;
 }
+export interface IWizardState {
+  projectName: string;
+}
+
 
 export interface IStoreState {
   app: IAppState;
   partSelector: IPartSelectorState;
+  wizard: IWizardState;
 }
 
