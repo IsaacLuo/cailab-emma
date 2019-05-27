@@ -35,7 +35,7 @@ interface IOptions {
 
 interface IProps extends RouteComponentProps {
   currentProject: IProject,
-  preSetParts: (arr: number[])=>void,
+  preSetParts: (arr: number[], mapDef?: any)=>void,
 }
 interface IState {
   selected0?: Selected0,
@@ -59,7 +59,7 @@ const mapStateToProps = (state: IStoreState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  preSetParts: (presetIndexes: number[]) =>  dispatch({type:CREATE_PROJECT, data: {name: `Project ${new Date().toLocaleDateString()}`, presetIndexes}}),
+  preSetParts: (presetIndexes: number[], mapDef:any = undefined) =>  dispatch({type:CREATE_PROJECT, data: {name: `Project ${new Date().toLocaleDateString()}`, presetIndexes, mapDef}}),
 });
 
 class ProjectWizard extends React.Component<IProps, IState> {
@@ -250,11 +250,12 @@ class ProjectWizard extends React.Component<IProps, IState> {
   private onClickOption(option: IOption) {
     option.action();
     const nextStep = option.nextStep();
-    if (nextStep === 'Final') {
-      console.log(this.state);
-      this.generateProject();
-    }
-    this.setState({currentStep: nextStep as StepType});
+    this.setState({currentStep: nextStep as StepType}, ()=>{
+      if (nextStep === 'Final') {
+        console.log(this.state);
+        this.generateProject();
+      }
+    });
   }
 
   private generateProject() {
@@ -271,43 +272,71 @@ class ProjectWizard extends React.Component<IProps, IState> {
       selectTransposonBasedVector
     } = this.state;
 
-    if ( selected1 === 'Plasmid Based vectors') {
+    let presetParts:number[] = [];
+    let predefMaps:any;
+
+    console.log(this.state);
+
+    if ( selected1 === 'Plasmid Based vectors' || selected1 === 'Episomal vectors') {
       if (selected2 === 1) {
         if (selected4 === 'Single protein') {
-          this.props.preSetParts([2,3,4,5,6,7,10,11]);
+          presetParts = [2,3,4,5,6,7,10,11];
+            predefMaps = {7:[2], 8:[], 9:[], 10:[0]};
         } else if (selected4 === 'Fusion protein') {
-          this.props.preSetParts([2,3,4,5,6,7,9,10,11]);
+          presetParts = [2,3,4,5,6,7,9,10,11];
+            predefMaps = {7:[1], 8:[],10:[0]};
         } else if (selected4 === 'p2A') {
-          this.props.preSetParts([2,3,4,5,6,7,9,10,11]);
+          presetParts = [2,3,4,5,6,7,9,10,11];
+            predefMaps = {7:[0], 8:[],10:[0]};
         } else {
-          this.props.preSetParts([2,3,4,5,6,7,8,9,10,11]);
+          presetParts = [2,3,4,5,6,7,8,9,10,11];
+            predefMaps = {7:[2], 8:[0],10:[0]};
         }
       } else {
         if (selected4 === 'Single protein' && selected7 === 'Single protein') {
-          this.props.preSetParts([1,2,3,4,5,6,7,10,11,12,18,19,20,22]);
+          presetParts = [1,2,3,4,5,6,7,10,11,12,18,19,20,22];
+            predefMaps = {1:[0],7:[2], 8:[], 9:[], 10:[0], 20:[2], 21:[]};
         } else if (selected4 === 'Fusion protein' && selected7 === 'Fusion protein') {
-          this.props.preSetParts([1,2,3,4,5,6,7,9,10,11,12,18,19,20,21,22]);
+          presetParts = [1,2,3,4,5,6,7,9,10,11,12,18,19,20,21,22];
+            predefMaps = {1:[0],7:[1], 8:[], 10:[0], 20:[1]};
         } else if (selected4 === 'Single protein' && selected7 === 'Fusion protein') {
-          this.props.preSetParts([1,2,3,4,5,6,7,10,11,12,18,19,20,21,22]);
+          presetParts = [1,2,3,4,5,6,7,10,11,12,18,19,20,21,22];
+            predefMaps = {1:[0], 7:[2], 8:[], 9:[], 10:[0], 20:[1]};
         } else if (selected4 === 'Fusion protein' && selected7 === 'Single protein') {
-          this.props.preSetParts([1,2,3,4,5,6,7,9,10,11,12,18,19,20,22]);
+          presetParts = [1,2,3,4,5,6,7,9,10,11,12,18,19,20,22];
+            predefMaps = {1:[0],7:[1], 8:[], 10:[0], 20:[2], 21:[]};
         } else if (selected4 === 'p2A' && selected7 === 'Single protein') {
-          this.props.preSetParts([1,2,3,4,5,6,7,9,10,11,12,18,19,20,22]);
+          presetParts = [1,2,3,4,5,6,7,9,10,11,12,18,19,20,22];
+            predefMaps = {1:[0],7:[0], 8:[], 10:[0], 20:[2], 21:[]};
         } else if (selected4 === 'p2A' && selected7 === 'Fusion protein') {
-          this.props.preSetParts([1,2,3,4,5,6,7,9,10,11,12,18,19,20,21,22]);
+          presetParts = [1,2,3,4,5,6,7,9,10,11,12,18,19,20,21,22];
+            predefMaps = {1:[0],7:[0], 8:[], 10:[0], 20:[1]};
         } else if (selected4 === 'IRES' && selected7 === 'Single protein') {
-          this.props.preSetParts([1,2,3,4,5,6,7,8,9,10,11,12,18,19,20,22]);
+          presetParts = [1,2,3,4,5,6,7,8,9,10,11,12,18,19,20,22];
+            predefMaps = {1:[0],7:[2], 8:[0], 10:[0], 20:[1]};
         } else if (selected4 === 'IRES' && selected7 === 'Fusion protein') {
-          this.props.preSetParts([1,2,3,4,5,6,7,8,9,10,11,12,18,19,20,21,22]);
+          presetParts = [1,2,3,4,5,6,7,8,9,10,11,12,18,19,20,21,22];
+            predefMaps = {1:[0], 7:[2], 8:[0], 10:[0], 20:[2], 21:[]};
         } else if (selected4 === 'Fusion protein' && selected7 === 'p2A') {
-          this.props.preSetParts([1,2,3,4,5,6,7,9,10,11,12,18,19,20,21,22]);
+          presetParts = [1,2,3,4,5,6,7,9,10,11,12,18,19,20,21,22];
+            predefMaps = {1:[0],7:[1], 8:[], 10:[0], 20:[0]};
         } else if (selected4 === 'Fusion protein' && selected7 === 'IRES') {
-          this.props.preSetParts([1,2,3,4,5,6,7,9,10,11,12,18,19,20,21,22]);
+          presetParts = [1,2,3,4,5,6,7,9,10,11,12,18,19,20,21,22];
+            predefMaps = {1:[0],7:[1], 8:[], 10:[0], 20:[2]};
+        } else {
+          alert('no project tempate (yet)');
         }
       }
-    } else {
-      alert('no project');
+
+      if ( selected1 === 'Episomal vectors') {
+        presetParts.push(25);
+      }
+    } 
+
+    else {
+      alert('no project tempate (yet)');
     }
+    this.props.preSetParts(presetParts, predefMaps);
   }
   
 }
