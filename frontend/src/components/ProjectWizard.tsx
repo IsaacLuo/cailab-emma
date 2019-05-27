@@ -24,6 +24,29 @@ type SelectTargetingVector1 = 'With independent selection marker transcription u
 type SelectTargetingVector2 = 'Default: with promoter'|'Promoterless option (for gene-trap strategy)';
 type SelectTransposonBasedVector = 'With independent selection marker cassette'|'Without independent selection marker cassette';
 type StepType = 'EMMA expression vectors'|Selected0|Selected1|Selected2|Selected3|Selected4|Selected5|Selected7|SelectTargetingVector1|SelectTargetingVector2|SelectTransposonBasedVector|'Final';
+
+const Panel = styled.div`
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  margin-top:50px;
+`;
+const WizardCard = styled.div`
+  width:640px;
+  height:480px;
+  border: solid 1px black;
+  padding: 20px;
+`
+const CardTitle = styled.div`
+  font-size: 2em;
+  margin-bottom: 20px;
+`
+const OptionButton = styled(Button)`
+  margin-top: 20px;
+  margin-buttom: 20px;
+`
+
+
 interface IOption {
   title: StepType;
   nextStep:()=>string;
@@ -249,10 +272,14 @@ class ProjectWizard extends React.Component<IProps, IState> {
         <Breadcrumb.Item active>project wizard</Breadcrumb.Item>
       </Breadcrumb>
       <h1>Project Wizard ({this.state.projectName})</h1>
-      <h2>{this.state.currentStep}</h2>
-      {currentSelect.options.map((v,i)=><div key={i} onClick={this.onClickOption.bind(this, v)}>
-        <li>{v.title}</li>
-      </div>)}
+      <Panel>
+        <WizardCard>
+        <CardTitle>{this.state.currentStep}</CardTitle>
+        {currentSelect.options.map((v,i)=><div key={i} onClick={this.onClickOption.bind(this, v)}>
+          <OptionButton variant="light">● {v.title}</OptionButton>
+        </div>)}
+        </WizardCard>
+      </Panel>
     </React.Fragment>
   }
 
