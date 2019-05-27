@@ -11,6 +11,7 @@ import { IStoreState, IUserInfo, IProject} from '../types.js';
 import { Dispatch } from 'redux';
 import { CREATE_PROJECT } from '../redux/actions';
 import queryString from 'query-string';
+import resetIcon from '../icons/reset.svg';
 
 type Selected0 = 'Transient transfection'|'Stable transfection';
 type Selected1 = 'Plasmid Based vectors'|'Episomal vectors'|'AAVs vectors'|'BacMam Baculovirus vectors'|'Targeting vector'|'Transposon based vector'|'Lentivirus'|'RCME'|'Episomal (+ selection)'|'Linear DNA – random integration';
@@ -36,6 +37,8 @@ const WizardCard = styled.div`
   height:480px;
   border: solid 1px black;
   padding: 20px;
+  display:flex;
+  flex-direction:column;
 `
 const CardTitle = styled.div`
   font-size: 2em;
@@ -44,6 +47,14 @@ const CardTitle = styled.div`
 const OptionButton = styled(Button)`
   margin-top: 20px;
   margin-buttom: 20px;
+`
+
+const PanelContent = styled.div`
+  flex: 1 0 auto;
+`
+const Footer = styled.div`
+  flex: 0 0 auto;
+  text-align:right;
 `
 
 
@@ -73,7 +84,6 @@ interface IState {
   selectTargetingVector1?: SelectTargetingVector1,
   selectTargetingVector2?: SelectTargetingVector2,
   selectTransposonBasedVector?: SelectTransposonBasedVector,
-  finish: boolean,
   step: number,
   currentStep: StepType,
   projectName: string,
@@ -246,7 +256,6 @@ class ProjectWizard extends React.Component<IProps, IState> {
     const parsed = queryString.parse(props.location.search);
     console.log(parsed);
     this.state = {
-      finish:false,
       step: 0,
       currentStep:'EMMA expression vectors',
       projectName: typeof parsed.name === 'string' ? parsed.name : 'new project',
@@ -275,9 +284,16 @@ class ProjectWizard extends React.Component<IProps, IState> {
       <Panel>
         <WizardCard>
         <CardTitle>{this.state.currentStep}</CardTitle>
+        <PanelContent>
         {currentSelect.options.map((v,i)=><div key={i} onClick={this.onClickOption.bind(this, v)}>
           <OptionButton variant="light">● {v.title}</OptionButton>
         </div>)}
+        </PanelContent>
+        <Footer>
+          <OptionButton variant="light" onClick={this.resetWizard}>
+            <img src={resetIcon} width="20" height="20"/>
+          </OptionButton>
+        </Footer>
         </WizardCard>
       </Panel>
     </React.Fragment>
@@ -373,6 +389,13 @@ class ProjectWizard extends React.Component<IProps, IState> {
       alert('no project tempate (yet)');
     }
     this.props.preSetParts(this.state.projectName, presetParts, predefMaps);
+  }
+
+  private resetWizard = () => {
+    this.setState({
+      step: 0,
+      currentStep:'EMMA expression vectors',
+    })
   }
   
 }
