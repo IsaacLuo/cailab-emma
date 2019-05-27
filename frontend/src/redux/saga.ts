@@ -16,6 +16,8 @@ DELETE_HISTORY,
 SET_REMOVED_HISTORY,
 STASH_HISTORY,
 LOGOUT_DONE,
+DELETE_PROJECT,
+PROJECT_DELETED,
 } from './actions';
 
 import STORE_PARTS from '../parts.json';
@@ -29,6 +31,8 @@ import {call, all, fork, put, takeLatest, select} from 'redux-saga/effects';
 import axios from 'axios';
 import conf from '../conf';
 import { eventChannel } from 'redux-saga';
+
+import {NotificationManager} from 'react-notifications';
 
 export function* getCurrentUser(action: IAction) {
   try {
@@ -75,7 +79,7 @@ export function* getMyProjects(action: IAction) {
         updatedAt: new Date(v.updatedAt),
         }),
     );
-    projects.forEach(v=>fillProjectDetail(v));
+    // projects.forEach(v=>fillProjectDetail(v));
     yield put({type: SET_MY_PROJECTS, data: projects});
   } catch (error) {
     console.warn('unable to logout');
@@ -131,7 +135,17 @@ export function* deleteHistory(action: IAction) {
     // yield put({type: SET_CURRENT_PROJECT, data: response.data.project});
     yield put({type: SET_REMOVED_HISTORY, data: historyIndex});
   } catch (error) {
-    console.warn('unable to logout');
+    console.warn('unable to ');
+  }
+}
+
+export function* deleteProject(action: IAction) {
+  try {
+    const projectId = action.data;
+    const response = yield call(axios.delete, conf.serverURL + `/api/project/${projectId}`, {withCredentials: true});    
+  } catch (error) {
+    NotificationManager.error(`unable to delete project`);
+    yield put({type: GET_MY_PROJECTS});
   }
 }
 
@@ -143,6 +157,7 @@ export function* watchUsers() {
   yield takeLatest(CREATE_PROJECT, createProject);
   yield takeLatest(SAVE_PROJECT_HISTORY, saveProjectHistory);
   yield takeLatest(DELETE_HISTORY, deleteHistory);
+  yield takeLatest(DELETE_PROJECT, deleteProject);
 }
 
 export default function* rootSaga() {

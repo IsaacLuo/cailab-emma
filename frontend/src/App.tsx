@@ -22,6 +22,9 @@ import {detect} from 'detect-browser';
 import MainPage from './components/MainPage';
 import ProjectWizard from './components/ProjectWizard';
 
+import 'react-notifications/lib/notifications.css';
+import { NotificationContainer } from 'react-notifications';
+
 
 const CenterDiv = styled.div`
   display:flex;
@@ -68,6 +71,7 @@ class App extends Component<any, IState> {
       <Route path='/' exact={true} component = {MainPage}/>
       <Route path='/:anything' render={()=>
         <React.Fragment>
+          <NotificationContainer/>
           <UserBar/>
           <Route path='/projects' exact={true} component = {ChooseProject}/>
           <Route

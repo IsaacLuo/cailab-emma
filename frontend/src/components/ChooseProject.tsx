@@ -7,12 +7,16 @@ import { RouteComponentProps, withRouter, Redirect, Link } from 'react-router-do
 import { IUserInfo, IProject, IStoreState } from '../types';
 import {Button, InputGroup, FormControl, FormControlProps} from 'react-bootstrap';
 import { listMyProjects } from '../backendCalls';
-import { SET_CURRENT_PROJECT, CREATE_PROJECT, GET_MY_PROJECTS } from '../redux/actions';
+import { SET_CURRENT_PROJECT, CREATE_PROJECT, GET_MY_PROJECTS, DELETE_PROJECT } from '../redux/actions';
 import ProjectWizard from './ProjectWizard';
 
 const Panel = styled.div`
-  margin:100px;
+  margin:30px;
   text-align:left;
+`;
+
+const CloseButton = styled(Button)`
+  margin-left:5px;
 `;
 
 interface IProps extends RouteComponentProps {
@@ -21,6 +25,7 @@ interface IProps extends RouteComponentProps {
   getMyProjects: ()=>void;
   onNewProject: (name:string, history:any) => void;
   onLoadProject: (project: IProject) => void;
+  deleteProject: (id: string)=>void;
 }
 interface IState {
   projectName: string;
@@ -35,6 +40,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   getMyProjects: () => dispatch({type:GET_MY_PROJECTS}),
   onNewProject: (name:string, history:any) => dispatch({type: CREATE_PROJECT, data:{name, history}}),
   onLoadProject: (project: IProject) => dispatch({type: SET_CURRENT_PROJECT, data: project}),
+  deleteProject: (_id:string) => dispatch({type:DELETE_PROJECT, data: _id}),
 });
 
 class ChooseProject extends React.Component<IProps, IState> {
@@ -66,7 +72,9 @@ class ChooseProject extends React.Component<IProps, IState> {
 
   public render() {
     return (
-      <div>
+      <Panel>
+        <div style={{marginTop:30}}>
+        <h3>create a project</h3>
         <InputGroup style={{width:600}}>
           <FormControl
             placeholder='filename'
@@ -80,20 +88,22 @@ class ChooseProject extends React.Component<IProps, IState> {
             <Link to={`/projectWizard?name=${this.state.projectName}`}><Button variant='outline-secondary'>use wizard</Button></Link>
           </InputGroup.Append>
         </InputGroup>
+        </div>
         
-        <div>
+        <div style={{marginTop:30}}>
+          <h3>your projects</h3>
           {this.props.projects.map((v, i) =>
           <div key={i}>
             <Button variant='link' onClick={this.onClickOpenProject.bind(this, v)}>
               <span>{v.name}</span>
               {v.updatedAt && <span style={{color: '#777', fontSize: '80%'}}> {v.updatedAt.toLocaleDateString()}</span>}
             </Button>
-
+            <CloseButton variant="text" size="sm" onClick={this.props.deleteProject.bind(this, v._id!)}>X</CloseButton>
           </div>,
           )}
         </div>
         
-      </div>
+      </Panel>
     );
   }
 

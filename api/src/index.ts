@@ -10,7 +10,7 @@ import {Project} from './models';
 import jwt from 'jsonwebtoken';
 import cors from 'koa-cors';
 
-const GUEST_ID = conf.GUEST_ID;
+const GUEST_ID = '000000000000000000000000';
 
 const app = new koa();
 const router = new Router();
@@ -70,7 +70,7 @@ userMust(beUser),
 async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> {
   const user = ctx.state.user;
   if (user) {
-    const projects = await Project.find({owner: user._id}).exec();
+    const projects = await Project.find({owner: user._id}).select('_id name createdAt updatedAt').exec();
     ctx.body = projects;
   } else {
     ctx.throw(401);
@@ -127,7 +127,8 @@ async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> 
   const user = ctx.state.user;
   if (user) {
     const now = new Date();
-    const projectCount = await Project.countDocuments({_id:ctx.query.id, owner: {$ne:user._id}}).exec();
+    const {id} = ctx.params;
+    const projectCount = await Project.countDocuments({_id:id, owner: {$ne:user._id}}).exec();
     if (projectCount>0) {
       ctx.throw(401, 'unable to modify projects of other users');
     }
@@ -181,6 +182,36 @@ async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> 
     ctx.throw(401);
   }
 });
+
+router.delete('/api/project/:id',
+userMust(beUser),
+async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> {
+  const user = ctx.state.user;
+  if (user) {
+    const now = new Date();
+    const id = ctx.params.id;
+    console.log('delete id' + id);
+    const projectCount = await Project.countDocuments({_id:id, owner: {$ne:user._id}}).exec();
+    if (projectCount>0) {
+      ctx.throw(401, 'unable to modify projects of other users');
+    }
+    const res = await Project.deleteOne({_id:id, owner: user._id}).exec();
+    if (res.n === 1) {
+      ctx.body = {message:'OK'}
+      next(); // no await needed
+    } else {
+      ctx.throw(404);
+    }
+  } else {
+    ctx.throw(401);
+  }
+},
+// delete old guest project
+async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> {
+  const res = await Project.deleteMany({owner: GUEST_ID, updatedAt:{$lt: new Date(Date.now()-172800000)}}).exec();
+  console.log('guest project deleted', res.n, res.ok);
+}
+);
 
 router.delete('/api/project/:id/history/:index',
 userMust(beUser, beGuest),

@@ -21,6 +21,8 @@ import {
   SAVE_PROJECT_HISTORY,
   STASH_HISTORY,
   LOGOUT_DONE,
+  PROJECT_DELETED,
+  DELETE_PROJECT,
 } from './actions';
 
 const defaultUser: IUserInfo = {
@@ -108,6 +110,10 @@ function appReducer(state: IAppState = DEFAULT_STATE, action: IAction) {
         } else {
           return {...state, currentProject: {...state.currentProject}, stashHistory: {...state.currentProject, history:[]}}
         }
+      }
+    case DELETE_PROJECT:
+      {
+        return {...state, myProjects: state.myProjects.filter(v=>v._id !== action.data)}
       }
   }
   return state;

@@ -36,7 +36,7 @@ interface IOptions {
 
 interface IProps extends RouteComponentProps {
   currentProject: IProject,
-  preSetParts: (arr: number[], mapDef?: any)=>void,
+  preSetParts: (projectName: string, arr: number[], mapDef?: any)=>void,
 }
 interface IState {
   selected0?: Selected0,
@@ -61,7 +61,7 @@ const mapStateToProps = (state: IStoreState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  preSetParts: (presetIndexes: number[], mapDef:any = undefined) =>  dispatch({type:CREATE_PROJECT, data: {name: `Project ${new Date().toLocaleDateString()}`, presetIndexes, mapDef}}),
+  preSetParts: (projectName: string, presetIndexes: number[], mapDef:any = undefined) =>  dispatch({type:CREATE_PROJECT, data: {name: projectName, presetIndexes, mapDef}}),
 });
 
 class ProjectWizard extends React.Component<IProps, IState> {
@@ -243,13 +243,17 @@ class ProjectWizard extends React.Component<IProps, IState> {
     if (currentStep === 'Final') {
       return <div>{JSON.stringify(this.state)}</div>
     }
-    return <div>
+    return <React.Fragment>
+      <Breadcrumb>
+        <Breadcrumb.Item href='/projects'>Home</Breadcrumb.Item>
+        <Breadcrumb.Item active>project wizard</Breadcrumb.Item>
+      </Breadcrumb>
       <h1>Project Wizard ({this.state.projectName})</h1>
       <h2>{this.state.currentStep}</h2>
       {currentSelect.options.map((v,i)=><div key={i} onClick={this.onClickOption.bind(this, v)}>
         <li>{v.title}</li>
       </div>)}
-    </div>
+    </React.Fragment>
   }
 
   private onClickOption(option: IOption) {
@@ -341,7 +345,7 @@ class ProjectWizard extends React.Component<IProps, IState> {
     else {
       alert('no project tempate (yet)');
     }
-    this.props.preSetParts(presetParts, predefMaps);
+    this.props.preSetParts(this.state.projectName, presetParts, predefMaps);
   }
   
 }
