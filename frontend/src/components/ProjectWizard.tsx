@@ -249,6 +249,8 @@ class ProjectWizard extends React.Component<IProps, IState> {
         {title:'Without independent selection marker cassette', nextStep:()=>'selectTU', action:()=>this.setState({selectTransposonBasedVector:'Without independent selection marker cassette'})},
       ]
     },
+
+
   }
 
   constructor (props:IProps) {
@@ -329,7 +331,7 @@ class ProjectWizard extends React.Component<IProps, IState> {
 
     console.log(this.state);
 
-    if ( selected1 === 'Plasmid Based vectors' || selected1 === 'Episomal vectors') {
+    if ( selected1 === 'Plasmid Based vectors' || selected1 === 'Episomal vectors' || selected1 === 'AAVs vectors' || selected1 === 'BacMam Baculovirus vectors') {
       if (selected2 === 1) {
         if (selected4 === 'Single protein') {
           presetParts = [2,3,4,5,6,7,10,11];
@@ -382,6 +384,10 @@ class ProjectWizard extends React.Component<IProps, IState> {
 
       if ( selected1 === 'Episomal vectors') {
         presetParts.push(25);
+      } else if (selected1 === 'AAVs vectors') {
+        presetParts = [0, ...presetParts, 24];
+      } else if (selected1 === 'BacMam Baculovirus vectors') {
+        presetParts = [0, ...presetParts, 24];
       }
     } 
 
