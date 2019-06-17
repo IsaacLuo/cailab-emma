@@ -31,7 +31,8 @@ function userMust (...args: Array<(ctx:koa.ParameterizedContext<any, {}>, next:(
 }
 
 function beUser (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>) {
-  return ctx.state.user && ctx.state.user.groups.indexOf('emma/users')>=0;
+  // console.log(ctx.state.user.groups);
+  return ctx.state.user && (ctx.state.user.groups.indexOf('emma/users')>=0 || ctx.state.user.groups.indexOf('users')>=0);
 }
 
 function beAdmin (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>) {
