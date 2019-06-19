@@ -50,7 +50,6 @@ function beGuest (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promi
   return ctx.state.user === undefined || ctx.state.user._id === '000000000000000000000000';
 }
 
-
 router.get('/', async (ctx:koa.ParameterizedContext<any, {}>)=> {
   ctx.body={message:'server: cailab-emma'};
 })

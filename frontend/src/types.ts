@@ -11,6 +11,7 @@ export interface IPartDetail {
   // subCategory: string,
   comment: string,
   sequence?: string,
+  len?:number,
 }
 
 export interface ISelectedPart {

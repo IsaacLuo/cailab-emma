@@ -71,8 +71,8 @@ function appReducer(state: IAppState = DEFAULT_STATE, action: IAction) {
         ...state.currentProject,
         parts: [...state.currentProject.parts],
       }
-      const {name, comment} = detail;
-      currentProject.parts[position].partDetail = {name, comment};
+      const {name, comment, len} = detail;
+      currentProject.parts[position].partDetail = {name, comment, len:len||1};
       currentProject.parts[position].partName = name;
       return {...state, currentProject}
     case LOAD_HISTORY: 
