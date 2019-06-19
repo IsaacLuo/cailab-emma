@@ -67,6 +67,19 @@ function appReducer(state: IAppState = DEFAULT_STATE, action: IAction) {
     }
     case SET_PART_DETAIL:
       const {position, detail} = action.data;
+
+      const ignorePos8 = (position === 7
+        && detail.len === 2
+        && state.currentProject.parts[7] 
+        && state.currentProject.parts[7].partDetail 
+        && state.currentProject.parts[7].partDetail.len === 1)
+      const resetPost8 = (position === 7
+        && (detail.len === undefined || detail.len === 1)
+        && state.currentProject.parts[7] 
+        && state.currentProject.parts[7].partDetail 
+        && state.currentProject.parts[7].partDetail.len === 2)
+
+
       const currentProject = {
         ...state.currentProject,
         parts: [...state.currentProject.parts],
@@ -74,6 +87,15 @@ function appReducer(state: IAppState = DEFAULT_STATE, action: IAction) {
       const {name, comment, len} = detail;
       currentProject.parts[position].partDetail = {name, comment, len:len||1};
       currentProject.parts[position].partName = name;
+
+      if (ignorePos8) {
+        currentProject.parts[8].partDetail = {name:'ignored', comment:'ignored', len:0, sequence: 'XXXXXXXX'};
+        currentProject.parts[8].partName = 'ignored';
+      } else if (resetPost8) {
+        currentProject.parts[8].partDetail = undefined;
+        currentProject.parts[8].partName = undefined;
+      }
+
       return {...state, currentProject}
     case LOAD_HISTORY: 
       {

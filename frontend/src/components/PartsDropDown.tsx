@@ -66,6 +66,7 @@ interface IProps extends RouteComponentProps {
 interface IState {
   nextButtonVisible: boolean;
   readyToSaveProjectHistory: boolean;
+  // pos8Ignored: boolean;
 }
 
 const mapStateToProps = (state: IStoreState) => ({
@@ -81,14 +82,18 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 class PartsDropDown extends React.Component<IProps, IState> {
   
   public static getDerivedStateFromProps (nextProps: IProps, prevState: IState) {
+    // let pos8Ignored:boolean = !!(nextProps.project.parts[7].selected && nextProps.project.parts[7].partDetail && nextProps.project.parts[7].partDetail.len === 2);
+
     const nextButtonVisible = nextProps.project.parts.every(
       (part)=> part.selected && part.partDetail!==undefined || !part.selected
     );
+
     const readyToSaveProjectHistory = (nextButtonVisible && !prevState.nextButtonVisible) 
     return {
       ...prevState,
       nextButtonVisible,
       readyToSaveProjectHistory,
+      // pos8Ignored,
     };
   }
 
@@ -102,6 +107,7 @@ class PartsDropDown extends React.Component<IProps, IState> {
     this.state = {
       nextButtonVisible: false,
       readyToSaveProjectHistory: false,
+      // pos8Ignored: false,
     }
   }
 
@@ -119,6 +125,10 @@ class PartsDropDown extends React.Component<IProps, IState> {
       {parts.map((part,i)=>
       <React.Fragment key={i}>
         {part.selected &&
+          (part.partName === 'ignored'
+          ?
+          <SelectionRow>position 9 is disabled</SelectionRow>
+          : 
           <SelectionRow >
             <PositionTitle>position {i+1}</PositionTitle>
             <SVGIcon>  
@@ -159,6 +169,7 @@ class PartsDropDown extends React.Component<IProps, IState> {
               </PartDetailDescription>
             </DropdownPanel>
           </SelectionRow>
+          )
         }
         </React.Fragment>
       )}

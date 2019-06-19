@@ -64,13 +64,18 @@ class Assemble extends React.Component<IProps, IState> {
         re.push({name: shortCuts[i].name, sequence: shortCuts[i].sequence})
         i++;
       } else {
-        re.push({name: selectedParts[j].partName, sequence: selectedParts[j].partDetail!.sequence})
+        if(selectedParts[j].partDetail) {
+          re.push({name: selectedParts[j].partName, sequence: selectedParts[j].partDetail!.sequence})
+        }
         j++;
       }
     }
     if (i===shortCuts.length) {
       while (j < selectedParts.length) {
-        re.push({name: selectedParts[j].partName, sequence: selectedParts[j].partDetail!.sequence})
+        // console.log(j);
+        if(selectedParts[j].partDetail) {
+          re.push({name: selectedParts[j].partName, sequence: selectedParts[j].partDetail!.sequence})
+        }
         j++;
       }
     } else {
