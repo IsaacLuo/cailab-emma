@@ -63,6 +63,13 @@ export function* logout(action: IAction) {
 function fillProjectDetail(project:IProject) {
   project.parts.forEach((part, i) => {
     if (part.partName) {
+      // if (part.partName === 'ignored') {
+      //   part.partDetail = {
+      //       name: 'ignored',
+      //       comment: 'ignored',
+      //       sequence: '',
+      //   }
+      // }
       const storeParts = STORE_PARTS[i].parts as IPartDetail[];
       part.partDetail = storeParts.find(v=>v.name === part.partName)
     }

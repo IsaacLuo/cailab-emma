@@ -69,10 +69,7 @@ function appReducer(state: IAppState = DEFAULT_STATE, action: IAction) {
       const {position, detail} = action.data;
 
       const ignorePos8 = (position === 7
-        && detail.len === 2
-        && state.currentProject.parts[7] 
-        && state.currentProject.parts[7].partDetail 
-        && state.currentProject.parts[7].partDetail.len === 1)
+        && detail.len === 2)
       const resetPost8 = (position === 7
         && (detail.len === undefined || detail.len === 1)
         && state.currentProject.parts[7] 
