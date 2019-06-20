@@ -18,6 +18,7 @@ STASH_HISTORY,
 LOGOUT_DONE,
 DELETE_PROJECT,
 PROJECT_DELETED,
+GO_TO_STEP_3,
 } from './actions';
 
 import STORE_PARTS from '../parts.json';
@@ -156,6 +157,17 @@ export function* deleteProject(action: IAction) {
   }
 }
 
+export function* gotoStep3(action:IAction) {
+  try {
+    const project:IProject = action.data.project;
+    const callback:()=>{} = action.data.callback;
+    const response = yield call(axios.put, conf.serverURL + `/api/project/${project._id}`, project, {withCredentials: true});
+    callback();
+  } catch (error) {
+    console.warn('unable to logout');
+  }
+}
+
 export function* watchUsers() {
   yield takeLatest(GET_CURENT_USER, getCurrentUser);
   yield takeLatest(LOGOUT, logout);
@@ -165,6 +177,7 @@ export function* watchUsers() {
   yield takeLatest(SAVE_PROJECT_HISTORY, saveProjectHistory);
   yield takeLatest(DELETE_HISTORY, deleteHistory);
   yield takeLatest(DELETE_PROJECT, deleteProject);
+  yield takeLatest(GO_TO_STEP_3, gotoStep3);
 }
 
 export default function* rootSaga() {

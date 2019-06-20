@@ -12,6 +12,7 @@ import {
   SAVE_PROJECT_HISTORY,
   SET_CURRENT_PROJECT,
   SET_PART_DETAIL,
+  GO_TO_STEP_3,
 } from '../redux/actions';
 import {Dropdown, Button, Breadcrumb} from 'react-bootstrap';
 import {SHORTCUTS} from '../graphElements';
@@ -62,6 +63,7 @@ interface IProps extends RouteComponentProps {
   onLoadProject: (projectId: string) => void;
   setPartDetail: (position: number, detal:IPartDetail) => void;
   saveProjectHistory: (project: IProject) => void;
+  gotoStep3: (project: IProject, callback:()=>void) => void;
 }
 interface IState {
   nextButtonVisible: boolean;
@@ -77,6 +79,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   onLoadProject: (projectId: string) => dispatch({type: GET_PROJECT, data: projectId}),
   setPartDetail: (position: number, detail:IPartDetail) => dispatch({type: SET_PART_DETAIL, data: {position, detail}}),
   saveProjectHistory: (project: IProject) => dispatch({type:SAVE_PROJECT_HISTORY, data: project}),
+  gotoStep3: (project: IProject, callback:()=>void) => dispatch({type:GO_TO_STEP_3, data: {project, callback}}),
 });
 
 class PartsDropDown extends React.Component<IProps, IState> {
@@ -175,9 +178,9 @@ class PartsDropDown extends React.Component<IProps, IState> {
       )}
       {this.state.nextButtonVisible &&
         <div>
-          <Link to={`/project/${(this.props.match.params as any).id}/step3`}>
+          {/* <Link to={`/project/${(this.props.match.params as any).id}/step3`}> */}
           <Button variant="primary" size="lg" onClick={this.onClickNext}>next</Button>
-          </Link>
+          {/* </Link> */}
         </div>
       }
     </Panel>
@@ -185,10 +188,10 @@ class PartsDropDown extends React.Component<IProps, IState> {
   }
 
   public componentDidUpdate () {
-    const {readyToSaveProjectHistory} = this.state;
-    if (readyToSaveProjectHistory) {
-      this.props.saveProjectHistory(this.props.project);
-    }
+    // const {readyToSaveProjectHistory} = this.state;
+    // if (readyToSaveProjectHistory) {
+      // this.props.saveProjectHistory(this.props.project);
+    // }
   }
   private onClickSelectedPart = (position:number, detail:IPartDetail) => {
     console.log(position,detail);
@@ -197,9 +200,14 @@ class PartsDropDown extends React.Component<IProps, IState> {
     
   }
   private onClickNext = () => {
+    // save projectHistory
+    this.props.gotoStep3(this.props.project, ()=>{
+      this.props.history.push(`/project/${(this.props.match.params as any).id}/step3`);
+    });
     // if(this.props.onClickNext){
     //   this.props.onClickNext(this.state.selectedParts);
     // }
+    
   }
 }
 

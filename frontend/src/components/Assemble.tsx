@@ -50,7 +50,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 class Assemble extends React.Component<IProps, IState> {
   public static getDerivedStateFromProps(props:IProps, state:IState) {
     const shortCuts = props.project.connectorIndexes.map(v=>CONNECTORS[v]);
-    const selectedParts = props.project.parts.filter(part=>part.selected);
+    const selectedParts = props.project.parts.filter(part=>part.selected && part.partName!=='ignored');
 
     // merge sort
     let i=0;
@@ -154,8 +154,10 @@ class Assemble extends React.Component<IProps, IState> {
   private generateGenbank (parts:any[]) {
     const dnaSeq = new DNASeq({
       sequence: vectorReceiver.seqeunce,
-      features: vectorReceiver.features,
+      features: [...vectorReceiver.features],
     });
+
+    // console.log(dnaSeq, parts);
 
     parts.forEach(part => {
       
