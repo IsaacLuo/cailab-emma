@@ -569,7 +569,7 @@ class PartSelector extends React.Component<IProps, IState> {
         key={i}
       >
         {
-          partGroup.map((part, j) =>
+          partGroup.filter((part,j)=>part.len!==2).map((part, j) =>
           <image
             key={`${i}.${j}`}
             x={w * i + 10}
