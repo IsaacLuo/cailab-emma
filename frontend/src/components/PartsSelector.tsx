@@ -366,6 +366,7 @@ class PartSelector extends React.Component<IProps, IState> {
         </g>
         <g transform={`translate(${this.baseX},${this.baseY})`}>
           {this.genParts()}
+          {this.genSpecialParts()}
         </g>
         <g transform={`translate(${this.baseX},${this.baseY + 300})`}>
           {this.genSelectedParts()}
@@ -532,12 +533,14 @@ class PartSelector extends React.Component<IProps, IState> {
       :
       <text x='0' y='-10'>choose some parts to build a path</text>
       }
-      {renderingParts.map((partGroup, i) =>
-        <g
+      {renderingParts.map((partGroup, i) => {
+        const singlePartGroup = partGroup.filter((part,j)=>part.len!==2)
+        const pos8 = partGroup.findIndex((part,j)=>part.len===2);
+        return <g
           key={i}
         >
           {
-            partGroup.map((part, j) =>
+            singlePartGroup.map((part, j) =>
             <image
               key={`${i}.${j}`}
               x={w * i + 10}
@@ -549,13 +552,38 @@ class PartSelector extends React.Component<IProps, IState> {
             x={w * i}
             y={0}
             width={w}
-            height={w * partGroup.length}
+            height={w * singlePartGroup.length}
             fill='#00ff0033'
             stroke='black'
             strokeWidth='1'
           />
-        </g>,
-        )
+          {
+            partsProp[7].selected && partsProp[8].selected &&
+            <g>
+              {
+                partGroup.filter((part,j)=>part.len===2).map((part, j) =>
+                <image
+                  key={`${j}`}
+                  x={w * i + 35}
+                  y={j * 50 + 60}
+                  width='30' height='30' xlinkHref={part.icon}
+                />)
+              }
+              {partGroup.filter((part,j)=>part.len===2).length > 0 &&
+              <rect
+                x={w * i}
+                y={50}
+                width={w * 2}
+                height={w * 2}
+                fill='#00ff0033'
+                stroke='black'
+                strokeWidth='1'
+              />
+              }
+            </g>
+          } 
+        </g>
+        })
       }
     </g>;
   }
@@ -581,7 +609,7 @@ class PartSelector extends React.Component<IProps, IState> {
           x={w * i}
           y={0}
           width={w}
-          height={w * partGroup.length}
+          height={w * partGroup.filter((part,j)=>part.len!==2).length}
           fill={partsProp[i].activated ? (partsProp[i].selected ? '#00ff0033' : '#ffff0033') : '#77777777'}
           stroke='black'
           strokeWidth='1'
@@ -598,6 +626,32 @@ class PartSelector extends React.Component<IProps, IState> {
         }
       </g>,
       );
+  }
+
+  private genSpecialParts() {
+    const parts = this.partNames[7].filter(part=>part.len===2);
+    const {partsProp} = this.state;
+    
+    return <g>
+      {parts.map((part, j)=><image
+            key={`${j}`}
+            x={50 * 7.5 + 10}
+            y={j * 50 + 60}
+            width='30' height='30' xlinkHref={part.icon}
+          />)}
+      <rect
+          x={50 * 7}
+          y={50}
+          width={100}
+          height={50 * parts.length}
+          fill={partsProp[7].activated && partsProp[8].activated? (partsProp[7].selected && partsProp[8].selected ? '#00ff0033' : '#ffff0033') : '#77777777'}
+          stroke='black'
+          strokeWidth='1'
+          style={{cursor: 'pointer'}}
+          className='clickable'
+          onClick={this.clickPart.bind(this, 7)}
+        />
+    </g>
   }
 
   private genShortcuts() {
