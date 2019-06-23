@@ -24,6 +24,7 @@ import ProjectWizard from './components/ProjectWizard';
 
 import 'react-notifications/lib/notifications.css';
 import { NotificationContainer } from 'react-notifications';
+import ProtocolView from './components/ProtocolView';
 
 
 const CenterDiv = styled.div`
@@ -90,9 +91,15 @@ class App extends Component<any, IState> {
           />
 
           <Route
+            path='/project/:id/protocols/human/manual'
+            component = {ProtocolView}
+          />
+
+          <Route
             path='/projectWizard'
             component = {ProjectWizard}
           />
+          
 
         </React.Fragment>
       }/>
