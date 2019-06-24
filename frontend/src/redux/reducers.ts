@@ -23,6 +23,7 @@ import {
   LOGOUT_DONE,
   PROJECT_DELETED,
   DELETE_PROJECT,
+  SET_ASSEMBLY,
 } from './actions';
 
 const defaultUser: IUserInfo = {
@@ -41,6 +42,7 @@ const DEFAULT_STATE: IAppState = {
   currentUser: defaultUser,
   myProjects: [],
   currentProject: defaultCurrentProject,
+  currentAssembly: undefined,
   stashHistory: undefined,
 };
 
@@ -134,6 +136,8 @@ function appReducer(state: IAppState = DEFAULT_STATE, action: IAction) {
       {
         return {...state, myProjects: state.myProjects.filter(v=>v._id !== action.data)}
       }
+    case SET_ASSEMBLY:
+      return {...state, currentAssembly: action.data};
   }
   return state;
 }

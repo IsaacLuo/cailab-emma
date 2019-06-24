@@ -7,9 +7,12 @@ import {IFeature, DNASeq} from '../gbGenerator';
 import vectorReceiver from '../vectorReceiver.json';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { connect } from 'react-redux';
-import { IStoreState, IPartDetail, IProject } from '../types.js';
+import { IStoreState, IPartDetail, IProject, IPartSequence } from '../types.js';
 import { Dispatch } from 'redux';
-import { GET_PROJECT } from '../redux/actions';
+import { 
+  GET_PROJECT,
+  SET_ASSEMBLY,
+} from '../redux/actions';
 
 const Panel = styled.div`
   margin:100px;
@@ -32,19 +35,23 @@ interface IProps extends RouteComponentProps {
   selectedShortcuts: any[],
   onLoadProject: (projectId: string) => void,
   onClickNext?: (selectedParts:any)=>void,
+  setAssembly: (finalParts: IPartSequence[])=>void,
   project: IProject;
+  assembly?: IPartSequence[];
 }
 interface IState {
-  finalParts: any[],
+  finalParts: IPartSequence[],
   genbank: string,
 }
 
 const mapStateToProps = (state: IStoreState) => ({
   project: state.app.currentProject,
+  assembly: state.app.currentAssembly,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   onLoadProject: (projectId: string) => dispatch({type: GET_PROJECT, data: projectId}),
+  setAssembly: (finalParts:IPartSequence[])=> dispatch({type:SET_ASSEMBLY, data:finalParts}),
 });
 
 class Assemble extends React.Component<IProps, IState> {
@@ -55,7 +62,7 @@ class Assemble extends React.Component<IProps, IState> {
     // merge sort
     let i=0;
     let j=0;
-    const re = [];
+    const re:IPartSequence[] = [];
 
     while(i<shortCuts.length && j<selectedParts.length) {
       const idxI = shortCuts[i].pos[0];
@@ -65,7 +72,7 @@ class Assemble extends React.Component<IProps, IState> {
         i++;
       } else {
         if(selectedParts[j].partDetail) {
-          re.push({name: selectedParts[j].partName, sequence: selectedParts[j].partDetail!.sequence})
+          re.push({name: selectedParts[j].partName!, sequence: selectedParts[j].partDetail!.sequence!})
         }
         j++;
       }
@@ -74,7 +81,7 @@ class Assemble extends React.Component<IProps, IState> {
       while (j < selectedParts.length) {
         // console.log(j);
         if(selectedParts[j].partDetail) {
-          re.push({name: selectedParts[j].partName, sequence: selectedParts[j].partDetail!.sequence})
+          re.push({name: selectedParts[j].partName!, sequence: selectedParts[j].partDetail!.sequence!})
         }
         j++;
       }
@@ -146,6 +153,7 @@ class Assemble extends React.Component<IProps, IState> {
       </Table>
       <div>
         <Button variant="primary" size="lg" onClick={this.downloadGenbank}>download genbank</Button>
+        <Button variant="primary" size="lg" onClick={this.onClickManualProtocol}>Manual Protocol</Button>
       </div>
     </Panel>
     </React.Fragment>
@@ -190,6 +198,11 @@ class Assemble extends React.Component<IProps, IState> {
 
     // Remove anchor from body
     document.body.removeChild(a);
+  }
+
+  private onClickManualProtocol = () => {
+    this.props.setAssembly(this.state.finalParts);
+    this.props.history.push(`/project/${this.props.project._id}/protocols/human/manual`);
   }
 }
 

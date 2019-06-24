@@ -4,6 +4,11 @@ export interface IUserInfo {
   groups: string[];
 }
 
+export interface IPartSequence {
+  name:string,
+  sequence: string,
+}
+
 export interface IPartDetail {
   name: string,
   // labName: string,
@@ -46,6 +51,7 @@ export interface IAppState {
   myProjects: IProject[];
   currentProject: IProject;
   stashHistory?: IProject;
+  currentAssembly?: IPartSequence[];
 }
 export interface IPartSelectorState {
   resetCount: number;

@@ -8,7 +8,7 @@ import {IFeature, DNASeq} from '../gbGenerator';
 import vectorReceiver from '../vectorReceiver.json';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { connect } from 'react-redux';
-import { IStoreState, IPartDetail, IProject } from '../types.js';
+import { IStoreState, IPartDetail, IProject, IPartSequence } from '../types.js';
 import { Dispatch } from 'redux';
 import { GET_PROJECT } from '../redux/actions';
 
@@ -30,6 +30,7 @@ const Li = styled.li`
 
 interface IProps extends RouteComponentProps {
   project: IProject;
+  assembly?: IPartSequence[];
   onLoadProject: (projectId: string) => void,
   
 }
@@ -38,6 +39,7 @@ interface IState {
 
 const mapStateToProps = (state: IStoreState) => ({
   project: state.app.currentProject,
+  assembly: state.app.currentAssembly,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -65,7 +67,8 @@ class ProtocolView extends React.Component<IProps, IState> {
   }
   public render() {
 
-    const sampleCount = this.props.project.parts.filter(v=>v.selected).length + this.props.project.connectorIndexes.length;
+    // const sampleCount = this.props.project.parts.filter(v=>v.selected).length + this.props.project.connectorIndexes.length;
+    const sampleCount = this.props.assembly? this.props.assembly.length : 0;
 
     return <React.Fragment>
       <Breadcrumb>
@@ -132,21 +135,49 @@ class ProtocolView extends React.Component<IProps, IState> {
           </tr>
         </Table>
         <Li>
-          Next, place on ice as many 0.2 mL PCR tubes as assemblies 
-          to be carried out. To each tube, add an equimolar amount of 
-          each part plasmid (13 fmol)
-          and 0.5 µL of the receiver vector (10 ng/µL). 
-          Add nuclease-free water to a final volume of 8.15 µL . 
+          Next, place on ice {sampleCount} 0.2mL PCR tubes. To each tube, add an equimolar amount of 
+          each part plasmid (13fmol)
+          and 0.5µL of the receiver vector (10 ng/µL). 
+          Add nuclease-free water to a final volume of 8.15µL. 
         </Li>
+        <Table bordered hover>
+          <tr>
+            <th></th>
+            <th>part</th>
+            <th>length</th>
+            <th>ng</th>
+            <th>µL</th>
+          </tr>
+          {
+            this.props.assembly!.map((v,i)=><tr>
+              <td>{i+1}</td>
+              <td>{v.name}</td>
+              <td>{v.sequence.length}</td>
+              <td>{this.calcDNAMass(13, v.sequence.length).toFixed(3)}ng</td>
+              <td>{this.calcDNAVolume(this.calcDNAMass(13, v.sequence.length)).toFixed(3)}µL</td>
+            </tr>)
+          }
+        </Table>
       </ol>
     </Panel>
     </React.Fragment>
   }
 
-  private calcDNAMass(mol:number, dnaLen:number) {
-    return mol * dnaLen * 617.96 + 36.04;
+  /**
+   * 
+   * @param fmol 
+   * @param dnaLen 
+   * @return ng
+   */
+  private calcDNAMass(fmol:number, dnaLen:number) {
+    return fmol * (dnaLen * 0.00061796 + 0.00003604);
   }
 
+  /**
+   * 
+   * @param mass in ng
+   * @return μL
+   */
   private calcDNAVolume(mass:number) {
     return mass / 50;
   }
