@@ -1,5 +1,5 @@
 import {
-  IProject, IPartDetail,
+  IProject, IPartDetail, IPartSequence,
 } from '../types';
 import {
   LOGIN,
@@ -19,6 +19,9 @@ LOGOUT_DONE,
 DELETE_PROJECT,
 PROJECT_DELETED,
 GO_TO_STEP_3,
+SAVE_ASSEMBLY,
+GET_ASSEMBLY,
+SET_ASSEMBLY,
 } from './actions';
 
 import STORE_PARTS from '../parts.json';
@@ -168,6 +171,28 @@ export function* gotoStep3(action:IAction) {
   }
 }
 
+export function* saveAssembly(action:IAction) {
+  try {
+    const projectId:string = action.data.projectId;
+    const finalParts:IPartSequence[] = action.data.finalParts;
+    
+    const response = yield call(axios.put, conf.serverURL + `/api/project/${projectId}/assembly`, finalParts, {withCredentials: true});
+    
+  } catch (error) {
+    console.warn('unable to logout');
+  }
+}
+
+export function* getAssembly(action:IAction) {
+  try {
+    const projectId:string = action.data;
+    const response = yield call(axios.get, conf.serverURL + `/api/project/${projectId}/assembly`, {withCredentials: true});
+    yield put({type: SET_ASSEMBLY, data:response.data});
+  } catch (error) {
+    console.warn('unable to logout');
+  }
+}
+
 export function* watchUsers() {
   yield takeLatest(GET_CURENT_USER, getCurrentUser);
   yield takeLatest(LOGOUT, logout);
@@ -178,6 +203,8 @@ export function* watchUsers() {
   yield takeLatest(DELETE_HISTORY, deleteHistory);
   yield takeLatest(DELETE_PROJECT, deleteProject);
   yield takeLatest(GO_TO_STEP_3, gotoStep3);
+  yield takeLatest(SAVE_ASSEMBLY, saveAssembly);
+  yield takeLatest(GET_ASSEMBLY, getAssembly);
 }
 
 export default function* rootSaga() {

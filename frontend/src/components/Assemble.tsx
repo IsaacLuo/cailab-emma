@@ -12,6 +12,7 @@ import { Dispatch } from 'redux';
 import { 
   GET_PROJECT,
   SET_ASSEMBLY,
+  SAVE_ASSEMBLY,
 } from '../redux/actions';
 
 const Panel = styled.div`
@@ -36,6 +37,7 @@ interface IProps extends RouteComponentProps {
   onLoadProject: (projectId: string) => void,
   onClickNext?: (selectedParts:any)=>void,
   setAssembly: (finalParts: IPartSequence[])=>void,
+  saveAssembly: (projectId:string, finalParts: IPartSequence[])=>void,
   project: IProject;
   assembly?: IPartSequence[];
 }
@@ -52,6 +54,7 @@ const mapStateToProps = (state: IStoreState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   onLoadProject: (projectId: string) => dispatch({type: GET_PROJECT, data: projectId}),
   setAssembly: (finalParts:IPartSequence[])=> dispatch({type:SET_ASSEMBLY, data:finalParts}),
+  saveAssembly: (projectId:string, finalParts:IPartSequence[])=> dispatch({type:SAVE_ASSEMBLY, data:{projectId, finalParts}}),
 });
 
 class Assemble extends React.Component<IProps, IState> {
@@ -201,6 +204,7 @@ class Assemble extends React.Component<IProps, IState> {
   }
 
   private onClickManualProtocol = () => {
+    this.props.saveAssembly(this.props.project._id!, this.state.finalParts);
     this.props.setAssembly(this.state.finalParts);
     this.props.history.push(`/project/${this.props.project._id}/protocols/human/manual`);
   }

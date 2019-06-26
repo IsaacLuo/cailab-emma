@@ -10,7 +10,9 @@ import { withRouter, RouteComponentProps } from 'react-router';
 import { connect } from 'react-redux';
 import { IStoreState, IPartDetail, IProject, IPartSequence } from '../types.js';
 import { Dispatch } from 'redux';
-import { GET_PROJECT } from '../redux/actions';
+import { GET_ASSEMBLY } from '../redux/actions';
+
+const backboneLength = 1839;
 
 const Panel = styled.div`
   margin:100px;
@@ -43,7 +45,7 @@ const mapStateToProps = (state: IStoreState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onLoadProject: (projectId: string) => dispatch({type: GET_PROJECT, data: projectId}),
+  onLoadProject: (projectId: string) => dispatch({type: GET_ASSEMBLY, data: projectId}),
 });
 
 class ProtocolView extends React.Component<IProps, IState> {
@@ -59,17 +61,15 @@ class ProtocolView extends React.Component<IProps, IState> {
       this.props.onLoadProject(projectId);
     }
 
-    // this.state = {
-    //   finalParts: [],
-    //   genbank: '',
-    // }
-
   }
   public render() {
+    if (!this.props.assembly) {
+      return <div>loading</div>
+    }
 
     // const sampleCount = this.props.project.parts.filter(v=>v.selected).length + this.props.project.connectorIndexes.length;
     const sampleCount = this.props.assembly? this.props.assembly.length : 0;
-
+    
     return <React.Fragment>
       <Breadcrumb>
         <Breadcrumb.Item href='/projects'>Home</Breadcrumb.Item>
@@ -149,13 +149,16 @@ class ProtocolView extends React.Component<IProps, IState> {
             <th>µL</th>
           </tr>
           {
-            this.props.assembly!.map((v,i)=><tr>
-              <td>{i+1}</td>
-              <td>{v.name}</td>
-              <td>{v.sequence.length}</td>
-              <td>{this.calcDNAMass(13, v.sequence.length).toFixed(3)}ng</td>
-              <td>{this.calcDNAVolume(this.calcDNAMass(13, v.sequence.length)).toFixed(3)}µL</td>
-            </tr>)
+            this.props.assembly!.map((v,i)=>{
+              const vectorLen = v.sequence.length+backboneLength;
+              const dnaMass = this.calcDNAMass(13, vectorLen);
+              return <tr>
+                <td>{i+1}</td>
+                <td>{v.name}</td>
+                <td>{vectorLen}</td>
+                <td>{dnaMass.toFixed(3)}ng</td>
+                <td>{this.calcDNAVolume(dnaMass).toFixed(3)}µL</td>
+              </tr>})
           }
         </Table>
       </ol>

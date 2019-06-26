@@ -6,7 +6,7 @@ import Router from 'koa-router';
 import log4js from 'log4js';
 import conf from '../conf';
 import crypto from 'crypto';
-import {Project} from './models';
+import {Project, Assembly} from './models';
 import jwt from 'jsonwebtoken';
 import cors from 'koa-cors';
 
@@ -235,6 +235,22 @@ async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> 
     ctx.throw(404);
   }
 
+});
+
+
+router.get('/api/project/:id/assembly',
+userMust(beAnyOne, beUser, beGuest),
+async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> {
+  const {id} = ctx.params;
+  const assembly = await Assembly.findOne({project:id}).exec();
+  ctx.body = assembly.finalParts;
+});
+
+router.put('/api/project/:id/assembly',
+userMust(beAnyOne, beUser, beGuest),
+async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> {
+  const {id} = ctx.params;
+  ctx.body = await Assembly.update({project:id}, {_id:id, project:id, finalParts:ctx.request.body}, {upsert:true}).exec();
 });
 
 

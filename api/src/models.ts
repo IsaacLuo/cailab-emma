@@ -51,3 +51,25 @@ export interface IProjectModel extends IProject, Document{
 }
 
 export const Project:Model<IProjectModel> = mongoose.model('Project', ProjectSchema, 'projects');
+
+export const AssemblySchema = new Schema({
+  project: {
+    type: Schema.Types.ObjectId,
+    ref: 'Project',
+  },
+  finalParts: [{
+    name: String,
+    sequence: String,
+  }]
+});
+
+export interface IAssembly {
+  project: string|IProjectModel,
+  finalParts: Array<{
+    name: string,
+    sequence: string,
+  }>
+}
+
+export interface IAssemblyModel extends IAssembly, Document {}
+export const Assembly:Model<IAssemblyModel> = mongoose.model('Assembly', AssemblySchema, 'assemblies');

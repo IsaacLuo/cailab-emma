@@ -21,3 +21,5 @@ export const STASH_HISTORY = 'STASH_HISTORY';
 export const PROJECT_DELETED = 'PROJECT_DELETED';
 export const GO_TO_STEP_3 = 'GO_TO_STEP_3';
 export const SET_ASSEMBLY = 'SET_ASSEMBLY';
+export const SAVE_ASSEMBLY = 'SAVE_ASSEMBLY';
+export const GET_ASSEMBLY = 'GET_ASSEMBLY';
