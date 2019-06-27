@@ -12,7 +12,8 @@ import { IStoreState, IPartDetail, IProject, IPartSequence } from '../types.js';
 import { Dispatch } from 'redux';
 import { GET_ASSEMBLY } from '../redux/actions';
 
-const backboneLength = 1839;
+// const backboneLength = 1839;
+const backboneLength = 1840;
 
 const Panel = styled.div`
   margin:100px;
@@ -48,7 +49,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   onLoadProject: (projectId: string) => dispatch({type: GET_ASSEMBLY, data: projectId}),
 });
 
-class ProtocolView extends React.Component<IProps, IState> {
+class AutoProtocolView extends React.Component<IProps, IState> {
   // public static getDerivedStateFromProps(props:IProps, state:IState) {
   //   return {finalParts: re};
   // }
@@ -75,7 +76,7 @@ class ProtocolView extends React.Component<IProps, IState> {
         <Breadcrumb.Item href='/projects'>Home</Breadcrumb.Item>
         <Breadcrumb.Item href={`/project/${this.props.project._id}`}>step 1</Breadcrumb.Item>
         <Breadcrumb.Item href={`/project/${this.props.project._id}/step2`}>step 2</Breadcrumb.Item>
-        <Breadcrumb.Item href={`/project/${this.props.project._id}/step3`}>step 2</Breadcrumb.Item>
+        <Breadcrumb.Item href={`/project/${this.props.project._id}/step3`}>step 3</Breadcrumb.Item>
         <Breadcrumb.Item active>step 4: generate protocol ({this.props.project.name})</Breadcrumb.Item>
       </Breadcrumb>
     <Panel>
@@ -86,50 +87,50 @@ class ProtocolView extends React.Component<IProps, IState> {
         Equipment/Reagents:
       </Title2>
       <ul>
-      <Li>Thermocycler</Li>
-      <Li>T4 DNA ligase 400U/µL (NEB: M0202S)</Li>
-      <Li>10X T4 ligase reaction buffer (included in NEB: M0202S)</Li>
-      <Li>Bovine serum albumin (BSA) (NEB: B9000S)</Li>
-      <Li>Fast digest Esp3I (Thermo Fisher Scientific: FD0454)</Li>
-      <Li>Plasmid-Safe™ ATP-dependent DNase 10 U/µL (Epicenter: E3110K)</Li>
-      <Li>ATP solution, 25 mM (included in Epicenter: E3110K)</Li>
-      <Li>Part plasmids (50 ng/µL)</Li>
-      <Li>Receiver plasmid (10 ng/µL)</Li>
+        <Li>Echo 550 liquid handler (Labcyte)</Li>
+        <Li>Echo 550 qualified 384-well polypropylene source plate (384PP, Labycte LP-0200)</Li>
+        <Li>Echo 550 qualified 384-well low dead volume source plate (384LDV, Labcyte PP-0200)</Li>
+        <Li>96-well PCR plate defined in the Echo labware list (e.g. Eppendorf, Bio-rad)</Li>
+        <Li>96-well thermocycler</Li>
+
+        <Li>T4 DNA ligase 400U/µL (NEB: M0202S)</Li>
+        <Li>10X T4 ligase reaction buffer (included in NEB: M0202S)</Li>
+        <Li>Bovine serum albumin (BSA) (NEB: B9000S)</Li>
+        <Li>Fast digest Esp3I (Thermo Fisher Scientific: FD0454)</Li>
+        <Li>Plasmid-Safe™ ATP-dependent DNase 10 U/µL (Epicenter: E3110K)</Li>
+        <Li>ATP solution, 25 mM (included in Epicenter: E3110K)</Li>
+        <Li>Part plasmids (50 ng/µL) </Li>
+        <Li>Receiver plasmid (10 ng/µL)</Li>
       </ul>
       <ol>
-        <Li>On ice, prepare a Golden Gate assembly MM. For each reaction, mix together
-            1 µL 10X T4 DNA Ligase Reaction Buffer, 0.1 µL BSA, 0.5 µL FastDigest Esp3I
-            and 0.25 µL T4 DNA ligase 400 U/µL. Multiply the volume for each component
-            by the number of reactions. Mix the final solution gently.
+        <Li>
+          On ice, prepare a Golden Gate assembly MM. For each reaction, mix together 1 µL 10X T4 DNA Ligase Reaction Buffer,
+          0.1 µL BSA, 0.5 µL FastDigest Esp3I and 0.25 µL T4 DNA ligase 400 U/µL. Multiply the volume for each component by 
+          the number of reactions. Mix the final solution gently.
         </Li>
         <Table bordered hover>
           <tr>
-            <th></th>
-            <th>volume per component</th>
-            <th>volume for {sampleCount} items</th>
-          </tr>
-          <tr>
             <th>Reagent</th>
-            <td>10μL reaction</td>
-            <td>{sampleCount*10}μL reaction</td>
+            <th>/10µL reaction</th>
+            <th>For {sampleCount} master mix</th>
           </tr>
           <tr>
-            <th>T4 Ligase Reaction Buffer</th>
+            <td>T4 Ligase Reaction Buffer</td>
             <td>1µL</td>
-            <td>{sampleCount*1}μL</td>
+            <td>{sampleCount*1}μL reaction</td>
           </tr>
           <tr>
-            <th>BSA</th>
+            <td>BSA</td>
             <td>0.1µL</td>
             <td>{(sampleCount*0.1).toFixed(2)}μL</td>
           </tr>
           <tr>
-            <th>Fast Digest Esp3I</th>
+            <td>Fast Digest Esp3I</td>
             <td>0.5µL</td>
             <td>{(sampleCount*0.5).toFixed(2)}μL</td>
           </tr>
           <tr>
-            <th>T4 DNA Ligase</th>
+            <td>T4 DNA Ligase</td>
             <td>0.25µL</td>
             <td>{(sampleCount*0.25).toFixed(2)}μL</td>
           </tr>
@@ -147,20 +148,69 @@ class ProtocolView extends React.Component<IProps, IState> {
             <th>length</th>
             <th>ng</th>
             <th>µL</th>
+            <th>water(µL)</th>
           </tr>
           {
             this.props.assembly!.map((v,i)=>{
               const vectorLen = v.sequence.length+backboneLength;
               const dnaMass = this.calcDNAMass(13, vectorLen);
+              const dnaVolume = this.calcDNAVolume(dnaMass);
               return <tr>
                 <td>{i+1}</td>
                 <td>{v.name}</td>
                 <td>{vectorLen}</td>
                 <td>{dnaMass.toFixed(3)}ng</td>
-                <td>{this.calcDNAVolume(dnaMass).toFixed(3)}µL</td>
+                <td>{dnaVolume.toFixed(3)}µL</td>
+                <td>{(8.15-dnaVolume).toFixed(3)}µL</td>
               </tr>})
           }
         </Table>
+        <Li>
+          Distribute 1.85 µL of the Golden Gate MM into each of the tubes containing the parts and the receiver vector to a final volume of 10 µL. Mix gently.
+        </Li>
+        <Li>
+          Place the tubes into a thermocycler and run the following program:
+          <br/>
+          Step 1: 37 °C for 5 min
+          <br/>
+          Step 2: 37 °C for 5 min
+          <br/>
+          Step 3: 16 °C for 10 min (Go to step 2 and cycle 30 times)
+          <br/>
+          Step 4: 16 °C for 20 min
+          <br/>
+          Step 5: 37 °C for 30 min
+          <br/>
+          Step 6: 75 °C for 6 min
+          <br/>
+          Step 7: 4 °C hold
+          <br/>
+        </Li>
+        <Li>
+          Next, on ice prepare a Plasmid-Safe™ ATP-Dependent DNase mix. 
+          For each sample, mix together 0.25 µL of Plasmid-Safe™ ATP-Dependent DNase 10 U/µL and 0.5 µL of 25 mM ATP solution. 
+          Distribute 0.75µL ({(0.75*sampleCount).toFixed(2)}µL totally) in each Golden Gate reaction tube. Mix gently and incubate at 37 °C for 15 min.
+        </Li>
+        <Table bordered hover>
+          <tr>
+            <th>Reagent</th>
+            <th>/ manual 10µL reaction</th>
+            <th>for {sampleCount} samples</th>
+          </tr>
+          <tr>
+            <td>Plasmid-Safe™ ATP-Dependent DNase 10 U/µL</td>
+            <td>0.25µL</td>
+            <td>{(0.25*sampleCount).toFixed(2)}µL</td>
+          </tr>
+          <tr>
+            <td>25 mM ATP solution</td>
+            <td>0.5µL</td>
+            <td>{(0.5*sampleCount).toFixed(2)}µL</td>
+          </tr>
+        </Table>
+        <Li>
+          Place the tubes on ice and proceeded with bacterial transformation, plating on LB+Amp.
+        </Li>
       </ol>
     </Panel>
     </React.Fragment>
@@ -186,4 +236,4 @@ class ProtocolView extends React.Component<IProps, IState> {
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProtocolView));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AutoProtocolView));

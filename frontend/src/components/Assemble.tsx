@@ -157,6 +157,7 @@ class Assemble extends React.Component<IProps, IState> {
       <div>
         <Button variant="primary" size="lg" onClick={this.downloadGenbank}>download genbank</Button>
         <Button variant="primary" size="lg" onClick={this.onClickManualProtocol}>Manual Protocol</Button>
+        <Button variant="primary" size="lg" onClick={this.onClickAutoProtocol}>Automatic Protocol</Button>
       </div>
     </Panel>
     </React.Fragment>
@@ -207,6 +208,12 @@ class Assemble extends React.Component<IProps, IState> {
     this.props.saveAssembly(this.props.project._id!, this.state.finalParts);
     this.props.setAssembly(this.state.finalParts);
     this.props.history.push(`/project/${this.props.project._id}/protocols/human/manual`);
+  }
+
+  private onClickAutoProtocol = () => {
+    this.props.saveAssembly(this.props.project._id!, this.state.finalParts);
+    this.props.setAssembly(this.state.finalParts);
+    this.props.history.push(`/project/${this.props.project._id}/protocols/human/automatic`);
   }
 }
 
