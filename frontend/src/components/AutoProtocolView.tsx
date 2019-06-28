@@ -31,6 +31,11 @@ const Title2 = styled.h2`
 const Li = styled.li`
 `;
 
+const WellNameInput = styled.input`
+  width: 50px;
+  padding: 5px;
+`;
+
 interface IProps extends RouteComponentProps {
   project: IProject;
   assembly?: IPartSequence[];
@@ -38,6 +43,8 @@ interface IProps extends RouteComponentProps {
   
 }
 interface IState {
+  masterMixWellName:string;
+  waterWellName:string;
 }
 
 const mapStateToProps = (state: IStoreState) => ({
@@ -62,6 +69,11 @@ class AutoProtocolView extends React.Component<IProps, IState> {
       this.props.onLoadProject(projectId);
     }
 
+    this.state = {
+      masterMixWellName:'A1',
+      waterWellName:'A2',
+    }
+
   }
   public render() {
     if (!this.props.assembly) {
@@ -70,6 +82,9 @@ class AutoProtocolView extends React.Component<IProps, IState> {
 
     // const sampleCount = this.props.project.parts.filter(v=>v.selected).length + this.props.project.connectorIndexes.length;
     const sampleCount = this.props.assembly? this.props.assembly.length : 0;
+    const partVolumes = this.props.assembly.map(v=>this.calcDNAVolume(this.calcDNAMass(1.3, v.sequence.length+backboneLength)));
+    const partVolumesSum = partVolumes.reduce((a,b)=>a+b)
+    const masterMixVolumeNL = Math.floor(235 + partVolumesSum*1000)
     
     return <React.Fragment>
       <Breadcrumb>
@@ -112,7 +127,7 @@ class AutoProtocolView extends React.Component<IProps, IState> {
           <tr>
             <th>Reagent</th>
             <th>/10µL reaction</th>
-            <th>For {sampleCount} master mix</th>
+            <th>For {sampleCount*1.85}µL master mix</th>
           </tr>
           <tr>
             <td>T4 Ligase Reaction Buffer</td>
@@ -136,37 +151,25 @@ class AutoProtocolView extends React.Component<IProps, IState> {
           </tr>
         </Table>
         <Li>
-          Next, place on ice {sampleCount} 0.2mL PCR tubes. To each tube, add an equimolar amount of 
-          each part plasmid (13fmol)
-          and 0.5µL of the receiver vector (10 ng/µL). 
-          Add nuclease-free water to a final volume of 8.15µL. 
+          Dispense 30-65µL of master mix into
+          well <WellNameInput value={this.state.masterMixWellName} onChange={this.setMasterMixWellName}/> of 
+          a 384PP Echo source plate, and 15-65µL of nuclease-free water to 
+          well <WellNameInput value={this.state.waterWellName} onChange={this.setWaterWellName}/> .
         </Li>
-        <Table bordered hover>
-          <tr>
-            <th></th>
-            <th>part</th>
-            <th>length</th>
-            <th>ng</th>
-            <th>µL</th>
-            <th>water(µL)</th>
-          </tr>
-          {
-            this.props.assembly!.map((v,i)=>{
-              const vectorLen = v.sequence.length+backboneLength;
-              const dnaMass = this.calcDNAMass(13, vectorLen);
-              const dnaVolume = this.calcDNAVolume(dnaMass);
-              return <tr>
-                <td>{i+1}</td>
-                <td>{v.name}</td>
-                <td>{vectorLen}</td>
-                <td>{dnaMass.toFixed(3)}ng</td>
-                <td>{dnaVolume.toFixed(3)}µL</td>
-                <td>{(8.15-dnaVolume).toFixed(3)}µL</td>
-              </tr>})
-          }
-        </Table>
         <Li>
-          Distribute 1.85 µL of the Golden Gate MM into each of the tubes containing the parts and the receiver vector to a final volume of 10 µL. Mix gently.
+          Allow the source plates to adjust to room temperature and centrifuge the DNA part (LDV) source plate 
+          e.g. 3000xg for 2-3 minutes, checking that the meniscus is flat. The destination plate should be kept 
+          on ice as far as possible to reduce evaporation. 
+        </Li>
+        <Li>
+          Run a protocol to dispense {masterMixVolumeNL} nL of master mix and {1000-masterMixVolumeNL} nL of water 
+          into each well of the 96-well PCR destination plate to be used  for an assembly. Spin down the destination plate once the protocol has finished, and seal and store the source plate at -20 °C.
+        </Li>
+        <Li>
+          5.	Use the CAD-generated picklist to dispense an equimolar amount of each 
+          part plasmid (1.3fmol), and 0.5 µL of the 10 ng/µL receiver plasmid, into 
+          the destination well for each assembly.  Seal the plate and spin down. 
+          Seal the source plate and store.cfv fc6c77 
         </Li>
         <Li>
           Place the tubes into a thermocycler and run the following program:
@@ -187,33 +190,59 @@ class AutoProtocolView extends React.Component<IProps, IState> {
           <br/>
         </Li>
         <Li>
-          Next, on ice prepare a Plasmid-Safe™ ATP-Dependent DNase mix. 
-          For each sample, mix together 0.25 µL of Plasmid-Safe™ ATP-Dependent DNase 10 U/µL and 0.5 µL of 25 mM ATP solution. 
-          Distribute 0.75µL ({(0.75*sampleCount).toFixed(2)}µL totally) in each Golden Gate reaction tube. Mix gently and incubate at 37 °C for 15 min.
+          Prepare 1x T4 ligase buffer from the 10x T4 ligase buffer, 
+          and add to the assembly wells to a final volume of 2µL.
         </Li>
-        <Table bordered hover>
-          <tr>
-            <th>Reagent</th>
-            <th>/ manual 10µL reaction</th>
-            <th>for {sampleCount} samples</th>
-          </tr>
-          <tr>
-            <td>Plasmid-Safe™ ATP-Dependent DNase 10 U/µL</td>
-            <td>0.25µL</td>
-            <td>{(0.25*sampleCount).toFixed(2)}µL</td>
-          </tr>
-          <tr>
-            <td>25 mM ATP solution</td>
-            <td>0.5µL</td>
-            <td>{(0.5*sampleCount).toFixed(2)}µL</td>
-          </tr>
-        </Table>
         <Li>
-          Place the tubes on ice and proceeded with bacterial transformation, plating on LB+Amp.
+          repare PlasmidSafe DNase mix:
+          <Table bordered hover>
+            <tr>
+              <th>Reagent</th>
+              <th>each</th>
+              <th>for {sampleCount} parts</th>
+            </tr>
+            <tr>
+              <td>1x T4 ligase buffer</td>
+              <td>6µL</td>
+              <td>{(6*sampleCount).toFixed(2)}µL</td>
+            </tr>
+            <tr>
+              <td>25 mM ATP</td>
+              <td>1.5µL</td>
+              <td>{(1.5*sampleCount).toFixed(2)}µL</td>
+            </tr>
+            <tr>
+              <td>PlasmidSafe DNase</td>
+              <td>0.75µL</td>
+              <td>{(0.75*sampleCount).toFixed(2)}µL</td>
+            </tr>
+            <tr>
+              <td>Total</td>
+              <td>8.25µL</td>
+              <td>{(8.25*sampleCount).toFixed(2)}µL</td>
+            </tr>
+          </Table>
+          Dispense 3 µL PlasmidSafe DNase mix into each assembly reaction well, 
+          mix gently and incubate at 37 °C for 15 minutes
+        </Li>
+
+        <Li>
+          Place the tubes on ice and proceeded with bacterial transformation, 
+          plating on LB+Amp (add 20 µL of competent cells to the well containing the assembly reaction).
         </Li>
       </ol>
     </Panel>
     </React.Fragment>
+  }
+  
+  private setMasterMixWellName = (event:any)=>{
+    const masterMixWellName = event.target.value;
+    this.setState({masterMixWellName});
+  }
+
+  private setWaterWellName = (event:any)=>{
+    const waterWellName = event.target.value;
+    this.setState({waterWellName});
   }
 
   /**
