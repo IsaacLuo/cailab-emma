@@ -151,10 +151,10 @@ class AutoProtocolView extends React.Component<IProps, IState> {
           </tr>
         </Table>
         <Li>
-          Dispense 30-65µL of master mix into
-          well <WellNameInput value={this.state.masterMixWellName} onChange={this.setMasterMixWellName}/> of 
-          a 384PP Echo source plate, and 15-65µL of nuclease-free water to 
-          well <WellNameInput value={this.state.waterWellName} onChange={this.setWaterWellName}/> .
+          Dispense 30-65µL of master mix into well A1
+          {/* well <WellNameInput value={this.state.masterMixWellName} onChange={this.setMasterMixWellName}/> of  */}
+          a 384PP Echo source plate, and 15-65µL of nuclease-free water to well A2
+          {/* well <WellNameInput value={this.state.waterWellName} onChange={this.setWaterWellName}/> . */}
         </Li>
         <Li>
           Allow the source plates to adjust to room temperature and centrifuge the DNA part (LDV) source plate 
