@@ -22,7 +22,6 @@ export const SHORTCUTS = [
       ['N', 'R'],
       ['Q', 'R'],
       ['Q', 'W'],
-      ['M', 'W'],
       ['R', 'W'],
       ['T', 'V'],
       ['U', 'V'],
