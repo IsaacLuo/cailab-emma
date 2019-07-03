@@ -26,6 +26,7 @@ import 'react-notifications/lib/notifications.css';
 import { NotificationContainer } from 'react-notifications';
 import ManualProtocolView from './components/ManualProtocolView';
 import AutoProtocolView from './components/AutoProtocolView';
+import GenerateProtocols from './components/GenerateProtocols';
 
 
 const CenterDiv = styled.div`
@@ -104,6 +105,11 @@ class App extends Component<any, IState> {
           <Route
             path='/projectWizard'
             component = {ProjectWizard}
+          />
+
+          <Route
+            path='/generateProtocols'
+            component = {GenerateProtocols}
           />
           
 

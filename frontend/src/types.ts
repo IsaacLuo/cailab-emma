@@ -1,3 +1,4 @@
+import { IAssembly } from './../../api/src/models';
 export interface IUserInfo {
   _id: string;
   fullName: string;
@@ -37,6 +38,7 @@ export interface IProject {
   history?: IProject[];
   createdAt?: Date;
   updatedAt?: Date;
+  assemblies?: number;
 }
 
 export interface IAction {

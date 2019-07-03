@@ -77,7 +77,25 @@ userMust(beAnyOne, beUser),
 async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> {
   const user = ctx.state.user;
   if (user) {
-    const projects = await Project.find({owner: user._id}).select('_id name createdAt updatedAt').exec();
+    const projects = await Project.aggregate([
+      {
+        $lookup: {
+          from: "assemblies",
+          localField: "_id",
+          foreignField: "project",
+          as: "assemblies",
+        }
+      },
+      {
+        $project: {
+          assemblies: {$size: '$assemblies'},
+          name: '$name',
+          createdAt: '$createdAt',
+          updatedAt: '$updatedAt',
+        }
+      }
+      ])
+    // const projects = await Project.find({owner: user._id}).select('_id name createdAt updatedAt').exec();
     ctx.body = projects;
   } else {
     ctx.throw(401);

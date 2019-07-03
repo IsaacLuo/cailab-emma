@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import styled from 'styled-components';
 import { RouteComponentProps, withRouter, Redirect, Link } from 'react-router-dom';
 import { IUserInfo, IProject, IStoreState } from '../types';
-import {Button, InputGroup, FormControl, FormControlProps} from 'react-bootstrap';
+import {Button, InputGroup, FormControl, FormControlProps, Form} from 'react-bootstrap';
 import { listMyProjects } from '../backendCalls';
 import { SET_CURRENT_PROJECT, CREATE_PROJECT, GET_MY_PROJECTS, DELETE_PROJECT } from '../redux/actions';
 import ProjectWizard from './ProjectWizard';
@@ -43,7 +43,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   deleteProject: (_id:string) => dispatch({type:DELETE_PROJECT, data: _id}),
 });
 
-class ChooseProject extends React.Component<IProps, IState> {
+class GenerateProtocols extends React.Component<IProps, IState> {
 
   public static getDervidedStateFromProps(props: IProps, state: IState) {
 
@@ -74,38 +74,18 @@ class ChooseProject extends React.Component<IProps, IState> {
     return (
       <Panel>
         <div style={{marginTop:30}}>
-        <h3>create a project</h3>
-        <InputGroup style={{width:600}}>
-          <FormControl
-            placeholder='filename'
-            aria-label='filename'
-            aria-describedby='filename'
-            value={this.state.projectName}
-            onChange={this.onChangeFileName}
-          />
-          <InputGroup.Append>
-            <Button variant='primary' onClick={this.onClickNewProject}>new project</Button>
-            <Link to={`/projectWizard?name=${this.state.projectName}`}><Button variant='outline-secondary'>use wizard</Button></Link>
-          </InputGroup.Append>
-        </InputGroup>
-        </div>
-
-        <div style={{marginTop:30}}>
-          <h3>generate protocols</h3>
-          <Link to={'/generateProtocols'}><Button variant='primary'>start</Button></Link>
-        </div>
-        
-        <div style={{marginTop:30}}>
           <h3>your projects</h3>
-          {this.props.projects.map((v, i) =>
-          <div key={i}>
-            <Button variant='link' onClick={this.onClickOpenProject.bind(this, v)}>
-              <span>{v.name}</span>
-              {v.updatedAt && <span style={{color: '#777', fontSize: '80%'}}> {v.updatedAt.toLocaleDateString()}</span>}
-            </Button>
-            <CloseButton variant="text" size="sm" onClick={this.props.deleteProject.bind(this, v._id!)}>X</CloseButton>
-          </div>,
-          )}
+          <Form>
+            {this.props.projects.map((v, i) =>
+            <div key={i}>
+              <Form.Group controlId={v._id}>
+              <input type="checkbox" name={v._id} value={v._id}/>
+                <span>{v.name}</span>
+                {v.updatedAt && <span style={{color: '#777', fontSize: '80%'}}> {v.updatedAt.toLocaleDateString()}</span>}
+              </Form.Group>
+            </div>,
+            )}
+          </Form>
         </div>
         
       </Panel>
@@ -139,4 +119,4 @@ class ChooseProject extends React.Component<IProps, IState> {
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ChooseProject));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(GenerateProtocols));
