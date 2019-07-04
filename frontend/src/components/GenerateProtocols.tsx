@@ -29,6 +29,9 @@ interface IProps extends RouteComponentProps {
 }
 interface IState {
   projectName: string;
+  validProjects: IProject[];
+  projects: IProject[];
+  checkedProjectIds: boolean[];
 }
 
 const mapStateToProps = (state: IStoreState) => ({
@@ -45,14 +48,27 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 class GenerateProtocols extends React.Component<IProps, IState> {
 
-  public static getDervidedStateFromProps(props: IProps, state: IState) {
-
+  public static getDerivedStateFromProps(props: IProps, state: IState) {
+    if (props.projects.length !== state.projects.length) {
+      const validProjects = props.projects.filter(v=>v.assemblies);
+      return {
+        ...state,
+        validProjects,
+        projects:props.projects,
+        checkedProjectIds: validProjects.map(v=>false),
+        }
+    }
+    return null;
   }
 
   constructor(props: IProps) {
     super(props);
+    const checkedProjectIds:any = props.projects.map(v=>false)
     this.state = {
       projectName: `project ${new Date().toLocaleString()}`,
+      validProjects: props.projects.filter(v=>v.assemblies),
+      checkedProjectIds,
+      projects: props.projects,
     };
   }
 
@@ -76,16 +92,28 @@ class GenerateProtocols extends React.Component<IProps, IState> {
         <div style={{marginTop:30}}>
           <h3>your projects</h3>
           <Form>
-            {this.props.projects.map((v, i) =>
+            {this.state.validProjects.map((v, i) => 
+            v._id ?
             <div key={i}>
               <Form.Group controlId={v._id}>
-              <input type="checkbox" name={v._id} value={v._id}/>
-                <span>{v.name}</span>
-                {v.updatedAt && <span style={{color: '#777', fontSize: '80%'}}> {v.updatedAt.toLocaleDateString()}</span>}
+              <Form.Check 
+                type={'checkbox'}
+                label={`${v.name}`}
+                checked={this.state.checkedProjectIds[i]}
+                onChange={(event:React.ChangeEvent<HTMLInputElement>)=>{
+                  const checkedProjectIds = [...this.state.checkedProjectIds];
+                  checkedProjectIds[i] = event.target.checked;
+                  console.log(checkedProjectIds);
+                  this.setState({checkedProjectIds})
+                  }}
+              />
+                {/* <span>{v.name}</span> */}
+                {/* {v.updatedAt && <span style={{color: '#777', fontSize: '80%'}}> {v.updatedAt.toLocaleDateString()}</span>} */}
               </Form.Group>
-            </div>,
+            </div> : <div>...</div>
             )}
           </Form>
+          {this.state.checkedProjectIds.find(v=>v) && <Button onClick={this.onClickNext}>Generate</Button>}
         </div>
         
       </Panel>
@@ -95,27 +123,13 @@ class GenerateProtocols extends React.Component<IProps, IState> {
   public componentWillUnmount() {
   }
 
-  private onClickNewProject = () => {
-    this.props.onNewProject(this.state.projectName, this.props.history);
-    // this.props.history.push(`/project/new`);
+  private onClickNext = () => {
+    const projectIds = this.state.validProjects.map(v=>v._id).filter((v,i)=>this.state.checkedProjectIds[i]);
+    console.log(projectIds);
   }
 
-  private onClickOpenProject = (project: IProject) => {
-    // this.props.onLoadProject(project);
-    this.props.history.push(`/project/${project._id}`);
-  }
-
-  private onChangeFileName = (event: React.FormEvent<FormControlProps>) => {
-    const projectName = (event.target as FormControlProps).value!;
-    this.setState({projectName});
-  }
   private async getProjectList() {
     this.props.getMyProjects();
-      // try {
-      //   const projectList = await listMyProjects();
-      // } catch (error) {
-
-      // }
   }
 }
 
