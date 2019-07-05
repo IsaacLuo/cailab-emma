@@ -6,7 +6,7 @@ import Router from 'koa-router';
 import log4js from 'log4js';
 import conf from '../conf';
 import crypto from 'crypto';
-import {Project, Assembly} from './models';
+import {Project, Assembly, AssemblyList} from './models';
 import jwt from 'jsonwebtoken';
 import cors from 'koa-cors';
 
@@ -269,6 +269,20 @@ userMust(beAnyOne, beUser, beGuest),
 async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> {
   const {id} = ctx.params;
   ctx.body = await Assembly.update({project:id}, {_id:id, project:id, finalParts:ctx.request.body}, {upsert:true}).exec();
+});
+
+router.post('/api/assemblyList',
+userMust(beAnyOne, beUser, beGuest),
+async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> {
+  ctx.body = await AssemblyList.create({assemblies:ctx.request.body, createdAt: new Date(), owner:ctx.state.user._id});
+});
+
+router.get('/api/assemblyList/:id',
+userMust(beAnyOne, beUser, beGuest),
+async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> {
+  const {id} = ctx.params;
+  const assemblyList = await AssemblyList.findById(id).populate('assemblies').exec();
+  ctx.body = assemblyList;
 });
 
 

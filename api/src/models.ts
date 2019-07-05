@@ -73,3 +73,19 @@ export interface IAssembly {
 
 export interface IAssemblyModel extends IAssembly, Document {}
 export const Assembly:Model<IAssemblyModel> = mongoose.model('Assembly', AssemblySchema, 'assemblies');
+
+export const AssemblyListSchema = new Schema({
+  assemblies: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Assembly',
+  }],
+  owner: Schema.Types.ObjectId,
+  createdAt: Date,
+})
+export interface IAssemblyList {
+  assemblies: Array<Model<IAssemblyModel>>|string[];
+  owner: string;
+  createdAt: Date;
+}
+export interface IAssemblyListModel extends IAssemblyList, Document {}
+export const AssemblyList:Model<IAssemblyListModel> = mongoose.model('AssemblyList', AssemblyListSchema, 'assembly_lists');
