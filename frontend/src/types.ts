@@ -54,6 +54,8 @@ export interface IAppState {
   currentProject: IProject;
   stashHistory?: IProject;
   currentAssembly?: IPartSequence[];
+  assemblyListId: string;
+  assemblyProjects: IAssembly[];
 }
 export interface IPartSelectorState {
   resetCount: number;

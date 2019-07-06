@@ -7,7 +7,7 @@ import { RouteComponentProps, withRouter, Redirect, Link } from 'react-router-do
 import { IUserInfo, IProject, IStoreState } from '../types';
 import {Button, InputGroup, FormControl, FormControlProps, Form} from 'react-bootstrap';
 import { listMyProjects } from '../backendCalls';
-import { SET_CURRENT_PROJECT, CREATE_PROJECT, GET_MY_PROJECTS, DELETE_PROJECT } from '../redux/actions';
+import { SET_CURRENT_PROJECT, CREATE_PROJECT, GET_MY_PROJECTS, DELETE_PROJECT, POST_ASSEMBLY_LIST} from '../redux/actions';
 import ProjectWizard from './ProjectWizard';
 
 const Panel = styled.div`
@@ -23,9 +23,8 @@ interface IProps extends RouteComponentProps {
   currentUser: IUserInfo;
   projects: IProject[];
   getMyProjects: ()=>void;
-  onNewProject: (name:string, history:any) => void;
   onLoadProject: (project: IProject) => void;
-  deleteProject: (id: string)=>void;
+  onSaveAssemblyList: (projectIds:string[])=>void;
 }
 interface IState {
   projectName: string;
@@ -41,9 +40,8 @@ const mapStateToProps = (state: IStoreState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   getMyProjects: () => dispatch({type:GET_MY_PROJECTS}),
-  onNewProject: (name:string, history:any) => dispatch({type: CREATE_PROJECT, data:{name, history}}),
   onLoadProject: (project: IProject) => dispatch({type: SET_CURRENT_PROJECT, data: project}),
-  deleteProject: (_id:string) => dispatch({type:DELETE_PROJECT, data: _id}),
+  onSaveAssemblyList: (projectIds: string[]) => dispatch({type:POST_ASSEMBLY_LIST, data: projectIds}),
 });
 
 class GenerateProtocols extends React.Component<IProps, IState> {
@@ -124,8 +122,9 @@ class GenerateProtocols extends React.Component<IProps, IState> {
   }
 
   private onClickNext = () => {
-    const projectIds = this.state.validProjects.map(v=>v._id).filter((v,i)=>this.state.checkedProjectIds[i]);
+    const projectIds = this.state.validProjects.map(v=>v._id!).filter((v,i)=>this.state.checkedProjectIds[i]);
     console.log(projectIds);
+    this.props.onSaveAssemblyList(projectIds);
   }
 
   private async getProjectList() {

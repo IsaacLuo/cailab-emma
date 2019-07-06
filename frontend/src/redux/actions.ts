@@ -23,3 +23,5 @@ export const GO_TO_STEP_3 = 'GO_TO_STEP_3';
 export const SET_ASSEMBLY = 'SET_ASSEMBLY';
 export const SAVE_ASSEMBLY = 'SAVE_ASSEMBLY';
 export const GET_ASSEMBLY = 'GET_ASSEMBLY';
+export const POST_ASSEMBLY_LIST = 'POST_ASSEMBLY_LIST';
+export const SET_ASSEMBLY_LIST = 'SET_ASSEMBLY_LIST';

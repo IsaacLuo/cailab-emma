@@ -24,6 +24,7 @@ import {
   PROJECT_DELETED,
   DELETE_PROJECT,
   SET_ASSEMBLY,
+  SET_ASSEMBLY_LIST,
 } from './actions';
 
 const defaultUser: IUserInfo = {
@@ -44,6 +45,7 @@ const DEFAULT_STATE: IAppState = {
   currentProject: defaultCurrentProject,
   currentAssembly: undefined,
   stashHistory: undefined,
+  assemblyList: [],
 };
 
 function appReducer(state: IAppState = DEFAULT_STATE, action: IAction) {
@@ -138,6 +140,9 @@ function appReducer(state: IAppState = DEFAULT_STATE, action: IAction) {
       }
     case SET_ASSEMBLY:
       return {...state, currentAssembly: action.data};
+    case SET_ASSEMBLY_LIST:
+      return {...state, assemblyList: action.data};
+      
   }
   return state;
 }

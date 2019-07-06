@@ -22,6 +22,8 @@ GO_TO_STEP_3,
 SAVE_ASSEMBLY,
 GET_ASSEMBLY,
 SET_ASSEMBLY,
+POST_ASSEMBLY_LIST,
+SET_ASSEMBLY_LIST,
 } from './actions';
 
 import STORE_PARTS from '../parts.json';
@@ -193,6 +195,17 @@ export function* getAssembly(action:IAction) {
   }
 }
 
+export function* postAssemblyList(action:IAction) {
+  try {
+    const projectIds = action.data;
+    const response = yield call(axios.post, conf.serverURL + `/api/assemblyList`, projectIds, {withCredentials: true});
+    const assemblyList = response.data;
+    yield put({type: SET_ASSEMBLY_LIST, data: assemblyList});
+  } catch (error) {
+    console.warn('unable to save assemblyList');
+  }
+}
+
 export function* watchUsers() {
   yield takeLatest(GET_CURENT_USER, getCurrentUser);
   yield takeLatest(LOGOUT, logout);
@@ -205,6 +218,7 @@ export function* watchUsers() {
   yield takeLatest(GO_TO_STEP_3, gotoStep3);
   yield takeLatest(SAVE_ASSEMBLY, saveAssembly);
   yield takeLatest(GET_ASSEMBLY, getAssembly);
+  yield takeLatest(POST_ASSEMBLY_LIST, postAssemblyList);
 }
 
 export default function* rootSaga() {
