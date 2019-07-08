@@ -26,6 +26,7 @@ import 'react-notifications/lib/notifications.css';
 import { NotificationContainer } from 'react-notifications';
 import ManualProtocolView from './components/ManualProtocolView';
 import AutoProtocolView from './components/AutoProtocolView';
+import BatchAutoProtocolView from './components/BatchAutoProtocolView';
 import GenerateProtocols from './components/GenerateProtocols';
 
 
@@ -110,6 +111,11 @@ class App extends Component<any, IState> {
           <Route
             path='/generateProtocols'
             component = {GenerateProtocols}
+          />
+
+          <Route 
+            path='protocolList/:id'
+            component = {BatchAutoProtocolView}
           />
           
 

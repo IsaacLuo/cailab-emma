@@ -200,7 +200,10 @@ export function* postAssemblyList(action:IAction) {
     const projectIds = action.data;
     const response = yield call(axios.post, conf.serverURL + `/api/assemblyList`, projectIds, {withCredentials: true});
     const assemblyList = response.data;
-    yield put({type: SET_ASSEMBLY_LIST, data: assemblyList});
+    yield put({type: SET_ASSEMBLY_LIST, data: assemblyList._id});
+    if (action.cb) {
+      action.cb(assemblyList._id);
+    }
   } catch (error) {
     console.warn('unable to save assemblyList');
   }

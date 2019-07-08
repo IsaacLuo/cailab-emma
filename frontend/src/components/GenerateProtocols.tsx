@@ -7,7 +7,7 @@ import { RouteComponentProps, withRouter, Redirect, Link } from 'react-router-do
 import { IUserInfo, IProject, IStoreState } from '../types';
 import {Button, InputGroup, FormControl, FormControlProps, Form} from 'react-bootstrap';
 import { listMyProjects } from '../backendCalls';
-import { SET_CURRENT_PROJECT, CREATE_PROJECT, GET_MY_PROJECTS, DELETE_PROJECT, POST_ASSEMBLY_LIST} from '../redux/actions';
+import { SET_CURRENT_PROJECT, CREATE_PROJECT, GET_MY_PROJECTS, DELETE_PROJECT, POST_ASSEMBLY_LIST, SET_ASSEMBLY_LIST} from '../redux/actions';
 import ProjectWizard from './ProjectWizard';
 
 const Panel = styled.div`
@@ -22,9 +22,11 @@ const CloseButton = styled(Button)`
 interface IProps extends RouteComponentProps {
   currentUser: IUserInfo;
   projects: IProject[];
+  assemblyListId?: string;
   getMyProjects: ()=>void;
   onLoadProject: (project: IProject) => void;
-  onSaveAssemblyList: (projectIds:string[])=>void;
+  onSaveAssemblyList: (projectIds:string[])=>Promise<any>;
+  resetAssemblyList:()=>void;
 }
 interface IState {
   projectName: string;
@@ -36,17 +38,20 @@ interface IState {
 const mapStateToProps = (state: IStoreState) => ({
   currentUser: state.app.currentUser,
   projects: state.app.myProjects,
+  assemblyListId: state.app.assemblyListId,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   getMyProjects: () => dispatch({type:GET_MY_PROJECTS}),
   onLoadProject: (project: IProject) => dispatch({type: SET_CURRENT_PROJECT, data: project}),
-  onSaveAssemblyList: (projectIds: string[]) => dispatch({type:POST_ASSEMBLY_LIST, data: projectIds}),
+  onSaveAssemblyList: async (projectIds: string[]) => new Promise((resolve:any)=>dispatch({type:POST_ASSEMBLY_LIST, data: projectIds, cb:resolve,})),
+  resetAssemblyList: ()=>dispatch({type:SET_ASSEMBLY_LIST, data:undefined}),
 });
 
 class GenerateProtocols extends React.Component<IProps, IState> {
 
   public static getDerivedStateFromProps(props: IProps, state: IState) {
+
     if (props.projects.length !== state.projects.length) {
       const validProjects = props.projects.filter(v=>v.assemblies);
       return {
@@ -61,6 +66,7 @@ class GenerateProtocols extends React.Component<IProps, IState> {
 
   constructor(props: IProps) {
     super(props);
+    this.props.resetAssemblyList();
     const checkedProjectIds:any = props.projects.map(v=>false)
     this.state = {
       projectName: `project ${new Date().toLocaleString()}`,
@@ -71,6 +77,7 @@ class GenerateProtocols extends React.Component<IProps, IState> {
   }
 
   public componentDidMount() {
+    
     if (this.props.currentUser._id) {
       this.getProjectList();
     }
@@ -123,8 +130,9 @@ class GenerateProtocols extends React.Component<IProps, IState> {
 
   private onClickNext = () => {
     const projectIds = this.state.validProjects.map(v=>v._id!).filter((v,i)=>this.state.checkedProjectIds[i]);
-    console.log(projectIds);
-    this.props.onSaveAssemblyList(projectIds);
+    this.props.onSaveAssemblyList(projectIds).then(
+      (listId:string) => this.props.history.push(`/protocolList/${listId}`)
+    );
   }
 
   private async getProjectList() {

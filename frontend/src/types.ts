@@ -44,6 +44,7 @@ export interface IProject {
 export interface IAction {
   type: string;
   data: any;
+  cb?: (...args: any[])=>void;
 }
 
 
@@ -54,7 +55,7 @@ export interface IAppState {
   currentProject: IProject;
   stashHistory?: IProject;
   currentAssembly?: IPartSequence[];
-  assemblyListId: string;
+  assemblyListId?: string;
   assemblyProjects: IAssembly[];
 }
 export interface IPartSelectorState {

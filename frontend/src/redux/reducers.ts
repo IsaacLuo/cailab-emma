@@ -45,7 +45,8 @@ const DEFAULT_STATE: IAppState = {
   currentProject: defaultCurrentProject,
   currentAssembly: undefined,
   stashHistory: undefined,
-  assemblyList: [],
+  assemblyListId: undefined,
+  assemblyProjects: [],
 };
 
 function appReducer(state: IAppState = DEFAULT_STATE, action: IAction) {
@@ -141,7 +142,7 @@ function appReducer(state: IAppState = DEFAULT_STATE, action: IAction) {
     case SET_ASSEMBLY:
       return {...state, currentAssembly: action.data};
     case SET_ASSEMBLY_LIST:
-      return {...state, assemblyList: action.data};
+      return {...state, assemblyListId: action.data};
       
   }
   return state;
