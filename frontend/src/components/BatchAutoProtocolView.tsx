@@ -10,7 +10,8 @@ import { withRouter, RouteComponentProps } from 'react-router';
 import { connect } from 'react-redux';
 import { IStoreState, IPartDetail, IProject, IPartSequence } from '../types.js';
 import { Dispatch } from 'redux';
-import { GET_ASSEMBLY } from '../redux/actions';
+import { GET_ASSEMBLY_LIST } from '../redux/actions';
+import { IAssembly } from '../../../api/src/models.js';
 
 // const backboneLength = 1839;
 const backboneLength = 1840;
@@ -36,69 +37,71 @@ const WellNameInput = styled.input`
   padding: 5px;
 `;
 
+const Calced = styled.span`
+  text-decoration:underline;
+`;
+
+
 interface IProps extends RouteComponentProps {
-  project: IProject;
-  assembly?: IPartSequence[];
-  onLoadProject: (projectId: string) => void,
-  
+  assemblyProjects?: IAssembly[];
+  loadAssemblyList: (assemblyId: string) => void;
 }
 interface IState {
-  masterMixWellName:string;
-  waterWellName:string;
+  partCount:number;
 }
 
 const mapStateToProps = (state: IStoreState) => ({
-  project: state.app.currentProject,
+  assemblyProjects: state.app.assemblyProjects,
   assembly: state.app.currentAssembly,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onLoadProject: (projectId: string) => dispatch({type: GET_ASSEMBLY, data: projectId}),
+  loadAssemblyList: (assemblyId: string) => dispatch({type: GET_ASSEMBLY_LIST, data: assemblyId}),
 });
 
 class BatchAutoProtocolView extends React.Component<IProps, IState> {
-  // public static getDerivedStateFromProps(props:IProps, state:IState) {
-  //   return {finalParts: re};
-  // }
+  public static getDerivedStateFromProps(props:IProps, state:IState) {
+    let partCount = 0;
+    if (props.assemblyProjects) {
+      partCount = props.assemblyProjects.reduce((c:number,ass:IAssembly)=>c+ass.finalParts.length, 0);
+      props.assemblyProjects.reduce((c:number,ass:IAssembly)=>c+ass.finalParts.length+backboneLength, 0);
+    }
+    return {
+      partCount,
+    };
+  }
 
   constructor (props:IProps) {
     super(props); 
-
-    const projectId = (this.props.match.params as any).id;
-    if (projectId) {
-      this.props.onLoadProject(projectId);
-    }
-
-    this.state = {
-      masterMixWellName:'A1',
-      waterWellName:'A2',
-    }
+    const assemblyListId = (this.props.match.params as any).id;
+    console.log('test');
+    this.props.loadAssemblyList(assemblyListId);
 
   }
   public render() {
-    if (!this.props.assembly) {
+    if (!this.props.assemblyProjects) {
       return <div>loading</div>
     }
 
-    // const sampleCount = this.props.project.parts.filter(v=>v.selected).length + this.props.project.connectorIndexes.length;
-    const sampleCount = this.props.assembly? this.props.assembly.length : 0;
-    const partVolumes = this.props.assembly.map(v=>this.calcDNAVolume(this.calcDNAMass(1.3, v.sequence.length+backboneLength)));
-    const partVolumesSum = partVolumes.reduce((a,b)=>a+b)
+
+    const sampleCount = this.state.partCount;
+    // const partVolumes = this.props.assembly.map(v=>this.calcDNAVolume(this.calcDNAMass(1.3, v.sequence.length+backboneLength)));
+    // const partVolumesSum = partVolumes.reduce((a,b)=>a+b)
+    const partVolumesSum = 0.1
     const masterMixVolumeNL = Math.floor(235 + partVolumesSum*1000)
     
     return <React.Fragment>
       <Breadcrumb>
         <Breadcrumb.Item href='/projects'>Home</Breadcrumb.Item>
-        <Breadcrumb.Item href={`/project/${this.props.project._id}`}>step 1</Breadcrumb.Item>
-        <Breadcrumb.Item href={`/project/${this.props.project._id}/step2`}>step 2</Breadcrumb.Item>
-        <Breadcrumb.Item href={`/project/${this.props.project._id}/step3`}>step 3</Breadcrumb.Item>
-        <Breadcrumb.Item active>step 4: generate protocol ({this.props.project.name})</Breadcrumb.Item>
+        <Breadcrumb.Item active>generate protocols</Breadcrumb.Item>
       </Breadcrumb>
-    <Panel>
-      <Title1>
-        EMMA - Assembly Golden Gate assembly reaction
-      </Title1>
-      <Title2>
+      <Panel>
+        <Title1>
+          EMMA - Assembly Golden Gate assembly reaction
+        </Title1>
+        <p>protocol for assembling {this.props.assemblyProjects.length} projects, {this.state.partCount} parts </p>
+
+        <Title2>
         Equipment/Reagents:
       </Title2>
       <ul>
@@ -127,34 +130,34 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
           <tr>
             <th>Reagent</th>
             <th>/10µL reaction</th>
-            <th>For {sampleCount*1.85}µL master mix</th>
+            <th>For <Calced>{sampleCount*1.85}µL</Calced> master mix</th>
           </tr>
           <tr>
             <td>T4 Ligase Reaction Buffer</td>
             <td>1µL</td>
-            <td>{sampleCount*1}μL reaction</td>
+            <td><Calced>{sampleCount*1}μL</Calced> reaction</td>
           </tr>
           <tr>
             <td>BSA</td>
             <td>0.1µL</td>
-            <td>{(sampleCount*0.1).toFixed(2)}μL</td>
+            <td><Calced>{(sampleCount*0.1).toFixed(2)}μL</Calced></td>
           </tr>
           <tr>
             <td>Fast Digest Esp3I</td>
             <td>0.5µL</td>
-            <td>{(sampleCount*0.5).toFixed(2)}μL</td>
+            <td><Calced>{(sampleCount*0.5).toFixed(2)}μL</Calced></td>
           </tr>
           <tr>
             <td>T4 DNA Ligase</td>
             <td>0.25µL</td>
-            <td>{(sampleCount*0.25).toFixed(2)}μL</td>
+            <td><Calced>{(sampleCount*0.25).toFixed(2)}μL</Calced></td>
           </tr>
         </Table>
         <Li>
           Dispense 30-65µL of master mix into well A1
-          {/* well <WellNameInput value={this.state.masterMixWellName} onChange={this.setMasterMixWellName}/> of  */}
+          
           a 384PP Echo source plate, and 15-65µL of nuclease-free water to well A2
-          {/* well <WellNameInput value={this.state.waterWellName} onChange={this.setWaterWellName}/> . */}
+          
         </Li>
         <Li>
           Allow the source plates to adjust to room temperature and centrifuge the DNA part (LDV) source plate 
@@ -162,8 +165,9 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
           on ice as far as possible to reduce evaporation. 
         </Li>
         <Li>
-          Run a protocol to dispense {masterMixVolumeNL} nL of master mix and {1000-masterMixVolumeNL} nL of water 
-          into each well of the 96-well PCR destination plate to be used  for an assembly. Spin down the destination plate once the protocol has finished, and seal and store the source plate at -20 °C.
+          Run a protocol to dispense <Calced>{masterMixVolumeNL} nL</Calced> of master mix and <Calced>{1000-masterMixVolumeNL} nL</Calced> of water 
+          into each well of the 96-well PCR destination plate to be used  for an assembly. Spin down the destination 
+          plate once the protocol has finished, and seal and store the source plate at -20 °C.
         </Li>
         <Li>
           5.	Use the CAD-generated picklist to dispense an equimolar amount of each 
@@ -199,27 +203,27 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
             <tr>
               <th>Reagent</th>
               <th>each</th>
-              <th>for {sampleCount} parts</th>
+              <th>for <Calced>{sampleCount}</Calced> parts</th>
             </tr>
             <tr>
               <td>1x T4 ligase buffer</td>
               <td>6µL</td>
-              <td>{(6*sampleCount).toFixed(2)}µL</td>
+              <td><Calced>{(6*sampleCount).toFixed(2)}µL</Calced></td>
             </tr>
             <tr>
               <td>25 mM ATP</td>
               <td>1.5µL</td>
-              <td>{(1.5*sampleCount).toFixed(2)}µL</td>
+              <td><Calced>{(1.5*sampleCount).toFixed(2)}µL</Calced></td>
             </tr>
             <tr>
               <td>PlasmidSafe DNase</td>
               <td>0.75µL</td>
-              <td>{(0.75*sampleCount).toFixed(2)}µL</td>
+              <td><Calced>{(0.75*sampleCount).toFixed(2)}µL</Calced></td>
             </tr>
             <tr>
               <td>Total</td>
               <td>8.25µL</td>
-              <td>{(8.25*sampleCount).toFixed(2)}µL</td>
+              <td><Calced>{(8.25*sampleCount).toFixed(2)}µL</Calced></td>
             </tr>
           </Table>
           Dispense 3 µL PlasmidSafe DNase mix into each assembly reaction well, 
@@ -231,18 +235,8 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
           plating on LB+Amp (add 20 µL of competent cells to the well containing the assembly reaction).
         </Li>
       </ol>
-    </Panel>
+      </Panel>
     </React.Fragment>
-  }
-  
-  private setMasterMixWellName = (event:any)=>{
-    const masterMixWellName = event.target.value;
-    this.setState({masterMixWellName});
-  }
-
-  private setWaterWellName = (event:any)=>{
-    const waterWellName = event.target.value;
-    this.setState({waterWellName});
   }
 
   /**

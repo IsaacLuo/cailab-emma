@@ -7,7 +7,7 @@ import { RouteComponentProps, withRouter, Redirect, Link } from 'react-router-do
 import { IUserInfo, IProject, IStoreState } from '../types';
 import {Button, InputGroup, FormControl, FormControlProps, Form} from 'react-bootstrap';
 import { listMyProjects } from '../backendCalls';
-import { SET_CURRENT_PROJECT, CREATE_PROJECT, GET_MY_PROJECTS, DELETE_PROJECT, POST_ASSEMBLY_LIST, SET_ASSEMBLY_LIST} from '../redux/actions';
+import { SET_CURRENT_PROJECT, CREATE_PROJECT, GET_MY_PROJECTS, DELETE_PROJECT, POST_ASSEMBLY_LIST, SET_ASSEMBLY_LIST, SET_ASSEMBLY_LIST_ID} from '../redux/actions';
 import ProjectWizard from './ProjectWizard';
 
 const Panel = styled.div`
@@ -45,7 +45,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   getMyProjects: () => dispatch({type:GET_MY_PROJECTS}),
   onLoadProject: (project: IProject) => dispatch({type: SET_CURRENT_PROJECT, data: project}),
   onSaveAssemblyList: async (projectIds: string[]) => new Promise((resolve:any)=>dispatch({type:POST_ASSEMBLY_LIST, data: projectIds, cb:resolve,})),
-  resetAssemblyList: ()=>dispatch({type:SET_ASSEMBLY_LIST, data:undefined}),
+  resetAssemblyList: ()=>dispatch({type:SET_ASSEMBLY_LIST_ID, data:undefined}),
 });
 
 class GenerateProtocols extends React.Component<IProps, IState> {

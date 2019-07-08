@@ -114,7 +114,7 @@ class App extends Component<any, IState> {
           />
 
           <Route 
-            path='protocolList/:id'
+            path='/protocolList/:id'
             component = {BatchAutoProtocolView}
           />
           

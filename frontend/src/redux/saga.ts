@@ -24,6 +24,8 @@ GET_ASSEMBLY,
 SET_ASSEMBLY,
 POST_ASSEMBLY_LIST,
 SET_ASSEMBLY_LIST,
+GET_ASSEMBLY_LIST,
+SET_ASSEMBLY_LIST_ID,
 } from './actions';
 
 import STORE_PARTS from '../parts.json';
@@ -200,7 +202,21 @@ export function* postAssemblyList(action:IAction) {
     const projectIds = action.data;
     const response = yield call(axios.post, conf.serverURL + `/api/assemblyList`, projectIds, {withCredentials: true});
     const assemblyList = response.data;
-    yield put({type: SET_ASSEMBLY_LIST, data: assemblyList._id});
+    yield put({type: SET_ASSEMBLY_LIST_ID, data: assemblyList._id});
+    if (action.cb) {
+      action.cb(assemblyList._id);
+    }
+  } catch (error) {
+    console.warn('unable to save assemblyList');
+  }
+}
+
+export function* getAssemblyList(action:IAction) {
+  try {
+    const id = action.data;
+    const response = yield call(axios.get, conf.serverURL + `/api/assemblyList/${id}`, {withCredentials: true});
+    const assemblyList = response.data;
+    yield put({type: SET_ASSEMBLY_LIST, data: assemblyList});
     if (action.cb) {
       action.cb(assemblyList._id);
     }
@@ -222,6 +238,7 @@ export function* watchUsers() {
   yield takeLatest(SAVE_ASSEMBLY, saveAssembly);
   yield takeLatest(GET_ASSEMBLY, getAssembly);
   yield takeLatest(POST_ASSEMBLY_LIST, postAssemblyList);
+  yield takeLatest(GET_ASSEMBLY_LIST, getAssemblyList);
 }
 
 export default function* rootSaga() {
