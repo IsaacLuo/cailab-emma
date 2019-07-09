@@ -1,5 +1,6 @@
 // step 4: generate protocol of manual or auto Emma Project
 import * as React from 'react'
+import {useCallback} from 'react'
 import {Dropdown, Button, Table, Breadcrumb} from 'react-bootstrap';
 import styled from 'styled-components';
 
@@ -12,6 +13,16 @@ import { IStoreState, IPartDetail, IProject, IPartSequence } from '../types.js';
 import { Dispatch } from 'redux';
 import { GET_ASSEMBLY_LIST } from '../redux/actions';
 import { IAssembly } from '../../../api/src/models.js';
+
+import {useDropzone} from 'react-dropzone'
+import papaparse from 'papaparse'
+import { generateEchoSheet } from '../generateEchoSheet';
+
+// const MyDropzone = styled(Dropzone)`
+//   height: 30px;
+//   border: solid 1px black;
+// `
+
 
 // const backboneLength = 1839;
 const backboneLength = 1840;
@@ -41,6 +52,28 @@ const Calced = styled.span`
   text-decoration:underline;
 `;
 
+const DropzoneDiv = styled.div`
+  height:80px;
+  border: solid 1px black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+function download(filename:string, text:string) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  element.setAttribute('download', filename);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+}
+
 
 interface IProps extends RouteComponentProps {
   assemblyProjects?: IAssembly[];
@@ -48,6 +81,7 @@ interface IProps extends RouteComponentProps {
 }
 interface IState {
   partCount:number;
+  partLocations:any;
 }
 
 const mapStateToProps = (state: IStoreState) => ({
@@ -60,6 +94,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 class BatchAutoProtocolView extends React.Component<IProps, IState> {
+
   public static getDerivedStateFromProps(props:IProps, state:IState) {
     let partCount = 0;
     if (props.assemblyProjects) {
@@ -67,6 +102,7 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
       props.assemblyProjects.reduce((c:number,ass:IAssembly)=>c+ass.finalParts.length+backboneLength, 0);
     }
     return {
+      ...state,
       partCount,
     };
   }
@@ -76,6 +112,10 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
     const assemblyListId = (this.props.match.params as any).id;
     console.log('test');
     this.props.loadAssemblyList(assemblyListId);
+    this.state = {
+      partCount:0,
+      partLocations:undefined,
+    };
 
   }
   public render() {
@@ -127,6 +167,7 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
           the number of reactions. Mix the final solution gently.
         </Li>
         <Table bordered hover>
+          <tbody>
           <tr>
             <th>Reagent</th>
             <th>/10µL reaction</th>
@@ -152,6 +193,7 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
             <td>0.25µL</td>
             <td><Calced>{(sampleCount*0.25).toFixed(2)}μL</Calced></td>
           </tr>
+          </tbody>
         </Table>
         <Li>
           Dispense 30-65µL of master mix into well A1
@@ -200,6 +242,7 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
         <Li>
           repare PlasmidSafe DNase mix:
           <Table bordered hover>
+          <tbody>
             <tr>
               <th>Reagent</th>
               <th>each</th>
@@ -225,6 +268,7 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
               <td>8.25µL</td>
               <td><Calced>{(8.25*sampleCount).toFixed(2)}µL</Calced></td>
             </tr>
+            </tbody>
           </Table>
           Dispense 3 µL PlasmidSafe DNase mix into each assembly reaction well, 
           mix gently and incubate at 37 °C for 15 minutes
@@ -235,8 +279,45 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
           plating on LB+Amp (add 20 µL of competent cells to the well containing the assembly reaction).
         </Li>
       </ol>
+      <this.MyDropzone/>
+      {this.state.partLocations &&
+        <Button onClick={this.onClickMainEchoScript}>download main echo script</Button>
+      }
       </Panel>
     </React.Fragment>
+  }
+
+  private MyDropzone = () => {
+    const onDrop = useCallback(acceptedFiles => {
+      const reader = new FileReader()
+  
+      reader.onabort = () => console.log('file reading was aborted')
+      reader.onerror = () => console.log('file reading has failed')
+      reader.onload = () => {
+        // Do whatever you want with the file contents
+        const csvStr = reader.result as string;
+        const pp = papaparse.parse(csvStr);
+        // const fd = pp.data.filter((_,i)=>i>0&&i<17).map((v:string[])=>v.filter((_,i)=>i>0));
+        const partLocations:any = {};
+        for(let i=0;i<16;i++) {
+          for (let j=0;j<24;j++) {
+            if (pp.data[i+1][j+1]!==undefined && pp.data[i+1][j+1] !== '') {
+              partLocations[pp.data[i+1][j+1]] = String.fromCharCode(65+i)+j;
+            }
+          }
+        }
+        this.setState({partLocations});
+      }
+      acceptedFiles.forEach((file:any) => reader.readAsBinaryString(file))
+    }, [])
+    const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
+  
+    return (
+      <DropzoneDiv {...getRootProps()}>
+        <input {...getInputProps()} />
+        <p></p>
+      </DropzoneDiv>
+    )
   }
 
   /**
@@ -256,6 +337,19 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
    */
   private calcDNAVolume(mass:number) {
     return mass / 50;
+  }
+
+  private onClickMainEchoScript = () => {
+    if (this.props.assemblyProjects) {
+      try {
+        const echoSheet = generateEchoSheet(this.props.assemblyProjects, this.state.partLocations);
+        console.log(echoSheet);
+        const csv = papaparse.unparse(echoSheet);
+        download('main_script.csv', csv);
+      } catch (err) {
+        alert(err);
+      }
+    }
   }
 }
 

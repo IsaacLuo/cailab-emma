@@ -1,0 +1,17 @@
+﻿,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24
+A,conn A-B,conn A-C,conn B-C,conn B-E,conn B-L,conn D-E,conn D-F,conn E-F,conn H-Ha,conn H-J,conn H-K,conn Ha-J,conn Ha-K,conn J-K,conn L-M,conn L-N,conn L-R,conn L-W,conn L-Y,conn M-R,conn N-R,conn Q-R,conn Q-W,conn R-W
+B,conn T-V,conn U-V,conn W-X,conn W-Y,conn W-Z,conn Y-Z,5'HA-hAAVS1-new,5'-ITR-PB,Chimeric-5'LTR,Minimal_UCOE,Insulator_FB,CAGp,CMVp_Tet,EF1ap,TRE3Gp,EF-1ap_core,HSV_TKp,LacI -operator,Kt-L7Ae - Weiss,K1-K1 -L7Ae,Kt-Kt -L7Ae-Weiss,ATG-BoxC (L7Ae),Kozak_ATG,Nt-IgKL sequence
+C,Nt-MLS,Nt-myristoylation signal,Nt-Palmytolination sequence,Nt-SV40-NLS,Sp-dCas9,Nano-LCF,Sp-Cas9,dCas9N(1-1153)_IntN,mCherry,BxB1,L7Ae - Weiss,L7Ae ,mKate2,mNeoGreen,mRuby2,mTagBFP2,Lac-repressor,ATOH1,ATOH8,BTG2,c-MYC,CDK4,ETV1,CIITA
+D,ETV4,FOXA1,HES6,HNF1B,HNF4A(7),HNF4A(8),HOXP,NEUROD1,NFIB,NGN3,NKX2.2,PEG10,PPARD,RFX3,RXRA,SOX2,TOX,TOX3,MS2,PP7,Sp-Cas9,Sp-dCas9N(1-1153)_IntN,ACSL1,FOXA2
+E,GATA4,HES1,HES5,HNF6,PDX1,PTF1A,SOX21,SOX8,ZIC1,Linker 1,Linker 2,p2A-Porcine teschovirus-1 ,hPEST,Ct-KDEL,IRES2,TET-1,Nano-Luciferase,BSDR,PuroR,DmrC,Fyrefly Luciferase -3XFLAG,mNeoGreen,mRuby2,mTagBFP2
+F,a-Tubulin,ATOH1,BTG2,c-MYC,CDKN4,CIITA,ETV1,ETV4,FOXA1,HES6,HNF1B,HNF4A(7),HNF4A(8),ACSL1,FOXA2,HES1,HES5,HNF6,DMN3A,KRAB,p65-HSF1,VPR,Tet-Aptazyme,3'LTR
+G,SV40 polyA,CAGp,CMVp,SV40p,PuroR,bGH polyA,min-CMVp,YB-TATA,minSV40p,CMVp,EF1ap,Nano-LCF,Sp-dCas9,mNeoGreen,mRuby2,mTagBFP2,Tet-ON-3G,HOXP,NEUROD1,NFIB,NGN3,NKX2.2,PEG10,PPARD
+H,RXRA,SOX2,TOX,TOX3,IntC_dCas9(1154-1368),RFX3,PDX1,PTF1A,SOX11,SOX21,SOX8,Sp-dCas9-FokI,Ct-minute-NES,Ct-NES,Linker 3,p2A-Porcine teschovirus-1 ,IRES2,TET-1,GCN4-v4,DmrA,mKate2,mNeoGreen,mRuby2,mTagBFP2
+I,PuroR,DMN3A,KRAB,p65-HSF1,VPR,LSD1,PGK polyA,Insulator_FB,3'HA-hAAVS1,3'-ITR-PB,SV40-ORI,,,,,,,,,,,,,
+J,,,,,,,,,,,,,,,,,,,,,,,,
+K,,,,,,,,,,,,,,,,,,,,,,,,
+L,,,,,,,,,,,,,,,,,,,,,,,,
+M,,,,,,,,,,,,,,,,,,,,,,,,
+N,,,,,,,,,,,,,,,,,,,,,,,,
+O,,,,,,,,,,,,,,,,,,,,,,,,
+P,,,,,,,,,,,,,,,,,,,,,,,,
