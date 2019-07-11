@@ -16,7 +16,7 @@ import { IAssembly } from '../../../api/src/models.js';
 
 import {useDropzone} from 'react-dropzone'
 import papaparse from 'papaparse'
-import { generateEchoSheet } from '../generateEchoSheet';
+import { generateEchoSheet, generateMasterMixEchoSheet, calcDNAVolume, calcDNAMass } from '../generateEchoSheet';
 
 // const MyDropzone = styled(Dropzone)`
 //   height: 30px;
@@ -82,6 +82,8 @@ interface IProps extends RouteComponentProps {
 interface IState {
   partCount:number;
   partLocations:any;
+  masterMixVolumes:number[];
+  waterVolumes:number[];
 }
 
 const mapStateToProps = (state: IStoreState) => ({
@@ -97,13 +99,26 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
 
   public static getDerivedStateFromProps(props:IProps, state:IState) {
     let partCount = 0;
+    let masterMixVolumes:number[] = []; 
+    let waterVolumes:number[]=[];
+    // const partVolumesSum = partVolumes.reduce((a,b)=>a+b)
     if (props.assemblyProjects) {
       partCount = props.assemblyProjects.reduce((c:number,ass:IAssembly)=>c+ass.finalParts.length, 0);
-      props.assemblyProjects.reduce((c:number,ass:IAssembly)=>c+ass.finalParts.length+backboneLength, 0);
+      // props.assemblyProjects.reduce((c:number,ass:IAssembly)=>c+ass.finalParts.length+backboneLength, 0);
+      for (const project of props.assemblyProjects) {
+        let masterMixVolumeNL = 0;
+        for (const part of project.finalParts) {
+          masterMixVolumeNL+= calcDNAVolume(calcDNAMass(1.3, part.sequence.length+backboneLength));
+        }
+        masterMixVolumes.push(masterMixVolumeNL);
+        waterVolumes.push(1000-masterMixVolumeNL);
+      }
     }
     return {
       ...state,
       partCount,
+      masterMixVolumes,
+      waterVolumes,
     };
   }
 
@@ -115,6 +130,8 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
     this.state = {
       partCount:0,
       partLocations:undefined,
+      masterMixVolumes:[],
+      waterVolumes:[],
     };
 
   }
@@ -125,10 +142,7 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
 
 
     const sampleCount = this.state.partCount;
-    // const partVolumes = this.props.assembly.map(v=>this.calcDNAVolume(this.calcDNAMass(1.3, v.sequence.length+backboneLength)));
-    // const partVolumesSum = partVolumes.reduce((a,b)=>a+b)
-    const partVolumesSum = 0.1
-    const masterMixVolumeNL = Math.floor(235 + partVolumesSum*1000)
+    const masterMixVolumeNL = this.state.masterMixVolumes;
     
     return <React.Fragment>
       <Breadcrumb>
@@ -207,7 +221,7 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
           on ice as far as possible to reduce evaporation. 
         </Li>
         <Li>
-          Run a protocol to dispense <Calced>{masterMixVolumeNL} nL</Calced> of master mix and <Calced>{1000-masterMixVolumeNL} nL</Calced> of water 
+          Run a protocol to dispense <Calced>{this.state.masterMixVolumes.join('/')} nL</Calced> of master mix and <Calced>{this.state.waterVolumes.join('/')} nL</Calced> of water 
           into each well of the 96-well PCR destination plate to be used  for an assembly. Spin down the destination 
           plate once the protocol has finished, and seal and store the source plate at -20 °C.
         </Li>
@@ -281,7 +295,11 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
       </ol>
       <this.MyDropzone/>
       {this.state.partLocations &&
-        <Button onClick={this.onClickMainEchoScript}>download main echo script</Button>
+        <div style={{marginTop:10}}>
+          <Button onClick={this.onClickMasterMixEchoScript}>download master mix echo script</Button>
+          .
+          <Button onClick={this.onClickMainEchoScript}>download parts echo script</Button>
+        </div>
       }
       </Panel>
     </React.Fragment>
@@ -337,6 +355,19 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
    */
   private calcDNAVolume(mass:number) {
     return mass / 50;
+  }
+
+  private onClickMasterMixEchoScript = () => {
+    if (this.props.assemblyProjects) {
+      try {
+        const echoSheet = generateMasterMixEchoSheet(this.props.assemblyProjects.length, this.state.masterMixVolumes );
+        console.log(echoSheet);
+        const csv = papaparse.unparse(echoSheet);
+        download('mastermix_script.csv', csv);
+      } catch (err) {
+        alert(err);
+      }
+    }
   }
 
   private onClickMainEchoScript = () => {

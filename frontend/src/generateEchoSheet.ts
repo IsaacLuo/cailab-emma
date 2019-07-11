@@ -61,3 +61,26 @@ export function generateEchoSheet(assemblyList:IAssembly[], partLocations:any) {
 
   return sheet;
 }
+
+export function generateMasterMixEchoSheet(wellsCount:number, masterVolumes:number[]) {
+  let wellId = 0;
+  const sheet = [];
+  sheet.push([
+    'Source Plate Name', 
+    'Source Plate Type',
+    'Source Well', 
+    'Destination Plate Name', 
+    'Destination Well',
+    'Transfer Volume', 
+    'Destination Well X Offset', 
+    'Destination Well Y Offset']);
+
+  while(wellId < wellsCount) {
+    const dstWellName = wellIdToWellName(wellId);
+    sheet.push(['PartPlate', '384LDV_AQ_B',  'A1' , 'Assay1', dstWellName, masterVolumes[wellId], 0, 0]);
+    sheet.push(['PartPlate', '384LDV_AQ_B',  'A2' , 'Assay1', dstWellName, 1000 - masterVolumes[wellId], 0, 0]);
+    wellId++;
+  }
+
+  return sheet;
+}
