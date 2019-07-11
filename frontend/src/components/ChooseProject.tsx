@@ -91,7 +91,8 @@ class ChooseProject extends React.Component<IProps, IState> {
         </div>
 
         <div style={{marginTop:30}}>
-          <h3>generate protocols</h3>
+          <h3>generate ECHO protocols</h3>
+          <p>generate an echo script for multiple projects</p>
           <Link to={'/generateProtocols'}><Button variant='primary'>start</Button></Link>
         </div>
         

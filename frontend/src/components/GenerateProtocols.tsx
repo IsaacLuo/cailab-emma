@@ -9,6 +9,7 @@ import {Button, InputGroup, FormControl, FormControlProps, Form} from 'react-boo
 import { listMyProjects } from '../backendCalls';
 import { SET_CURRENT_PROJECT, CREATE_PROJECT, GET_MY_PROJECTS, DELETE_PROJECT, POST_ASSEMBLY_LIST, SET_ASSEMBLY_LIST, SET_ASSEMBLY_LIST_ID} from '../redux/actions';
 import ProjectWizard from './ProjectWizard';
+import qs from 'qs';
 
 const Panel = styled.div`
   margin:30px;
@@ -33,6 +34,7 @@ interface IState {
   validProjects: IProject[];
   projects: IProject[];
   checkedProjectIds: boolean[];
+  preselected: string[];
 }
 
 const mapStateToProps = (state: IStoreState) => ({
@@ -58,7 +60,7 @@ class GenerateProtocols extends React.Component<IProps, IState> {
         ...state,
         validProjects,
         projects:props.projects,
-        checkedProjectIds: validProjects.map(v=>false),
+        checkedProjectIds: validProjects.map(v=>v._id ? state.preselected.indexOf(v._id)>=0 : false),
         }
     }
     return null;
@@ -67,12 +69,15 @@ class GenerateProtocols extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.props.resetAssemblyList();
-    const checkedProjectIds:any = props.projects.map(v=>false)
+    const checkedProjectIds:any = props.projects.map(v=>false);
+    const queryObj = qs.parse(this.props.location.search, { ignoreQueryPrefix: true });
+
     this.state = {
       projectName: `project ${new Date().toLocaleString()}`,
       validProjects: props.projects.filter(v=>v.assemblies),
       checkedProjectIds,
       projects: props.projects,
+      preselected: queryObj.preselected,
     };
   }
 
@@ -95,7 +100,7 @@ class GenerateProtocols extends React.Component<IProps, IState> {
     return (
       <Panel>
         <div style={{marginTop:30}}>
-          <h3>your projects</h3>
+          <h3>select projects to genterate automatic protocols</h3>
           <Form>
             {this.state.validProjects.map((v, i) => 
             v._id ?

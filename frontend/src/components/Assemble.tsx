@@ -14,6 +14,8 @@ import {
   SET_ASSEMBLY,
   SAVE_ASSEMBLY,
 } from '../redux/actions';
+import { Link } from 'react-router-dom';
+import qs from 'qs';
 
 const Panel = styled.div`
   margin:100px;
@@ -157,7 +159,8 @@ class Assemble extends React.Component<IProps, IState> {
       <div>
         <Button variant="primary" size="lg" onClick={this.downloadGenbank}>download genbank</Button>
         <Button variant="primary" size="lg" onClick={this.onClickManualProtocol}>Manual Protocol</Button>
-        <Button variant="primary" size="lg" onClick={this.onClickAutoProtocol}>Automatic Protocol</Button>
+        {/* <Button variant="primary" size="lg" onClick={this.onClickAutoProtocol}>Automatic Protocol</Button> */}
+        <Link to={`/generateProtocols?${qs.stringify({preselected: [this.props.project._id]})}`}><Button variant="primary" size="lg">Automatic Protocol</Button></Link>
       </div>
     </Panel>
     </React.Fragment>

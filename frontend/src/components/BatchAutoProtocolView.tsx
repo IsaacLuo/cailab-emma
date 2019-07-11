@@ -86,7 +86,6 @@ interface IState {
 
 const mapStateToProps = (state: IStoreState) => ({
   assemblyProjects: state.app.assemblyProjects,
-  assembly: state.app.currentAssembly,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -331,7 +330,7 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
     return (
       <DropzoneDiv {...getRootProps()}>
         <input {...getInputProps()} />
-        <p></p>
+        <p>drop the plate definition csv file to here</p>
       </DropzoneDiv>
     )
   }

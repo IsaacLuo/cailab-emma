@@ -25,7 +25,6 @@ import ProjectWizard from './components/ProjectWizard';
 import 'react-notifications/lib/notifications.css';
 import { NotificationContainer } from 'react-notifications';
 import ManualProtocolView from './components/ManualProtocolView';
-import AutoProtocolView from './components/AutoProtocolView';
 import BatchAutoProtocolView from './components/BatchAutoProtocolView';
 import GenerateProtocols from './components/GenerateProtocols';
 
@@ -99,11 +98,6 @@ class App extends Component<any, IState> {
           />
 
           <Route
-            path='/project/:id/protocols/human/automatic'
-            component = {AutoProtocolView}
-          />
-
-          <Route
             path='/projectWizard'
             component = {ProjectWizard}
           />
@@ -126,39 +120,6 @@ class App extends Component<any, IState> {
 
     </Router>
     </Provider>);
-
-    // if (selectedParts.length > 0) {
-    //   return (
-    //     <div className='App'>
-    //       <Assemble
-    //         selectedParts={selectedParts}
-    //         selectedShortcuts={selectedShortcuts}
-    //       />
-    //       {selectedParts.map((v: any, i: number) => <div key={i}>
-    //         {v.selected.name}
-    //       </div>)}
-    //     </div>
-    //   );
-    // }
-    // return (
-    //   <div className='App'>
-    //     <CenterDiv>
-    //       {<button onClick={this.clickLogin}>log in</button>}
-    //       {
-    //         this.state.selectedSlots.length > 0
-    //           ?
-    //           <PartsDropDown
-    //             parts={this.state.selectedSlots}
-    //             onClickNext={this.onFinishStep2}
-    //           />
-    //           :
-    //           <PartSelector
-    //             onClickNext={this.onFinishStep1}
-    //           />
-    //       }
-    //     </CenterDiv>
-    //   </div>
-    // );
   }
 
   private onFinishStep1 = (result: any) => {
