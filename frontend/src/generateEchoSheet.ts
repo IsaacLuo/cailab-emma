@@ -1,4 +1,4 @@
-import { IAssembly } from './../../api/src/models'
+import { IAssembly } from './types'
 import papaparse from 'papaparse'
 
 const DEFAULT_BACKBONE_LENGTH = 1840;

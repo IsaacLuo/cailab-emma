@@ -9,11 +9,9 @@ import {IFeature, DNASeq} from '../gbGenerator';
 import vectorReceiver from '../vectorReceiver.json';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { connect } from 'react-redux';
-import { IStoreState, IPartDetail, IProject, IPartSequence } from '../types.js';
+import { IStoreState, IAssembly} from '../types.js';
 import { Dispatch } from 'redux';
 import { GET_ASSEMBLY_LIST } from '../redux/actions';
-import { IAssembly } from '../../../api/src/models.js';
-
 import {useDropzone} from 'react-dropzone'
 import papaparse from 'papaparse'
 import { generateEchoSheet, generateMasterMixEchoSheet, calcDNAVolume, calcDNAMass } from '../generateEchoSheet';

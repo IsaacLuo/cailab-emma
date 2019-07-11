@@ -1,4 +1,4 @@
-import { IAssembly } from './../../api/src/models';
+
 export interface IUserInfo {
   _id: string;
   fullName: string;
@@ -72,3 +72,10 @@ export interface IStoreState {
   wizard: IWizardState;
 }
 
+export interface IAssembly {
+  project: string,
+  finalParts: Array<{
+    name: string,
+    sequence: string,
+  }>
+}
