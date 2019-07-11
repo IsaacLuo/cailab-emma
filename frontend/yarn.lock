@@ -1405,6 +1405,13 @@
     "@types/prop-types" "*"
     "@types/react" "*"
 
+"@types/react-numeric-input@^2.2.3":
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/@types/react-numeric-input/-/react-numeric-input-2.2.3.tgz#fbb0e8f24a4775374eda9cdce2355679d40f9e92"
+  integrity sha512-TQtZ+0PM3/Pk15YYY3xJGOmfwETFQYHGydMaY42OvAbRTBmYJSmGPL7f/Yi/9FfXWb4m4T8FrZborccZX6VXDw==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-redux@^7.0.6":
   version "7.0.6"
   resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-7.0.6.tgz#992271450e0d3bf61130ad9e356ad018841c7f78"
@@ -9007,6 +9014,11 @@ react-notifications@^1.4.3:
     classnames "^2.1.1"
     prop-types "^15.5.10"
     react-transition-group "^1.2.0"
+
+react-numeric-input@^2.2.3:
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/react-numeric-input/-/react-numeric-input-2.2.3.tgz#4bf5918c3eafed851a80df1eb992d941002bb552"
+  integrity sha1-S/WRjD6v7YUagN8euZLZQQArtVI=
 
 react-overlays@^1.2.0:
   version "1.2.0"

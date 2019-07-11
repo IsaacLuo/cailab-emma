@@ -29,6 +29,10 @@ function wellIdToWellName(id:number) {
   return `${String.fromCharCode(65+row)}${col+1}`
 }
 
+function echoRound(volume:number) {
+  return Math.round(volume/10*4)/4*10;
+}
+
 export function generateEchoSheet(assemblyList:IAssembly[], partLocations:any) {
   let wellId = 0;
   const sheet = [];
@@ -54,7 +58,7 @@ export function generateEchoSheet(assemblyList:IAssembly[], partLocations:any) {
         throw `${name} not found in the plate definition`;
       }
 
-      sheet.push(['PartPlate', '384LDV_AQ_B', partLocations[name] , 'Assay1', dstWellName, plasmidVolume, 0, 0]);
+      sheet.push(['PartPlate', '384LDV_AQ_B', partLocations[name] , 'Assay1', dstWellName, echoRound(plasmidVolume), 0, 0]);
     }
     wellId++;
   }
@@ -77,8 +81,9 @@ export function generateMasterMixEchoSheet(wellsCount:number, masterVolumes:numb
 
   while(wellId < wellsCount) {
     const dstWellName = wellIdToWellName(wellId);
-    sheet.push(['PartPlate', '384LDV_AQ_B',  'A1' , 'Assay1', dstWellName, masterVolumes[wellId], 0, 0]);
-    sheet.push(['PartPlate', '384LDV_AQ_B',  'A2' , 'Assay1', dstWellName, 1000 - masterVolumes[wellId], 0, 0]);
+    const volume = echoRound(masterVolumes[wellId]);
+    sheet.push(['PartPlate', '384LDV_AQ_B',  'A1' , 'Assay1', dstWellName, volume, 0, 0]);
+    sheet.push(['PartPlate', '384LDV_AQ_B',  'A2' , 'Assay1', dstWellName, 1000 - volume, 0, 0]);
     wellId++;
   }
 

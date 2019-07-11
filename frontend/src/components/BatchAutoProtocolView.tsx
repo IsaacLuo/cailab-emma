@@ -15,6 +15,7 @@ import { GET_ASSEMBLY_LIST } from '../redux/actions';
 import {useDropzone} from 'react-dropzone'
 import papaparse from 'papaparse'
 import { generateEchoSheet, generateMasterMixEchoSheet, calcDNAVolume, calcDNAMass } from '../generateEchoSheet';
+import NumericInput from "react-numeric-input";
 
 // const MyDropzone = styled(Dropzone)`
 //   height: 30px;
@@ -82,6 +83,8 @@ interface IState {
   partLocations:any;
   masterMixVolumes:number[];
   waterVolumes:number[];
+  preparedMasterMixVolume: number;
+  dnaseMixExtra: number;
 }
 
 const mapStateToProps = (state: IStoreState) => ({
@@ -98,9 +101,13 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
     let partCount = 0;
     let masterMixVolumes:number[] = []; 
     let waterVolumes:number[]=[];
+    let preparedMasterMixVolume = state.preparedMasterMixVolume;
     // const partVolumesSum = partVolumes.reduce((a,b)=>a+b)
     if (props.assemblyProjects) {
       partCount = props.assemblyProjects.reduce((c:number,ass:IAssembly)=>c+ass.finalParts.length, 0);
+      if(partCount*1.85>preparedMasterMixVolume) {
+        preparedMasterMixVolume = Math.ceil(partCount*1.85);
+      }
       // props.assemblyProjects.reduce((c:number,ass:IAssembly)=>c+ass.finalParts.length+backboneLength, 0);
       for (const project of props.assemblyProjects) {
         let masterMixVolumeNL = 0;
@@ -116,6 +123,7 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
       partCount,
       masterMixVolumes,
       waterVolumes,
+      preparedMasterMixVolume,
     };
   }
 
@@ -129,6 +137,8 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
       partLocations:undefined,
       masterMixVolumes:[],
       waterVolumes:[],
+      preparedMasterMixVolume: 30,
+      dnaseMixExtra: 1.5,
     };
 
   }
@@ -139,7 +149,8 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
 
 
     const sampleCount = this.state.partCount;
-    const masterMixVolumeNL = this.state.masterMixVolumes;
+    const masterMixVolumeNL = this.state.masterMixVolumes.reduce((p,c)=>p+c,0);
+    const assembliesCount = this.props.assemblyProjects!.length;
     
     return <React.Fragment>
       <Breadcrumb>
@@ -183,26 +194,31 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
             <th>Reagent</th>
             <th>/10µL reaction</th>
             <th>For <Calced>{sampleCount*1.85}µL</Calced> master mix</th>
+            <th>For <Calced><NumericInput min={Math.floor(sampleCount*1.85)>30?Math.floor(sampleCount*1.85):30} max={65} size={1} value={this.state.preparedMasterMixVolume} onChange={(v)=>this.setState({preparedMasterMixVolume:(v as number)})}/>µL</Calced> master mix</th>
           </tr>
           <tr>
             <td>T4 Ligase Reaction Buffer</td>
             <td>1µL</td>
-            <td><Calced>{sampleCount*1}μL</Calced> reaction</td>
+            <td><Calced>{sampleCount*1}μL</Calced></td>
+            <td><Calced>{(this.state.preparedMasterMixVolume*1/1.85).toFixed(2)}μL</Calced></td>
           </tr>
           <tr>
             <td>BSA</td>
             <td>0.1µL</td>
             <td><Calced>{(sampleCount*0.1).toFixed(2)}μL</Calced></td>
+            <td><Calced>{(this.state.preparedMasterMixVolume*0.1/1.85).toFixed(2)}μL</Calced></td>
           </tr>
           <tr>
             <td>Fast Digest Esp3I</td>
             <td>0.5µL</td>
             <td><Calced>{(sampleCount*0.5).toFixed(2)}μL</Calced></td>
+            <td><Calced>{(this.state.preparedMasterMixVolume*0.5/1.85).toFixed(2)}μL</Calced></td>
           </tr>
           <tr>
             <td>T4 DNA Ligase</td>
             <td>0.25µL</td>
             <td><Calced>{(sampleCount*0.25).toFixed(2)}μL</Calced></td>
+            <td><Calced>{(this.state.preparedMasterMixVolume*0.25/1.85).toFixed(2)}μL</Calced></td>
           </tr>
           </tbody>
         </Table>
@@ -218,8 +234,8 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
           on ice as far as possible to reduce evaporation. 
         </Li>
         <Li>
-          Run a protocol to dispense <Calced>{this.state.masterMixVolumes.join('/')} nL</Calced> of master mix and <Calced>{this.state.waterVolumes.join('/')} nL</Calced> of water 
-          into each well of the 96-well PCR destination plate to be used  for an assembly. Spin down the destination 
+          Run a protocol to dispense <Calced>{masterMixVolumeNL} nL</Calced> of master mix and <Calced>{1000-masterMixVolumeNL} nL</Calced> of water 
+          into well of the 96-well PCR destination plate to be used  for an assembly. Spin down the destination 
           plate once the protocol has finished, and seal and store the source plate at -20 °C.
         </Li>
         <Li>
@@ -257,27 +273,32 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
             <tr>
               <th>Reagent</th>
               <th>each</th>
-              <th>for <Calced>{sampleCount}</Calced> parts</th>
+              <th>for <Calced>{assembliesCount}</Calced> assemblies</th>
+              <th><Calced><NumericInput min={1.0} max={3.0} size={1} value={this.state.dnaseMixExtra} step={0.1} onChange={(v)=>this.setState({dnaseMixExtra:(v as number)})}/></Calced></th>
             </tr>
             <tr>
               <td>1x T4 ligase buffer</td>
-              <td>6µL</td>
-              <td><Calced>{(6*sampleCount).toFixed(2)}µL</Calced></td>
+              <td>3µL</td>
+              <td><Calced>{(3*assembliesCount).toFixed(2)}µL</Calced></td>
+              <td><Calced>{(this.state.dnaseMixExtra*3*assembliesCount).toFixed(2)}µL</Calced></td>
             </tr>
             <tr>
               <td>25 mM ATP</td>
-              <td>1.5µL</td>
-              <td><Calced>{(1.5*sampleCount).toFixed(2)}µL</Calced></td>
+              <td>0.25µL</td>
+              <td><Calced>{(0.25*assembliesCount).toFixed(2)}µL</Calced></td>
+              <td><Calced>{(this.state.dnaseMixExtra*0.25*assembliesCount).toFixed(2)}µL</Calced></td>
             </tr>
             <tr>
               <td>PlasmidSafe DNase</td>
-              <td>0.75µL</td>
-              <td><Calced>{(0.75*sampleCount).toFixed(2)}µL</Calced></td>
+              <td>0.125µL</td>
+              <td><Calced>{(0.125*assembliesCount).toFixed(2)}µL</Calced></td>
+              <td><Calced>{(this.state.dnaseMixExtra*0.125*assembliesCount).toFixed(2)}µL</Calced></td>
             </tr>
             <tr>
               <td>Total</td>
-              <td>8.25µL</td>
-              <td><Calced>{(8.25*sampleCount).toFixed(2)}µL</Calced></td>
+              <td>3.375µL</td>
+              <td><Calced>{(3.375*assembliesCount).toFixed(2)}µL</Calced></td>
+              <td><Calced>{(this.state.dnaseMixExtra*3.375*assembliesCount).toFixed(2)}µL</Calced></td>
             </tr>
             </tbody>
           </Table>
