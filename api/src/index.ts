@@ -9,6 +9,7 @@ import crypto from 'crypto';
 import {Project, Assembly, AssemblyList} from './models';
 import jwt from 'jsonwebtoken';
 import cors from 'koa-cors';
+import mongoose from 'mongoose';
 
 const GUEST_ID = '000000000000000000000000';
 
@@ -76,8 +77,14 @@ async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> 
 userMust(beAnyOne, beUser),
 async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> {
   const user = ctx.state.user;
+  console.log(user._id);
   if (user) {
     const projects = await Project.aggregate([
+      { 
+        $match: {
+          owner: new mongoose.Types.ObjectId(user._id)
+        } 
+      },
       {
         $lookup: {
           from: "assemblies",
@@ -92,8 +99,10 @@ async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> 
           name: '$name',
           createdAt: '$createdAt',
           updatedAt: '$updatedAt',
+          owner: '$owner',
         }
-      }
+      },
+
       ])
     // const projects = await Project.find({owner: user._id}).select('_id name createdAt updatedAt').exec();
     ctx.body = projects;
