@@ -7,8 +7,16 @@ import { RouteComponentProps, withRouter, Redirect, Link } from 'react-router-do
 import { IUserInfo, IProject, IStoreState } from '../types';
 import {Button, InputGroup, FormControl, FormControlProps} from 'react-bootstrap';
 import { listMyProjects } from '../backendCalls';
-import { SET_CURRENT_PROJECT, CREATE_PROJECT, GET_MY_PROJECTS, DELETE_PROJECT } from '../redux/actions';
+import { 
+  SET_CURRENT_PROJECT, 
+  CREATE_PROJECT, 
+  GET_MY_PROJECTS, 
+  DELETE_PROJECT, 
+  RENAME_PROJECT,
+} from '../redux/actions';
 import ProjectWizard from './ProjectWizard';
+import pencilSVG from '../icons/tiny-pencil.svg'
+import Form from 'react-bootstrap/Form'
 
 const Panel = styled.div`
   margin:30px;
@@ -16,8 +24,16 @@ const Panel = styled.div`
 `;
 
 const CloseButton = styled(Button)`
-  margin-left:5px;
+  margin-left:10px;
 `;
+
+
+const EditButton = styled.img`
+  width:15px;
+  height:15px;
+  margin-left:5px;
+  cursor:pointer;
+`
 
 interface IProps extends RouteComponentProps {
   currentUser: IUserInfo;
@@ -26,9 +42,12 @@ interface IProps extends RouteComponentProps {
   onNewProject: (name:string, history:any) => void;
   onLoadProject: (project: IProject) => void;
   deleteProject: (id: string)=>void;
+  renameProject: (id: string, name:string)=>void;
 }
 interface IState {
   projectName: string;
+  editingProjectId?: string;
+  editingProjectName: string;
 }
 
 const mapStateToProps = (state: IStoreState) => ({
@@ -41,6 +60,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   onNewProject: (name:string, history:any) => dispatch({type: CREATE_PROJECT, data:{name, history}}),
   onLoadProject: (project: IProject) => dispatch({type: SET_CURRENT_PROJECT, data: project}),
   deleteProject: (_id:string) => dispatch({type:DELETE_PROJECT, data: _id}),
+  renameProject: (_id:string, name:string) => dispatch({type:RENAME_PROJECT, data: {_id, name}})
 });
 
 class ChooseProject extends React.Component<IProps, IState> {
@@ -53,6 +73,7 @@ class ChooseProject extends React.Component<IProps, IState> {
     super(props);
     this.state = {
       projectName: `project ${new Date().toLocaleString()}`,
+      editingProjectName: '',
     };
   }
 
@@ -100,11 +121,28 @@ class ChooseProject extends React.Component<IProps, IState> {
           <h3>your projects</h3>
           {this.props.projects.map((v, i) =>
           <div key={i}>
-            <Button variant='link' onClick={this.onClickOpenProject.bind(this, v)}>
-              <span>{v.name}</span>
-              {v.updatedAt && <span style={{color: '#777', fontSize: '80%'}}> {v.updatedAt.toLocaleDateString()}</span>}
-            </Button>
-            <CloseButton variant="text" size="sm" onClick={this.props.deleteProject.bind(this, v._id!)}>X</CloseButton>
+            
+              {this.state.editingProjectId === v._id
+                ?
+                <Form.Control 
+                  type="text" 
+                  placeholder="Normal text" 
+                  value={this.state.editingProjectName} 
+                  onChange={(event:any)=>this.setState({editingProjectName:event.target.value})}
+                  onBlur={this.saveProjectName}
+                />
+                :
+                <div>
+                <Button variant='link' onClick={this.onClickOpenProject.bind(this, v)}>
+                <span>{v.name}</span>
+                </Button>
+                  {v.updatedAt && <span style={{color: '#777', fontSize: '80%'}}> {v.updatedAt.toLocaleDateString()}</span>}
+            
+                  <EditButton src={pencilSVG} onClick={this.onClickRenameProject.bind(this, v._id!, v.name)}/>
+                  <CloseButton variant="text" size="sm" onClick={this.props.deleteProject.bind(this, v._id!)}>X</CloseButton>
+                  </div>
+                }
+            
           </div>,
           )}
         </div>
@@ -114,6 +152,15 @@ class ChooseProject extends React.Component<IProps, IState> {
   }
 
   public componentWillUnmount() {
+  }
+
+  private saveProjectName = ()=>{
+    this.setState({editingProjectId:undefined});
+    this.props.renameProject(this.state.editingProjectId!, this.state.editingProjectName);
+  }
+
+  private onClickRenameProject = (id:string, initialName:string) => {
+    this.setState({editingProjectId: id, editingProjectName:initialName});
   }
 
   private onClickNewProject = () => {

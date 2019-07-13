@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import styled from 'styled-components';
 import { RouteComponentProps, withRouter, Redirect, Link } from 'react-router-dom';
 import { IUserInfo, IProject, IStoreState } from '../types';
-import {Button, InputGroup, FormControl, FormControlProps, Form} from 'react-bootstrap';
+import {Button, InputGroup, FormControl, FormControlProps, Form, Breadcrumb} from 'react-bootstrap';
 import { listMyProjects } from '../backendCalls';
 import { SET_CURRENT_PROJECT, CREATE_PROJECT, GET_MY_PROJECTS, DELETE_PROJECT, POST_ASSEMBLY_LIST, SET_ASSEMBLY_LIST, SET_ASSEMBLY_LIST_ID} from '../redux/actions';
 import ProjectWizard from './ProjectWizard';
@@ -99,6 +99,11 @@ class GenerateProtocols extends React.Component<IProps, IState> {
   public render() {
     return (
       <Panel>
+        <Breadcrumb>
+          <Breadcrumb.Item href='/projects'>Home</Breadcrumb.Item>
+          <Breadcrumb.Item active>select projects</Breadcrumb.Item>
+        </Breadcrumb>
+        
         <div style={{marginTop:30}}>
           <h3>select projects to genterate automatic protocols</h3>
           <Form>

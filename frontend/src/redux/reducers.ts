@@ -26,6 +26,7 @@ import {
   SET_ASSEMBLY,
   SET_ASSEMBLY_LIST,
   SET_ASSEMBLY_LIST_ID,
+  RENAME_PROJECT,
 } from './actions';
 
 const defaultUser: IUserInfo = {
@@ -146,6 +147,8 @@ function appReducer(state: IAppState = DEFAULT_STATE, action: IAction) {
       return {...state, assemblyListId: action.data};
     case SET_ASSEMBLY_LIST:
       return {...state, assemblyProjects: action.data.assemblies};
+    case RENAME_PROJECT:
+      return {...state, myProjects: state.myProjects.map(v=>v._id === action.data._id ? {...v, name:action.data.name} : v)}
       
   }
   return state;

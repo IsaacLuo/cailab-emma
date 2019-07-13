@@ -26,6 +26,7 @@ POST_ASSEMBLY_LIST,
 SET_ASSEMBLY_LIST,
 GET_ASSEMBLY_LIST,
 SET_ASSEMBLY_LIST_ID,
+RENAME_PROJECT,
 } from './actions';
 
 import STORE_PARTS from '../parts.json';
@@ -179,9 +180,10 @@ export function* saveAssembly(action:IAction) {
   try {
     const projectId:string = action.data.projectId;
     const finalParts:IPartSequence[] = action.data.finalParts;
-    
     const response = yield call(axios.put, conf.serverURL + `/api/project/${projectId}/assembly`, finalParts, {withCredentials: true});
-    
+    if (action.cb) {
+      action.cb();
+    }
   } catch (error) {
     console.warn('unable to logout');
   }
@@ -225,6 +227,21 @@ export function* getAssemblyList(action:IAction) {
   }
 }
 
+export function* renameProject(action:IAction) {
+  try {
+    const {_id, name} = action.data;
+    const response = yield call(axios.get, conf.serverURL + `/api/project/${_id}`, {withCredentials: true});
+    const project = response.data;
+    project.name = name;
+    const response2 = yield call(axios.put, conf.serverURL + `/api/project/${_id}`, project, {withCredentials: true});
+    if (action.cb) {
+      action.cb();
+    }
+  } catch (error) {
+    console.warn('unable to logout');
+  }
+}
+
 export function* watchUsers() {
   yield takeLatest(GET_CURENT_USER, getCurrentUser);
   yield takeLatest(LOGOUT, logout);
@@ -239,6 +256,7 @@ export function* watchUsers() {
   yield takeLatest(GET_ASSEMBLY, getAssembly);
   yield takeLatest(POST_ASSEMBLY_LIST, postAssemblyList);
   yield takeLatest(GET_ASSEMBLY_LIST, getAssemblyList);
+  yield takeLatest(RENAME_PROJECT, renameProject);
 }
 
 export default function* rootSaga() {

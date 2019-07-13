@@ -39,7 +39,7 @@ interface IProps extends RouteComponentProps {
   onLoadProject: (projectId: string) => void,
   onClickNext?: (selectedParts:any)=>void,
   setAssembly: (finalParts: IPartSequence[])=>void,
-  saveAssembly: (projectId:string, finalParts: IPartSequence[])=>void,
+  saveAssembly: (projectId:string, finalParts: IPartSequence[])=>Promise<any>,
   project: IProject;
   assembly?: IPartSequence[];
 }
@@ -56,7 +56,12 @@ const mapStateToProps = (state: IStoreState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   onLoadProject: (projectId: string) => dispatch({type: GET_PROJECT, data: projectId}),
   setAssembly: (finalParts:IPartSequence[])=> dispatch({type:SET_ASSEMBLY, data:finalParts}),
-  saveAssembly: (projectId:string, finalParts:IPartSequence[])=> dispatch({type:SAVE_ASSEMBLY, data:{projectId, finalParts}}),
+  saveAssembly: (projectId:string, finalParts:IPartSequence[]) => new Promise(
+    resolve => dispatch({
+      type:SAVE_ASSEMBLY, 
+      data:{projectId, finalParts}, 
+      cb: resolve,
+    })),
 });
 
 class Assemble extends React.Component<IProps, IState> {
@@ -159,8 +164,7 @@ class Assemble extends React.Component<IProps, IState> {
       <div>
         <Button variant="primary" size="lg" onClick={this.downloadGenbank}>download genbank</Button>
         <Button variant="primary" size="lg" onClick={this.onClickManualProtocol}>Manual Protocol</Button>
-        {/* <Button variant="primary" size="lg" onClick={this.onClickAutoProtocol}>Automatic Protocol</Button> */}
-        <Link to={`/generateProtocols?${qs.stringify({preselected: [this.props.project._id]})}`}><Button variant="primary" size="lg">Automatic Protocol</Button></Link>
+        <Button variant="primary" size="lg" onClick={this.onClickAutoProtocol}>Automatic Protocol</Button>
       </div>
     </Panel>
     </React.Fragment>
@@ -214,9 +218,11 @@ class Assemble extends React.Component<IProps, IState> {
   }
 
   private onClickAutoProtocol = () => {
-    this.props.saveAssembly(this.props.project._id!, this.state.finalParts);
+    this.props.saveAssembly(this.props.project._id!, this.state.finalParts).then(
+      ()=>this.props.history.push(`/generateProtocols?${qs.stringify({preselected: [this.props.project._id]})}`)
+    );
     this.props.setAssembly(this.state.finalParts);
-    this.props.history.push(`/project/${this.props.project._id}/protocols/human/automatic`);
+    
   }
 }
 
