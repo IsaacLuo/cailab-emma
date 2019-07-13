@@ -219,9 +219,12 @@ class Assemble extends React.Component<IProps, IState> {
 
   private onClickAutoProtocol = () => {
     this.props.saveAssembly(this.props.project._id!, this.state.finalParts).then(
-      ()=>this.props.history.push(`/generateProtocols?${qs.stringify({preselected: [this.props.project._id]})}`)
+      ()=>{
+        this.props.setAssembly(this.state.finalParts);
+        this.props.history.push(`/generateProtocols?${qs.stringify({preselected: [this.props.project._id]})}`)
+      }
     );
-    this.props.setAssembly(this.state.finalParts);
+    
     
   }
 }

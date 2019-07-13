@@ -54,16 +54,17 @@ class GenerateProtocols extends React.Component<IProps, IState> {
 
   public static getDerivedStateFromProps(props: IProps, state: IState) {
 
-    if (props.projects.length !== state.projects.length) {
+    // if (props.projects.length !== state.projects.length) {
       const validProjects = props.projects.filter(v=>v.assemblies);
-      return {
+      const newState = {
         ...state,
         validProjects,
         projects:props.projects,
-        checkedProjectIds: validProjects.map(v=>v._id ? state.preselected.indexOf(v._id)>=0 : false),
-        }
-    }
-    return null;
+      };
+      if (state.preselected) {
+        newState.checkedProjectIds = validProjects.map(v=>v._id ? state.preselected.indexOf(v._id)>=0 : false);
+      }
+      return newState;
   }
 
   constructor(props: IProps) {
@@ -91,7 +92,6 @@ class GenerateProtocols extends React.Component<IProps, IState> {
   public shouldComponentUpdate(np: IProps, ns: IState) {
     if (np.currentUser !== this.props.currentUser && np.currentUser._id) {
       this.getProjectList();
-      return false;
     }
     return true;
   }
@@ -103,7 +103,7 @@ class GenerateProtocols extends React.Component<IProps, IState> {
           <Breadcrumb.Item href='/projects'>Home</Breadcrumb.Item>
           <Breadcrumb.Item active>select projects</Breadcrumb.Item>
         </Breadcrumb>
-        
+
         <div style={{marginTop:30}}>
           <h3>select projects to genterate automatic protocols</h3>
           <Form>

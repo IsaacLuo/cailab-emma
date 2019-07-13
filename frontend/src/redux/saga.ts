@@ -181,6 +181,7 @@ export function* saveAssembly(action:IAction) {
     const projectId:string = action.data.projectId;
     const finalParts:IPartSequence[] = action.data.finalParts;
     const response = yield call(axios.put, conf.serverURL + `/api/project/${projectId}/assembly`, finalParts, {withCredentials: true});
+    yield put({type:GET_MY_PROJECTS, data:undefined});
     if (action.cb) {
       action.cb();
     }
