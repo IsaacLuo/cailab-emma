@@ -117,6 +117,7 @@ export interface IPartDefinition {
   updatedAt: Date;
   permission: number;
   part: {
+    pos:number;
     position: string;
     name: string;
     labName: string;
@@ -129,4 +130,4 @@ export interface IPartDefinition {
   }
 }
 export interface IPartDefinitionModel extends IPartDefinition, Document {}
-export const PartDefinition:Model<IPartDefinitionModel> = mongoose.model('PartDefinition', AssemblyListSchema, 'part_definition');
+export const PartDefinition:Model<IPartDefinitionModel> = mongoose.model('PartDefinition', PartDefinitionSchema, 'part_definitions');

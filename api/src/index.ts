@@ -297,23 +297,30 @@ async (ctx:Ctx, next:Next)=> {
   ctx.body = assemblyList;
 });
 
-router.post('/api/partList/item',
+router.post('/api/partDefinition/item',
 userMust(beUser),
 async (ctx:Ctx, next:Next)=> {
   const form:IPartDefinition = ctx.request.body as IPartDefinition;
   if (form.group && ctx.state.user.groups.indexOf(form.group) < 0) {
     ctx.throw(401, 'unable to apply the group settings');
   }
+  if (form.permission === undefined) {
+    form.permission = 666;
+  }
   form.owner = ctx.state.user._id;
+  const now = new Date();
+  form.createdAt = now;
+  form.updatedAt = now;
   const docs = await PartDefinition.find({'part.name':form.part.name}).limit(1).exec();
-  if (!docs.length) {
+  if (docs.length) {
+    console.log(docs.length, docs);
     ctx.throw(401, 'name already exists');
   }
 
   ctx.body = await PartDefinition.create(form);
 });
 
-router.get('/api/partList',
+router.get('/api/partDefinition',
 userMust(beAnyOne, beUser, beGuest),
 async (ctx:Ctx, next:Next)=> {
   let userId:string[]|undefined;
@@ -332,7 +339,7 @@ async (ctx:Ctx, next:Next)=> {
   }).exec();
 });
 
-router.delete('/api/partList/item/:id',
+router.delete('/api/partDefinition/item/:id',
 userMust(beUser),
 async (ctx:Ctx, next:Next)=> {
   let userId:string[]|undefined;
