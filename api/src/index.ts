@@ -16,13 +16,16 @@ const GUEST_ID = '000000000000000000000000';
 const app = new koa();
 const router = new Router();
 
+type Ctx = koa.ParameterizedContext<ICustomState, {}>;
+type Next = ()=>Promise<any>;
+
 app.use(cors({credentials: true}));
 app.use(koaBody());
 middleware(app);
 
 function userMust (...args: Array<(ctx:koa.ParameterizedContext<any, {}>, next:()=>Promise<any>)=>boolean>) {
   const arg = arguments;
-  return async (ctx:koa.ParameterizedContext<any, {}>, next:()=>Promise<any>)=> {
+  return async (ctx:koa.ParameterizedContext<any, {}>, next:Next)=> {
     if (Array.prototype.some.call(arg, f=>f(ctx))) {
       await next();
     } else {
@@ -31,23 +34,23 @@ function userMust (...args: Array<(ctx:koa.ParameterizedContext<any, {}>, next:(
   };
 }
 
-function beUser (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>) {
+function beUser (ctx:Ctx, next:Next) {
   // console.log(ctx.state.user.groups);
   return ctx.state.user && (ctx.state.user.groups.indexOf('emma/users')>=0 || ctx.state.user.groups.indexOf('users')>=0);
   // return ctx.state.user!== undefined;
 }
 
-function beAnyOne (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>) {
+function beAnyOne (ctx:Ctx, next:Next) {
   // console.log(ctx.state.user.groups);
   // return ctx.state.user && (ctx.state.user.groups.indexOf('emma/users')>=0 || ctx.state.user.groups.indexOf('users')>=0);
   return ctx.state.user!== undefined;
 }
 
-function beAdmin (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>) {
+function beAdmin (ctx:Ctx, next:Next) {
   return ctx.state.user && (ctx.state.user.groups.indexOf('administrators')>=0 || ctx.state.user.groups.indexOf('emma/administrators')>=0);
 }
 
-function beGuest (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>) {
+function beGuest (ctx:Ctx, next:Next) {
   return ctx.state.user === undefined || ctx.state.user._id === '000000000000000000000000';
 }
 
@@ -55,7 +58,7 @@ router.get('/', async (ctx:koa.ParameterizedContext<any, {}>)=> {
   ctx.body={message:'server: cailab-emma'};
 })
 
-router.get('/api/user/current', async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> {
+router.get('/api/user/current', async (ctx:Ctx, next:Next)=> {
   const user = ctx.state.user;
   ctx.body = {message:'OK', user,};
   if (user) {
@@ -66,7 +69,7 @@ router.get('/api/user/current', async (ctx:koa.ParameterizedContext<ICustomState
 });
 
 router.get('/api/projects/', 
-async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> {
+async (ctx:Ctx, next:Next)=> {
   const user = ctx.state.user;
   if (user._id === '000000000000000000000000') {
     ctx.body = [];
@@ -75,7 +78,7 @@ async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> 
   }
 },
 userMust(beAnyOne, beUser),
-async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> {
+async (ctx:Ctx, next:Next)=> {
   const user = ctx.state.user;
   console.log(user._id);
   if (user) {
@@ -113,7 +116,7 @@ async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> 
 
 router.get('/api/project/:id',
 userMust(beAnyOne, beUser, beGuest),
-async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> {
+async (ctx:Ctx, next:Next)=> {
   const user = ctx.state.user;
   if (user) {
     const project = await Project.findOne({_id:ctx.params.id, owner: user._id}).exec();
@@ -128,7 +131,7 @@ async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> 
 
 router.post('/api/project',
 userMust(beAnyOne, beUser, beGuest),
-async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> {
+async (ctx:Ctx, next:Next)=> {
   const user = ctx.state.user;
   if (user) {
     const {name, presetIndexes} = ctx.request.body;
@@ -157,7 +160,7 @@ async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> 
 
 router.put('/api/project/:id',
 userMust(beAnyOne, beUser, beGuest),
-async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> {
+async (ctx:Ctx, next:Next)=> {
   const user = ctx.state.user;
   if (user) {
     const now = new Date();
@@ -219,7 +222,7 @@ async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> 
 
 router.delete('/api/project/:id',
 userMust(beAnyOne, beUser),
-async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> {
+async (ctx:Ctx, next:Next)=> {
   const user = ctx.state.user;
   if (user) {
     const now = new Date();
@@ -241,7 +244,7 @@ async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> 
   }
 },
 // delete old guest project
-async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> {
+async (ctx:Ctx, next:Next)=> {
   const res = await Project.deleteMany({owner: GUEST_ID, updatedAt:{$lt: new Date(Date.now()-172800000)}}).exec();
   console.log('guest project deleted', res.n, res.ok);
 }
@@ -249,7 +252,7 @@ async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> 
 
 router.delete('/api/project/:id/history/:index',
 userMust(beAnyOne, beUser, beGuest),
-async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> {
+async (ctx:Ctx, next:Next)=> {
   const {id, index} = ctx.params;
   const {time} = ctx.request.query;
   const project = await Project.findById(id).exec();
@@ -267,7 +270,7 @@ async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> 
 
 router.get('/api/project/:id/assembly',
 userMust(beAnyOne, beUser, beGuest),
-async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> {
+async (ctx:Ctx, next:Next)=> {
   const {id} = ctx.params;
   const assembly = await Assembly.findOne({project:id}).exec();
   ctx.body = assembly.finalParts;
@@ -275,23 +278,35 @@ async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> 
 
 router.put('/api/project/:id/assembly',
 userMust(beAnyOne, beUser, beGuest),
-async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> {
+async (ctx:Ctx, next:Next)=> {
   const {id} = ctx.params;
   ctx.body = await Assembly.update({project:id}, {_id:id, project:id, finalParts:ctx.request.body}, {upsert:true}).exec();
 });
 
 router.post('/api/assemblyList',
 userMust(beAnyOne, beUser, beGuest),
-async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> {
+async (ctx:Ctx, next:Next)=> {
   ctx.body = await AssemblyList.create({assemblies:ctx.request.body, createdAt: new Date(), owner:ctx.state.user._id});
 });
 
 router.get('/api/assemblyList/:id',
 userMust(beAnyOne, beUser, beGuest),
-async (ctx:koa.ParameterizedContext<ICustomState, {}>, next:()=>Promise<any>)=> {
+async (ctx:Ctx, next:Next)=> {
   const {id} = ctx.params;
   const assemblyList = await AssemblyList.findById(id).populate('assemblies').exec();
   ctx.body = assemblyList;
+});
+
+router.post('/api/partList',
+userMust(beAnyOne, beUser, beGuest),
+async (ctx:Ctx, next:Next)=> {
+  
+});
+
+router.get('/api/partList',
+userMust(beAnyOne, beUser, beGuest),
+async (ctx:Ctx, next:Next)=> {
+
 });
 
 
