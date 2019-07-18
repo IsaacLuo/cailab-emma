@@ -41,6 +41,7 @@ export const ProjectSchema = new Schema({
   parts: [PartsSchema],
   connectorIndexes: [Number],
   owner: Schema.Types.ObjectId,
+  group: String,
   createdAt: Date,
   updatedAt: Date,
   history: [Schema.Types.Mixed],
@@ -89,3 +90,43 @@ export interface IAssemblyList {
 }
 export interface IAssemblyListModel extends IAssemblyList, Document {}
 export const AssemblyList:Model<IAssemblyListModel> = mongoose.model('AssemblyList', AssemblyListSchema, 'assembly_lists');
+
+
+export const PartDefinitionSchema = new Schema({
+  owner: Schema.Types.ObjectId,
+  group: String,
+  createdAt: Date,
+  updatedAt: Date,
+  permission: Number,
+  part: {
+    position: String,
+    name: String,
+    labName: String,
+    category: String,
+    subCategory: String,
+    comment: String,
+    sequence: String,
+    plasmidLength: Number,
+    backboneLength: Number,
+  },
+})
+export interface IPartDefinition {
+  owner: string;
+  group: string;
+  createdAt: Date;
+  updatedAt: Date;
+  permission: number;
+  part: {
+    position: string;
+    name: string;
+    labName: string;
+    category: string;
+    subCategory: string;
+    comment: string;
+    sequence: string;
+    plasmidLength: number;
+    backboneLength: number;
+  }
+}
+export interface IPartDefinitionModel extends IPartDefinition, Document {}
+export const PartDefinition:Model<IPartDefinitionModel> = mongoose.model('PartDefinition', AssemblyListSchema, 'part_definition');

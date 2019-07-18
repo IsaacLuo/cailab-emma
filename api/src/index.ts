@@ -6,7 +6,7 @@ import Router from 'koa-router';
 import log4js from 'log4js';
 import conf from '../conf';
 import crypto from 'crypto';
-import {Project, Assembly, AssemblyList} from './models';
+import {Project, Assembly, AssemblyList, IPartDefinition, PartDefinition} from './models';
 import jwt from 'jsonwebtoken';
 import cors from 'koa-cors';
 import mongoose from 'mongoose';
@@ -297,16 +297,64 @@ async (ctx:Ctx, next:Next)=> {
   ctx.body = assemblyList;
 });
 
-router.post('/api/partList',
-userMust(beAnyOne, beUser, beGuest),
+router.post('/api/partList/item',
+userMust(beUser),
 async (ctx:Ctx, next:Next)=> {
-  
+  const form:IPartDefinition = ctx.request.body as IPartDefinition;
+  if (form.group && ctx.state.user.groups.indexOf(form.group) < 0) {
+    ctx.throw(401, 'unable to apply the group settings');
+  }
+  form.owner = ctx.state.user._id;
+  const docs = await PartDefinition.find({'part.name':form.part.name}).limit(1).exec();
+  if (!docs.length) {
+    ctx.throw(401, 'name already exists');
+  }
+
+  ctx.body = await PartDefinition.create(form);
 });
 
 router.get('/api/partList',
 userMust(beAnyOne, beUser, beGuest),
 async (ctx:Ctx, next:Next)=> {
+  let userId:string[]|undefined;
+  let groups = [undefined];
+  if(ctx.state.user) {
+    userId = [undefined, ctx.state.user._id];
+    groups = [undefined, ...ctx.state.user.groups];
+  }
+  
+  ctx.body = await PartDefinition.find({
+    $or: [
+      {owner: userId},
+      {groups, permission:{$bitsAllSet:0x40}},
+      {permission:{$bitsAllSet:0x04}},
+    ]
+  }).exec();
+});
 
+router.delete('/api/partList/item/:id',
+userMust(beUser),
+async (ctx:Ctx, next:Next)=> {
+  let userId:string[]|undefined;
+  let groups = [undefined];
+  if(ctx.state.user) {
+    userId = [undefined, ctx.state.user._id];
+    groups = [undefined, ...ctx.state.user.groups];
+  }
+  const {id} = ctx.params;
+  const res = await PartDefinition.deleteMany({
+    _id: id,
+    $or: [
+      {owner: userId},
+      {groups, permission:{$bitsAllSet:0x40}},
+      {permission:{$bitsAllSet:0x04}},
+    ]
+  }).exec();
+  if(res['deletedCount']>0) {
+    ctx.body = {message:'OK'};
+  }else {
+    ctx.throw(404);
+  }
 });
 
 
