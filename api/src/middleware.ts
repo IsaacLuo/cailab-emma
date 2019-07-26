@@ -88,7 +88,7 @@ export default function middleware (app:koa) {
     passthrough: true,
   }).unless({
     path: [
-      '/',
+      /\//,
     ]
   }));
 
