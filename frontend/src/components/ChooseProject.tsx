@@ -1,3 +1,6 @@
+/**
+ * the panel of selecting projects after loggin
+ */
 import * as React from 'react';
 import { Dispatch } from 'redux';
 import {connect} from 'react-redux';
@@ -6,6 +9,11 @@ import styled from 'styled-components';
 import { RouteComponentProps, withRouter, Redirect, Link } from 'react-router-dom';
 import { IUserInfo, IProject, IStoreState } from '../types';
 import {Button, InputGroup, FormControl, FormControlProps} from 'react-bootstrap';
+
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
+
 import { listMyProjects } from '../backendCalls';
 import { 
   SET_CURRENT_PROJECT, 
@@ -132,11 +140,23 @@ class ChooseProject extends React.Component<IProps, IState> {
                   onBlur={this.saveProjectName}
                 />
                 :
-                <div>
-                <Button variant='link' onClick={this.onClickOpenProject.bind(this, v)}>
-                <span>{v.name}</span>
-                </Button>
-                  {v.updatedAt && <span style={{color: '#777', fontSize: '80%'}}> {v.updatedAt.toLocaleDateString()}</span>}
+                <div style={{display:'flex', alignItems:'center'}}>
+                  
+                    <Button variant='link' onClick={this.onClickOpenProject.bind(this, v)}>
+                      <span>{v.name}</span>
+                    </Button>
+                    {v.updatedAt && <span style={{color: '#777', fontSize: '80%', marginRight:20}}> {v.updatedAt.toLocaleDateString()}</span>}
+                  
+                    <Switch value="checkedA" />
+                    <span style={{marginRight:20}}>public </span>
+                    {/* <FormControlLabel
+                      control={
+                        // <Switch checked={state.checkedA} onChange={handleChange('checkedA')} value="checkedA" />
+                        
+                      }
+                      label="Secondary"
+                    />             */}
+                  
             
                   <EditButton src={pencilSVG} onClick={this.onClickRenameProject.bind(this, v._id!, v.name)}/>
                   <CloseButton variant="text" size="sm" onClick={this.props.deleteProject.bind(this, v._id!)}>X</CloseButton>
