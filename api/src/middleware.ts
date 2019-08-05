@@ -86,17 +86,20 @@ export default function middleware (app:koa) {
     secret: conf.secret.jwt.key,
     cookie: 'token',
     passthrough: true,
-  }).unless({
-    path: [
-      /\//,
-    ]
-  }));
+  })
+  // .unless({
+  //   path: [
+  //     /\//,
+  //   ]
+  // })
+  );
 
   /**
    * if user is undefined, create a guest user
    */
   app.use(async (ctx:koa.ParameterizedContext<any, {}>, next: ()=>Promise<any>)=> {
     if(ctx.state.user === undefined) {
+      console.debug('user is undefined set it to guest')
       ctx.state.user = {
         _id: '000000000000000000000000',
         fullName: 'guest',
