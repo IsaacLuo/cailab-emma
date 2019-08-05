@@ -21,6 +21,7 @@
     "@types/styled-components": "^4.1.12",
     "@types/useragent": "^2.1.1",
     "@types/uuid": "^3.4.4",
+    "antd": "^3.21.2",
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
     "cross-env": "^5.2.0",

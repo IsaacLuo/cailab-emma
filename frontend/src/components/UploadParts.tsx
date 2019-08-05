@@ -71,7 +71,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   renameProject: (_id:string, name:string) => dispatch({type:RENAME_PROJECT, data: {_id, name}})
 });
 
-class ChooseProject extends React.Component<IProps, IState> {
+class UploadParts extends React.Component<IProps, IState> {
 
   public static getDervidedStateFromProps(props: IProps, state: IState) {
 
@@ -213,4 +213,4 @@ class ChooseProject extends React.Component<IProps, IState> {
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ChooseProject));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(UploadParts));
