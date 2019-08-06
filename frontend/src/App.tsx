@@ -29,6 +29,9 @@ import BatchAutoProtocolView from './components/BatchAutoProtocolView';
 import GenerateProtocols from './components/GenerateProtocols';
 import UploadParts from './components/UploadParts';
 
+import 'antd/dist/antd.css';
+
+
 
 const CenterDiv = styled.div`
   display:flex;

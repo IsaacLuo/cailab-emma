@@ -8,13 +8,6 @@ import {connect} from 'react-redux';
 import styled from 'styled-components';
 import { RouteComponentProps, withRouter, Redirect, Link } from 'react-router-dom';
 import { IUserInfo, IProject, IStoreState } from '../types';
-import {Button, InputGroup, FormControl, FormControlProps} from 'react-bootstrap';
-
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
-
-import { listMyProjects } from '../backendCalls';
 import { 
   SET_CURRENT_PROJECT, 
   CREATE_PROJECT, 
@@ -24,7 +17,9 @@ import {
 } from '../redux/actions';
 import ProjectWizard from './ProjectWizard';
 import pencilSVG from '../icons/tiny-pencil.svg'
-import Form from 'react-bootstrap/Form'
+
+import { Table, Divider, Tag } from 'antd';
+import { Form, Icon, Input, Button } from 'antd';
 
 const Panel = styled.div`
   margin:30px;
@@ -45,30 +40,15 @@ const EditButton = styled.img`
 
 interface IProps extends RouteComponentProps {
   currentUser: IUserInfo;
-  projects: IProject[];
-  getMyProjects: ()=>void;
-  onNewProject: (name:string, history:any) => void;
-  onLoadProject: (project: IProject) => void;
-  deleteProject: (id: string)=>void;
-  renameProject: (id: string, name:string)=>void;
 }
 interface IState {
-  projectName: string;
-  editingProjectId?: string;
-  editingProjectName: string;
 }
 
 const mapStateToProps = (state: IStoreState) => ({
   currentUser: state.app.currentUser,
-  projects: state.app.myProjects,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  getMyProjects: () => dispatch({type:GET_MY_PROJECTS}),
-  onNewProject: (name:string, history:any) => dispatch({type: CREATE_PROJECT, data:{name, history}}),
-  onLoadProject: (project: IProject) => dispatch({type: SET_CURRENT_PROJECT, data: project}),
-  deleteProject: (_id:string) => dispatch({type:DELETE_PROJECT, data: _id}),
-  renameProject: (_id:string, name:string) => dispatch({type:RENAME_PROJECT, data: {_id, name}})
 });
 
 class UploadParts extends React.Component<IProps, IState> {
@@ -86,93 +66,89 @@ class UploadParts extends React.Component<IProps, IState> {
   }
 
   public componentDidMount() {
-    if (this.props.currentUser._id) {
-      this.getProjectList();
-    }
-  }
-
-  public shouldComponentUpdate(np: IProps, ns: IState) {
-    if (np.currentUser !== this.props.currentUser && np.currentUser._id) {
-      this.getProjectList();
-      return false;
-    }
-    return true;
   }
 
   public render() {
+
+    const { Column, ColumnGroup } = Table;
+
+const data = [
+  {
+    key: '1',
+    firstName: 'John',
+    lastName: 'Brown',
+    age: 32,
+    address: 'New York No. 1 Lake Park',
+    tags: ['nice', 'developer'],
+  },
+  {
+    key: '2',
+    firstName: 'Jim',
+    lastName: 'Green',
+    age: 42,
+    address: 'London No. 1 Lake Park',
+    tags: ['loser'],
+  },
+  {
+    key: '3',
+    firstName: 'Joe',
+    lastName: 'Black',
+    age: 32,
+    address: 'Sidney No. 1 Lake Park',
+    tags: ['cool', 'teacher'],
+  },
+];
+
     return (
       <Panel>
         <div style={{marginTop:30}}>
         <h3>create a project</h3>
-        <InputGroup style={{width:600}}>
-          <FormControl
-            placeholder='filename'
-            aria-label='filename'
-            aria-describedby='filename'
-            value={this.state.projectName}
-            onChange={this.onChangeFileName}
-          />
-          <InputGroup.Append>
-            <Button variant='primary' onClick={this.onClickNewProject}>new project</Button>
-            <Link to={`/projectWizard?name=${this.state.projectName}`}><Button variant='outline-secondary'>use wizard</Button></Link>
-          </InputGroup.Append>
-        </InputGroup>
-        </div>
+          <Table dataSource={data}>
+            <ColumnGroup title="Name">
+              <Column title="First Name" dataIndex="firstName" key="firstName" />
+              <Column title="Last Name" dataIndex="lastName" key="lastName" />
+            </ColumnGroup>
+            <Column title="Age" dataIndex="age" key="age" />
+            <Column title="Address" dataIndex="address" key="address" />
+            <Column
+              title="Tags"
+              dataIndex="tags"
+              key="tags"
+              render={tags => (
+                <span>
+                  {tags.map((tag:any) => (
+                    <Tag color="blue" key={tag}>
+                      {tag}
+                    </Tag>
+                  ))}
+                </span>
+              )}
+            />
+            <Column
+              title="Action"
+              key="action"
+              render={(text, record) => (
+                <span>
+                  <a href="javascript:;">Delete</a>
+                </span>
+              )}
+            />
+          </Table>
 
-        <div style={{marginTop:30}}>
-          <h3>generate ECHO protocols</h3>
-          <p>generate an echo script for multiple projects</p>
-          <Link to={'/generateProtocols'}><Button variant='primary'>start</Button></Link>
+          <Form onSubmit={this.handleSubmit}>
+            <Form.Item>            
+              <Input
+                prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                placeholder="Username"
+              />
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" htmlType="submit">
+                Log in
+              </Button>
+            </Form.Item>
+          </Form>
         </div>
-
-        <div style={{marginTop:30}}>
-          <h3>upload new parts</h3>
-          <p>upload custom parts to the database</p>
-          <Link to={'/uploadParts'}><Button variant='primary'>start</Button></Link>
-        </div>
-        
-        <div style={{marginTop:30}}>
-          <h3>your projects</h3>
-          {this.props.projects.map((v, i) =>
-          <div key={i}>
-            
-              {this.state.editingProjectId === v._id
-                ?
-                <Form.Control 
-                  type="text" 
-                  placeholder="Normal text" 
-                  value={this.state.editingProjectName} 
-                  onChange={(event:any)=>this.setState({editingProjectName:event.target.value})}
-                  onBlur={this.saveProjectName}
-                />
-                :
-                <div style={{display:'flex', alignItems:'center'}}>
-                  
-                    <Button variant='link' onClick={this.onClickOpenProject.bind(this, v)}>
-                      <span>{v.name}</span>
-                    </Button>
-                    {v.updatedAt && <span style={{color: '#777', fontSize: '80%', marginRight:20}}> {v.updatedAt.toLocaleDateString()}</span>}
-                  
-                    <Switch value="checkedA" />
-                    <span style={{marginRight:20}}>public </span>
-                    {/* <FormControlLabel
-                      control={
-                        // <Switch checked={state.checkedA} onChange={handleChange('checkedA')} value="checkedA" />
-                        
-                      }
-                      label="Secondary"
-                    />             */}
-                  
-            
-                  <EditButton src={pencilSVG} onClick={this.onClickRenameProject.bind(this, v._id!, v.name)}/>
-                  <CloseButton variant="text" size="sm" onClick={this.props.deleteProject.bind(this, v._id!)}>X</CloseButton>
-                  </div>
-                }
-            
-          </div>,
-          )}
-        </div>
-        
       </Panel>
     );
   }
@@ -180,36 +156,8 @@ class UploadParts extends React.Component<IProps, IState> {
   public componentWillUnmount() {
   }
 
-  private saveProjectName = ()=>{
-    this.setState({editingProjectId:undefined});
-    this.props.renameProject(this.state.editingProjectId!, this.state.editingProjectName);
-  }
+  private handleSubmit() {
 
-  private onClickRenameProject = (id:string, initialName:string) => {
-    this.setState({editingProjectId: id, editingProjectName:initialName});
-  }
-
-  private onClickNewProject = () => {
-    this.props.onNewProject(this.state.projectName, this.props.history);
-    // this.props.history.push(`/project/new`);
-  }
-
-  private onClickOpenProject = (project: IProject) => {
-    // this.props.onLoadProject(project);
-    this.props.history.push(`/project/${project._id}`);
-  }
-
-  private onChangeFileName = (event: React.FormEvent<FormControlProps>) => {
-    const projectName = (event.target as FormControlProps).value!;
-    this.setState({projectName});
-  }
-  private async getProjectList() {
-    this.props.getMyProjects();
-      // try {
-      //   const projectList = await listMyProjects();
-      // } catch (error) {
-
-      // }
   }
 }
 
