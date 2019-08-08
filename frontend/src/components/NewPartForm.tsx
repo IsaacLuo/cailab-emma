@@ -20,6 +20,7 @@ import {
   Checkbox,
   Button,
   AutoComplete,
+  InputNumber,
 } from 'antd';
 import { FormProps } from 'antd/lib/form';
 
@@ -62,7 +63,7 @@ class NewPartForm extends React.Component<IProps, IState> {
   validateToPositionNames = (rule:any, value:string, callback:(...args:string[])=>void) => {
     const { form } = this.props;
     const positions = ['1', '2', '3', '4', '5', '6', '7', '8a', '8b', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '8'];
-    if (value && positions.indexOf(form!.getFieldValue('pos'))<0) {
+    if (value && positions.indexOf(form!.getFieldValue('position'))<0) {
       callback('position is invalid');
     } else {
       callback();
@@ -143,7 +144,7 @@ class NewPartForm extends React.Component<IProps, IState> {
                 <Icon type="question-circle-o" />
               </Tooltip>
         </span>} hasFeedback>
-          {getFieldDecorator('pos', {
+          {getFieldDecorator('position', {
             rules: [
               {
                 required: true,
@@ -155,6 +156,7 @@ class NewPartForm extends React.Component<IProps, IState> {
             ],
           })(<Input />)}
         </Form.Item>
+
         <Form.Item
           label='name'
         >
@@ -162,53 +164,68 @@ class NewPartForm extends React.Component<IProps, IState> {
             rules: [
               { required: true, 
                 message: 'Please input the name!', 
-                whitespace: true 
+                whitespace: true, 
               }
             ],
           })(<Input />)}
         </Form.Item>
-        <Form.Item label="Phone Number">
-          {getFieldDecorator('phone', {
-            rules: [{ required: true, message: 'Please input your phone number!' }],
-          })(<Input addonBefore={prefixSelector} style={{ width: '100%' }} />)}
+
+        <Form.Item
+          label='labName'
+        >
+          {getFieldDecorator('labName', {
+            rules: [
+              { required: true, 
+                message: 'Please input the name!', 
+                whitespace: true, 
+              }
+            ],
+          })(<Input />)}
         </Form.Item>
-        <Form.Item label="Website">
-          {getFieldDecorator('website', {
-            rules: [{ required: true, message: 'Please input website!' }],
-          })(
-            <AutoComplete
-              dataSource={websiteOptions}
-              onChange={this.handleWebsiteChange}
-              placeholder="website"
-            >
-              <Input />
-            </AutoComplete>,
-          )}
+
+        <Form.Item
+          label='category'
+        >
+          {getFieldDecorator('category', {
+            rules: [
+              { required: true, 
+                message: 'Please input the category!', 
+                whitespace: true, 
+              }
+            ],
+          })(<Input />)}
         </Form.Item>
-        <Form.Item label="Captcha" extra="We must make sure that your are a human.">
-          <Row gutter={8}>
-            <Col span={12}>
-              {getFieldDecorator('captcha', {
-                rules: [{ required: true, message: 'Please input the captcha you got!' }],
-              })(<Input />)}
-            </Col>
-            <Col span={12}>
-              <Button>Get captcha</Button>
-            </Col>
-          </Row>
+
+        <Form.Item
+          label='comment'
+        >
+          {getFieldDecorator('comment', {
+            rules: [],
+          })(<Input />)}
         </Form.Item>
-        <Form.Item {...tailFormItemLayout}>
-          {getFieldDecorator('agreement', {
-            valuePropName: 'checked',
-          })(
-            <Checkbox>
-              I have read the <a href="">agreement</a>
-            </Checkbox>,
-          )}
+
+        <Form.Item
+          label='sequence'
+        >
+          {getFieldDecorator('sequence', {
+            rules: [
+              { required: true, 
+                message: 'Please input the sequence!', 
+                whitespace: true, 
+              }
+            ],
+          })(<Input />)}
         </Form.Item>
+
+        <Form.Item label="plasmidLength">
+          {getFieldDecorator('plasmidLength', { initialValue: 1500 })(<InputNumber min={1} max={10000} />)}
+          <span className="ant-form-text"> bp</span>
+        </Form.Item>
+
+        
         <Form.Item {...tailFormItemLayout}>
           <Button type="primary" htmlType="submit">
-            Register
+            Create
           </Button>
         </Form.Item>
       </Form>
@@ -216,6 +233,6 @@ class NewPartForm extends React.Component<IProps, IState> {
   }
 }
 
-const WrappedNewPartForm = Form.create({ name: 'register' })(NewPartForm);
+const WrappedNewPartForm = Form.create({ name: 'newPart' })(NewPartForm);
 
 export default WrappedNewPartForm;
