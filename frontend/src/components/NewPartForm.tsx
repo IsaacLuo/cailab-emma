@@ -59,6 +59,16 @@ class NewPartForm extends React.Component<IProps, IState> {
     this.setState({ confirmDirty: this.state.confirmDirty || !!value });
   };
 
+  validateToPositionNames = (rule:any, value:string, callback:(...args:string[])=>void) => {
+    const { form } = this.props;
+    const positions = ['1', '2', '3', '4', '5', '6', '7', '8a', '8b', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '8'];
+    if (value && positions.indexOf(form!.getFieldValue('pos'))<0) {
+      callback('position is invalid');
+    } else {
+      callback();
+    }
+  };
+
   compareToFirstPassword = (rule:any, value:string, callback:(...args:string[])=>void) => {
     const { form } = this.props;
     if (value && value !== form!.getFieldValue('password')) {
@@ -93,11 +103,11 @@ class NewPartForm extends React.Component<IProps, IState> {
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
-        sm: { span: 8 },
+        sm: { span: 4 },
       },
       wrapperCol: {
         xs: { span: 24 },
-        sm: { span: 16 },
+        sm: { span: 20 },
       },
     };
     const tailFormItemLayout = {
@@ -127,58 +137,34 @@ class NewPartForm extends React.Component<IProps, IState> {
 
     return (
       <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-        <Form.Item label="E-mail">
-          {getFieldDecorator('email', {
+        <Form.Item label={<span>
+          Position&nbsp;
+          <Tooltip title="from 1 to 23 (and 8a, 8b)">
+                <Icon type="question-circle-o" />
+              </Tooltip>
+        </span>} hasFeedback>
+          {getFieldDecorator('pos', {
             rules: [
               {
-                type: 'email',
-                message: 'The input is not valid E-mail!',
+                required: true,
+                message: 'Please input position name!',
               },
               {
-                required: true,
-                message: 'Please input your E-mail!',
+                validator: this.validateToPositionNames,
               },
             ],
           })(<Input />)}
         </Form.Item>
-        <Form.Item label="Password" hasFeedback>
-          {getFieldDecorator('password', {
-            rules: [
-              {
-                required: true,
-                message: 'Please input your password!',
-              },
-              {
-                validator: this.validateToNextPassword,
-              },
-            ],
-          })(<Input.Password />)}
-        </Form.Item>
-        <Form.Item label="Confirm Password" hasFeedback>
-          {getFieldDecorator('confirm', {
-            rules: [
-              {
-                required: true,
-                message: 'Please confirm your password!',
-              },
-              {
-                validator: this.compareToFirstPassword,
-              },
-            ],
-          })(<Input.Password onBlur={this.handleConfirmBlur} />)}
-        </Form.Item>
         <Form.Item
-          label={
-            <span>
-              Nickname&nbsp;
-              <Tooltip title="What do you want others to call you?">
-                <Icon type="question-circle-o" />
-              </Tooltip>
-            </span>
-          }
+          label='name'
         >
-          {getFieldDecorator('nickname', {
-            rules: [{ required: true, message: 'Please input your nickname!', whitespace: true }],
+          {getFieldDecorator('name', {
+            rules: [
+              { required: true, 
+                message: 'Please input the name!', 
+                whitespace: true 
+              }
+            ],
           })(<Input />)}
         </Form.Item>
         <Form.Item label="Phone Number">

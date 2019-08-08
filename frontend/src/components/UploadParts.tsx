@@ -21,6 +21,9 @@ import pencilSVG from '../icons/tiny-pencil.svg'
 import { Table, Divider, Tag } from 'antd';
 import { Form, Icon, Input, Button } from 'antd';
 
+//my components
+import NewPartForm from './NewPartForm'
+
 const Panel = styled.div`
   margin:30px;
   text-align:left;
@@ -135,19 +138,7 @@ const data = [
             />
           </Table>
 
-          <Form onSubmit={this.handleSubmit}>
-            <Form.Item>            
-              <Input
-                prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                placeholder="Username"
-              />
-            </Form.Item>
-            <Form.Item>
-              <Button type="primary" htmlType="submit">
-                Log in
-              </Button>
-            </Form.Item>
-          </Form>
+          <NewPartForm/>
         </div>
       </Panel>
     );
