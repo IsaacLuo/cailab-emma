@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 import { IStoreState, IPartDetail, IProject, IPartSequence } from '../types.js';
 import { Dispatch } from 'redux';
 import { GET_ASSEMBLY } from '../redux/actions';
+import NumericInput from "react-numeric-input";
 
 // const backboneLength = 1839;
 const backboneLength = 1840;
@@ -18,6 +19,10 @@ const backboneLength = 1840;
 const Panel = styled.div`
   margin:100px;
   text-align:left;
+`;
+
+const Calced = styled.span`
+  text-decoration:underline;
 `;
 
 const Title1 = styled.h1`
@@ -38,6 +43,8 @@ interface IProps extends RouteComponentProps {
   
 }
 interface IState {
+  preparedMasterMixVolume: number;
+  sampleCount: number;
 }
 
 const mapStateToProps = (state: IStoreState) => ({
@@ -62,6 +69,11 @@ class ManualProtocolView extends React.Component<IProps, IState> {
       this.props.onLoadProject(projectId);
     }
 
+    this.state = {
+      preparedMasterMixVolume: 10,
+      sampleCount: 1,
+    }
+
   }
   public render() {
     if (!this.props.assembly) {
@@ -70,6 +82,13 @@ class ManualProtocolView extends React.Component<IProps, IState> {
 
     // const sampleCount = this.props.project.parts.filter(v=>v.selected).length + this.props.project.connectorIndexes.length;
     const sampleCount = this.props.assembly? this.props.assembly.length : 0;
+
+    const dnaVolumeSum = this.props.assembly!.reduce((sum,v,i)=>{
+      const vectorLen = v.sequence.length+backboneLength;
+      const dnaMass = this.calcDNAMass(13, vectorLen);
+      const dnaVolume = this.calcDNAVolume(dnaMass);
+      return sum+dnaVolume;
+    }, 0);
     
     return <React.Fragment>
       <Breadcrumb>
@@ -106,32 +125,42 @@ class ManualProtocolView extends React.Component<IProps, IState> {
         <Table bordered hover>
           <tr>
             <th>Reagent</th>
-            <td>10μL reaction</td>
-            <td>{sampleCount*10}μL reaction</td>
+            <th>10μL reaction</th>
+            <th> 
+              <Calced>
+                <NumericInput 
+                  min={1}
+                  max={100}
+                  size={1}
+                  value={this.state.preparedMasterMixVolume}
+                  onChange={(v)=>this.setState({preparedMasterMixVolume:(v as number)})}/>
+                µL
+              </Calced> reaction
+            </th>
           </tr>
           <tr>
             <th>T4 Ligase Reaction Buffer</th>
             <td>1µL</td>
-            <td>{sampleCount*1}μL</td>
+            <td>{(this.state.preparedMasterMixVolume/10).toFixed(3)}µL</td>
           </tr>
           <tr>
             <th>BSA</th>
             <td>0.1µL</td>
-            <td>{(sampleCount*0.1).toFixed(2)}μL</td>
+            <td>{(this.state.preparedMasterMixVolume/100).toFixed(3)}µL</td>
           </tr>
           <tr>
             <th>Fast Digest Esp3I</th>
             <td>0.5µL</td>
-            <td>{(sampleCount*0.5).toFixed(2)}μL</td>
+            <td>{(this.state.preparedMasterMixVolume*0.05).toFixed(3)}µL</td>
           </tr>
           <tr>
             <th>T4 DNA Ligase</th>
             <td>0.25µL</td>
-            <td>{(sampleCount*0.25).toFixed(2)}μL</td>
+            <td>{(this.state.preparedMasterMixVolume*0.025).toFixed(3)}µL</td>
           </tr>
         </Table>
         <Li>
-          Next, place on ice {sampleCount} 0.2mL PCR tubes. To each tube, add an equimolar amount of 
+          Next, place on ice 0.2mL PCR tubes. Add an equimolar amount of 
           each part plasmid (13fmol)
           and 0.5µL of the receiver vector (10 ng/µL). 
           Add nuclease-free water to a final volume of 8.15µL. 
@@ -140,10 +169,9 @@ class ManualProtocolView extends React.Component<IProps, IState> {
           <tr>
             <th></th>
             <th>part</th>
-            <th>length</th>
+            <th>length(bp)</th>
             <th>ng</th>
             <th>µL</th>
-            <th>water(µL)</th>
           </tr>
           {
             this.props.assembly!.map((v,i)=>{
@@ -156,9 +184,22 @@ class ManualProtocolView extends React.Component<IProps, IState> {
                 <td>{vectorLen}</td>
                 <td>{dnaMass.toFixed(3)}ng</td>
                 <td>{dnaVolume.toFixed(3)}µL</td>
-                <td>{(8.15-dnaVolume).toFixed(3)}µL</td>
               </tr>})
           }
+          <tr>
+            <td/>
+            <td>receiver vector</td>
+            <td/>
+            <td/>
+            <td>50µL</td>
+          </tr>
+          <tr>
+            <td/>
+            <td>water</td>
+            <td/>
+            <td/>
+            <td>{(10-1.85-dnaVolumeSum-0.5).toFixed(3)}µL</td>
+          </tr>
         </Table>
         <Li>
           Distribute 1.85 µL of the Golden Gate MM into each of the tubes containing the parts and the receiver vector to a final volume of 10 µL. Mix gently.
@@ -184,23 +225,32 @@ class ManualProtocolView extends React.Component<IProps, IState> {
         <Li>
           Next, on ice prepare a Plasmid-Safe™ ATP-Dependent DNase mix. 
           For each sample, mix together 0.25 µL of Plasmid-Safe™ ATP-Dependent DNase 10 U/µL and 0.5 µL of 25 mM ATP solution. 
-          Distribute 0.75µL ({(0.75*sampleCount).toFixed(2)}µL totally) in each Golden Gate reaction tube. Mix gently and incubate at 37 °C for 15 min.
+          Distribute 0.75µL in each Golden Gate reaction tube. Mix gently and incubate at 37 °C for 15 min.
         </Li>
         <Table bordered hover>
           <tr>
             <th>Reagent</th>
             <th>/ manual 10µL reaction</th>
-            <th>for {sampleCount} samples</th>
+            <th> 
+              <Calced>
+                <NumericInput 
+                  min={1}
+                  max={100}
+                  size={1}
+                  value={this.state.sampleCount}
+                  onChange={(v)=>this.setState({sampleCount:(v as number)})}/>
+              </Calced> samples
+            </th>
           </tr>
           <tr>
             <td>Plasmid-Safe™ ATP-Dependent DNase 10 U/µL</td>
             <td>0.25µL</td>
-            <td>{(0.25*sampleCount).toFixed(2)}µL</td>
+            <td>{(0.25*this.state.sampleCount).toFixed(2)}µL</td>
           </tr>
           <tr>
             <td>25 mM ATP solution</td>
             <td>0.5µL</td>
-            <td>{(0.5*sampleCount).toFixed(2)}µL</td>
+            <td>{(0.5*this.state.sampleCount).toFixed(2)}µL</td>
           </tr>
         </Table>
         <Li>
