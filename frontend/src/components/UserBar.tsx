@@ -80,9 +80,9 @@ class MyComponent extends React.Component<IProps, IState> {
 
   private onClickLogin = (event: any) => {
     const width = 400;
-    const height = 560;
-    const top = (screen.availHeight / 2) - (height / 2);
-    const left = (screen.availWidth / 2) - (width / 2);
+    const height = 600;
+    const top = (window.screen.availHeight / 2) - (height / 2);
+    const left = (window.screen.availWidth / 2) - (width / 2);
 
     window.addEventListener('message', this.onLogginWindowClosed, false);
     const subWindow = window.open(

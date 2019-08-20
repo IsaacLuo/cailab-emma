@@ -85,8 +85,8 @@ class MainPage extends React.Component<IProps, IState> {
   private onClickLogin = () => {
     const width = 400;
     const height = 560;
-    const top = (screen.availHeight / 2) - (height / 2);
-    const left = (screen.availWidth / 2) - (width / 2);
+    const top = (window.screen.availHeight / 2) - (height / 2);
+    const left = (window.screen.availWidth / 2) - (width / 2);
 
     window.addEventListener('message', this.onLogginWindowClosed, false);
     const subWindow = window.open(
@@ -99,8 +99,8 @@ class MainPage extends React.Component<IProps, IState> {
   private onClickLoginGuest = () => {
     const width = 400;
     const height = 560;
-    const top = (screen.availHeight / 2) - (height / 2);
-    const left = (screen.availWidth / 2) - (width / 2);
+    const top = (window.screen.availHeight / 2) - (height / 2);
+    const left = (window.screen.availWidth / 2) - (width / 2);
 
     window.addEventListener('message', this.onLogginWindowClosed, false);
     const subWindow = window.open(
