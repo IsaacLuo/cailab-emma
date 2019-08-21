@@ -297,6 +297,18 @@ async (ctx:Ctx, next:Next)=> {
   ctx.body = assemblyList;
 });
 
+router.get('/api/partNames/',
+userMust(beUser, beGuest),
+async (ctx:Ctx, next:Next)=> {
+  let groups = ['all'];
+  if (ctx.state.user) {
+    groups = [...groups, ...ctx.state.user.groups];
+  }
+  const partDefinitions = await PartDefinition.find({}).select('part.name part.labName').exec();
+  ctx.body = partDefinitions.map(v=>({_id:v._id, name:v.part.name, labName:v.part.labName}));
+
+});
+
 router.post('/api/partDefinition/item',
 userMust(beUser),
 async (ctx:Ctx, next:Next)=> {

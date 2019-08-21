@@ -30,7 +30,7 @@ import GenerateProtocols from './components/GenerateProtocols';
 import UploadParts from './components/UploadParts';
 
 import 'antd/dist/antd.css';
-// import PlateMapEditor from './components/PlateMapEditor';
+import PlateMapEditor from './components/PlateMapEditor';
 
 
 
@@ -122,15 +122,10 @@ class App extends Component<any, IState> {
             component = {UploadParts}
           />
 
-          {/* <Route
-            path='/plate/new'
-            component = {PlateMapEditor}
-          />
-
           <Route
             path='/plate/:id'
             component = {PlateMapEditor}
-          /> */}
+          />
           
 
         </React.Fragment>

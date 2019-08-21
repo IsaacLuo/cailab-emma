@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import { IStoreState, IPartName} from '../types.js';
 import { Dispatch } from 'redux';
 import { Select } from 'antd';
-const { Option } = Select;
 import styled from 'styled-components';
+const { Option } = Select;
+
 
 interface IProps {
   partNames: IPartName[];
@@ -37,7 +38,7 @@ class PartSelectSearchBox extends React.Component<IProps, IState> {
         showSearch
         value={this.state.searchValue}
         placeholder={'empty'}
-        // style={this.props.style}
+        style={{width:100}}
         defaultActiveFirstOption={false}
         showArrow={false}
         filterOption={false}

@@ -27,6 +27,7 @@ import {
   SET_ASSEMBLY_LIST,
   SET_ASSEMBLY_LIST_ID,
   RENAME_PROJECT,
+  SET_ALL_PART_NAMES,
 } from './actions';
 
 const defaultUser: IUserInfo = {
@@ -49,6 +50,7 @@ const DEFAULT_STATE: IAppState = {
   stashHistory: undefined,
   assemblyListId: undefined,
   assemblyProjects: [],
+  partNames: [],
 };
 
 function appReducer(state: IAppState = DEFAULT_STATE, action: IAction) {
@@ -148,8 +150,9 @@ function appReducer(state: IAppState = DEFAULT_STATE, action: IAction) {
     case SET_ASSEMBLY_LIST:
       return {...state, assemblyProjects: action.data.assemblies};
     case RENAME_PROJECT:
-      return {...state, myProjects: state.myProjects.map(v=>v._id === action.data._id ? {...v, name:action.data.name} : v)}
-      
+      return {...state, myProjects: state.myProjects.map(v=>v._id === action.data._id ? {...v, name:action.data.name} : v)};
+    case SET_ALL_PART_NAMES:
+      return {...state, partNames: action.data};
   }
   return state;
 }
