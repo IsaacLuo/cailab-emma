@@ -47,6 +47,11 @@ export interface IAction {
   cb?: (...args: any[])=>void;
 }
 
+export interface IPartName {
+  _id: string;
+  name: string;
+  labName: string;
+}
 
 export interface IAppState {
   // the app is initializing(fetching data from server first time)
@@ -57,6 +62,7 @@ export interface IAppState {
   currentAssembly?: IPartSequence[];
   assemblyListId?: string;
   assemblyProjects: IAssembly[];
+  partNames: IPartName[];
 }
 export interface IPartSelectorState {
   resetCount: number;
