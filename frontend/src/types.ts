@@ -63,6 +63,7 @@ export interface IAppState {
   assemblyListId?: string;
   assemblyProjects: IAssembly[];
   partNames: IPartName[];
+  partDict: any;
 }
 export interface IPartSelectorState {
   resetCount: number;

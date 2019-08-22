@@ -51,6 +51,7 @@ const DEFAULT_STATE: IAppState = {
   assemblyListId: undefined,
   assemblyProjects: [],
   partNames: [],
+  partDict: {},
 };
 
 function appReducer(state: IAppState = DEFAULT_STATE, action: IAction) {
@@ -152,7 +153,9 @@ function appReducer(state: IAppState = DEFAULT_STATE, action: IAction) {
     case RENAME_PROJECT:
       return {...state, myProjects: state.myProjects.map(v=>v._id === action.data._id ? {...v, name:action.data.name} : v)};
     case SET_ALL_PART_NAMES:
-      return {...state, partNames: action.data};
+      const partDict:any = {};
+      action.data.forEach((v:any)=>partDict[v._id] = v);
+      return {...state, partNames: action.data, partDict };
   }
   return state;
 }

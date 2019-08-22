@@ -9,15 +9,21 @@ const { Option } = Select;
 
 
 interface IProps {
+  value?: string;
   partNames: IPartName[];
+  partDict: any;
+  onChange?: (value: string)=>void;
 }
 
 interface IState {
-  searchValue:string
+  filteredPartNames:IPartName[],
+  searchValue:string,
+  selectedValue: string,
 }
 
 const mapStateToProps = (state: IStoreState) => ({
   partNames: state.app.partNames,
+  partDict: state.app.partDict,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -25,20 +31,31 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 class PartSelectSearchBox extends React.Component<IProps, IState> {
+
+  static getDerivedStateFromProps(props:IProps, state:IState) {
+    return {
+      searchValue: state.searchValue,
+      filteredPartNames: state.searchValue === '' ? props.partNames : props.partNames.filter((v)=>`${v.name} ${v.labName}`.indexOf(state.searchValue)>=0),
+    }
+  }
+
   constructor(props: IProps) {
     super(props);
     this.state = {
+      filteredPartNames:props.partNames,
       searchValue: '',
+      selectedValue: this.props.value || '',
     }
   }
   public render() {
-    const options = this.props.partNames.map(d => <Option key={d._id}>{d.name}({d.labName})</Option>);
+    const options = this.state.filteredPartNames.map(d => <Option key={d._id}>{`${d.name}(${d.labName})`}</Option>);
     return <div>
       <Select
         showSearch
-        value={this.state.searchValue}
+        labelInValue
+        value={this.state.selectedValue}
         placeholder={'empty'}
-        style={{width:100}}
+        style={{width:400}}
         defaultActiveFirstOption={false}
         showArrow={false}
         filterOption={false}
@@ -53,8 +70,10 @@ class PartSelectSearchBox extends React.Component<IProps, IState> {
 
 
 
-  private onChange = (value:string) => {
-    console.log(`selected ${value}`);
+  private onChange = (item:any) => {
+    console.log(item);
+    if (this.props.onChange) this.props.onChange(item);
+    this.setState({selectedValue:item.label});
   }
 
   private onBlur = () => {
@@ -66,7 +85,7 @@ class PartSelectSearchBox extends React.Component<IProps, IState> {
   }
 
   private onSearch = (val:string) => {
-    console.log('search:', val);
+    this.setState({searchValue:val});
   }
 }
 
