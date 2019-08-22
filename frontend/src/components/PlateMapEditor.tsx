@@ -37,6 +37,8 @@ interface IState {
   modalVisible: boolean;
   currentWellId: number;
   currentWellName: string;
+  currentWellPart: any;
+  // currentSearchValue: string;
 }
 
 const mapStateToProps = (state: IStoreState) => ({
@@ -57,10 +59,12 @@ class PlateMapEditor extends React.Component<IProps, IState> {
     super(props);
     this.props.loadAllPartNames();
     this.state = {
-      selectedParts: Array(384).fill({_id:undefined, text:'empty'}),
+      selectedParts: Array(384).fill({_id:'', name:'empty'}),
       modalVisible:false,
       currentWellId: -1,
       currentWellName: '',
+      currentWellPart: {},
+      // currentSearchValue: '',
     };
   }
 
@@ -77,7 +81,7 @@ class PlateMapEditor extends React.Component<IProps, IState> {
           </tr>
           {
             
-            rowTitles.map((v,i)=><tr>
+            rowTitles.map((v,i)=><tr key={i}>
               <WellTd>{v}</WellTd>
               {colTitles.map((vv,ii)=>{
                 const wellIdx = i*24+ii;
@@ -88,7 +92,7 @@ class PlateMapEditor extends React.Component<IProps, IState> {
                 >
                   {wellName}
                   <br/>
-                  {this.state.selectedParts[wellIdx].text}
+                  {this.state.selectedParts[wellIdx].name}
                 </ClickableDiv>
               </WellTd>;})}
             </tr>)}
@@ -99,12 +103,24 @@ class PlateMapEditor extends React.Component<IProps, IState> {
           visible={this.state.modalVisible && this.state.currentWellId>=0}
           onOk={this.handleModalOK}
           onCancel={this.handleModalCancel}
+          footer={[
+            <Button key="clear" onClick={this.handleModalClear}>
+              Clear
+            </Button>,
+            <Button key="cancel" onClick={this.handleModalCancel}>
+              Cancel
+            </Button>,
+            <Button key="submit" type="primary" onClick={this.handleModalOK}>
+              OK
+            </Button>,
+          ]}
         >
           <p>{this.state.currentWellName}</p>
           <PartSelectSearchBox
             value={this.state.selectedParts[this.state.currentWellId]}
             onChange={this.setWellValue.bind(this)}
           />
+          
         </Modal>
         
       </Panel>
@@ -112,18 +128,27 @@ class PlateMapEditor extends React.Component<IProps, IState> {
   }
 
   private clickWell = (wellId:number, wellName:string) => {
-    console.log(wellId);
+    // console.log(wellId);
+    // let {currentSearchValue} = this.state;
+    // const {currentWellId, selectedParts} = this.state;
+    // if (currentWellId !== wellId) {
+    //   currentSearchValue = '';
+    // } else {
+    //   currentSearchValue = selectedParts[currentWellId]
+    // }
     this.setState({
       modalVisible: true,
       currentWellId: wellId,
       currentWellName: wellName,
+      currentWellPart: this.state.selectedParts[wellId],
     })
   }
 
   private handleModalOK = (e:React.MouseEvent<HTMLElement, MouseEvent>)=> {
-    
-
+    const {currentWellId, currentWellPart, selectedParts} = this.state;
+    selectedParts[currentWellId] = currentWellPart;
     this.setState({
+      selectedParts: [...selectedParts],
       modalVisible: false,
       currentWellId: -1,
       currentWellName: '',
@@ -138,14 +163,21 @@ class PlateMapEditor extends React.Component<IProps, IState> {
     });
   }
 
+  private handleModalClear = ()=>{
+    const {currentWellId, currentWellPart, selectedParts} = this.state;
+    selectedParts[currentWellId] = {_id:'', name:'empty'};
+    this.setState({
+      selectedParts: [...selectedParts],
+      modalVisible: false,
+      currentWellId: -1,
+      currentWellName: '',
+    });
+  }
+
   private setWellValue = (item:any) => {
-    const partId = item.key;
-    const partName = item.label;
-    const {currentWellId} = this.state;
-    console.log(partName);
-    // this.setState({
-      
-    // })
+    this.setState({
+      currentWellPart: item,
+    })
   }
 
 }
