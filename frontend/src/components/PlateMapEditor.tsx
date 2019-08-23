@@ -10,7 +10,7 @@ import { RouteComponentProps, withRouter, Redirect, Link } from 'react-router-do
 import { IUserInfo, IProject, IStoreState, IPartDetail, IPartName } from '../types';
 import PartSelectSearchBox from './PartSelectSearchBox';
 import { LOAD_ALL_PART_NAMES } from '../redux/actions';
-import { Modal, Button } from 'antd';
+import { Input, Modal, Button } from 'antd';
 
 const Panel = styled.div`
   margin:30px;
@@ -73,6 +73,13 @@ class PlateMapEditor extends React.Component<IProps, IState> {
     const rowTitles = 'ABCDEFGHIJKLMNOP'.split('');
     return (
       <Panel>
+        <p>
+        <Input placeholder="plate name" />
+        </p>
+        <p>
+        <Input placeholder="barcode" />
+        </p>
+        <p>plate map</p>
         <table>
           <tbody>
           <tr>
