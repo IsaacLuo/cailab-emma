@@ -6,7 +6,7 @@ import Router from 'koa-router';
 import log4js from 'log4js';
 import conf from '../conf';
 import crypto from 'crypto';
-import {Project, Assembly, AssemblyList, IPartDefinition, PartDefinition} from './models';
+import {Project, Assembly, AssemblyList, IPartDefinition, PartDefinition, PlateDefinition} from './models';
 import jwt from 'jsonwebtoken';
 import cors from 'koa-cors';
 import mongoose from 'mongoose';
@@ -34,23 +34,23 @@ function userMust (...args: Array<(ctx:koa.ParameterizedContext<any, {}>, next:(
   };
 }
 
-function beUser (ctx:Ctx, next:Next) {
+function beUser (ctx:Ctx, next?:Next) {
   // console.log(ctx.state.user.groups);
   return ctx.state.user && (ctx.state.user.groups.indexOf('emma/users')>=0 || ctx.state.user.groups.indexOf('users')>=0);
   // return ctx.state.user!== undefined;
 }
 
-function beAnyOne (ctx:Ctx, next:Next) {
+function beAnyOne (ctx:Ctx, next?:Next) {
   // console.log(ctx.state.user.groups);
   // return ctx.state.user && (ctx.state.user.groups.indexOf('emma/users')>=0 || ctx.state.user.groups.indexOf('users')>=0);
   return ctx.state.user!== undefined;
 }
 
-function beAdmin (ctx:Ctx, next:Next) {
+function beAdmin (ctx:Ctx, next?:Next) {
   return ctx.state.user && (ctx.state.user.groups.indexOf('administrators')>=0 || ctx.state.user.groups.indexOf('emma/administrators')>=0);
 }
 
-function beGuest (ctx:Ctx, next:Next) {
+function beGuest (ctx:Ctx, next?:Next) {
   return ctx.state.user === undefined || ctx.state.user._id === '000000000000000000000000';
 }
 
@@ -374,6 +374,80 @@ async (ctx:Ctx, next:Next)=> {
   }else {
     ctx.throw(404);
   }
+});
+
+router.post('/api/plateDefinition',
+userMust(beUser, beAdmin),
+async (ctx:Ctx, next:Next)=> {
+  const userId = ctx.state.user._id;
+  if(!ctx.request.body) {
+    ctx.throw(403);
+  }
+  const {owner} = ctx.request.body;
+  if (!ctx.request.body.owner) {
+    ctx.request.body.owner = userId;
+    await next();
+    return;
+  }
+  if(beAdmin(ctx) && userId !== owner) {
+    ctx.throw(401, 'cannot set owner to others');
+  }
+},
+async (ctx:Ctx, next:Next)=> {
+  const {owner, group, permission, plateType, name, barcode, parts} = ctx.request.body;
+  const now = new Date();
+  const partsCount = await PartDefinition.find({_id:parts}).countDocuments().exec();
+  const uniquePartSize = new Set(parts).size;
+  console.log('partsCount', partsCount, uniquePartSize);
+  if (partsCount < uniquePartSize) {
+    ctx.throw(404, 'some part not found in database');
+  }
+  // ctx.body = await PlateDefinition.create({
+  //   owner,
+  //   group,
+  //   createdAt: now,
+  //   updatedAt: now,
+  //   permission,
+  //   plateType,
+  //   name,
+  //   barcode,
+  //   parts,
+  // });
+  ctx.body = {message:'OK'};
+});
+
+router.put('/api/plateDefinition',
+userMust(beUser, beAdmin),
+async (ctx:Ctx, next:Next)=> {
+  if(!ctx.request.body) {
+    ctx.throw(403);
+  }
+  const userId = ctx.state.user._id;
+  if (!ctx.request.body.owner) {
+    ctx.request.body.owner = userId;
+    next();
+    return;
+  }
+  if(beAdmin(ctx) && userId !== ctx.request.body.owner) {
+    ctx.throw(401);
+  }
+},
+async (ctx:Ctx, next:Next)=> {
+  const {owner, group, permission, plateType, name, barcode, parts} = ctx.request.body;
+  const now = new Date();
+  const partsCount = await PartDefinition.find({_id:parts}).count().exec();
+  console.log('partsCount', partsCount);
+  ctx.body = await PlateDefinition.create({
+    owner,
+    group,
+    createdAt: now,
+    updatedAt: now,
+    permission,
+    plateType,
+    name,
+    barcode,
+    parts,
+  });
 });
 
 

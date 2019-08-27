@@ -9,7 +9,10 @@ import styled from 'styled-components';
 import { RouteComponentProps, withRouter, Redirect, Link } from 'react-router-dom';
 import { IUserInfo, IProject, IStoreState, IPartDetail, IPartName } from '../types';
 import PartSelectSearchBox from './PartSelectSearchBox';
-import { LOAD_ALL_PART_NAMES } from '../redux/actions';
+import { 
+  LOAD_ALL_PART_NAMES,
+  SAVE_PLATE_DEFINITION,
+} from '../redux/actions';
 import { Input, Modal, Button, Radio } from 'antd';
 
 const Panel = styled.div`
@@ -30,10 +33,26 @@ const ClickableDiv = styled.div`
 
 interface IProps extends RouteComponentProps {
   loadAllPartNames: ()=>void;
+  dispatchSavePlateDefinition: (data:any)=>void;
   partDict: any;
+  
+  plateName?: string;
+  plateBarcode?: string;
+  plateOwner: string;
+  plateGroup?: string;
+  platepriviledge?: number;
+  parts?: any[];
+  currentUserId: string;
+
 }
 interface IState {
-  selectedParts: any[];
+  plateName: string;
+  plateBarcode: string;
+  plateOwner: string;
+  plateGroup: string;
+  platepriviledge: number;
+  parts: any[];
+
   modalVisible: boolean;
   currentWellId: number;
   currentWellName: string;
@@ -45,10 +64,12 @@ interface IState {
 
 const mapStateToProps = (state: IStoreState) => ({
   partDict: state.app.partDict,
+  currentUserId: state.app.currentUser._id,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadAllPartNames: ()=>dispatch({type:LOAD_ALL_PART_NAMES}),
+  dispatchSavePlateDefinition: (data:any)=>dispatch({type:SAVE_PLATE_DEFINITION, data,})
 });
 
 class PlateMapEditor extends React.Component<IProps, IState> {
@@ -60,8 +81,22 @@ class PlateMapEditor extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.props.loadAllPartNames();
+    const {
+      plateName,
+      plateBarcode,
+      plateOwner,
+      plateGroup,
+      platepriviledge,
+      parts,
+    } = props;
+
     this.state = {
-      selectedParts: Array(384).fill({_id:'', name:'empty'}),
+      plateName: plateName || `New Plate ${new Date()}`,
+      plateBarcode: plateBarcode || ``,
+      plateOwner: plateOwner || props.currentUserId,
+      plateGroup: plateGroup || '',
+      platepriviledge: platepriviledge || 600,
+      parts: parts || Array(384).fill({_id:'', name:'empty'}),
       modalVisible:false,
       currentWellId: -1,
       currentWellName: '',
@@ -115,12 +150,15 @@ class PlateMapEditor extends React.Component<IProps, IState> {
                 >
                   {wellName}
                   <br/>
-                  {this.state.selectedParts[wellIdx].name}
+                  {this.state.parts[wellIdx].name}
                 </ClickableDiv>
               </WellTd>;})}
             </tr>)}
           </tbody>
         </table>
+        <Button key="submit" type="primary" onClick={this.handleSavePlate}>
+          Save
+        </Button>,
         <Modal
           title="Basic Modal"
           visible={this.state.modalVisible && this.state.currentWellId>=0}
@@ -140,7 +178,7 @@ class PlateMapEditor extends React.Component<IProps, IState> {
         >
           <p>{this.state.currentWellName}</p>
           <PartSelectSearchBox
-            value={this.state.selectedParts[this.state.currentWellId]}
+            value={this.state.parts[this.state.currentWellId]}
             onChange={this.setWellValue.bind(this)}
           />
           
@@ -153,25 +191,25 @@ class PlateMapEditor extends React.Component<IProps, IState> {
   private clickWell = (wellId:number, wellName:string) => {
     // console.log(wellId);
     // let {currentSearchValue} = this.state;
-    // const {currentWellId, selectedParts} = this.state;
+    // const {currentWellId, parts} = this.state;
     // if (currentWellId !== wellId) {
     //   currentSearchValue = '';
     // } else {
-    //   currentSearchValue = selectedParts[currentWellId]
+    //   currentSearchValue = parts[currentWellId]
     // }
     this.setState({
       modalVisible: true,
       currentWellId: wellId,
       currentWellName: wellName,
-      currentWellPart: this.state.selectedParts[wellId],
+      currentWellPart: this.state.parts[wellId],
     })
   }
 
   private handleModalOK = (e:React.MouseEvent<HTMLElement, MouseEvent>)=> {
-    const {currentWellId, currentWellPart, selectedParts} = this.state;
-    selectedParts[currentWellId] = currentWellPart;
+    const {currentWellId, currentWellPart, parts} = this.state;
+    parts[currentWellId] = currentWellPart;
     this.setState({
-      selectedParts: [...selectedParts],
+      parts: [...parts],
       modalVisible: false,
       currentWellId: -1,
       currentWellName: '',
@@ -187,10 +225,10 @@ class PlateMapEditor extends React.Component<IProps, IState> {
   }
 
   private handleModalClear = ()=>{
-    const {currentWellId, currentWellPart, selectedParts} = this.state;
-    selectedParts[currentWellId] = {_id:'', name:'empty'};
+    const {currentWellId, currentWellPart, parts} = this.state;
+    parts[currentWellId] = {_id:'', name:'empty'};
     this.setState({
-      selectedParts: [...selectedParts],
+      parts: [...parts],
       modalVisible: false,
       currentWellId: -1,
       currentWellName: '',
@@ -207,6 +245,26 @@ class PlateMapEditor extends React.Component<IProps, IState> {
     this.setState({
       plateType:e.target.value,
     })
+  }
+
+  private handleSavePlate = ()=>{
+    const {
+      plateName,
+      plateBarcode,
+      plateOwner,
+      plateGroup,
+      platepriviledge,
+      parts,
+    } = this.props;
+    
+    this.props.dispatchSavePlateDefinition({
+      name:plateName,
+      barcode: plateBarcode,
+      owner: plateOwner,
+      group: plateGroup,
+      priviledge: platepriviledge,
+      parts: parts,
+    });
   }
 
 }
