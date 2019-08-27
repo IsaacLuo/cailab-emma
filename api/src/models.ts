@@ -131,3 +131,34 @@ export interface IPartDefinition {
 }
 export interface IPartDefinitionModel extends IPartDefinition, Document {}
 export const PartDefinition:Model<IPartDefinitionModel> = mongoose.model('PartDefinition', PartDefinitionSchema, 'part_definitions');
+
+
+export interface IPlateDefinition {
+  owner: string;
+  group: string;
+  createdAt: Date;
+  updatedAt: Date;
+  permission: number;
+  plateType: '96'|'384';
+  name: string;
+  barcode: string;
+  parts: Array<IPartDefinition|string>;
+}
+
+export const PlateDefinitionSchema = new Schema({
+  owner: Schema.Types.ObjectId,
+  group: String,
+  createdAt: Date,
+  updatedAt: Date,
+  permission: Number,
+  plateType: String,
+  name: String,
+  barcode: String,
+  parts: [{
+    type: Schema.Types.ObjectId,
+    ref: 'PartDefinition',
+  }],
+});
+
+export interface IPlateDefinitionModel extends IPlateDefinition, Document {}
+export const PlateDefinition:Model<IPartDefinitionModel> = mongoose.model('PlateDefinition', PlateDefinitionSchema, 'plate_definition');
