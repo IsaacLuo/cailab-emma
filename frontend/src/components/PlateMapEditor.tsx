@@ -10,7 +10,7 @@ import { RouteComponentProps, withRouter, Redirect, Link } from 'react-router-do
 import { IUserInfo, IProject, IStoreState, IPartDetail, IPartName } from '../types';
 import PartSelectSearchBox from './PartSelectSearchBox';
 import { LOAD_ALL_PART_NAMES } from '../redux/actions';
-import { Input, Modal, Button } from 'antd';
+import { Input, Modal, Button, Radio } from 'antd';
 
 const Panel = styled.div`
   margin:30px;
@@ -39,6 +39,8 @@ interface IState {
   currentWellName: string;
   currentWellPart: any;
   // currentSearchValue: string;
+
+  plateType: string;
 }
 
 const mapStateToProps = (state: IStoreState) => ({
@@ -65,6 +67,9 @@ class PlateMapEditor extends React.Component<IProps, IState> {
       currentWellName: '',
       currentWellPart: {},
       // currentSearchValue: '',
+
+      plateType: '96',
+
     };
   }
 
@@ -79,6 +84,17 @@ class PlateMapEditor extends React.Component<IProps, IState> {
         <p>
         <Input placeholder="barcode" />
         </p>
+
+        <p>
+        <Input.TextArea placeholder="description" autosize={{ minRows: 2, maxRows: 6 }}/>
+        </p>
+
+        <Radio.Group onChange={this.onChangePlateType} value={this.state.plateType}>
+          <Radio value={'96'}>96</Radio>
+          <Radio value={'384'}>384</Radio>
+
+        </Radio.Group>
+
         <p>plate map</p>
         <table>
           <tbody>
@@ -184,6 +200,12 @@ class PlateMapEditor extends React.Component<IProps, IState> {
   private setWellValue = (item:any) => {
     this.setState({
       currentWellPart: item,
+    })
+  }
+
+  private onChangePlateType = (e:any) => {
+    this.setState({
+      plateType:e.target.value,
     })
   }
 
