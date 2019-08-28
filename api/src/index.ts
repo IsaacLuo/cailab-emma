@@ -376,6 +376,7 @@ async (ctx:Ctx, next:Next)=> {
   }
 });
 
+// -----------------------------------------------------------------------------------------------
 router.post('/api/plateDefinition',
 userMust(beUser, beAdmin),
 async (ctx:Ctx, next:Next)=> {
@@ -383,60 +384,25 @@ async (ctx:Ctx, next:Next)=> {
   if(!ctx.request.body) {
     ctx.throw(403);
   }
-  const {owner} = ctx.request.body;
+  console.log(ctx.request.body);
   if (!ctx.request.body.owner) {
     ctx.request.body.owner = userId;
-    await next();
-    return;
   }
-  if(beAdmin(ctx) && userId !== owner) {
+  if(beAdmin(ctx) && userId !== ctx.request.body.owner) {
     ctx.throw(401, 'cannot set owner to others');
   }
+  await next();
 },
 async (ctx:Ctx, next:Next)=> {
   const {owner, group, permission, plateType, name, barcode, parts} = ctx.request.body;
   const now = new Date();
+  console.log('create plate');
   const partsCount = await PartDefinition.find({_id:parts}).countDocuments().exec();
   const uniquePartSize = new Set(parts).size;
   console.log('partsCount', partsCount, uniquePartSize);
   if (partsCount < uniquePartSize) {
     ctx.throw(404, 'some part not found in database');
   }
-  // ctx.body = await PlateDefinition.create({
-  //   owner,
-  //   group,
-  //   createdAt: now,
-  //   updatedAt: now,
-  //   permission,
-  //   plateType,
-  //   name,
-  //   barcode,
-  //   parts,
-  // });
-  ctx.body = {message:'OK'};
-});
-
-router.put('/api/plateDefinition',
-userMust(beUser, beAdmin),
-async (ctx:Ctx, next:Next)=> {
-  if(!ctx.request.body) {
-    ctx.throw(403);
-  }
-  const userId = ctx.state.user._id;
-  if (!ctx.request.body.owner) {
-    ctx.request.body.owner = userId;
-    next();
-    return;
-  }
-  if(beAdmin(ctx) && userId !== ctx.request.body.owner) {
-    ctx.throw(401);
-  }
-},
-async (ctx:Ctx, next:Next)=> {
-  const {owner, group, permission, plateType, name, barcode, parts} = ctx.request.body;
-  const now = new Date();
-  const partsCount = await PartDefinition.find({_id:parts}).count().exec();
-  console.log('partsCount', partsCount);
   ctx.body = await PlateDefinition.create({
     owner,
     group,
@@ -448,8 +414,35 @@ async (ctx:Ctx, next:Next)=> {
     barcode,
     parts,
   });
+  // ctx.body = {message:'OK'};
 });
 
+// -----------------------------------------------------------------------------------------------
+router.get('/api/plateDefinition/:id',
+userMust(beAnyOne),
+async (ctx:Ctx, next:Next)=> {
+  const plate = await PlateDefinition.findById(ctx.params.id).exec();
+  if(!plate) {
+    ctx.throw(404, 'no plate');
+  }
+  let permissionMask = 0x000;
+  if (ctx.state.user && plate.owner === ctx.state.user._id) {
+    // plate owner
+    permissionMask = 0x400;
+  } else if (ctx.state.user && plate.group && ctx.state.user.groups.indexOf(plate.group)>=0) {
+    permissionMask = 0x040;
+  } else {
+    permissionMask = 0x004;
+  }
+  if ((plate.permission & permissionMask) !== 0) {
+    ctx.body = plate;
+  } else {
+    ctx.throw(401, 'no permission of this plate');
+  }
+});
+
+
+// -----------------------------------------------------------------------------------------------
 
 app.use(router.routes());
 app.listen(8000, '0.0.0.0');

@@ -40,7 +40,7 @@ interface IProps extends RouteComponentProps {
   plateBarcode?: string;
   plateOwner: string;
   plateGroup?: string;
-  platepriviledge?: number;
+  platePermission?: number;
   parts?: any[];
   currentUserId: string;
 
@@ -50,7 +50,7 @@ interface IState {
   plateBarcode: string;
   plateOwner: string;
   plateGroup: string;
-  platepriviledge: number;
+  platePermission: number;
   parts: any[];
 
   modalVisible: boolean;
@@ -86,7 +86,7 @@ class PlateMapEditor extends React.Component<IProps, IState> {
       plateBarcode,
       plateOwner,
       plateGroup,
-      platepriviledge,
+      platePermission,
       parts,
     } = props;
 
@@ -95,7 +95,7 @@ class PlateMapEditor extends React.Component<IProps, IState> {
       plateBarcode: plateBarcode || ``,
       plateOwner: plateOwner || props.currentUserId,
       plateGroup: plateGroup || '',
-      platepriviledge: platepriviledge || 600,
+      platePermission: platePermission || 600,
       parts: parts || Array(384).fill({_id:'', name:'empty'}),
       modalVisible:false,
       currentWellId: -1,
@@ -253,16 +253,16 @@ class PlateMapEditor extends React.Component<IProps, IState> {
       plateBarcode,
       plateOwner,
       plateGroup,
-      platepriviledge,
+      platePermission,
       parts,
     } = this.props;
-    
+
     this.props.dispatchSavePlateDefinition({
       name:plateName,
       barcode: plateBarcode,
       owner: plateOwner,
       group: plateGroup,
-      priviledge: platepriviledge,
+      permission: platePermission,
       parts: parts,
     });
   }
