@@ -10,6 +10,8 @@ import {Project, Assembly, AssemblyList, IPartDefinition, PartDefinition, PlateD
 import jwt from 'jsonwebtoken';
 import cors from 'koa-cors';
 import mongoose from 'mongoose';
+import { graphqlKoa, graphiqlKoa } from 'graphql-server-koa'
+import GraphqlSchema from './graphql/schema'
 
 const GUEST_ID = '000000000000000000000000';
 
@@ -440,6 +442,23 @@ async (ctx:Ctx, next:Next)=> {
     ctx.throw(401, 'no permission of this plate');
   }
 });
+
+// -----------------------------------------------------------------------------------------------
+router.get('/graphql',
+async (ctx:Ctx, next:Next)=> {
+  await graphqlKoa({schema: GraphqlSchema})(ctx, next);
+});
+router.post('/graphql',
+async (ctx:Ctx, next:Next)=> {
+  await graphqlKoa({schema: GraphqlSchema})(ctx, next);
+});
+
+router.get('/graphiql', 
+async (ctx:Ctx, next:Next)=> {
+  await graphiqlKoa({endpointURL: '/graphql'})(ctx)
+}
+);
+
 
 
 // -----------------------------------------------------------------------------------------------
