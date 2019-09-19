@@ -38,6 +38,9 @@ import {IAction, IStoreState, IUserInfo} from '../types';
 import {call, all, fork, put, takeLatest, select} from 'redux-saga/effects';
 // redux actions
 
+// other saga
+import watchPartsTable from '../components/PartsTable/saga';
+
 // other libs
 import axios from 'axios';
 import conf from '../conf';
@@ -275,5 +278,6 @@ export function* watchUsers() {
 export default function* rootSaga() {
   yield all([
     fork(watchUsers),
+    fork(watchPartsTable),
   ]);
 }

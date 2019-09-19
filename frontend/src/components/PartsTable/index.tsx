@@ -7,23 +7,12 @@ import {connect} from 'react-redux';
 
 import styled from 'styled-components';
 import { RouteComponentProps, withRouter, Redirect, Link } from 'react-router-dom';
-import { IUserInfo, IProject, IStoreState } from '../types';
+import { IUserInfo, IProject, IStoreState } from '../../types';
 import { 
-  SET_CURRENT_PROJECT, 
-  CREATE_PROJECT, 
-  GET_MY_PROJECTS, 
-  DELETE_PROJECT, 
-  RENAME_PROJECT,
-} from '../redux/actions';
-import ProjectWizard from './ProjectWizard';
-import pencilSVG from '../icons/tiny-pencil.svg'
-
+  GET_PARTS,
+} from './actions';
 import { Table, Divider, Tag } from 'antd';
 import { Form, Icon, Input, Button } from 'antd';
-
-//my components
-import NewPartForm from './NewPartForm'
-import PartsTable from './PartsTable';
 
 const Panel = styled.div`
   margin:30px;
@@ -42,20 +31,27 @@ const EditButton = styled.img`
   cursor:pointer;
 `
 
-interface IProps extends RouteComponentProps {
+interface IProps {
   currentUser: IUserInfo;
+  offset:number;
+  first:number;
+
+  dispatchGetParts: (offset:number, first:number) => void;
 }
 interface IState {
 }
 
 const mapStateToProps = (state: IStoreState) => ({
   currentUser: state.app.currentUser,
+  offset: state.partsTable.offset,
+  first: state.partsTable.first,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  dispatchGetParts: (offset:number, first:number, ) => dispatch({type:GET_PARTS, data:{offset, first}}),
 });
 
-class UploadParts extends React.Component<IProps, IState> {
+class PartsTable extends React.Component<IProps, IState> {
 
   public static getDervidedStateFromProps(props: IProps, state: IState) {
 
@@ -70,6 +66,7 @@ class UploadParts extends React.Component<IProps, IState> {
   }
 
   public componentDidMount() {
+    this.props.dispatchGetParts(this.props.offset, this.props.first);
   }
 
   public render() {
@@ -104,23 +101,39 @@ const data = [
 ];
 
     return (
-      <Panel>
-        <div style={{marginTop:30}}>
-        <h3>create a project</h3>
-          <PartsTable/>
-
-          <NewPartForm/>
-        </div>
-      </Panel>
+      <Table dataSource={data}>
+            <ColumnGroup title="Name">
+              <Column title="First Name" dataIndex="firstName" key="firstName" />
+              <Column title="Last Name" dataIndex="lastName" key="lastName" />
+            </ColumnGroup>
+            <Column title="Age" dataIndex="age" key="age" />
+            <Column title="Address" dataIndex="address" key="address" />
+            <Column
+              title="Tags"
+              dataIndex="tags"
+              key="tags"
+              render={tags => (
+                <span>
+                  {tags.map((tag:any) => (
+                    <Tag color="blue" key={tag}>
+                      {tag}
+                    </Tag>
+                  ))}
+                </span>
+              )}
+            />
+            <Column
+              title="Action"
+              key="action"
+              render={(text, record) => (
+                <span>
+                  <a href="javascript:;">Delete</a>
+                </span>
+              )}
+            />
+          </Table>
     );
-  }
-
-  public componentWillUnmount() {
-  }
-
-  private handleSubmit() {
-
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(UploadParts));
+export default connect(mapStateToProps, mapDispatchToProps)(PartsTable);

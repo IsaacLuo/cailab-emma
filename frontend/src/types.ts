@@ -1,3 +1,4 @@
+import { IPartDefinition } from './../../api/src/models';
 
 export interface IUserInfo {
   _id: string;
@@ -72,10 +73,17 @@ export interface IWizardState {
   projectName: string;
 }
 
+export interface IPartsTableState {
+  parts: IPartDefinition[];
+  first: number;
+  offset: number;
+}
+
 
 export interface IStoreState {
   app: IAppState;
   partSelector: IPartSelectorState;
+  partsTable: IPartsTableState;
   wizard: IWizardState;
 }
 

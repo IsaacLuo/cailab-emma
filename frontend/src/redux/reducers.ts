@@ -30,6 +30,8 @@ import {
   SET_ALL_PART_NAMES,
 } from './actions';
 
+import partsTableReducer from '../components/PartsTable/reducer'
+
 const defaultUser: IUserInfo = {
     _id: '',
     fullName: '',
@@ -183,5 +185,6 @@ function partSelectorReducer(state: IPartSelectorState = DEFAULT_PART_SELECTOR_S
 export default combineReducers({
   app: appReducer,
   partSelector: partSelectorReducer,
+  partsTable: partsTableReducer,
   // wizard: wizardReducer,
 });
