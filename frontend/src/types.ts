@@ -77,6 +77,7 @@ export interface IPartsTableState {
   parts: IPartDefinition[];
   first: number;
   offset: number;
+  count:number;
 }
 
 

@@ -35,6 +35,12 @@ let PartDefinitionType = new GraphQLObjectType({
     _id: {
       type: GraphQLID,
     },
+    owner: {
+      type: GraphQLID,
+    },
+    group: {
+      type: GraphQLString,
+    },
     permission: {
       type: GraphQLInt,
     },

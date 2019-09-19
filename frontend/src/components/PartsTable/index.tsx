@@ -12,7 +12,7 @@ import {
   GET_PARTS,
 } from './actions';
 import { Table, Divider, Tag } from 'antd';
-import { Form, Icon, Input, Button } from 'antd';
+import { Form, Icon, Input, Button, Pagination } from 'antd';
 
 const Panel = styled.div`
   margin:30px;
@@ -35,16 +35,21 @@ interface IProps {
   currentUser: IUserInfo;
   offset:number;
   first:number;
+  count:number;
+  parts: any;
 
   dispatchGetParts: (offset:number, first:number) => void;
 }
 interface IState {
+  parts: any;
 }
 
 const mapStateToProps = (state: IStoreState) => ({
   currentUser: state.app.currentUser,
+  parts: state.partsTable.parts,
   offset: state.partsTable.offset,
   first: state.partsTable.first,
+  count: state.partsTable.count,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -53,16 +58,16 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 class PartsTable extends React.Component<IProps, IState> {
 
-  public static getDervidedStateFromProps(props: IProps, state: IState) {
-
+  public static getDerivedStateFromProps(props: IProps, state: IState) {
+    console.log('props', props.parts);
+    return {parts: props.parts.map((v:any)=>({...v.part, _id:v._id}))};
   }
 
   constructor(props: IProps) {
     super(props);
     this.state = {
-      projectName: `project ${new Date().toLocaleString()}`,
-      editingProjectName: '',
-    };
+      parts: [],
+    }
   }
 
   public componentDidMount() {
@@ -72,67 +77,37 @@ class PartsTable extends React.Component<IProps, IState> {
   public render() {
 
     const { Column, ColumnGroup } = Table;
-
-const data = [
-  {
-    key: '1',
-    firstName: 'John',
-    lastName: 'Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-  },
-  {
-    key: '2',
-    firstName: 'Jim',
-    lastName: 'Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-  },
-  {
-    key: '3',
-    firstName: 'Joe',
-    lastName: 'Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-];
+    const {count, first, offset} = this.props;
+    const pager = {total: count, pageSize: first, current: Math.floor(offset/first)+1}
 
     return (
-      <Table dataSource={data}>
-            <ColumnGroup title="Name">
-              <Column title="First Name" dataIndex="firstName" key="firstName" />
-              <Column title="Last Name" dataIndex="lastName" key="lastName" />
-            </ColumnGroup>
-            <Column title="Age" dataIndex="age" key="age" />
-            <Column title="Address" dataIndex="address" key="address" />
-            <Column
-              title="Tags"
-              dataIndex="tags"
-              key="tags"
-              render={tags => (
-                <span>
-                  {tags.map((tag:any) => (
-                    <Tag color="blue" key={tag}>
-                      {tag}
-                    </Tag>
-                  ))}
-                </span>
-              )}
-            />
-            <Column
-              title="Action"
-              key="action"
-              render={(text, record) => (
-                <span>
-                  <a href="javascript:;">Delete</a>
-                </span>
-              )}
-            />
-          </Table>
+      <React.Fragment>
+      <Table 
+        dataSource={this.props.parts} 
+        pagination={pager} 
+        onChange={this.onChangeTable}
+        rowKey={(record:any) => record._id}
+      >
+        <Column title="Name" dataIndex="part.name" key="part.name"/>
+        <Column title="labName" dataIndex="part.labName" key="part.labName"/>
+        <Column title="category" dataIndex="part.category" key="part.category"/>
+        <Column title="comment" dataIndex="part.comment" key="part.comment"/>
+        <Column
+          title="Action"
+          key="action"
+          render={(text, record) => (
+            <span>
+            </span>
+          )}
+        />
+      </Table>
+      </React.Fragment>
     );
+  }
+
+  private onChangeTable = (pagination:any, filters:any, sorter:any) => {
+    console.log(pagination);
+    this.props.dispatchGetParts((pagination.current-1)*this.props.first, this.props.first);
   }
 }
 

@@ -8,9 +8,12 @@ function* getParts(action:IAction) {
   const result = yield call(Axios.post, conf.serverURL + '/graphql', {
     query: `query ($first: Int, $offset: Int){
     partDefinitionCount
-    partDefinitions(pagination:{first:$first, offset:$offset)
+    partDefinitions(pagination:{first:$first, offset:$offset})
 {
   _id
+  owner
+  group
+  permission
   part {
     position
     name
