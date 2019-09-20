@@ -80,12 +80,17 @@ export interface IPartsTableState {
   count:number;
 }
 
+export interface INewPartFormState {
+  resetForm: boolean;
+}
+
 
 export interface IStoreState {
   app: IAppState;
   partSelector: IPartSelectorState;
   partsTable: IPartsTableState;
   wizard: IWizardState;
+  newPartForm: INewPartFormState;
 }
 
 export interface IAssembly {

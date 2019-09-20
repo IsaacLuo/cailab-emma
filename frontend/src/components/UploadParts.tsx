@@ -8,17 +8,6 @@ import {connect} from 'react-redux';
 import styled from 'styled-components';
 import { RouteComponentProps, withRouter, Redirect, Link } from 'react-router-dom';
 import { IUserInfo, IProject, IStoreState } from '../types';
-import { 
-  SET_CURRENT_PROJECT, 
-  CREATE_PROJECT, 
-  GET_MY_PROJECTS, 
-  DELETE_PROJECT, 
-  RENAME_PROJECT,
-  NEW_PART,
-} from '../redux/actions';
-import ProjectWizard from './ProjectWizard';
-import pencilSVG from '../icons/tiny-pencil.svg'
-
 import { Table, Divider, Tag } from 'antd';
 import { Form, Icon, Input, Button } from 'antd';
 
@@ -46,8 +35,6 @@ const EditButton = styled.img`
 
 interface IProps extends RouteComponentProps {
   currentUser: IUserInfo;
-
-  dispatchNewPart: (form:any)=>void;
 }
 interface IState {
 }
@@ -57,7 +44,6 @@ const mapStateToProps = (state: IStoreState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  dispatchNewPart: (form:any)=>dispatch({type:NEW_PART, data:form})
 });
 
 class UploadParts extends React.Component<IProps, IState> {
@@ -112,9 +98,11 @@ const data = [
       <Panel>
         <div style={{marginTop:30}}>
         <h3>create a project</h3>
-          <PartsTable/>
 
-          <NewPartForm onSubmitData={this.handleSubmit}/>
+        <NewPartForm/>
+        <PartsTable/>
+
+          
         </div>
       </Panel>
     );
@@ -122,12 +110,6 @@ const data = [
 
   public componentWillUnmount() {
   }
-
-  private handleSubmit = (form:any) => {
-    this.props.dispatchNewPart(form);
-  }
-
-
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(UploadParts));

@@ -31,6 +31,7 @@ import {
 } from './actions';
 
 import partsTableReducer from '../components/PartsTable/reducer'
+import newPartFormReducer from '../components/NewPartForm/reducer'
 
 const defaultUser: IUserInfo = {
     _id: '',
@@ -187,4 +188,5 @@ export default combineReducers({
   partSelector: partSelectorReducer,
   partsTable: partsTableReducer,
   // wizard: wizardReducer,
+  newPartForm: newPartFormReducer,
 });

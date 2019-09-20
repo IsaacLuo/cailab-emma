@@ -23,18 +23,31 @@ import {
   InputNumber,
 } from 'antd';
 import { FormProps } from 'antd/lib/form';
+import { IStoreState } from '../../types';
+import { NEW_PART, RESET_FORM } from './actions';
 
 const { Option } = Select;
 const AutoCompleteOption = AutoComplete.Option;
 
 interface IProps extends FormProps {
-  onSubmitData?: (form:any) => void
+  resetForm: boolean;
+  dispatchNewPart: (form:any) => void;
+  dispatchResetForm: (flag:boolean) =>void;
 }
 
 interface IState {
   confirmDirty: boolean;
   autoCompleteResult: string[];
 }
+
+const mapStateToProps = (state: IStoreState) => ({
+  resetForm: state.newPartForm.resetForm,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  dispatchNewPart: (form:any)=>dispatch({type:NEW_PART, data:form}),
+  dispatchResetForm: (flag:boolean)=>dispatch({type:RESET_FORM, data:flag}),
+});
 
 class NewPartForm extends React.Component<IProps, IState> {
   constructor(props: IProps) {
@@ -44,29 +57,6 @@ class NewPartForm extends React.Component<IProps, IState> {
       autoCompleteResult: [],
     };
   }
-
-  handleSubmit = (e:any) => {
-    e.preventDefault();
-    if (this.props.form) {
-      this.props.form.validateFieldsAndScroll((err, values) => {
-        if (!err) {
-          console.log('Received values of form: ', values);
-          if (this.props.onSubmitData) {
-            this.props.onSubmitData(values);
-            this.props.form!.resetFields();
-          }
-          // if (this.props.onSubmit) {
-          //   this.props.onSubmit(e);
-          // }
-        }
-      });
-    }
-  };
-
-  handleConfirmBlur = (e:any) => {
-    const { value } = e.target;
-    this.setState({ confirmDirty: this.state.confirmDirty || !!value });
-  };
 
   validateToPositionNames = (rule:any, value:string, callback:(...args:string[])=>void) => {
     const { form } = this.props;
@@ -78,32 +68,39 @@ class NewPartForm extends React.Component<IProps, IState> {
     }
   };
 
-  compareToFirstPassword = (rule:any, value:string, callback:(...args:string[])=>void) => {
-    const { form } = this.props;
-    if (value && value !== form!.getFieldValue('password')) {
-      callback('Two passwords that you enter is inconsistent!');
-    } else {
-      callback();
+  handleSubmit = (e:any) => {
+    e.preventDefault();
+    if (this.props.form) {
+      this.props.form.validateFieldsAndScroll((err, values) => {
+        if (!err) {
+          console.log('Received values of form: ', values);
+          this.props.dispatchNewPart(values);
+        }
+      });
     }
   };
 
-  validateToNextPassword = (rule:any, value:string, callback:(...args:string[])=>void) => {
-    const { form } = this.props;
-    if (value && this.state.confirmDirty) {
-      form!.validateFields(['confirm'], { force: true });
+  handleResetButton = () => {
+    if(this.props.form) {
+      this.props.form.resetFields();
     }
-    callback();
+  }
+
+  handleConfirmBlur = (e:any) => {
+    const { value } = e.target;
+    this.setState({ confirmDirty: this.state.confirmDirty || !!value });
   };
 
-  handleWebsiteChange = (value:any) => {
-    let autoCompleteResult:string[];
-    if (!value) {
-      autoCompleteResult = [];
-    } else {
-      autoCompleteResult = ['.com', '.org', '.net'].map(domain => `${value}${domain}`);
+  public shouldComponentUpdate(np:IProps, ns:IState) {
+    if(np.resetForm) {
+      this.props.dispatchResetForm(false);
+      if(this.props.form) {
+        this.props.form.resetFields();
+      }
+      return false;
     }
-    this.setState({ autoCompleteResult });
-  };
+    return true;
+  }
 
   render() {
     const { getFieldDecorator } = this.props.form!;
@@ -227,6 +224,10 @@ class NewPartForm extends React.Component<IProps, IState> {
           <Button type="primary" htmlType="submit">
             Create
           </Button>
+          &nbsp;
+          <Button type="primary" onClick={this.handleResetButton}>
+            Reset
+          </Button>
         </Form.Item>
       </Form>
     );
@@ -234,5 +235,6 @@ class NewPartForm extends React.Component<IProps, IState> {
 }
 
 const WrappedNewPartForm = Form.create({ name: 'newPart' })(NewPartForm);
-
-export default WrappedNewPartForm as any;
+const ReduxWrappedComp = connect(mapStateToProps, mapDispatchToProps)(WrappedNewPartForm);
+// export default WrappedNewPartForm as any;
+export default ReduxWrappedComp as any;
