@@ -3,7 +3,7 @@ import { Dispatch } from 'redux';
 import {connect} from 'react-redux';
 
 import styled from 'styled-components';
-import { RouteComponentProps, withRouter, Redirect } from 'react-router-dom';
+import { RouteComponentProps, withRouter, Redirect, Link } from 'react-router-dom';
 import { IUserInfo, IProject, IStoreState } from '../types';
 import {Button} from 'react-bootstrap';
 import uuid from 'uuid/v1';
@@ -13,6 +13,8 @@ import {
   LOGOUT,
   GET_CURENT_USER,
 } from '../redux/actions';
+import { Menu } from 'antd';
+import SubMenu from 'antd/lib/menu/SubMenu';
 
 const GUEST_ID = '000000000000000000000000';
 
@@ -21,10 +23,9 @@ const UserBar = styled.div`
 `;
 
 const PortraitImg = styled.img`
-  margin:5px;
-  margin-right:15px;
+  margin:0px;
+  margin-right:0px;
   border-radius: 50px;
-  border: solid 1px #77f;
 `;
 
 interface IProps extends RouteComponentProps {
@@ -62,13 +63,32 @@ class MyComponent extends React.Component<IProps, IState> {
         {
           currentUser._id === '' || currentUser._id === GUEST_ID
         ?
-        <Button variant='primary' onClick={this.onClickLogin}>login</Button>
+        <Menu
+          theme="dark"
+          mode="horizontal"
+          defaultSelectedKeys={['']}
+          style={{ lineHeight: '66px' }}
+        >
+          <Menu.Item key="1"><Link to="/">cailab-emma</Link></Menu.Item>
+          <Menu.Item key="2" onClick={this.onClickLogin}>
+            login
+          </Menu.Item>
+        </Menu>
+        
         :
-        <div>
-          <PortraitImg src='https://api.auth.cailab.org/api/user/current/portrait/s/profile.jpg'/>
-          {currentUser.fullName}
-          <Button variant='link' onClick={this.onClickLogout}>logout</Button>
-        </div>
+        <Menu
+          theme="dark"
+          mode="horizontal"
+          defaultSelectedKeys={['1']}
+          style={{ lineHeight: '66px' }}
+        >
+          <Menu.Item key="1"><Link to="/">cailab-emma</Link></Menu.Item>
+          <Menu.SubMenu style={{float: 'right'}} title={<span>{currentUser.fullName}<PortraitImg src='https://api.auth.cailab.org/api/user/current/portrait/s/profile.jpg'/></span>}>
+            <Menu.Item key="2" onClick={this.onClickLogout}>logout</Menu.Item>
+            
+          </Menu.SubMenu>
+      </Menu>
+          
       }
       </UserBar>
     );

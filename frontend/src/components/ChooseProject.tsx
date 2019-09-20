@@ -126,9 +126,19 @@ class ChooseProject extends React.Component<IProps, IState> {
         </div>
 
         <div style={{marginTop:30}}>
-          <h3>upload new parts</h3>
+          <h3>Parts</h3>
           <p>upload custom parts to the database</p>
-          <Link to={'/uploadParts'}><Button variant='primary'>start</Button></Link>
+          <Link to={'/uploadParts'}><Button variant='primary'>create</Button></Link>
+          &nbsp;
+          <Link to={'/parts'}><Button variant='primary'>list</Button></Link>
+        </div>
+
+        <div style={{marginTop:30}}>
+          <h3>Plates</h3>
+          <p>create a new plate map to hold parts</p>
+          <Link to={'/plate/new'}><Button variant='primary'>create</Button></Link>
+          &nbsp;
+          <Link to={'/plates'}><Button variant='primary'>list</Button></Link>
         </div>
         
         <div style={{marginTop:30}}>

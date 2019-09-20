@@ -28,6 +28,7 @@ import ManualProtocolView from './components/ManualProtocolView';
 import BatchAutoProtocolView from './components/BatchAutoProtocolView';
 import GenerateProtocols from './components/GenerateProtocols';
 import UploadParts from './components/UploadParts';
+import PartList from './components/PartList';
 
 import 'antd/dist/antd.css';
 import PlateMapEditor from './components/PlateMapEditor';
@@ -122,12 +123,16 @@ class App extends Component<any, IState> {
             component = {UploadParts}
           />
 
+          <Route 
+            path='/parts'
+            component = {PartList}
+          />
+
           <Route
             path='/plate/:id'
             component = {PlateMapEditor}
           />
           
-
         </React.Fragment>
       }/>
       
