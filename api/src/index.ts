@@ -319,7 +319,7 @@ async (ctx:Ctx, next:Next)=> {
     ctx.throw(401, 'unable to apply the group settings');
   }
   if (form.permission === undefined) {
-    form.permission = 666;
+    form.permission = 0x666;
   }
   form.owner = ctx.state.user._id;
   const now = new Date();

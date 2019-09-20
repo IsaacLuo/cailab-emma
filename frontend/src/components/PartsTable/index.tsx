@@ -88,6 +88,7 @@ class PartsTable extends React.Component<IProps, IState> {
         onChange={this.onChangeTable}
         rowKey={(record:any) => record._id}
       >
+        <Column title="Pos" dataIndex="part.position" key="part.position"/>
         <Column title="Name" dataIndex="part.name" key="part.name"/>
         <Column title="labName" dataIndex="part.labName" key="part.labName"/>
         <Column title="category" dataIndex="part.category" key="part.category"/>

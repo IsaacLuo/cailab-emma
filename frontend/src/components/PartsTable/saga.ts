@@ -1,10 +1,16 @@
-import { IAction } from './../../types';
+import { IAction, IStoreState } from './../../types';
 import {GET_PARTS, SET_PARTS} from './actions';
 import {call, all, fork, put, takeLatest, select} from 'redux-saga/effects';
 import Axios from 'axios';
 import conf from '../../conf';
 function* getParts(action:IAction) {
-  const {offset, first} = action.data;
+  let {offset, first} = action.data;
+  if(offset === undefined) {
+    offset = yield select((state:IStoreState)=>state.partsTable.offset);
+  }
+  if(first === undefined) {
+    first = yield select((state:IStoreState)=>state.partsTable.first);
+  }
   const result = yield call(Axios.post, conf.serverURL + '/graphql', {
     query: `query ($first: Int, $offset: Int){
     partDefinitionCount

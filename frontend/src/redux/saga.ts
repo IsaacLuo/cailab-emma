@@ -29,6 +29,7 @@ SET_ASSEMBLY_LIST_ID,
 RENAME_PROJECT,
 LOAD_ALL_PART_NAMES,
 SET_ALL_PART_NAMES,
+NEW_PART,
 } from './actions';
 
 import STORE_PARTS from '../parts.json';
@@ -47,6 +48,7 @@ import conf from '../conf';
 import { eventChannel } from 'redux-saga';
 
 import {NotificationManager} from 'react-notifications';
+import { GET_PARTS } from '../components/PartsTable/actions';
 
 export function* getCurrentUser(action: IAction) {
   try {
@@ -257,6 +259,15 @@ export function* loadAllPartNames(action:IAction) {
   }
 }
 
+export function* newPart(action:IAction) {
+  try {
+    const response = yield call(axios.post, conf.serverURL + `/api/partDefinition/item`, {part:action.data}, {withCredentials: true});
+    yield put({type: GET_PARTS, data:response.data});
+  } catch (error) {
+    console.warn('unable to logout');
+  }
+}
+
 export function* watchUsers() {
   yield takeLatest(GET_CURENT_USER, getCurrentUser);
   yield takeLatest(LOGOUT, logout);
@@ -273,6 +284,7 @@ export function* watchUsers() {
   yield takeLatest(GET_ASSEMBLY_LIST, getAssemblyList);
   yield takeLatest(RENAME_PROJECT, renameProject);
   yield takeLatest(LOAD_ALL_PART_NAMES, loadAllPartNames);
+  yield takeLatest(NEW_PART, newPart);
 }
 
 export default function* rootSaga() {

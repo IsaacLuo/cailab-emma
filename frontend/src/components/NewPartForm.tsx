@@ -28,6 +28,7 @@ const { Option } = Select;
 const AutoCompleteOption = AutoComplete.Option;
 
 interface IProps extends FormProps {
+  onSubmitData?: (form:any) => void
 }
 
 interface IState {
@@ -50,6 +51,13 @@ class NewPartForm extends React.Component<IProps, IState> {
       this.props.form.validateFieldsAndScroll((err, values) => {
         if (!err) {
           console.log('Received values of form: ', values);
+          if (this.props.onSubmitData) {
+            this.props.onSubmitData(values);
+            this.props.form!.resetFields();
+          }
+          // if (this.props.onSubmit) {
+          //   this.props.onSubmit(e);
+          // }
         }
       });
     }
@@ -123,14 +131,6 @@ class NewPartForm extends React.Component<IProps, IState> {
         },
       },
     };
-    const prefixSelector = getFieldDecorator('prefix', {
-      initialValue: '86',
-    })(
-      <Select style={{ width: 70 }}>
-        <Option value="86">+86</Option>
-        <Option value="87">+87</Option>
-      </Select>,
-    );
 
     const websiteOptions = autoCompleteResult.map(website => (
       <AutoCompleteOption key={website}>{website}</AutoCompleteOption>
@@ -235,4 +235,4 @@ class NewPartForm extends React.Component<IProps, IState> {
 
 const WrappedNewPartForm = Form.create({ name: 'newPart' })(NewPartForm);
 
-export default WrappedNewPartForm;
+export default WrappedNewPartForm as any;
