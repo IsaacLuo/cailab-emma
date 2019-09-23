@@ -13,6 +13,7 @@ import {
 } from './actions';
 import { Table, Divider, Tag } from 'antd';
 import { Form, Icon, Input, Button, Pagination } from 'antd';
+import { wellIdToWellName } from '../../utilities/wellIdConverter';
 
 const Panel = styled.div`
   margin:30px;
@@ -80,13 +81,19 @@ class PartsTable extends React.Component<IProps, IState> {
 
     return (
       <React.Fragment>
-      <Table 
+      <Table
         dataSource={this.props.plates} 
         pagination={pager} 
         onChange={this.onChangeTable}
         rowKey={(record:any) => record._id}
+        expandedRowRender={record => 
+        <div style={{ margin: 0 }}>{
+          record.parts.map((v:any, i:number)=>
+            v &&
+            <div key={i}>{wellIdToWellName(i)} {`${v.part.name}(${v.part.labName})`}</div>
+          ).filter((v:any)=>v)}
+        </div>}
       >
-        
         <Column title="Name" dataIndex="name" key="name"/>
         <Column title="comment" dataIndex="description" key="description"/>
         <Column

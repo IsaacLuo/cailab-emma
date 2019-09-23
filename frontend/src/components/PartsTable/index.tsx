@@ -59,7 +59,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 class PartsTable extends React.Component<IProps, IState> {
 
   public static getDerivedStateFromProps(props: IProps, state: IState) {
-    console.log('props', props.parts);
     return {parts: props.parts.map((v:any)=>({...v.part, _id:v._id}))};
   }
 
@@ -107,7 +106,6 @@ class PartsTable extends React.Component<IProps, IState> {
   }
 
   private onChangeTable = (pagination:any, filters:any, sorter:any) => {
-    console.log(pagination);
     this.props.dispatchGetParts((pagination.current-1)*this.props.first, this.props.first);
   }
 }

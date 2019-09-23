@@ -14,6 +14,7 @@ import {
   SAVE_PLATE_DEFINITION,
 } from '../redux/actions';
 import { Input, Modal, Button, Radio } from 'antd';
+import { wellPosToWellId } from '../utilities/wellIdConverter';
 
 const Panel = styled.div`
   margin:30px;
@@ -156,7 +157,7 @@ class PlateMapEditor extends React.Component<IProps, IState> {
             rowTitles.map((v,i)=><tr key={i}>
               <WellTd>{v}</WellTd>
               {colTitles.map((vv,ii)=>{
-                const wellIdx = i*24+ii;
+                const wellIdx = wellPosToWellId(i, ii);
                 const wellName = `${rowTitles[i]}${colTitles[ii]}`;
                 return <WellTd key={wellIdx} id={`${wellIdx}`}>
                 <ClickableDiv 

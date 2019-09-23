@@ -50,12 +50,11 @@ export const plateDefinitions = {
       },
   },
   resolve (root, params, options) {
-    console.log(root, params, options)
     return PlateDefinition
       .find({})
       .skip(params.pagination.offset)
       .limit(params.pagination.first)
-      .populate('parts')
+      .populate({path:'parts', options:{retainNullValues:true}})
       .exec();
   }
 }
