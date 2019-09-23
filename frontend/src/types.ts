@@ -1,4 +1,4 @@
-import { IPartDefinition } from './../../api/src/models';
+import { IPartDefinition, IPlateDefinition } from './../../api/src/models';
 
 export interface IUserInfo {
   _id: string;
@@ -80,6 +80,13 @@ export interface IPartsTableState {
   count:number;
 }
 
+export interface IPlatesTableState {
+  plates: IPlateDefinition[];
+  first:number;
+  offset:number;
+  count:number;
+}
+
 export interface INewPartFormState {
   resetForm: boolean;
 }
@@ -89,6 +96,7 @@ export interface IStoreState {
   app: IAppState;
   partSelector: IPartSelectorState;
   partsTable: IPartsTableState;
+  platesTable: IPlatesTableState;
   wizard: IWizardState;
   newPartForm: INewPartFormState;
 }

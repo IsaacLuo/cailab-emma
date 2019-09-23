@@ -383,11 +383,12 @@ router.post('/api/plateDefinition',
 userMust(beUser, beAdmin),
 async (ctx:Ctx, next:Next)=> {
   const userId = ctx.state.user._id;
+  console.log(userId);
   if(!ctx.request.body) {
     ctx.throw(403);
   }
   console.log(ctx.request.body);
-  if (!ctx.request.body.owner) {
+  if (!ctx.request.body.owner || ctx.request.body.owner === '') {
     ctx.request.body.owner = userId;
   }
   if(beAdmin(ctx) && userId !== ctx.request.body.owner) {
@@ -399,8 +400,14 @@ async (ctx:Ctx, next:Next)=> {
   const {owner, group, permission, plateType, name, barcode, parts} = ctx.request.body;
   const now = new Date();
   console.log('create plate');
-  const partsCount = await PartDefinition.find({_id:parts}).countDocuments().exec();
-  const uniquePartSize = new Set(parts).size;
+  // const partIds = parts.filter(v=>v!=='' && v!== undefined);
+  const partIds = parts.map(v=>v===''?undefined:v);
+  console.log('partIds', partIds);
+  if (partIds === []) {
+    ctx.throw(403, 'no parts');
+  }
+  const partsCount = await PartDefinition.find({_id:partIds}).countDocuments().exec();
+  const uniquePartSize = new Set(partIds.filter(v=>v)).size;
   console.log('partsCount', partsCount, uniquePartSize);
   if (partsCount < uniquePartSize) {
     ctx.throw(404, 'some part not found in database');
@@ -414,7 +421,7 @@ async (ctx:Ctx, next:Next)=> {
     plateType,
     name,
     barcode,
-    parts,
+    parts:partIds,
   });
   // ctx.body = {message:'OK'};
 });

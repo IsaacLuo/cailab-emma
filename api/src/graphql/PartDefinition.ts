@@ -13,7 +13,7 @@ import {
   GraphQLInputObjectType
 } from 'graphql';
 
-const PartType = new GraphQLObjectType({
+export const PartType = new GraphQLObjectType({
   name: 'part',
   fields: {
     position: { type: GraphQLString },
@@ -28,8 +28,8 @@ const PartType = new GraphQLObjectType({
   }
 })
 
-// 定义Info的数据类型
-let PartDefinitionType = new GraphQLObjectType({
+
+export const PartDefinitionType = new GraphQLObjectType({
   name: 'PartDefinitionType',
   fields: {
     _id: {

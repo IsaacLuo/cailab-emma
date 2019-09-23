@@ -38,6 +38,7 @@ interface IProps extends RouteComponentProps {
   
   plateName?: string;
   plateBarcode?: string;
+  plateDescription?: string;
   plateOwner: string;
   plateGroup?: string;
   platePermission?: number;
@@ -48,6 +49,7 @@ interface IProps extends RouteComponentProps {
 interface IState {
   plateName: string;
   plateBarcode: string;
+  plateDescription: string;
   plateOwner: string;
   plateGroup: string;
   platePermission: number;
@@ -74,9 +76,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 class PlateMapEditor extends React.Component<IProps, IState> {
 
-  public static getDervidedStateFromProps(props: IProps, state: IState) {
+  // public static getDervidedStateFromProps(props: IProps, state: IState) {
 
-  }
+  // }
 
   constructor(props: IProps) {
     super(props);
@@ -84,6 +86,7 @@ class PlateMapEditor extends React.Component<IProps, IState> {
     const {
       plateName,
       plateBarcode,
+      plateDescription,
       plateOwner,
       plateGroup,
       platePermission,
@@ -93,9 +96,10 @@ class PlateMapEditor extends React.Component<IProps, IState> {
     this.state = {
       plateName: plateName || `New Plate ${new Date()}`,
       plateBarcode: plateBarcode || ``,
+      plateDescription: plateDescription || ``,
       plateOwner: plateOwner || props.currentUserId,
       plateGroup: plateGroup || '',
-      platePermission: platePermission || 600,
+      platePermission: platePermission || 0x666,
       parts: parts || Array(384).fill({_id:'', name:'empty'}),
       modalVisible:false,
       currentWellId: -1,
@@ -109,19 +113,29 @@ class PlateMapEditor extends React.Component<IProps, IState> {
   }
 
   public render() {
-    const colTitles = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24];
-    const rowTitles = 'ABCDEFGHIJKLMNOP'.split('');
+    let colTitles:number[];
+    let rowTitles:string[];
+    let cols:number;
+    if (this.state.plateType === '96') {
+      colTitles = [1,2,3,4,5,6,7,8,9,10,11,12];
+      rowTitles = 'ABCDEFGH'.split('');
+      cols = 12;
+    } else {
+      colTitles = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24];
+      rowTitles = 'ABCDEFGHIJKLMNOP'.split('');
+      cols = 24;
+    }
     return (
       <Panel>
         <p>
-        <Input placeholder="plate name" />
+        <Input placeholder="plate name" onChange={this.handleChangePlateName}/>
         </p>
         <p>
-        <Input placeholder="barcode" />
+        <Input placeholder="barcode" onChange={this.handleChangeBarcode}/>
         </p>
 
         <p>
-        <Input.TextArea placeholder="description" autosize={{ minRows: 2, maxRows: 6 }}/>
+        <Input.TextArea placeholder="description" autosize={{ minRows: 2, maxRows: 6 }} onChange={this.handleChangeDescription}/>
         </p>
 
         <Radio.Group onChange={this.onChangePlateType} value={this.state.plateType}>
@@ -186,6 +200,19 @@ class PlateMapEditor extends React.Component<IProps, IState> {
         
       </Panel>
     );
+  }
+
+  private handleChangePlateName = (event:React.ChangeEvent<HTMLInputElement>) => {
+    // console.log(event.target.value, this.state)
+    this.setState({plateName:event.target.value});
+  }
+
+  private handleChangeBarcode = (event:React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({plateBarcode:event.target.value});
+  }
+
+  private handleChangeDescription = (event:React.ChangeEvent<HTMLTextAreaElement>) => {
+    this.setState({plateDescription:event.target.value});
   }
 
   private clickWell = (wellId:number, wellName:string) => {
@@ -255,7 +282,8 @@ class PlateMapEditor extends React.Component<IProps, IState> {
       plateGroup,
       platePermission,
       parts,
-    } = this.props;
+    } = this.state;
+    console.log(this.state);
 
     this.props.dispatchSavePlateDefinition({
       name:plateName,
@@ -263,7 +291,7 @@ class PlateMapEditor extends React.Component<IProps, IState> {
       owner: plateOwner,
       group: plateGroup,
       permission: platePermission,
-      parts: parts,
+      parts: parts.map(v=>v._id),
     });
   }
 

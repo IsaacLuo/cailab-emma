@@ -32,6 +32,7 @@ import PartList from './components/PartList';
 
 import 'antd/dist/antd.css';
 import PlateMapEditor from './components/PlateMapEditor';
+import PlatesTable from './components/PlatesTable';
 
 
 
@@ -131,6 +132,11 @@ class App extends Component<any, IState> {
           <Route
             path='/plate/:id'
             component = {PlateMapEditor}
+          />
+
+<Route
+            path='/plates'
+            component = {PlatesTable}
           />
           
         </React.Fragment>

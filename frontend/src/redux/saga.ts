@@ -29,6 +29,8 @@ SET_ASSEMBLY_LIST_ID,
 RENAME_PROJECT,
 LOAD_ALL_PART_NAMES,
 SET_ALL_PART_NAMES,
+SAVE_PLATE_DEFINITION,
+SAVE_PLATE_DEFINITION_DONE,
 } from './actions';
 
 import STORE_PARTS from '../parts.json';
@@ -41,6 +43,7 @@ import {call, all, fork, put, takeLatest, select} from 'redux-saga/effects';
 // other saga
 import watchPartsTable from '../components/PartsTable/saga';
 import watchNewPartForm from '../components/NewPartForm/saga';
+import watchPlatesTable from '../components/PlatesTable/saga';
 
 // other libs
 import axios from 'axios';
@@ -259,6 +262,15 @@ export function* loadAllPartNames(action:IAction) {
   }
 }
 
+export function* savePlateDefinition(action:IAction) {
+  try {
+    const response = yield call(axios.post, conf.serverURL + `/api/plateDefinition`, action.data, {withCredentials: true});
+    yield put({type: SAVE_PLATE_DEFINITION_DONE, data:response.data});
+  } catch (error) {
+    console.warn('unable to logout');
+  }
+}
+
 export function* watchUsers() {
   yield takeLatest(GET_CURENT_USER, getCurrentUser);
   yield takeLatest(LOGOUT, logout);
@@ -275,13 +287,14 @@ export function* watchUsers() {
   yield takeLatest(GET_ASSEMBLY_LIST, getAssemblyList);
   yield takeLatest(RENAME_PROJECT, renameProject);
   yield takeLatest(LOAD_ALL_PART_NAMES, loadAllPartNames);
-  
+  yield takeLatest(SAVE_PLATE_DEFINITION, savePlateDefinition);
 }
 
 export default function* rootSaga() {
   yield all([
     fork(watchUsers),
     fork(watchPartsTable),
+    fork(watchPlatesTable),
     fork(watchNewPartForm),
   ]);
 }

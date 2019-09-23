@@ -1,0 +1,3 @@
+const APPENDIX = '_PT';
+export const GET_PLATES = 'GET_PLATES'+APPENDIX;
+export const SET_PLATES = 'SET_PLATES'+APPENDIX;

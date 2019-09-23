@@ -9,7 +9,7 @@ import styled from 'styled-components';
 import { RouteComponentProps, withRouter, Redirect, Link } from 'react-router-dom';
 import { IUserInfo, IProject, IStoreState } from '../../types';
 import { 
-  GET_PARTS,
+  GET_PLATES,
 } from './actions';
 import { Table, Divider, Tag } from 'antd';
 import { Form, Icon, Input, Button, Pagination } from 'antd';
@@ -36,37 +36,35 @@ interface IProps {
   offset:number;
   first:number;
   count:number;
-  parts: any;
+  plates: any;
 
   dispatchGetParts: (offset:number, first:number) => void;
 }
 interface IState {
-  parts: any;
 }
 
 const mapStateToProps = (state: IStoreState) => ({
-  currentUser: state.app.currentUser,
-  parts: state.partsTable.parts,
-  offset: state.partsTable.offset,
-  first: state.partsTable.first,
-  count: state.partsTable.count,
+  plates: state.platesTable.plates,
+  offset: state.platesTable.offset,
+  first: state.platesTable.first,
+  count: state.platesTable.count,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  dispatchGetParts: (offset:number, first:number, ) => dispatch({type:GET_PARTS, data:{offset, first}}),
+  dispatchGetParts: (offset:number, first:number, ) => dispatch({type:GET_PLATES, data:{offset, first}}),
 });
 
 class PartsTable extends React.Component<IProps, IState> {
 
-  public static getDerivedStateFromProps(props: IProps, state: IState) {
-    console.log('props', props.parts);
-    return {parts: props.parts.map((v:any)=>({...v.part, _id:v._id}))};
-  }
+  // public static getDerivedStateFromProps(props: IProps, state: IState) {
+  //   console.log('props', props.parts);
+  //   return {parts: props.parts.map((v:any)=>({...v.part, _id:v._id}))};
+  // }
 
   constructor(props: IProps) {
     super(props);
     this.state = {
-      parts: [],
+      plates: [],
     }
   }
 
@@ -83,16 +81,14 @@ class PartsTable extends React.Component<IProps, IState> {
     return (
       <React.Fragment>
       <Table 
-        dataSource={this.props.parts} 
+        dataSource={this.props.plates} 
         pagination={pager} 
         onChange={this.onChangeTable}
         rowKey={(record:any) => record._id}
       >
-        <Column title="Pos" dataIndex="part.position" key="part.position"/>
-        <Column title="Name" dataIndex="part.name" key="part.name"/>
-        <Column title="labName" dataIndex="part.labName" key="part.labName"/>
-        <Column title="category" dataIndex="part.category" key="part.category"/>
-        <Column title="comment" dataIndex="part.comment" key="part.comment"/>
+        
+        <Column title="Name" dataIndex="name" key="name"/>
+        <Column title="comment" dataIndex="description" key="description"/>
         <Column
           title="Action"
           key="action"

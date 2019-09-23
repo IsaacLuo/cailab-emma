@@ -32,6 +32,7 @@ import {
 
 import partsTableReducer from '../components/PartsTable/reducer'
 import newPartFormReducer from '../components/NewPartForm/reducer'
+import platesTableReducer from '../components/PlatesTable/reducer'
 
 const defaultUser: IUserInfo = {
     _id: '',
@@ -187,6 +188,7 @@ export default combineReducers({
   app: appReducer,
   partSelector: partSelectorReducer,
   partsTable: partsTableReducer,
+  platesTable: platesTableReducer,
   // wizard: wizardReducer,
   newPartForm: newPartFormReducer,
 });

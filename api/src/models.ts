@@ -138,6 +138,7 @@ export interface IPlateDefinition {
   plateType: '96'|'384';
   name: string;
   barcode: string;
+  description:string;
   parts: Array<IPartDefinition|string>;
 }
 
@@ -153,6 +154,7 @@ export const PlateDefinitionSchema = new Schema({
   plateType: String,
   name: String,
   barcode: String,
+  description: String,
   parts: [{
     type: Schema.Types.ObjectId,
     ref: 'PartDefinition',
@@ -160,4 +162,4 @@ export const PlateDefinitionSchema = new Schema({
 });
 
 export interface IPlateDefinitionModel extends IPlateDefinition, Document {}
-export const PlateDefinition:Model<IPartDefinitionModel> = mongoose.model('PlateDefinition', PlateDefinitionSchema, 'plate_definition');
+export const PlateDefinition:Model<IPartDefinitionModel> = mongoose.model('PlateDefinition', PlateDefinitionSchema, 'plate_definitions');
