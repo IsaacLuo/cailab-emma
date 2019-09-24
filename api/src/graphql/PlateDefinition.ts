@@ -59,19 +59,33 @@ export const plateDefinitions = {
   }
 }
 
+export const plateDefinitionList = {
+  type: new GraphQLList(PlateDefinitionType),
+  args: {
+  },
+  resolve (root, params, options) {
+    return PlateDefinition
+      .find({})
+      .exec();
+  }
+}
 
-// export const partDefinition = {
-//   type: PartDefinitionType,
-//   args: {
-//     id: {
-//       name: 'id',
-//       type: new GraphQLNonNull(GraphQLID)
-//     }
-//   },
-//   resolve (root, params, options) {
-//     return PartDefinition.findOne({_id: params.id}).exec();
-//   }
-// }
+
+export const plateDefinition = {
+  type: PlateDefinitionType,
+  args: {
+    id: {
+      name: 'id',
+      type: new GraphQLNonNull(GraphQLID)
+    }
+  },
+  resolve (root, params, options) {
+    return PlateDefinition
+      .findOne({_id:params.id})
+      .populate({path:'parts', options:{retainNullValues:true}})
+      .exec();
+  }
+}
 
 export const plateDefinitionCount = {
   type: GraphQLInt,

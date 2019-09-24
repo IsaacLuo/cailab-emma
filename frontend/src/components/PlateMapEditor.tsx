@@ -283,6 +283,7 @@ class PlateMapEditor extends React.Component<IProps, IState> {
       plateGroup,
       platePermission,
       parts,
+      plateType,
     } = this.state;
     console.log(this.state);
 
@@ -293,6 +294,7 @@ class PlateMapEditor extends React.Component<IProps, IState> {
       group: plateGroup,
       permission: platePermission,
       parts: parts.map(v=>v._id),
+      plateType,
     });
   }
 

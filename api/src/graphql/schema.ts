@@ -1,3 +1,8 @@
+import {
+  GraphQLSchema,
+  GraphQLObjectType,
+} from 'graphql';
+
 import { 
   partDefinition, 
   partDefinitions, 
@@ -5,12 +10,11 @@ import {
 } from './PartDefinition';
 import {
   plateDefinitions,
+  plateDefinitionList,
   plateDefinitionCount,
+  plateDefinition,
 } from './PlateDefinition';
-import {
-  GraphQLSchema,
-  GraphQLObjectType,
-} from 'graphql';
+
 
 export default new GraphQLSchema({
   query: new GraphQLObjectType({
@@ -20,7 +24,9 @@ export default new GraphQLSchema({
       partDefinition,
       partDefinitionCount,
       plateDefinitions,
+      plateDefinitionList,
       plateDefinitionCount,
+      plateDefinition,
     }
   })
 })

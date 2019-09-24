@@ -28,11 +28,15 @@ import {
   SET_ASSEMBLY_LIST_ID,
   RENAME_PROJECT,
   SET_ALL_PART_NAMES,
+  SET_PLATES_LIST,
+  SET_CURRENT_SELECTED_PLATE,
+  SET_PART_DIFINITIONS,
 } from './actions';
 
 import partsTableReducer from '../components/PartsTable/reducer'
 import newPartFormReducer from '../components/NewPartForm/reducer'
 import platesTableReducer from '../components/PlatesTable/reducer'
+import { IPartDefinition } from '../../../api/src/models';
 
 const defaultUser: IUserInfo = {
     _id: '',
@@ -56,6 +60,9 @@ const DEFAULT_STATE: IAppState = {
   assemblyProjects: [],
   partNames: [],
   partDict: {},
+  platesList: [],
+  currentSelectedPlate: undefined,
+  currentAvailableParts: [],
 };
 
 function appReducer(state: IAppState = DEFAULT_STATE, action: IAction) {
@@ -160,6 +167,19 @@ function appReducer(state: IAppState = DEFAULT_STATE, action: IAction) {
       const partDict:any = {};
       action.data.forEach((v:any)=>partDict[v._id] = v);
       return {...state, partNames: action.data, partDict };
+    case SET_PLATES_LIST:
+      return {...state, platesList: action.data};
+    // case SET_CURRENT_SELECTED_PLATE:
+    //   return {
+    //     ...state, 
+    //     currentSelectedPlate: action.data,
+    //     currentAvailableParts: action.data.parts.filter((v:any)=>v),
+    //   };
+    case SET_PART_DIFINITIONS:
+      return {
+        ...state,
+        currentAvailableParts: action.data,
+      }
   }
   return state;
 }

@@ -31,6 +31,12 @@ LOAD_ALL_PART_NAMES,
 SET_ALL_PART_NAMES,
 SAVE_PLATE_DEFINITION,
 SAVE_PLATE_DEFINITION_DONE,
+GET_PLATE_LIST,
+SET_PLATES_LIST,
+GET_PLATE_DETAIL,
+SET_CURRENT_SELECTED_PLATE,
+GET_PART_DEFINITIONS,
+SET_PART_DIFINITIONS,
 } from './actions';
 
 import STORE_PARTS from '../parts.json';
@@ -271,6 +277,93 @@ export function* savePlateDefinition(action:IAction) {
   }
 }
 
+export function* getPlateList(action:IAction) {
+  try {
+    const result = yield call(axios.post, conf.serverURL + '/graphql', {
+      query: `query{
+        plateDefinitionList {
+            _id
+            name
+            barcode
+            description
+            plateType
+        }
+    }`,
+    variables: {}
+    }, {withCredentials: true});
+    yield put({type:SET_PLATES_LIST, data:result.data.data.plateDefinitionList});
+  } catch (error) {
+    console.warn('unable to logout');
+  }
+}
+
+export function* getPlateDetail(action:IAction) {
+  try {
+    const result = yield call(axios.post, conf.serverURL + '/graphql', {
+      query: `query ($id: ID!){
+        plateDefinition (id:$id){
+            _id
+            name
+            barcode
+            description
+            plateType
+            parts {
+              _id
+              part {
+                name
+                labName
+                comment
+                position
+                category
+                sequence
+                plasmidLength
+                backboneLength
+              }
+            }
+        }
+    }`,
+    variables: {
+      id: action.data,
+    }
+    }, {withCredentials: true});
+    yield put({type:SET_CURRENT_SELECTED_PLATE, data:result.data.data.plateDefinition});
+  } catch (error) {
+    console.warn('unable to logout');
+  }
+}
+
+export function* getPartDefinitions(action:IAction) {
+  try {
+    const result = yield call(axios.post, conf.serverURL + '/graphql', {
+      query: `query{
+        partDefinitions(pagination:{first:9999999}) {
+          _id
+          owner
+          group
+          permission
+          part {
+            position
+            name
+            labName
+            category
+            subCategory
+            comment
+            sequence
+            plasmidLength
+            backboneLength
+          }
+        }
+    }`,
+    variables: {
+      id: action.data,
+    }
+    }, {withCredentials: true});
+    yield put({type:SET_PART_DIFINITIONS, data:result.data.data.partDefinitions});
+  } catch (error) {
+    console.warn('unable to logout');
+  }
+}
+
 export function* watchUsers() {
   yield takeLatest(GET_CURENT_USER, getCurrentUser);
   yield takeLatest(LOGOUT, logout);
@@ -288,6 +381,9 @@ export function* watchUsers() {
   yield takeLatest(RENAME_PROJECT, renameProject);
   yield takeLatest(LOAD_ALL_PART_NAMES, loadAllPartNames);
   yield takeLatest(SAVE_PLATE_DEFINITION, savePlateDefinition);
+  yield takeLatest(GET_PLATE_LIST, getPlateList);
+  yield takeLatest(GET_PLATE_DETAIL, getPlateDetail);
+  yield takeLatest(GET_PART_DEFINITIONS, getPartDefinitions);
 }
 
 export default function* rootSaga() {

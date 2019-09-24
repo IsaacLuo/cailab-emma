@@ -54,6 +54,23 @@ export interface IPartName {
   labName: string;
 }
 
+export interface IPlatesListItem {
+  _id:string;
+  name:string;
+  barcode:string;
+  plateType:string;
+  description:string;
+}
+
+export interface IPlatesListItemWithDetail extends IPlatesListItem{
+  _id:string;
+  name:string;
+  barcode:string;
+  plateType:string;
+  description:string;
+  parts?: IPartDefinition[];
+}
+
 export interface IAppState {
   // the app is initializing(fetching data from server first time)
   currentUser: IUserInfo;
@@ -65,6 +82,9 @@ export interface IAppState {
   assemblyProjects: IAssembly[];
   partNames: IPartName[];
   partDict: any;
+  platesList: IPlatesListItem[];
+  currentSelectedPlate?: IPlatesListItemWithDetail;
+  currentAvailableParts: IPartDefinition[];
 }
 export interface IPartSelectorState {
   resetCount: number;
