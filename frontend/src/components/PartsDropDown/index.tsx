@@ -1,4 +1,4 @@
-import { IProject, IStoreState, IPartDetail, IPlatesListItem, IPlatesListItemWithDetail } from '../types';
+import { IProject, IStoreState, IPartDetail, IPlatesListItem, IPlatesListItemWithDetail, IPartDefinition } from '../../types';
 
 import * as React from 'react'
 import { withRouter, RouteComponentProps } from 'react-router';
@@ -17,16 +17,16 @@ import {
   SET_CURRENT_SELECTED_PLATE,
   GET_PLATE_DETAIL,
   GET_PART_DEFINITIONS,
-} from '../redux/actions';
+} from '../../redux/actions';
 import {Dropdown, Button, Breadcrumb} from 'react-bootstrap';
-import {SHORTCUTS} from '../graphElements';
+import {SHORTCUTS} from '../../graphElements';
 import styled from 'styled-components';
 
-import STORE_PARTS from '../parts.json';
-import PART_NAMES from '../partNames';
+import STORE_PARTS from '../../parts.json';
+import PART_NAMES from '../../partNames';
 import { Link } from 'react-router-dom';
-import { IPartDefinition } from '../../../api/src/models';
-
+import { AutoComplete, Input, Icon } from 'antd';
+import { positionNames } from '../../utilities/positionNames';
 
 
 const Panel = styled.div`
@@ -73,13 +73,14 @@ interface IProps extends RouteComponentProps {
   setPartDetail: (position: number, detal:IPartDetail) => void;
   saveProjectHistory: (project: IProject) => void;
   gotoStep3: (project: IProject, callback:()=>void) => void;
-  dispatchGetPlateList: ()=>void;
-  dispatchSetCurrentSelectedPlateId: (plateId:string)=>void;
+  // dispatchGetPlateList: ()=>void;
+  // dispatchSetCurrentSelectedPlateId: (plateId:string)=>void;
   dispatchGetPartDefinitions:()=>void;
 }
 interface IState {
   nextButtonVisible: boolean;
   readyToSaveProjectHistory: boolean;
+  searchString: any;
   // pos8Ignored: boolean;
 }
 
@@ -95,8 +96,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   setPartDetail: (position: number, detail:IPartDetail) => dispatch({type: SET_PART_DETAIL, data: {position, detail}}),
   saveProjectHistory: (project: IProject) => dispatch({type:SAVE_PROJECT_HISTORY, data: project}),
   gotoStep3: (project: IProject, callback:()=>void) => dispatch({type:GO_TO_STEP_3, data: {project, callback}}),
-  dispatchGetPlateList: ()=>dispatch({type:GET_PLATE_LIST}),
-  dispatchSetCurrentSelectedPlateId: (plateId:string) => dispatch({type:GET_PLATE_DETAIL, data:plateId}),
+  // dispatchGetPlateList: ()=>dispatch({type:GET_PLATE_LIST}),
+  // dispatchSetCurrentSelectedPlateId: (plateId:string) => dispatch({type:GET_PLATE_DETAIL, data:plateId}),
   dispatchGetPartDefinitions: ()=> dispatch({type:GET_PART_DEFINITIONS}),
 });
 
@@ -114,6 +115,7 @@ class PartsDropDown extends React.Component<IProps, IState> {
       ...prevState,
       nextButtonVisible,
       readyToSaveProjectHistory,
+      
       // pos8Ignored,
     };
   }
@@ -128,6 +130,7 @@ class PartsDropDown extends React.Component<IProps, IState> {
     this.state = {
       nextButtonVisible: false,
       readyToSaveProjectHistory: false,
+      searchString: {},
       // pos8Ignored: false,
     }
 
@@ -135,7 +138,7 @@ class PartsDropDown extends React.Component<IProps, IState> {
   }
 
   public componentDidMount() {
-    this.props.dispatchGetPlateList();
+    // this.props.dispatchGetPlateList();
     
   }
 
@@ -150,23 +153,6 @@ class PartsDropDown extends React.Component<IProps, IState> {
         <Breadcrumb.Item active>step 2: select parts ({this.props.project.name})</Breadcrumb.Item>
       </Breadcrumb>
       <Panel>
-        {/* <Dropdown>
-          <Dropdown.Toggle variant="success" id="dropdown-basic">
-            {this.props.currentSelectedPlate && this.props.currentSelectedPlate.name || 'use all parts'}
-          </Dropdown.Toggle>
-          <Dropdown.Menu>
-            {this.props.platesList.map((sample:any,i:number) => 
-              <Dropdown.Item
-                key={i}
-                onSelect={this.handleSelectPlate.bind(this, sample._id)}
-              >
-                {sample.name}
-              </Dropdown.Item>)}
-            
-          </Dropdown.Menu>
-        </Dropdown> */}
-
-
 
       {parts.map((part,i)=>
       <React.Fragment key={i}>
@@ -194,13 +180,35 @@ class PartsDropDown extends React.Component<IProps, IState> {
               }
             </SVGIcon>
             <DropdownPanel>
+              <AutoComplete
+                className="auto-complete"
+                dropdownClassName="auto-compolete-dropdown"
+                dropdownMatchSelectWidth={true}
+                dropdownStyle={{ width: 300 }}
+                size="large"
+                style={{ width: '100%' }}
+                dataSource={
+                  storeParts
+                  .filter((sample:any)=>sample && sample.part.position === positionNames[i])
+                  .filter((sample:any)=> !this.state.searchString[i] || sample.part.name.toLowerCase().indexOf(this.state.searchString[i]) >= 0)
+                  .map((sample:any,j:number) => 
+                    <AutoComplete.Option value={sample.part.name as string} key={sample._id+j.toString() as string}>
+                      {sample.part.name}
+                    </AutoComplete.Option>)
+                }
+                placeholder="input here"
+                optionLabelProp="value"
+                onSearch={this.handleSearchPartName.bind(this, i)}
+              >
+                <Input suffix={<Icon type="search" className="certain-category-icon" />} />
+              </AutoComplete>
               <Dropdown>
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                   {part.partDetail && part.partDetail.name || 'select'}
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                  {storeParts.filter((sample:any)=>sample && sample.part.position === (i+1).toString()).map((sample:any,j:number) => 
+                  {storeParts.filter((sample:any)=>sample && sample.part.position === positionNames[i]).map((sample:any,j:number) => 
                     <Dropdown.Item
                       key={j}
                       onClick={this.onClickSelectedPart.bind(this, i, sample)}
@@ -236,9 +244,7 @@ class PartsDropDown extends React.Component<IProps, IState> {
       // this.props.saveProjectHistory(this.props.project);
     // }
   }
-  private handleSelectPlate = (plateId:string)=>{
-    this.props.dispatchSetCurrentSelectedPlateId(plateId);
-  }
+
   private onClickSelectedPart = (position:number, detail:IPartDetail) => {
     console.log(position,detail);
     this.props.setPartDetail(position, detail);
@@ -254,6 +260,12 @@ class PartsDropDown extends React.Component<IProps, IState> {
     //   this.props.onClickNext(this.state.selectedParts);
     // }
     
+  }
+
+  private handleSearchPartName = (posIndex:number, searchStr:string) => {
+    console.log(posIndex, searchStr);
+    const {searchString} = this.state;
+    this.setState({searchString: {...searchString, [posIndex]:searchStr.toLowerCase()}})
   }
 }
 

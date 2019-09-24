@@ -128,3 +128,23 @@ export interface IAssembly {
     sequence: string,
   }>
 }
+
+export interface IPartDefinition {
+  owner: string;
+  group: string;
+  createdAt: Date;
+  updatedAt: Date;
+  permission: number;
+  part: {
+    pos:number;
+    position: string;
+    name: string;
+    labName: string;
+    category: string;
+    subCategory: string;
+    comment: string;
+    sequence: string;
+    plasmidLength: number;
+    backboneLength: number;
+  }
+}
