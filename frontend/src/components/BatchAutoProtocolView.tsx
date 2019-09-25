@@ -95,6 +95,14 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadAssemblyList: (assemblyId: string) => dispatch({type: GET_ASSEMBLY_LIST, data: assemblyId}),
 });
 
+/**
+ * 
+ * @param vol microLitters
+ */
+const toEchoVolume = (vol: number) =>{
+  return Math.round(vol*1000/5)*5/1000;
+}
+
 class BatchAutoProtocolView extends React.Component<IProps, IState> {
 
   public static getDerivedStateFromProps(props:IProps, state:IState) {
@@ -199,26 +207,26 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
           <tr>
             <td>T4 Ligase Reaction Buffer</td>
             <td>1µL</td>
-            <td><Calced>{sampleCount*1}μL</Calced></td>
-            <td><Calced>{(this.state.preparedMasterMixVolume*1/1.85).toFixed(2)}μL</Calced></td>
+            <td><Calced>{toEchoVolume(sampleCount*1).toFixed(3)}μL</Calced></td>
+            <td><Calced>{toEchoVolume(this.state.preparedMasterMixVolume*1/1.85).toFixed(3)}μL</Calced></td>
           </tr>
           <tr>
             <td>BSA</td>
             <td>0.1µL</td>
-            <td><Calced>{(sampleCount*0.1).toFixed(2)}μL</Calced></td>
-            <td><Calced>{(this.state.preparedMasterMixVolume*0.1/1.85).toFixed(2)}μL</Calced></td>
+            <td><Calced>{toEchoVolume(sampleCount*0.1).toFixed(3)}μL</Calced></td>
+            <td><Calced>{toEchoVolume(this.state.preparedMasterMixVolume*0.1/1.85).toFixed(3)}μL</Calced></td>
           </tr>
           <tr>
             <td>Fast Digest Esp3I</td>
             <td>0.5µL</td>
-            <td><Calced>{(sampleCount*0.5).toFixed(2)}μL</Calced></td>
-            <td><Calced>{(this.state.preparedMasterMixVolume*0.5/1.85).toFixed(2)}μL</Calced></td>
+            <td><Calced>{toEchoVolume(sampleCount*0.5).toFixed(3)}μL</Calced></td>
+            <td><Calced>{toEchoVolume(this.state.preparedMasterMixVolume*0.5/1.85).toFixed(3)}μL</Calced></td>
           </tr>
           <tr>
             <td>T4 DNA Ligase</td>
             <td>0.25µL</td>
-            <td><Calced>{(sampleCount*0.25).toFixed(2)}μL</Calced></td>
-            <td><Calced>{(this.state.preparedMasterMixVolume*0.25/1.85).toFixed(2)}μL</Calced></td>
+            <td><Calced>{toEchoVolume(sampleCount*0.25).toFixed(3)}μL</Calced></td>
+            <td><Calced>{toEchoVolume(this.state.preparedMasterMixVolume*0.25/1.85).toFixed(3)}μL</Calced></td>
           </tr>
           </tbody>
         </Table>
@@ -279,26 +287,26 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
             <tr>
               <td>1x T4 ligase buffer</td>
               <td>3µL</td>
-              <td><Calced>{(3*assembliesCount).toFixed(2)}µL</Calced></td>
-              <td><Calced>{(this.state.dnaseMixExtra*3*assembliesCount).toFixed(2)}µL</Calced></td>
+              <td><Calced>{toEchoVolume(3*assembliesCount).toFixed(3)}µL</Calced></td>
+              <td><Calced>{toEchoVolume(this.state.dnaseMixExtra*3*assembliesCount).toFixed(3)}µL</Calced></td>
             </tr>
             <tr>
               <td>25 mM ATP</td>
               <td>0.25µL</td>
-              <td><Calced>{(0.25*assembliesCount).toFixed(2)}µL</Calced></td>
-              <td><Calced>{(this.state.dnaseMixExtra*0.25*assembliesCount).toFixed(2)}µL</Calced></td>
+              <td><Calced>{toEchoVolume(0.25*assembliesCount).toFixed(3)}µL</Calced></td>
+              <td><Calced>{toEchoVolume(this.state.dnaseMixExtra*0.25*assembliesCount).toFixed(3)}µL</Calced></td>
             </tr>
             <tr>
               <td>PlasmidSafe DNase</td>
               <td>0.125µL</td>
-              <td><Calced>{(0.125*assembliesCount).toFixed(2)}µL</Calced></td>
-              <td><Calced>{(this.state.dnaseMixExtra*0.125*assembliesCount).toFixed(2)}µL</Calced></td>
+              <td><Calced>{toEchoVolume(0.125*assembliesCount).toFixed(3)}µL</Calced></td>
+              <td><Calced>{toEchoVolume(this.state.dnaseMixExtra*0.125*assembliesCount).toFixed(3)}µL</Calced></td>
             </tr>
             <tr>
               <td>Total</td>
               <td>3.375µL</td>
-              <td><Calced>{(3.375*assembliesCount).toFixed(2)}µL</Calced></td>
-              <td><Calced>{(this.state.dnaseMixExtra*3.375*assembliesCount).toFixed(2)}µL</Calced></td>
+              <td><Calced>{toEchoVolume(3.375*assembliesCount).toFixed(3)}µL</Calced></td>
+              <td><Calced>{toEchoVolume(this.state.dnaseMixExtra*3.375*assembliesCount).toFixed(3)}µL</Calced></td>
             </tr>
             </tbody>
           </Table>
