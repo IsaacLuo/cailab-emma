@@ -41,6 +41,7 @@ async function main() {
         permission: 0x666,
         part: {
           position: p.position,
+          len:p.len,
           name: p.name,
           labName: p.labName,
           category: p.category,

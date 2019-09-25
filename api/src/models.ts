@@ -96,6 +96,7 @@ export const PartDefinitionSchema = new Schema({
   permission: Number,
   part: {
     position: String,
+    len: Number,
     name: String,
     labName: String,
     category: String,
@@ -115,6 +116,7 @@ export interface IPartDefinition {
   part: {
     pos:number;
     position: string;
+    len:number|undefined;
     name: string;
     labName: string;
     category: string;

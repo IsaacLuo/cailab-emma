@@ -192,13 +192,14 @@ class PartsDropDown extends React.Component<IProps, IState> {
                   .filter((sample:any)=>sample && sample.part.position === positionNames[i])
                   .filter((sample:any)=> !this.state.searchString[i] || sample.part.name.toLowerCase().indexOf(this.state.searchString[i]) >= 0)
                   .map((sample:any,j:number) => 
-                    <AutoComplete.Option value={sample.part.name as string} key={sample._id+j.toString() as string}>
+                    <AutoComplete.Option value={sample.part.name as string} key={sample._id as string}>
                       {sample.part.name}
                     </AutoComplete.Option>)
                 }
                 placeholder="input here"
                 optionLabelProp="value"
                 onSearch={this.handleSearchPartName.bind(this, i)}
+                onSelect={this.handleSelectPart.bind(this, i)}
               >
                 <Input suffix={<Icon type="search" className="certain-category-icon" />} />
               </AutoComplete>
@@ -267,6 +268,22 @@ class PartsDropDown extends React.Component<IProps, IState> {
     const {searchString} = this.state;
     this.setState({searchString: {...searchString, [posIndex]:searchStr.toLowerCase()}})
   }
+
+  private handleSelectPart = (pos:number, value:any, option:any) => {
+    const id = option.key;
+    const partDefinition = this.props.currentAvailableParts.find(v=>v._id === id);
+    console.log(pos, value, option, partDefinition);
+    if (partDefinition) {
+      const detail:IPartDetail = {
+        name: `${partDefinition.part.name} (${partDefinition.part.labName})`,
+        comment: partDefinition.part.comment,
+        sequence: partDefinition.part.sequence,
+        len:partDefinition.part.len || 1,
+      };
+      this.props.setPartDetail(pos, detail);
+    }
+  }
+  
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PartsDropDown));

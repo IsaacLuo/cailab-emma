@@ -1,4 +1,3 @@
-import { IPartDefinition, IPlateDefinition } from './../../api/src/models';
 
 export interface IUserInfo {
   _id: string;
@@ -130,6 +129,7 @@ export interface IAssembly {
 }
 
 export interface IPartDefinition {
+  _id:string;
   owner: string;
   group: string;
   createdAt: Date;
@@ -138,6 +138,7 @@ export interface IPartDefinition {
   part: {
     pos:number;
     position: string;
+    len:number|undefined;
     name: string;
     labName: string;
     category: string;
@@ -147,4 +148,17 @@ export interface IPartDefinition {
     plasmidLength: number;
     backboneLength: number;
   }
+}
+
+export interface IPlateDefinition {
+  owner: string;
+  group: string;
+  createdAt: Date;
+  updatedAt: Date;
+  permission: number;
+  plateType: '96'|'384';
+  name: string;
+  barcode: string;
+  description:string;
+  parts: Array<IPartDefinition|string>;
 }
