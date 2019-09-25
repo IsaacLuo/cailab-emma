@@ -27,8 +27,10 @@ export const PartsSchema = new Schema({
   position: Number,
   activated: Boolean,
   selected: Boolean,
-  partName: String,
-  partDetail: PartDetailSchema,
+  partDefinition: {
+    type: Schema.Types.ObjectId,
+    ref: 'PartDefinition',
+  },
 }, {_id:false});
 
 export const ProjectSchema = new Schema({
@@ -107,25 +109,28 @@ export const PartDefinitionSchema = new Schema({
     backboneLength: Number,
   },
 })
+
+export interface IPart {
+  pos:number;
+  position: string;
+  len:number|undefined;
+  name: string;
+  labName: string;
+  category: string;
+  subCategory: string;
+  comment: string;
+  sequence: string;
+  plasmidLength: number;
+  backboneLength: number;
+}
+
 export interface IPartDefinition {
   owner: string;
   group: string;
   createdAt: Date;
   updatedAt: Date;
   permission: number;
-  part: {
-    pos:number;
-    position: string;
-    len:number|undefined;
-    name: string;
-    labName: string;
-    category: string;
-    subCategory: string;
-    comment: string;
-    sequence: string;
-    plasmidLength: number;
-    backboneLength: number;
-  }
+  part: IPart;
 }
 export interface IPartDefinitionModel extends IPartDefinition, Document {}
 export const PartDefinition:Model<IPartDefinitionModel> = mongoose.model('PartDefinition', PartDefinitionSchema, 'part_definitions');

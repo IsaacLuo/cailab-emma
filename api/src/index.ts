@@ -121,7 +121,7 @@ userMust(beAnyOne, beUser, beGuest),
 async (ctx:Ctx, next:Next)=> {
   const user = ctx.state.user;
   if (user) {
-    const project = await Project.findOne({_id:ctx.params.id, owner: user._id}).exec();
+    const project = await Project.findOne({_id:ctx.params.id, owner: user._id}).populate('parts.partDefinition').exec();
     if (!project) {
       ctx.throw(404);
     }

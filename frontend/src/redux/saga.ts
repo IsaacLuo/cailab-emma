@@ -348,7 +348,6 @@ export function* getPartDefinitions(action:IAction) {
             category
             subCategory
             comment
-            sequence
             plasmidLength
             backboneLength
           }

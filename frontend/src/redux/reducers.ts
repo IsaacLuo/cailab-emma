@@ -37,6 +37,7 @@ import partsTableReducer from '../components/PartsTable/reducer'
 import newPartFormReducer from '../components/NewPartForm/reducer'
 import platesTableReducer from '../components/PlatesTable/reducer'
 import { IPartDefinition } from '../../../api/src/models';
+import { PUT_PART_INTO_POSITION } from '../components/PartsDropDown/actions';
 
 const defaultUser: IUserInfo = {
     _id: '',
@@ -48,6 +49,7 @@ const defaultCurrentProject: IProject = {
     name: `empty project`,
     parts: Array(26).fill(undefined).map((v,i)=>({activated: false, selected: false, position:i})),
     connectorIndexes: [],
+    ignorePos8: false,
   };
 
 const DEFAULT_STATE: IAppState = {
@@ -86,35 +88,54 @@ function appReducer(state: IAppState = DEFAULT_STATE, action: IAction) {
       const stashHistory = action.data;
       return {...state, stashHistory};
     }
-    case SET_PART_DETAIL:
-      const {position, detail} = action.data;
+    case PUT_PART_INTO_POSITION: {
+      const {position, id} = action.data;
+      const partDefinition = state.currentAvailableParts.find(v=>v._id === id);
+      if(!partDefinition) {
+        return state;
+      }
 
-      const ignorePos8 = (position === 7
-        && detail.len === 2)
-      const resetPost8 = (position === 7
-        && (detail.len === undefined || detail.len === 1)
-        && state.currentProject.parts[7] 
-        && state.currentProject.parts[7].partDetail 
-        && state.currentProject.parts[7].partDetail.len === 2)
-
-
+      const ignorePos8 = (position === 7 && partDefinition.part.len === 2);
       const currentProject = {
         ...state.currentProject,
         parts: [...state.currentProject.parts],
       }
-      const {name, comment, len} = detail;
-      currentProject.parts[position].partDetail = {name, comment, len:len||1};
-      currentProject.parts[position].partName = name;
-
-      if (ignorePos8) {
-        currentProject.parts[8].partDetail = {name:'ignored', comment:'ignored', len:0, sequence: 'XXXXXXXX'};
-        currentProject.parts[8].partName = 'ignored';
-      } else if (resetPost8) {
-        currentProject.parts[8].partDetail = undefined;
-        currentProject.parts[8].partName = undefined;
-      }
+      currentProject.parts[position].partDefinition = partDefinition;
+      currentProject.ignorePos8 = ignorePos8;
 
       return {...state, currentProject}
+
+    }
+      
+    // case SET_PART_DETAIL:
+    //   const {position, detail} = action.data;
+
+    //   const ignorePos8 = (position === 7
+    //     && detail.len === 2)
+    //   const resetPost8 = (position === 7
+    //     && (detail.len === undefined || detail.len === 1)
+    //     && state.currentProject.parts[7] 
+    //     && state.currentProject.parts[7].partDetail 
+    //     && state.currentProject.parts[7].partDetail.len === 2)
+
+
+    //   const currentProject = {
+    //     ...state.currentProject,
+    //     parts: [...state.currentProject.parts],
+    //   }
+    //   const {name, comment, len} = detail;
+    //   currentProject.parts[position].partDetail = {name, comment, len:len||1};
+    //   currentProject.parts[position].partName = name;
+
+    //   if (ignorePos8) {
+    //     currentProject.parts[8].partDetail = {name:'ignored', comment:'ignored', len:0, sequence: 'XXXXXXXX'};
+    //     currentProject.parts[8].partName = 'ignored';
+    //   } else if (resetPost8) {
+    //     currentProject.parts[8].partDetail = undefined;
+    //     currentProject.parts[8].partName = undefined;
+    //   }
+
+    //   return {...state, currentProject}
     case LOAD_HISTORY: 
       {
         if (state.currentProject.history) {

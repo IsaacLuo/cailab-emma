@@ -27,6 +27,7 @@ import PART_NAMES from '../../partNames';
 import { Link } from 'react-router-dom';
 import { AutoComplete, Input, Icon } from 'antd';
 import { positionNames } from '../../utilities/positionNames';
+import { PUT_PART_INTO_POSITION } from './actions';
 
 
 const Panel = styled.div`
@@ -70,7 +71,7 @@ interface IProps extends RouteComponentProps {
   currentAvailableParts: IPartDefinition[];
   
   onLoadProject: (projectId: string) => void;
-  setPartDetail: (position: number, detal:IPartDetail) => void;
+  dispatchPutPartIntoPosition: (position: number, id: string) => void;
   saveProjectHistory: (project: IProject) => void;
   gotoStep3: (project: IProject, callback:()=>void) => void;
   // dispatchGetPlateList: ()=>void;
@@ -93,7 +94,7 @@ const mapStateToProps = (state: IStoreState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   onLoadProject: (projectId: string) => dispatch({type: GET_PROJECT, data: projectId}),
-  setPartDetail: (position: number, detail:IPartDetail) => dispatch({type: SET_PART_DETAIL, data: {position, detail}}),
+  dispatchPutPartIntoPosition: (position: number, id: string) => dispatch({type:PUT_PART_INTO_POSITION, data:{position, id}}),
   saveProjectHistory: (project: IProject) => dispatch({type:SAVE_PROJECT_HISTORY, data: project}),
   gotoStep3: (project: IProject, callback:()=>void) => dispatch({type:GO_TO_STEP_3, data: {project, callback}}),
   // dispatchGetPlateList: ()=>dispatch({type:GET_PLATE_LIST}),
@@ -107,7 +108,7 @@ class PartsDropDown extends React.Component<IProps, IState> {
     // let pos8Ignored:boolean = !!(nextProps.project.parts[7].selected && nextProps.project.parts[7].partDetail && nextProps.project.parts[7].partDetail.len === 2);
 
     const nextButtonVisible = nextProps.project.parts.every(
-      (part)=> part.selected && part.partDetail!==undefined || !part.selected
+      (part)=> part.selected && part.partDefinition!==undefined || !part.selected
     );
 
     const readyToSaveProjectHistory = (nextButtonVisible && !prevState.nextButtonVisible) 
@@ -203,22 +204,6 @@ class PartsDropDown extends React.Component<IProps, IState> {
               >
                 <Input suffix={<Icon type="search" className="certain-category-icon" />} />
               </AutoComplete>
-              <Dropdown>
-                <Dropdown.Toggle variant="success" id="dropdown-basic">
-                  {part.partDetail && part.partDetail.name || 'select'}
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                  {storeParts.filter((sample:any)=>sample && sample.part.position === positionNames[i]).map((sample:any,j:number) => 
-                    <Dropdown.Item
-                      key={j}
-                      onClick={this.onClickSelectedPart.bind(this, i, sample)}
-                    >
-                      {sample.part.name}
-                    </Dropdown.Item>)}
-                  
-                </Dropdown.Menu>
-              </Dropdown>
               <PartDetailDescription>
                 {part.partDetail && part.partDetail.comment}
               </PartDetailDescription>
@@ -245,13 +230,6 @@ class PartsDropDown extends React.Component<IProps, IState> {
       // this.props.saveProjectHistory(this.props.project);
     // }
   }
-
-  private onClickSelectedPart = (position:number, detail:IPartDetail) => {
-    console.log(position,detail);
-    this.props.setPartDetail(position, detail);
-    // this.state.selectedParts[slot].selected = part;
-    
-  }
   private onClickNext = () => {
     // save projectHistory
     this.props.gotoStep3(this.props.project, ()=>{
@@ -271,17 +249,7 @@ class PartsDropDown extends React.Component<IProps, IState> {
 
   private handleSelectPart = (pos:number, value:any, option:any) => {
     const id = option.key;
-    const partDefinition = this.props.currentAvailableParts.find(v=>v._id === id);
-    console.log(pos, value, option, partDefinition);
-    if (partDefinition) {
-      const detail:IPartDetail = {
-        name: `${partDefinition.part.name} (${partDefinition.part.labName})`,
-        comment: partDefinition.part.comment,
-        sequence: partDefinition.part.sequence,
-        len:partDefinition.part.len || 1,
-      };
-      this.props.setPartDetail(pos, detail);
-    }
+    this.props.dispatchPutPartIntoPosition(pos, id);
   }
   
 }

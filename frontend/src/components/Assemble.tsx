@@ -67,8 +67,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 class Assemble extends React.Component<IProps, IState> {
   public static getDerivedStateFromProps(props:IProps, state:IState) {
     const shortCuts = props.project.connectorIndexes.map(v=>CONNECTORS[v]);
-    const selectedParts = props.project.parts.filter(part=>part.selected && part.partName!=='ignored');
-
+    const selectedParts = props.project.parts.filter(part=>part.selected);
+    // console.log(selectedParts);
     // merge sort
     let i=0;
     let j=0;
@@ -81,8 +81,8 @@ class Assemble extends React.Component<IProps, IState> {
         re.push({name: shortCuts[i].name, sequence: shortCuts[i].sequence})
         i++;
       } else {
-        if(selectedParts[j].partDetail) {
-          re.push({name: selectedParts[j].partName!, sequence: selectedParts[j].partDetail!.sequence!})
+        if(selectedParts[j].partDefinition) {
+          re.push({name: selectedParts[j].partDefinition!.part.name, sequence: selectedParts[j].partDefinition!.part.sequence})
         }
         j++;
       }
@@ -90,8 +90,8 @@ class Assemble extends React.Component<IProps, IState> {
     if (i===shortCuts.length) {
       while (j < selectedParts.length) {
         // console.log(j);
-        if(selectedParts[j].partDetail) {
-          re.push({name: selectedParts[j].partName!, sequence: selectedParts[j].partDetail!.sequence!})
+        if(selectedParts[j].partDefinition) {
+          re.push({name: selectedParts[j].partDefinition!.part.name, sequence: selectedParts[j].partDefinition!.part.sequence})
         }
         j++;
       }

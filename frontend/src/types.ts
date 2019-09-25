@@ -20,10 +20,36 @@ export interface IPartDetail {
   len?:number,
 }
 
+export interface IPart {
+  pos:number;
+  position: string;
+  len:number|undefined;
+  name: string;
+  labName: string;
+  category: string;
+  subCategory: string;
+  comment: string;
+  sequence: string;
+  plasmidLength: number;
+  backboneLength: number;
+}
+
+export interface IPartDefinition {
+  _id: string;
+  owner: string;
+  group: string;
+  createdAt: Date;
+  updatedAt: Date;
+  permission: number;
+  part: IPart;
+}
+
 export interface ISelectedPart {
   position: number;
   activated: boolean;
   selected: boolean;
+  partDefinition?: IPartDefinition;
+  
   selectedKey?: string;
   partName?: string;
   partDetail?: IPartDetail;
@@ -34,6 +60,7 @@ export interface IProject {
   name: string;
   version?: string;
   parts: ISelectedPart[];
+  ignorePos8?: boolean;
   connectorIndexes: number[];
   history?: IProject[];
   createdAt?: Date;
