@@ -12,6 +12,7 @@ import PartSelectSearchBox from './PartSelectSearchBox';
 import { 
   LOAD_ALL_PART_NAMES,
   SAVE_PLATE_DEFINITION,
+  GET_ALL_CONNECTORS,
 } from '../redux/actions';
 import { Input, Modal, Button, Radio } from 'antd';
 import { wellPosToWellId } from '../utilities/wellIdConverter';
@@ -34,6 +35,7 @@ const ClickableDiv = styled.div`
 
 interface IProps extends RouteComponentProps {
   loadAllPartNames: ()=>void;
+  dispatchGetAllConnectors: ()=>void;
   dispatchSavePlateDefinition: (data:any)=>void;
   partDict: any;
   
@@ -72,7 +74,9 @@ const mapStateToProps = (state: IStoreState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadAllPartNames: ()=>dispatch({type:LOAD_ALL_PART_NAMES}),
+  dispatchGetAllConnectors: ()=>dispatch({type:GET_ALL_CONNECTORS}),
   dispatchSavePlateDefinition: (data:any)=>dispatch({type:SAVE_PLATE_DEFINITION, data,})
+
 });
 
 class PlateMapEditor extends React.Component<IProps, IState> {
@@ -84,6 +88,7 @@ class PlateMapEditor extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.props.loadAllPartNames();
+    this.props.dispatchGetAllConnectors();
     const {
       plateName,
       plateBarcode,

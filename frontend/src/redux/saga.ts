@@ -37,6 +37,8 @@ GET_PLATE_DETAIL,
 SET_CURRENT_SELECTED_PLATE,
 GET_PART_DEFINITIONS,
 SET_PART_DIFINITIONS,
+GET_ALL_CONNECTORS,
+SET_ALL_CONNECTORS,
 } from './actions';
 
 import STORE_PARTS from '../parts.json';
@@ -326,9 +328,10 @@ export function* getPlateDetail(action:IAction) {
       id: action.data,
     }
     }, {withCredentials: true});
+    console.log(result.data);
     yield put({type:SET_CURRENT_SELECTED_PLATE, data:result.data.data.plateDefinition});
   } catch (error) {
-    console.warn('unable to logout');
+    console.warn('failed querying getPlateDeatail', error);
   }
 }
 
@@ -363,6 +366,27 @@ export function* getPartDefinitions(action:IAction) {
   }
 }
 
+export function* getAllConnectors(action:IAction) {
+  try {
+    const result = yield call(axios.post, conf.serverURL + '/graphql', {
+      query: `query{
+        connectors {
+          _id
+          name
+          posBegin
+          posEnd
+          sequence
+        }
+    }`,
+    variables: {
+    }
+    }, {withCredentials: true});
+    yield put({type:SET_ALL_CONNECTORS, data:result.data.data.connectors});
+  } catch (error) {
+    console.warn(error);
+  }
+}
+
 export function* watchUsers() {
   yield takeLatest(GET_CURENT_USER, getCurrentUser);
   yield takeLatest(LOGOUT, logout);
@@ -383,6 +407,7 @@ export function* watchUsers() {
   yield takeLatest(GET_PLATE_LIST, getPlateList);
   yield takeLatest(GET_PLATE_DETAIL, getPlateDetail);
   yield takeLatest(GET_PART_DEFINITIONS, getPartDefinitions);
+  yield takeLatest(GET_ALL_CONNECTORS, getAllConnectors);
 }
 
 export default function* rootSaga() {

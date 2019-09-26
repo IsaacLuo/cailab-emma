@@ -9,7 +9,7 @@ import {IFeature, DNASeq} from '../gbGenerator';
 import vectorReceiver from '../vectorReceiver.json';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { connect } from 'react-redux';
-import { IStoreState, IAssembly, IPlatesListItem} from '../types.js';
+import { IStoreState, IAssembly, IPlatesListItem, IPlatesListItemWithDetail, IPartDefinition, IPlateMapItem, IPartSequence} from '../types.js';
 import { Dispatch } from 'redux';
 import { GET_ASSEMBLY_LIST, GET_PLATE_LIST, GET_PLATE_DETAIL } from '../redux/actions';
 import {useDropzone} from 'react-dropzone'
@@ -17,6 +17,7 @@ import papaparse from 'papaparse'
 import { generateEchoSheet, generateMasterMixEchoSheet, calcDNAVolume, calcDNAMass } from '../generateEchoSheet';
 import NumericInput from "react-numeric-input";
 import { AutoComplete, Input, Icon } from 'antd';
+import { wellIdToWellName } from '../utilities/wellIdConverter';
 
 // const MyDropzone = styled(Dropzone)`
 //   height: 30px;
@@ -83,6 +84,8 @@ interface IProps extends RouteComponentProps {
   dispatchGetPartListFromPlate: (plateId:string)=>void;
   
   plates: IPlatesListItem[];
+  currentSelectedPlate?: IPlatesListItemWithDetail;
+  currentPlateMap: IPlateMapItem[];
 }
 interface IState {
   partCount:number;
@@ -93,11 +96,15 @@ interface IState {
   dnaseMixExtra: number;
 
   plateId?: string;
+  downloadProtocolEnabled: boolean;
+  warningMessage: string;
 }
 
 const mapStateToProps = (state: IStoreState) => ({
   assemblyProjects: state.app.assemblyProjects,
   plates: state.app.platesList,
+  currentSelectedPlate: state.app.currentSelectedPlate,
+  currentPlateMap: state.app.currentPlateMap,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -121,6 +128,10 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
     let masterMixVolumes:number[] = []; 
     let waterVolumes:number[]=[];
     let preparedMasterMixVolume = state.preparedMasterMixVolume;
+    let downloadProtocolEnabled = state.downloadProtocolEnabled;
+    let warningMessage = state.warningMessage;
+    let plateMap;
+    const missingPartNames:string[] = [];
     // const partVolumesSum = partVolumes.reduce((a,b)=>a+b)
     if (props.assemblyProjects) {
       partCount = props.assemblyProjects.reduce((c:number,ass:IAssembly)=>c+ass.finalParts.length, 0);
@@ -137,6 +148,33 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
         waterVolumes.push(1000-masterMixVolumeNL);
       }
     }
+
+    if (props.currentPlateMap && props.assemblyProjects) {
+      const plateMap = props.currentPlateMap.filter(v=>v);
+      const locationDict:any = {};
+      plateMap.forEach((item:IPlateMapItem) => locationDict[item._id] = item);
+
+      if(props.assemblyProjects.every(
+        (project:IAssembly)=>
+          project.finalParts.every(
+            (part:IPartSequence)=> {
+              if (locationDict[part._id]) {
+                return true;
+              } else {
+                missingPartNames.push(part.name);
+              }
+            }
+            ))
+      ) { // all parts in plate
+        downloadProtocolEnabled = true;
+        warningMessage = '';
+      } else {
+        downloadProtocolEnabled = false;
+        warningMessage = `some parts are missing: ${missingPartNames.join(' ')}`;
+      }
+
+    }
+
     return {
       ...state,
       partCount,
@@ -158,6 +196,8 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
       waterVolumes:[],
       preparedMasterMixVolume: 30,
       dnaseMixExtra: 1.5,
+      downloadProtocolEnabled: false,
+      warningMessage: '',
     };
 
   }
@@ -379,38 +419,38 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
     this.props.dispatchGetPartListFromPlate(plateId);
   }
 
-  private MyDropzone = () => {
-    const onDrop = useCallback(acceptedFiles => {
-      const reader = new FileReader()
+  // private MyDropzone = () => {
+  //   const onDrop = useCallback(acceptedFiles => {
+  //     const reader = new FileReader()
   
-      reader.onabort = () => console.log('file reading was aborted')
-      reader.onerror = () => console.log('file reading has failed')
-      reader.onload = () => {
-        // Do whatever you want with the file contents
-        const csvStr = reader.result as string;
-        const pp = papaparse.parse(csvStr);
-        // const fd = pp.data.filter((_,i)=>i>0&&i<17).map((v:string[])=>v.filter((_,i)=>i>0));
-        const partLocations:any = {};
-        for(let i=0;i<16;i++) {
-          for (let j=0;j<24;j++) {
-            if (pp.data[i+1][j+1]!==undefined && pp.data[i+1][j+1] !== '') {
-              partLocations[pp.data[i+1][j+1]] = String.fromCharCode(65+i)+j;
-            }
-          }
-        }
-        this.setState({partLocations});
-      }
-      acceptedFiles.forEach((file:any) => reader.readAsBinaryString(file))
-    }, [])
-    const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
+  //     reader.onabort = () => console.log('file reading was aborted')
+  //     reader.onerror = () => console.log('file reading has failed')
+  //     reader.onload = () => {
+  //       // Do whatever you want with the file contents
+  //       const csvStr = reader.result as string;
+  //       const pp = papaparse.parse(csvStr);
+  //       // const fd = pp.data.filter((_,i)=>i>0&&i<17).map((v:string[])=>v.filter((_,i)=>i>0));
+  //       const partLocations:any = {};
+  //       for(let i=0;i<16;i++) {
+  //         for (let j=0;j<24;j++) {
+  //           if (pp.data[i+1][j+1]!==undefined && pp.data[i+1][j+1] !== '') {
+  //             partLocations[pp.data[i+1][j+1]] = String.fromCharCode(65+i)+j;
+  //           }
+  //         }
+  //       }
+  //       this.setState({partLocations});
+  //     }
+  //     acceptedFiles.forEach((file:any) => reader.readAsBinaryString(file))
+  //   }, [])
+  //   const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
   
-    return (
-      <DropzoneDiv {...getRootProps()}>
-        <input {...getInputProps()} />
-        <p>drop the plate definition csv file to here</p>
-      </DropzoneDiv>
-    )
-  }
+  //   return (
+  //     <DropzoneDiv {...getRootProps()}>
+  //       <input {...getInputProps()} />
+  //       <p>drop the plate definition csv file to here</p>
+  //     </DropzoneDiv>
+  //   )
+  // }
 
   /**
    * 

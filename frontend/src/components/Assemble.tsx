@@ -7,12 +7,13 @@ import {IFeature, DNASeq} from '../gbGenerator';
 import vectorReceiver from '../vectorReceiver.json';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { connect } from 'react-redux';
-import { IStoreState, IPartDetail, IProject, IPartSequence } from '../types.js';
+import { IStoreState, IPartDetail, IProject, IPartSequence, IConnector } from '../types.js';
 import { Dispatch } from 'redux';
 import { 
   GET_PROJECT,
   SET_ASSEMBLY,
   SAVE_ASSEMBLY,
+  GET_ALL_CONNECTORS,
 } from '../redux/actions';
 import { Link } from 'react-router-dom';
 import qs from 'qs';
@@ -40,8 +41,10 @@ interface IProps extends RouteComponentProps {
   onClickNext?: (selectedParts:any)=>void,
   setAssembly: (finalParts: IPartSequence[])=>void,
   saveAssembly: (projectId:string, finalParts: IPartSequence[])=>Promise<any>,
+  dispatchGetAllConnectors:()=>void,
   project: IProject;
   assembly?: IPartSequence[];
+  connectors: IConnector[];
 }
 interface IState {
   finalParts: IPartSequence[],
@@ -51,6 +54,7 @@ interface IState {
 const mapStateToProps = (state: IStoreState) => ({
   project: state.app.currentProject,
   assembly: state.app.currentAssembly,
+  connectors: state.app.connectors,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -62,11 +66,13 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
       data:{projectId, finalParts}, 
       cb: resolve,
     })),
+  dispatchGetAllConnectors: ()=>dispatch({type:GET_ALL_CONNECTORS}),
 });
 
 class Assemble extends React.Component<IProps, IState> {
   public static getDerivedStateFromProps(props:IProps, state:IState) {
-    const shortCuts = props.project.connectorIndexes.map(v=>CONNECTORS[v]);
+    // const shortCuts = props.project.connectorIndexes.map(v=>CONNECTORS[v]);
+    const shortCuts = props.project.connectors;
     const selectedParts = props.project.parts.filter(part=>part.selected);
     // console.log(selectedParts);
     // merge sort
@@ -75,14 +81,14 @@ class Assemble extends React.Component<IProps, IState> {
     const re:IPartSequence[] = [];
 
     while(i<shortCuts.length && j<selectedParts.length) {
-      const idxI = shortCuts[i].pos[0];
+      const idxI = shortCuts[i].posBegin;
       const idxJ = selectedParts[j].position;
       if (idxI < idxJ) {
-        re.push({name: shortCuts[i].name, sequence: shortCuts[i].sequence})
+        re.push({type: 'connector', _id:shortCuts[i]._id,  name: shortCuts[i].name, sequence: shortCuts[i].sequence})
         i++;
       } else {
         if(selectedParts[j].partDefinition) {
-          re.push({name: selectedParts[j].partDefinition!.part.name, sequence: selectedParts[j].partDefinition!.part.sequence})
+          re.push({type: 'part', _id:selectedParts[j].partDefinition!._id, name: selectedParts[j].partDefinition!.part.name, sequence: selectedParts[j].partDefinition!.part.sequence})
         }
         j++;
       }
@@ -91,13 +97,13 @@ class Assemble extends React.Component<IProps, IState> {
       while (j < selectedParts.length) {
         // console.log(j);
         if(selectedParts[j].partDefinition) {
-          re.push({name: selectedParts[j].partDefinition!.part.name, sequence: selectedParts[j].partDefinition!.part.sequence})
+          re.push({type: 'part', _id:selectedParts[j].partDefinition!._id, name: selectedParts[j].partDefinition!.part.name, sequence: selectedParts[j].partDefinition!.part.sequence})
         }
         j++;
       }
     } else {
       while (i<shortCuts.length) {
-        re.push({name: shortCuts[i].name, sequence: shortCuts[i].sequence})
+        re.push({type: 'connector', _id:shortCuts[i]._id, name: shortCuts[i].name, sequence: shortCuts[i].sequence})
         i++;
       }
     }

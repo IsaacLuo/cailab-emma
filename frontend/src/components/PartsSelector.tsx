@@ -19,6 +19,7 @@ import {
   GET_PROJECT,
   SAVE_PROJECT_HISTORY,
   SET_CURRENT_PROJECT,
+  GET_ALL_CONNECTORS,
 } from '../redux/actions';
 
 import IconLegend from './IconLegend';
@@ -78,6 +79,7 @@ interface IProps extends RouteComponentProps {
   onLoadProject: (projectId: string) => void;
   saveProjectHistory: (project: IProject) => void;
   onNewValidProjectGenerated: (project: IProject) => void;
+  dispatchGetAllConnectors:()=>void;
 }
 interface IState {
   shortcuts: IShortcut[];
@@ -93,12 +95,14 @@ const mapStateToProps = (state: IStoreState) => ({
   preloadedProject: state.app.currentProject,
   // key: state.app.currentProject.updatedAt,
   resetCount: state.partSelector.resetCount,
+  connectors: state.app.connectors,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   onLoadProject: (projectId: string) => dispatch({type: GET_PROJECT, data: projectId}),
   saveProjectHistory: (project: IProject) => dispatch({type:SAVE_PROJECT_HISTORY, data: project}),
   onNewValidProjectGenerated: (project: IProject) => dispatch({type:SET_CURRENT_PROJECT, data: project}),
+  dispatchGetAllConnectors: ()=>dispatch({type:GET_ALL_CONNECTORS}),
 });
 
 class PartSelector extends React.Component<IProps, IState> {
@@ -133,6 +137,7 @@ class PartSelector extends React.Component<IProps, IState> {
 
   constructor(props: IProps) {
     super(props);
+    this.props.dispatchGetAllConnectors();
 
     const {jointPoints, baseX, baseY} = this;
     const w = 50;
@@ -448,7 +453,8 @@ class PartSelector extends React.Component<IProps, IState> {
           parts: this.state.partsProp
             .map((part, position) => ({activated: part.activated, selected: part.selected, position}))
             .filter((part)=>part.selected),
-          connectorIndexes,
+          // connectorIndexes,
+          connectors:[],
           updatedAt: new Date(),
         };
       // save
@@ -460,22 +466,6 @@ class PartSelector extends React.Component<IProps, IState> {
 
   private onNewValidProjectGenerated = () => {
     // this.saveProjectHistory();
-  }
-
-  private onClickSaveAs = () => {
-      const connectorIndexes:number[] = [];
-      this.state.shortcuts.forEach((v,i)=>{
-        if (v.activated) {
-          connectorIndexes.push(i);
-        }
-      })
-    const project: IProject = {
-        name: this.state.projectName,
-        parts: this.state.partsProp.map((part, position) => ({activated: part.activated, selected: part.selected, position})),
-        connectorIndexes,
-      };
-    // save
-    saveProjectAs(project);
   }
 
   private onClickNext = () => {

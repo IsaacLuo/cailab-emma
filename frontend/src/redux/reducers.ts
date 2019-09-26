@@ -6,6 +6,7 @@ import {
   IAction,
   IAppState,
   IProject,
+  IPartDefinition,
   } from '../types';
 
 import {
@@ -31,13 +32,14 @@ import {
   SET_PLATES_LIST,
   SET_CURRENT_SELECTED_PLATE,
   SET_PART_DIFINITIONS,
+  SET_ALL_CONNECTORS,
 } from './actions';
 
 import partsTableReducer from '../components/PartsTable/reducer'
 import newPartFormReducer from '../components/NewPartForm/reducer'
 import platesTableReducer from '../components/PlatesTable/reducer'
-import { IPartDefinition } from '../../../api/src/models';
 import { PUT_PART_INTO_POSITION } from '../components/PartsDropDown/actions';
+import { wellIdToWellName } from '../utilities/wellIdConverter';
 
 const defaultUser: IUserInfo = {
     _id: '',
@@ -48,7 +50,7 @@ const defaultUser: IUserInfo = {
 const defaultCurrentProject: IProject = {
     name: `empty project`,
     parts: Array(26).fill(undefined).map((v,i)=>({activated: false, selected: false, position:i})),
-    connectorIndexes: [],
+    connectors: [],
     ignorePos8: false,
   };
 
@@ -65,6 +67,8 @@ const DEFAULT_STATE: IAppState = {
   platesList: [],
   currentSelectedPlate: undefined,
   currentAvailableParts: [],
+  currentPlateMap: [],
+  connectors: [],
 };
 
 function appReducer(state: IAppState = DEFAULT_STATE, action: IAction) {
@@ -190,16 +194,37 @@ function appReducer(state: IAppState = DEFAULT_STATE, action: IAction) {
       return {...state, partNames: action.data, partDict };
     case SET_PLATES_LIST:
       return {...state, platesList: action.data};
-    // case SET_CURRENT_SELECTED_PLATE:
-    //   return {
-    //     ...state, 
-    //     currentSelectedPlate: action.data,
-    //     currentAvailableParts: action.data.parts.filter((v:any)=>v),
-    //   };
+    case SET_CURRENT_SELECTED_PLATE:{
+      const currentSelectedPlate = action.data;
+      const plateMap = currentSelectedPlate.parts.map(
+        (part:IPartDefinition, wellId:number) => {
+          if (part) {
+          return {
+            _id: part._id,
+            name: part.part.name,
+            labName: part.part.labName,
+            wellId: wellId,
+            wellName: wellIdToWellName(wellId),
+          };
+          } else {
+            return undefined;
+          }
+        });
+      return {
+        ...state, 
+        currentSelectedPlate: action.data,
+        currentPlateMap: plateMap,
+      };
+    }
     case SET_PART_DIFINITIONS:
       return {
         ...state,
         currentAvailableParts: action.data,
+      }
+    case SET_ALL_CONNECTORS:
+      return {
+        ...state,
+        connectors: action.data,
       }
   }
   return state;

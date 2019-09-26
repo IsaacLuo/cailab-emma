@@ -33,11 +33,30 @@ export const PartsSchema = new Schema({
   },
 }, {_id:false});
 
+export const ConnectorSchema = new Schema({
+  name: String,
+  posBegin: Number,
+  posEnd: Number,
+  sequence: String,
+})
+
+interface IConnectorSchema {
+  _id: any;
+  name: string;
+  posBegin: Number;
+  posEnd: Number;
+  sequence: String;
+}
+
+export interface IConnectorModel extends IConnectorSchema, Document {}
+export const Connector:Model<IConnectorModel> = mongoose.model('Connector', ConnectorSchema, 'connectors');
+
 export const ProjectSchema = new Schema({
   name: String,
   version: String,
   parts: [PartsSchema],
-  connectorIndexes: [Number],
+  connectors: [ConnectorSchema],
+  // connectorIndexes: [Number],
   owner: Schema.Types.ObjectId,
   group: String,
   createdAt: Date,
@@ -57,6 +76,7 @@ export const AssemblySchema = new Schema({
     ref: 'Project',
   },
   finalParts: [{
+    type: String,
     name: String,
     sequence: String,
   }]
@@ -65,6 +85,7 @@ export const AssemblySchema = new Schema({
 export interface IAssembly {
   project: string|IProjectModel,
   finalParts: Array<{
+    type: String,
     name: string,
     sequence: string,
   }>
@@ -170,3 +191,5 @@ export const PlateDefinitionSchema = new Schema({
 
 export interface IPlateDefinitionModel extends IPlateDefinition, Document {}
 export const PlateDefinition:Model<IPartDefinitionModel> = mongoose.model('PlateDefinition', PlateDefinitionSchema, 'plate_definitions');
+
+

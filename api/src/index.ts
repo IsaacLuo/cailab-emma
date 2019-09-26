@@ -10,7 +10,8 @@ import {Project, Assembly, AssemblyList, IPartDefinition, PartDefinition, PlateD
 import jwt from 'jsonwebtoken';
 import cors from 'koa-cors';
 import mongoose from 'mongoose';
-import { graphqlKoa, graphiqlKoa } from 'graphql-server-koa'
+// import { graphqlKoa, graphiqlKoa } from 'graphql-server-koa'
+import {ApolloServer} from 'apollo-server-koa'
 import GraphqlSchema from './graphql/schema'
 
 const GUEST_ID = '000000000000000000000000';
@@ -450,21 +451,24 @@ async (ctx:Ctx, next:Next)=> {
   }
 });
 
-// -----------------------------------------------------------------------------------------------
-router.get('/graphql',
-async (ctx:Ctx, next:Next)=> {
-  await graphqlKoa({schema: GraphqlSchema})(ctx, next);
-});
-router.post('/graphql',
-async (ctx:Ctx, next:Next)=> {
-  await graphqlKoa({schema: GraphqlSchema})(ctx, next);
-});
+const apolloServer = new ApolloServer({schema: GraphqlSchema});
+apolloServer.applyMiddleware({app, path:'/graphql'});
 
-router.get('/graphiql', 
-async (ctx:Ctx, next:Next)=> {
-  await graphiqlKoa({endpointURL: '/graphql'})(ctx)
-}
-);
+// -----------------------------------------------------------------------------------------------
+// router.get('/graphql',
+// async (ctx:Ctx, next:Next)=> {
+//   await graphqlKoa({schema: GraphqlSchema})(ctx, next);
+// });
+// router.post('/graphql',
+// async (ctx:Ctx, next:Next)=> {
+//   await graphqlKoa({schema: GraphqlSchema})(ctx, next);
+// });
+
+// router.get('/graphiql', 
+// async (ctx:Ctx, next:Next)=> {
+//   await graphiqlKoa({endpointURL: '/graphql'})(ctx)
+// }
+// );
 
 
 

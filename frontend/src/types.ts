@@ -6,6 +6,8 @@ export interface IUserInfo {
 }
 
 export interface IPartSequence {
+  _id: string,
+  type: string,
   name:string,
   sequence: string,
 }
@@ -61,7 +63,7 @@ export interface IProject {
   version?: string;
   parts: ISelectedPart[];
   ignorePos8?: boolean;
-  connectorIndexes: number[];
+  connectors: IConnector[];
   history?: IProject[];
   createdAt?: Date;
   updatedAt?: Date;
@@ -97,6 +99,22 @@ export interface IPlatesListItemWithDetail extends IPlatesListItem{
   parts?: IPartDefinition[];
 }
 
+export interface IPlateMapItem {
+  _id:string;
+  name: string;
+  labName: string;
+  wellId: number;
+  wellName: string;
+}
+
+export interface IConnector {
+  _id: string;
+  name: string;
+  posBegin: number;
+  posEnd: number;
+  sequence: string;
+}
+
 export interface IAppState {
   // the app is initializing(fetching data from server first time)
   currentUser: IUserInfo;
@@ -110,7 +128,9 @@ export interface IAppState {
   partDict: any;
   platesList: IPlatesListItem[];
   currentSelectedPlate?: IPlatesListItemWithDetail;
+  currentPlateMap: IPlateMapItem[];
   currentAvailableParts: IPartDefinition[];
+  connectors: IConnector[];
 }
 export interface IPartSelectorState {
   resetCount: number;
@@ -150,6 +170,8 @@ export interface IStoreState {
 export interface IAssembly {
   project: string,
   finalParts: Array<{
+    _id: string,
+    type: string,
     name: string,
     sequence: string,
   }>

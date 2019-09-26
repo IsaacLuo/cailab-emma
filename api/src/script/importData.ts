@@ -1,8 +1,10 @@
+import { Project } from './../models';
 import parts from './parts.json'
-import conf from '../../conf'
+import connectors from './connectors.json'
+import conf from '../../conf' 
 
 import mongoose from 'mongoose';
-import {IPartDefinition, PartDefinition} from '../models';
+import {IPartDefinition, PartDefinition, Connector} from '../models';
 
 async function main() {
   try {
@@ -25,15 +27,19 @@ async function main() {
   }
 
   await PartDefinition.deleteMany({}).exec();
+  await Project.deleteMany({}).exec();
+  await Connector.deleteMany({}).exec();
 
   console.log('start import');
+
+  const allPromises:any[] = [];
 
   for(const pos of parts) {
     for (const p of pos.parts) {
       
       console.log(p.name);
       const now = new Date();
-      PartDefinition.create({
+      allPromises.push(PartDefinition.create({
         owner: '5c88cea93c27125df4ff9f4a',
         group:'all',
         createdAt: now,
@@ -51,11 +57,23 @@ async function main() {
           plasmidLength: p.plasmidLength,
           backboneLength: p.backboneLength,
         }
-      })
+      }));
     }
   }
+
+  for (const connector of connectors) {
+      console.log(connector.name);
+      allPromises.push(Connector.create({
+        name: connector.name,
+        posBegin: connector.pos[0],
+        posEnd: connector.pos[1],
+        sequence: connector.sequence,
+      }));
+  }
+
+  await Promise.all(allPromises);
 
   console.log('finish')
 }
 
-main();
+main().then(()=>process.exit());
