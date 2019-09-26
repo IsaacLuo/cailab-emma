@@ -205,7 +205,7 @@ class PartsDropDown extends React.Component<IProps, IState> {
                 <Input suffix={<Icon type="search" className="certain-category-icon" />} />
               </AutoComplete>
               <PartDetailDescription>
-                {part.partDetail && part.partDetail.comment}
+                {part.partDefinition && `${part.partDefinition.part.name} (${part.partDefinition.part.labName}):  ${part.partDefinition.part.comment}`}
               </PartDetailDescription>
             </DropdownPanel>
           </SelectionRow>

@@ -9,13 +9,14 @@ import {IFeature, DNASeq} from '../gbGenerator';
 import vectorReceiver from '../vectorReceiver.json';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { connect } from 'react-redux';
-import { IStoreState, IAssembly} from '../types.js';
+import { IStoreState, IAssembly, IPlatesListItem} from '../types.js';
 import { Dispatch } from 'redux';
-import { GET_ASSEMBLY_LIST } from '../redux/actions';
+import { GET_ASSEMBLY_LIST, GET_PLATE_LIST, GET_PLATE_DETAIL } from '../redux/actions';
 import {useDropzone} from 'react-dropzone'
 import papaparse from 'papaparse'
 import { generateEchoSheet, generateMasterMixEchoSheet, calcDNAVolume, calcDNAMass } from '../generateEchoSheet';
 import NumericInput from "react-numeric-input";
+import { AutoComplete, Input, Icon } from 'antd';
 
 // const MyDropzone = styled(Dropzone)`
 //   height: 30px;
@@ -77,6 +78,11 @@ function download(filename:string, text:string) {
 interface IProps extends RouteComponentProps {
   assemblyProjects?: IAssembly[];
   loadAssemblyList: (assemblyId: string) => void;
+  dispatchGetPlatesList: ()=>void;
+
+  dispatchGetPartListFromPlate: (plateId:string)=>void;
+  
+  plates: IPlatesListItem[];
 }
 interface IState {
   partCount:number;
@@ -85,14 +91,19 @@ interface IState {
   waterVolumes:number[];
   preparedMasterMixVolume: number;
   dnaseMixExtra: number;
+
+  plateId?: string;
 }
 
 const mapStateToProps = (state: IStoreState) => ({
   assemblyProjects: state.app.assemblyProjects,
+  plates: state.app.platesList,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadAssemblyList: (assemblyId: string) => dispatch({type: GET_ASSEMBLY_LIST, data: assemblyId}),
+  dispatchGetPlatesList: ()=>dispatch({type:GET_PLATE_LIST}),
+  dispatchGetPartListFromPlate: (plateId:string)=> dispatch({type: GET_PLATE_DETAIL, data: plateId}),
 });
 
 /**
@@ -150,6 +161,11 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
     };
 
   }
+
+  public componentDidMount() {
+    this.props.dispatchGetPlatesList();
+  }
+
   public render() {
     if (!this.props.assemblyProjects) {
       return <div>loading</div>
@@ -319,7 +335,30 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
           plating on LB+Amp (add 20 µL of competent cells to the well containing the assembly reaction).
         </Li>
       </ol>
-      <this.MyDropzone/>
+
+      <AutoComplete
+        className="auto-complete"
+        dropdownClassName="auto-compolete-dropdown"
+        dropdownMatchSelectWidth={true}
+        dropdownStyle={{ width: 300 }}
+        size="large"
+        style={{ width: '100%' }}
+        dataSource={
+          this.props.plates
+          .map((plate:any,j:number) => 
+          ({value:plate._id, text:plate.name}))
+            // <AutoComplete.Option value={plate.name+plate._id} key={plate._id}>
+            //   {plate.name}
+            // </AutoComplete.Option>)
+        }
+        placeholder="input here"
+        onSearch={this.handleSearchPlateName}
+        onSelect={this.handleSelectPlate}
+      >
+        <Input suffix={<Icon type="search" className="certain-category-icon" />} />
+      </AutoComplete>
+
+      {/* <this.MyDropzone/> */}
       {this.state.partLocations &&
         <div style={{marginTop:10}}>
           <Button onClick={this.onClickMasterMixEchoScript}>download master mix echo script</Button>
@@ -329,6 +368,15 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
       }
       </Panel>
     </React.Fragment>
+  }
+
+  private handleSearchPlateName = () => {
+
+  }
+
+  private handleSelectPlate = (plateId:any) => {
+    this.setState({plateId,});
+    this.props.dispatchGetPartListFromPlate(plateId);
   }
 
   private MyDropzone = () => {
