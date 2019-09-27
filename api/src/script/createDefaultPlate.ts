@@ -31,12 +31,26 @@ async function main() {
 
   const allPromises:any[] = [];
 
-  const connectorIds = (await Connector.find({}).select('_id').exec()).map(v=>v._id);
-  const partIds = (await PartDefinition.find({}).select('_id').exec()).map(v=>v._id);
+  const connectorIds = (await Connector.find({}).select('_id').exec()).map(
+    v=>({
+      _id:v._id,
+      ctype: 'connector',
+      part:null,
+      connector: v._id,
+    })
+    );
+  const partIds = (await PartDefinition.find({}).select('_id').exec()).map(
+  v=>({
+      _id:v._id,
+      ctype: 'part',
+      part:v._id,
+      connector: null,
+    })
+    );
 
   const now = new Date();
   await PlateDefinition.create({
-    parts: [...connectorIds, ...partIds],
+    content: [...connectorIds, ...partIds],
     createdAt: now,
     updatedAt: now,
     permission: 0x666,

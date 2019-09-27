@@ -1,3 +1,4 @@
+import { ConnectorType } from './Connector';
 import { PaginationArgType } from './ArgTypes';
 import { PartDefinition, PlateDefinition } from '../models';
 import {
@@ -26,6 +27,16 @@ let UserType = new GraphQLObjectType({
   }
 })
 
+let PlateContentType = new GraphQLObjectType({
+  name: 'PlateContentType',
+  fields: {
+    _id: {type: GraphQLID},
+    ctype: { type: GraphQLString },
+    part: { type: PartDefinitionType },
+    connector: {type: ConnectorType},
+  }
+})
+
 export const PlateDefinitionType = new GraphQLObjectType({
   name: 'plate',
   fields: {
@@ -37,7 +48,7 @@ export const PlateDefinitionType = new GraphQLObjectType({
     name: { type: GraphQLString },
     barcode: { type: GraphQLString },
     description: {type: GraphQLString},
-    parts: { type: new GraphQLList(PartDefinitionType) },
+    content: { type: new GraphQLList(PlateContentType) },
   }
 })
 
@@ -82,7 +93,8 @@ export const plateDefinition = {
   resolve (root, params, options) {
     return PlateDefinition
       .findOne({_id:params.id})
-      .populate({path:'parts', options:{retainNullValues:true}})
+      .populate({path:'content.connector', options:{retainNullValues:true}})
+      .populate({path:'content.part', options:{retainNullValues:true}})
       .exec();
   }
 }

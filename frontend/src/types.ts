@@ -6,8 +6,9 @@ export interface IUserInfo {
 }
 
 export interface IPartSequence {
-  _id: string,
-  type: string,
+  partId?: string,
+  connectorId?: string,
+  ctype: string,
   name:string,
   sequence: string,
 }
@@ -171,7 +172,7 @@ export interface IAssembly {
   project: string,
   finalParts: Array<{
     _id: string,
-    type: string,
+    ctype: string,
     name: string,
     sequence: string,
   }>

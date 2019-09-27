@@ -61,14 +61,17 @@ async function main() {
     }
   }
 
+  let index = 0;
   for (const connector of connectors) {
       console.log(connector.name);
-      allPromises.push(Connector.create({
+      await Connector.create({
         name: connector.name,
         posBegin: connector.pos[0],
         posEnd: connector.pos[1],
         sequence: connector.sequence,
-      }));
+        index,
+      });
+      index++;
   }
 
   await Promise.all(allPromises);

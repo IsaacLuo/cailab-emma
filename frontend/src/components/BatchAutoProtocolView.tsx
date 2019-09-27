@@ -141,6 +141,7 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
       // props.assemblyProjects.reduce((c:number,ass:IAssembly)=>c+ass.finalParts.length+backboneLength, 0);
       for (const project of props.assemblyProjects) {
         let masterMixVolumeNL = 0;
+        console.log({project});
         for (const part of project.finalParts) {
           masterMixVolumeNL+= calcDNAVolume(calcDNAMass(1.3, part.sequence.length+backboneLength));
         }
@@ -158,7 +159,7 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
         (project:IAssembly)=>
           project.finalParts.every(
             (part:IPartSequence)=> {
-              if (locationDict[part._id]) {
+              if (locationDict[part.connectorId || part.partId!]) {
                 return true;
               } else {
                 missingPartNames.push(part.name);
@@ -181,6 +182,8 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
       masterMixVolumes,
       waterVolumes,
       preparedMasterMixVolume,
+      downloadProtocolEnabled,
+      warningMessage,
     };
   }
 
@@ -399,11 +402,16 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
       </AutoComplete>
 
       {/* <this.MyDropzone/> */}
-      {this.state.partLocations &&
+      {this.state.downloadProtocolEnabled &&
         <div style={{marginTop:10}}>
           <Button onClick={this.onClickMasterMixEchoScript}>download master mix echo script</Button>
           .
           <Button onClick={this.onClickMainEchoScript}>download parts echo script</Button>
+        </div>
+      }
+      {this.state.warningMessage &&
+        <div style={{marginTop:10}}>
+          {this.state.warningMessage}
         </div>
       }
       </Panel>

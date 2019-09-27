@@ -122,7 +122,10 @@ userMust(beAnyOne, beUser, beGuest),
 async (ctx:Ctx, next:Next)=> {
   const user = ctx.state.user;
   if (user) {
-    const project = await Project.findOne({_id:ctx.params.id, owner: user._id}).populate('parts.partDefinition').exec();
+    const project = await Project.findOne({_id:ctx.params.id, owner: user._id})
+      .populate('parts.partDefinition')
+      .populate('connectors')
+      .exec();
     if (!project) {
       ctx.throw(404);
     }
@@ -172,7 +175,7 @@ async (ctx:Ctx, next:Next)=> {
     if (projectCount>0) {
       ctx.throw(401, 'unable to modify projects of other users');
     }
-    const {name, parts, connectorIndexes} = ctx.request.body;
+    const {name, parts, connectors} = ctx.request.body;
     
     const project = await Project.findOne({
       _id:ctx.params.id,
@@ -187,7 +190,7 @@ async (ctx:Ctx, next:Next)=> {
       name: project.name,
       version: project.version,
       parts: project.parts,
-      connectorIndexes: project.connectorIndexes,
+      connectors: project.connectors,
       createdAt: project.createdAt,
       updatedAt: project.updatedAt,
       history: [],
@@ -206,14 +209,14 @@ async (ctx:Ctx, next:Next)=> {
       // save original to history
       project.name = name;
       project.parts = parts;
-      project.connectorIndexes = connectorIndexes;
+      project.connectors = connectors;
       project.updatedAt= now;
       project.save();
       ctx.body = {message:'OK', project};
     } else {
       project.name = name;
       project.parts = parts;
-      project.connectorIndexes = connectorIndexes;
+      project.connectors = connectors;
       project.updatedAt= now;
       project.save();
       ctx.body = {message:'OK, but no history saved', project};
@@ -283,6 +286,7 @@ router.put('/api/project/:id/assembly',
 userMust(beAnyOne, beUser, beGuest),
 async (ctx:Ctx, next:Next)=> {
   const {id} = ctx.params;
+  console.log(ctx.request.body);
   ctx.body = await Assembly.update({project:id}, {_id:id, project:id, finalParts:ctx.request.body}, {upsert:true}).exec();
 });
 

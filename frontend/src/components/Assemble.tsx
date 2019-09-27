@@ -84,11 +84,11 @@ class Assemble extends React.Component<IProps, IState> {
       const idxI = shortCuts[i].posBegin;
       const idxJ = selectedParts[j].position;
       if (idxI < idxJ) {
-        re.push({type: 'connector', _id:shortCuts[i]._id,  name: shortCuts[i].name, sequence: shortCuts[i].sequence})
+        re.push({ctype: 'connector', connectorId:shortCuts[i]._id,  name: shortCuts[i].name, sequence: shortCuts[i].sequence})
         i++;
       } else {
         if(selectedParts[j].partDefinition) {
-          re.push({type: 'part', _id:selectedParts[j].partDefinition!._id, name: selectedParts[j].partDefinition!.part.name, sequence: selectedParts[j].partDefinition!.part.sequence})
+          re.push({ctype: 'part', partId:selectedParts[j].partDefinition!._id, name: selectedParts[j].partDefinition!.part.name, sequence: selectedParts[j].partDefinition!.part.sequence})
         }
         j++;
       }
@@ -97,13 +97,13 @@ class Assemble extends React.Component<IProps, IState> {
       while (j < selectedParts.length) {
         // console.log(j);
         if(selectedParts[j].partDefinition) {
-          re.push({type: 'part', _id:selectedParts[j].partDefinition!._id, name: selectedParts[j].partDefinition!.part.name, sequence: selectedParts[j].partDefinition!.part.sequence})
+          re.push({ctype: 'part', partId:selectedParts[j].partDefinition!._id, name: selectedParts[j].partDefinition!.part.name, sequence: selectedParts[j].partDefinition!.part.sequence})
         }
         j++;
       }
     } else {
       while (i<shortCuts.length) {
-        re.push({type: 'connector', _id:shortCuts[i]._id, name: shortCuts[i].name, sequence: shortCuts[i].sequence})
+        re.push({ctype: 'connector', connectorId:shortCuts[i]._id, name: shortCuts[i].name, sequence: shortCuts[i].sequence})
         i++;
       }
     }
@@ -155,7 +155,8 @@ class Assemble extends React.Component<IProps, IState> {
                   <RedSpan>
                     {v.sequence.substr(0,4)}
                   </RedSpan>
-                  {v.sequence.substring(4, v.sequence.length-4)}
+                  {/* {v.sequence.substring(4, v.sequence.length-4)} */}
+                    ...({v.sequence.length-8} bp)...
                   <RedSpan>
                     {v.sequence.substr(v.sequence.length-4,4)}
                   </RedSpan>
@@ -169,8 +170,11 @@ class Assemble extends React.Component<IProps, IState> {
       </Table>
       <div>
         <Button variant="primary" size="lg" onClick={this.downloadGenbank}>download genbank</Button>
+        &nbsp;
         <Button variant="primary" size="lg" onClick={this.onClickManualProtocol}>Manual Protocol</Button>
+        &nbsp;
         <Button variant="primary" size="lg" onClick={this.onClickAutoProtocol}>Automatic Protocol</Button>
+        &nbsp;
       </div>
     </Panel>
     </React.Fragment>

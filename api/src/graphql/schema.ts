@@ -1,3 +1,4 @@
+import { connectors } from './Connector';
 import {
   GraphQLSchema,
   GraphQLObjectType,
@@ -27,6 +28,7 @@ export default new GraphQLSchema({
       plateDefinitionList,
       plateDefinitionCount,
       plateDefinition,
+      connectors,
     }
   })
 })

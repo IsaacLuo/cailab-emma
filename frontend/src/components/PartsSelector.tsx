@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl, { FormControlProps } from 'react-bootstrap/FormControl';
 import {SHORTCUTS} from '../graphElements';
-import { IProject, IStoreState } from '../types';
+import { IProject, IStoreState, IConnector } from '../types';
 import { saveProjectAs } from '../backendCalls';
 
 import { RouteComponentProps, withRouter, Redirect, Link } from 'react-router-dom';
@@ -74,6 +74,7 @@ interface IProps extends RouteComponentProps {
   // key:any;
   preloadedProject: IProject;
   resetCount: number;
+  connectors: IConnector[];
   onNewPathGenerated?: (newPath: any) => void;
   onClickNext?: (newPath: any) => void;
   onLoadProject: (projectId: string) => void;
@@ -220,6 +221,8 @@ class PartSelector extends React.Component<IProps, IState> {
 
       return {from, to, distance: to - from, x1, y1, x2, y2, xm, ym, xa, ya, rg, activated: false, name: v};
     });
+
+
 
     const stdWeight = this.stdWeight;
 
@@ -438,12 +441,14 @@ class PartSelector extends React.Component<IProps, IState> {
 
   private saveProjectHistory = () => {
     console.debug('save history')
+    const {connectors} = this.props;
+
     // save history only when project is dirty
     if(this.state.isProjectDirty) {
-      const connectorIndexes:number[] = [];
+      const usingConnectors:IConnector[] = [];
       this.state.shortcuts.forEach((v,i)=>{
         if (v.activated) {
-          connectorIndexes.push(i);
+          usingConnectors.push(connectors[i]);
         }
       })
       console.log(this.state.partsProp);
@@ -454,7 +459,7 @@ class PartSelector extends React.Component<IProps, IState> {
             .map((part, position) => ({activated: part.activated, selected: part.selected, position}))
             .filter((part)=>part.selected),
           // connectorIndexes,
-          connectors:[],
+          connectors:usingConnectors,
           updatedAt: new Date(),
         };
       // save

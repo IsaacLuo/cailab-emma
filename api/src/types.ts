@@ -1,3 +1,4 @@
+import { IConnector } from './../../frontend/src/types';
 export interface IGLobalConfig {
   maxTubeDeleteLimit: number,
   host: string,
@@ -40,7 +41,7 @@ export interface IProject {
   name: string;
   version: string,
   parts: ISelectedPart[];
-  connectorIndexes: number[];
+  connectors: IConnector[];
   history: IProject[];
   createdAt: Date;
   updatedAt: Date;

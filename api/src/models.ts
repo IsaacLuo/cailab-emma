@@ -1,3 +1,4 @@
+import { IConnector } from './../../frontend/src/types';
 import { 
   IUser,
   IProject, 
@@ -38,14 +39,16 @@ export const ConnectorSchema = new Schema({
   posBegin: Number,
   posEnd: Number,
   sequence: String,
+  index: Number,
 })
 
 interface IConnectorSchema {
   _id: any;
   name: string;
-  posBegin: Number;
-  posEnd: Number;
-  sequence: String;
+  posBegin: number;
+  posEnd: number;
+  sequence: string;
+  index: number
 }
 
 export interface IConnectorModel extends IConnectorSchema, Document {}
@@ -55,7 +58,10 @@ export const ProjectSchema = new Schema({
   name: String,
   version: String,
   parts: [PartsSchema],
-  connectors: [ConnectorSchema],
+  connectors: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Connector',
+  }],
   // connectorIndexes: [Number],
   owner: Schema.Types.ObjectId,
   group: String,
@@ -76,7 +82,15 @@ export const AssemblySchema = new Schema({
     ref: 'Project',
   },
   finalParts: [{
-    type: String,
+    partId: {
+      type: Schema.Types.ObjectId,
+      ref: 'Part',
+    },
+    connectorId: {
+      type: Schema.Types.ObjectId,
+      ref: 'Connector',
+    },
+    ctype: String,
     name: String,
     sequence: String,
   }]
@@ -85,7 +99,8 @@ export const AssemblySchema = new Schema({
 export interface IAssembly {
   project: string|IProjectModel,
   finalParts: Array<{
-    type: String,
+    partId: string;
+    ctype: string;
     name: string,
     sequence: string,
   }>
@@ -157,6 +172,13 @@ export interface IPartDefinitionModel extends IPartDefinition, Document {}
 export const PartDefinition:Model<IPartDefinitionModel> = mongoose.model('PartDefinition', PartDefinitionSchema, 'part_definitions');
 
 
+export interface IPlateDefinitionContent {
+  _id:string;
+  ctype: string;
+  part: IPartDefinition | string;
+  connector: IConnector | string;
+}
+
 export interface IPlateDefinition {
   owner: string;
   group: string;
@@ -167,7 +189,7 @@ export interface IPlateDefinition {
   name: string;
   barcode: string;
   description:string;
-  parts: Array<IPartDefinition|string>;
+  content: Array<IPlateDefinitionContent|string>;
 }
 
 export const PlateDefinitionSchema = new Schema({
@@ -183,10 +205,18 @@ export const PlateDefinitionSchema = new Schema({
   name: String,
   barcode: String,
   description: String,
-  parts: [{
-    type: Schema.Types.ObjectId,
-    ref: 'PartDefinition',
-  }],
+  content: [{
+    _id: Schema.Types.ObjectId,
+    ctype: String,
+    part: {
+      type: Schema.Types.ObjectId,
+      ref: 'PartDefinition',
+    }, 
+    connector: {
+      type: Schema.Types.ObjectId,
+      ref: 'Connector',
+    },
+  }]
 });
 
 export interface IPlateDefinitionModel extends IPlateDefinition, Document {}
