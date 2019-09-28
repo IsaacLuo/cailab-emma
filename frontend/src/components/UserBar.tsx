@@ -3,18 +3,14 @@ import { Dispatch } from 'redux';
 import {connect} from 'react-redux';
 
 import styled from 'styled-components';
-import { RouteComponentProps, withRouter, Redirect, Link } from 'react-router-dom';
+import { RouteComponentProps, withRouter, Link } from 'react-router-dom';
 import { IUserInfo, IProject, IStoreState } from '../types';
-import {Button} from 'react-bootstrap';
-import uuid from 'uuid/v1';
-import { listMyProjects } from '../backendCalls';
 import {
   SHOW_LOGIN_WINDOW,
   LOGOUT,
   GET_CURENT_USER,
 } from '../redux/actions';
 import { Menu } from 'antd';
-import SubMenu from 'antd/lib/menu/SubMenu';
 
 const GUEST_ID = '000000000000000000000000';
 
@@ -105,7 +101,7 @@ class MyComponent extends React.Component<IProps, IState> {
     const left = (window.screen.availWidth / 2) - (width / 2);
 
     window.addEventListener('message', this.onLogginWindowClosed, false);
-    const subWindow = window.open(
+    window.open(
       'https://auth.cailab.org/login',
       'cailablogin',
 // tslint:disable-next-line: max-line-length
@@ -114,7 +110,7 @@ class MyComponent extends React.Component<IProps, IState> {
   }
 
   private onLogginWindowClosed = (messageEvent: MessageEvent) => {
-    const {origin, data} = messageEvent;
+    const {data} = messageEvent;
     if (data.event === 'closed' && data.success === true) {
       console.log('login');
       this.props.getCurrentUser();

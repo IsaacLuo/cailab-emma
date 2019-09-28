@@ -1,28 +1,25 @@
-import { IUserInfo, IPartSelectorState, IWizardState, IConnector, IPlateContent } from './../types';
-import {combineReducers} from 'redux';
-
-import {
-  IStoreState,
+import { 
+  IUserInfo, 
+  IPartSelectorState, 
+  IPlateContent,
   IAction,
   IAppState,
   IProject,
-  IPartDefinition,
-  } from '../types';
+} from './../types';
+import {combineReducers} from 'redux';
 
 import {
   SET_CURRENT_USER,
-  LOGOUT,
   SET_MY_PROJECTS,
   SET_CURRENT_PROJECT,
-  SET_PART_DETAIL,
   LOAD_HISTORY,
   SET_REMOVED_HISTORY,
   RESET_PROJECT,
   RESET_HISTORY_0,
-  SAVE_PROJECT_HISTORY,
+
   STASH_HISTORY,
   LOGOUT_DONE,
-  PROJECT_DELETED,
+
   DELETE_PROJECT,
   SET_ASSEMBLY,
   SET_ASSEMBLY_LIST,
@@ -155,6 +152,7 @@ function appReducer(state: IAppState = DEFAULT_STATE, action: IAction) {
           compactedParts.forEach((v)=>currentProject.parts[v.position] = v);          
           return {...state, currentProject,};
         }
+        break;
       }
     case SET_REMOVED_HISTORY:
       {
@@ -163,6 +161,7 @@ function appReducer(state: IAppState = DEFAULT_STATE, action: IAction) {
           history.splice(action.data,1);
           return {...state, currentProject: {...state.currentProject, history}}
         }
+        break;
       }
     case RESET_PROJECT:
       {

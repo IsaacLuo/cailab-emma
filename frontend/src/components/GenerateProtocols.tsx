@@ -3,21 +3,20 @@ import { Dispatch } from 'redux';
 import {connect} from 'react-redux';
 
 import styled from 'styled-components';
-import { RouteComponentProps, withRouter, Redirect, Link } from 'react-router-dom';
+import { RouteComponentProps, withRouter} from 'react-router-dom';
 import { IUserInfo, IProject, IStoreState } from '../types';
-import {Button, InputGroup, FormControl, FormControlProps, Form, Breadcrumb} from 'react-bootstrap';
-import { listMyProjects } from '../backendCalls';
-import { SET_CURRENT_PROJECT, CREATE_PROJECT, GET_MY_PROJECTS, DELETE_PROJECT, POST_ASSEMBLY_LIST, SET_ASSEMBLY_LIST, SET_ASSEMBLY_LIST_ID} from '../redux/actions';
-import ProjectWizard from './ProjectWizard';
+import {Button, Form, Breadcrumb} from 'react-bootstrap';
+import { 
+  SET_CURRENT_PROJECT, 
+  GET_MY_PROJECTS, 
+  POST_ASSEMBLY_LIST,
+  SET_ASSEMBLY_LIST_ID,
+} from '../redux/actions';
 import qs from 'qs';
 
 const Panel = styled.div`
   margin:30px;
   text-align:left;
-`;
-
-const CloseButton = styled(Button)`
-  margin-left:5px;
 `;
 
 interface IProps extends RouteComponentProps {

@@ -3,31 +3,18 @@ import * as React from 'react';
 // redux
 import { Dispatch } from 'redux';
 import {connect} from 'react-redux';
-
-// styled
-import styled from 'styled-components';
-
 // antd
 import {
   Form,
   Input,
   Tooltip,
   Icon,
-  Cascader,
-  Select,
-  Row,
-  Col,
-  Checkbox,
   Button,
-  AutoComplete,
   InputNumber,
 } from 'antd';
 import { FormProps } from 'antd/lib/form';
 import { IStoreState } from '../../types';
 import { NEW_PART, RESET_FORM } from './actions';
-
-const { Option } = Select;
-const AutoCompleteOption = AutoComplete.Option;
 
 interface IProps extends FormProps {
   resetForm: boolean;
@@ -104,7 +91,6 @@ class NewPartForm extends React.Component<IProps, IState> {
 
   render() {
     const { getFieldDecorator } = this.props.form!;
-    const { autoCompleteResult } = this.state;
 
     const formItemLayout = {
       labelCol: {
@@ -129,9 +115,9 @@ class NewPartForm extends React.Component<IProps, IState> {
       },
     };
 
-    const websiteOptions = autoCompleteResult.map(website => (
-      <AutoCompleteOption key={website}>{website}</AutoCompleteOption>
-    ));
+    // const websiteOptions = autoCompleteResult.map(website => (
+    //   <AutoCompleteOption key={website}>{website}</AutoCompleteOption>
+    // ));
 
     return (
       <Form {...formItemLayout} onSubmit={this.handleSubmit}>

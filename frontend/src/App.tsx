@@ -1,20 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
 import './bootstrap.css';
-
 import { Provider } from 'react-redux';
-
-import PartSelector from './components/PartsSelector';
-import styled from 'styled-components';
 import PartsDropDown from './components/PartsDropDown';
 import Assemble from './components/Assemble';
-import axios from 'axios';
-import conf from './conf';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import {Button} from 'react-bootstrap';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import ChooseProject from './components/ChooseProject';
 import { IUserInfo } from './types';
-import { RouteComponentProps } from 'react-router-dom';
 import ProjectLoader from './components/ProjectLoader';
 import UserBar from './components/UserBar';
 import store from './redux/store';
@@ -33,15 +25,6 @@ import PartList from './components/PartList';
 import 'antd/dist/antd.css';
 import PlateMapEditor from './components/PlateMapEditor';
 import PlatesTable from './components/PlatesTable';
-
-
-
-const CenterDiv = styled.div`
-  display:flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
 
 interface IState {
   currentUser: IUserInfo;
@@ -66,7 +49,6 @@ class App extends Component<any, IState> {
   }
 
   public render() {
-    const { selectedParts, selectedShortcuts} = this.state;
     const browser = detect();
     if (browser && browser.name !== 'chrome') {
       return (<h1>

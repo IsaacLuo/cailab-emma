@@ -6,8 +6,8 @@ import { Dispatch } from 'redux';
 import {connect} from 'react-redux';
 
 import styled from 'styled-components';
-import { RouteComponentProps, withRouter, Redirect, Link } from 'react-router-dom';
-import { IUserInfo, IProject, IStoreState, IPartDetail, IPartName } from '../types';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { IStoreState} from '../types';
 import PartSelectSearchBox from './PartSelectSearchBox';
 import { 
   LOAD_ALL_PART_NAMES,
@@ -121,15 +121,12 @@ class PlateMapEditor extends React.Component<IProps, IState> {
   public render() {
     let colTitles:number[];
     let rowTitles:string[];
-    let cols:number;
     if (this.state.plateType === '96') {
       colTitles = [1,2,3,4,5,6,7,8,9,10,11,12];
       rowTitles = 'ABCDEFGH'.split('');
-      cols = 12;
     } else {
       colTitles = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24];
       rowTitles = 'ABCDEFGHIJKLMNOP'.split('');
-      cols = 24;
     }
     return (
       <Panel>
@@ -258,7 +255,7 @@ class PlateMapEditor extends React.Component<IProps, IState> {
   }
 
   private handleModalClear = ()=>{
-    const {currentWellId, currentWellPart, parts} = this.state;
+    const {currentWellId, parts} = this.state;
     parts[currentWellId] = {_id:'', name:'empty'};
     this.setState({
       parts: [...parts],

@@ -13,7 +13,6 @@ import SVGRecombinase from './icons/recombinase-recognition-sequence.svg';
 import SVGRNA from './icons/RNA-stability-sequence.svg';
 import SVGTerminator from './icons/Terminator.svg';
 import SVGCDS from './icons/CDS.svg';
-import SVGDummy from './icons/dummy.svg';
 
 export default [
     [{icon: SVGITR35, title:`5'/3' Homology arm / 5'/3' ITR`}, {icon:SVGLTR35, title:`5'/3' LTR`}, {icon: SVGRecombinase, title: `Recombinase recognition sequence`}],

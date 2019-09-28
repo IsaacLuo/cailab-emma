@@ -2,7 +2,6 @@ import {
   IProject, IPartDetail, IPartSequence,
 } from '../types';
 import {
-  LOGIN,
 GET_CURENT_USER,
 SET_CURRENT_USER,
 LOGOUT,
@@ -17,7 +16,6 @@ SET_REMOVED_HISTORY,
 STASH_HISTORY,
 LOGOUT_DONE,
 DELETE_PROJECT,
-PROJECT_DELETED,
 GO_TO_STEP_3,
 SAVE_ASSEMBLY,
 GET_ASSEMBLY,
@@ -56,7 +54,6 @@ import watchPlatesTable from '../components/PlatesTable/saga';
 // other libs
 import axios from 'axios';
 import conf from '../conf';
-import { eventChannel } from 'redux-saga';
 
 import {NotificationManager} from 'react-notifications';
 
@@ -165,7 +162,7 @@ export function* saveProjectHistory(action: IAction) {
 export function* deleteHistory(action: IAction) {
   try {
     const {projectId, historyIndex, historyTimeStamp} = action.data;
-    const response = yield call(axios.delete, conf.serverURL + `/api/project/${projectId}/history/${historyIndex}?time=${historyTimeStamp}`, {withCredentials: true});
+    yield call(axios.delete, conf.serverURL + `/api/project/${projectId}/history/${historyIndex}?time=${historyTimeStamp}`, {withCredentials: true});
     // yield put({type: SET_CURRENT_PROJECT, data: response.data.project});
     yield put({type: SET_REMOVED_HISTORY, data: historyIndex});
   } catch (error) {
@@ -176,7 +173,7 @@ export function* deleteHistory(action: IAction) {
 export function* deleteProject(action: IAction) {
   try {
     const projectId = action.data;
-    const response = yield call(axios.delete, conf.serverURL + `/api/project/${projectId}`, {withCredentials: true});    
+    yield call(axios.delete, conf.serverURL + `/api/project/${projectId}`, {withCredentials: true});    
   } catch (error) {
     NotificationManager.error(`unable to delete project`);
     yield put({type: GET_MY_PROJECTS});
@@ -187,7 +184,7 @@ export function* gotoStep3(action:IAction) {
   try {
     const project:IProject = action.data.project;
     const callback:()=>{} = action.data.callback;
-    const response = yield call(axios.put, conf.serverURL + `/api/project/${project._id}`, project, {withCredentials: true});
+    yield call(axios.put, conf.serverURL + `/api/project/${project._id}`, project, {withCredentials: true});
     callback();
   } catch (error) {
     console.warn('unable to logout');
@@ -198,7 +195,7 @@ export function* saveAssembly(action:IAction) {
   try {
     const projectId:string = action.data.projectId;
     const finalParts:IPartSequence[] = action.data.finalParts;
-    const response = yield call(axios.put, conf.serverURL + `/api/project/${projectId}/assembly`, finalParts, {withCredentials: true});
+    yield call(axios.put, conf.serverURL + `/api/project/${projectId}/assembly`, finalParts, {withCredentials: true});
     yield put({type:GET_MY_PROJECTS, data:undefined});
     if (action.cb) {
       action.cb();
@@ -252,7 +249,7 @@ export function* renameProject(action:IAction) {
     const response = yield call(axios.get, conf.serverURL + `/api/project/${_id}`, {withCredentials: true});
     const project = response.data;
     project.name = name;
-    const response2 = yield call(axios.put, conf.serverURL + `/api/project/${_id}`, project, {withCredentials: true});
+    yield call(axios.put, conf.serverURL + `/api/project/${_id}`, project, {withCredentials: true});
     if (action.cb) {
       action.cb();
     }

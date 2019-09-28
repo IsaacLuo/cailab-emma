@@ -1,6 +1,6 @@
-import { IAction, IStoreState } from './../../types';
+import { IAction } from './../../types';
 import {NEW_PART, RESET_FORM} from './actions';
-import {call, all, fork, put, takeLatest, select} from 'redux-saga/effects';
+import {call,put, takeLatest} from 'redux-saga/effects';
 import axios from 'axios';
 import conf from '../../conf';
 import { GET_PARTS } from '../PartsTable/actions';

@@ -4,32 +4,11 @@
 import * as React from 'react';
 import { Dispatch } from 'redux';
 import {connect} from 'react-redux';
-
-import styled from 'styled-components';
-import { RouteComponentProps, withRouter, Redirect, Link } from 'react-router-dom';
-import { IUserInfo, IProject, IStoreState } from '../../types';
+import { IUserInfo, IStoreState } from '../../types';
 import { 
   GET_PARTS,
 } from './actions';
-import { Table, Divider, Tag } from 'antd';
-import { Form, Icon, Input, Button, Pagination } from 'antd';
-
-const Panel = styled.div`
-  margin:30px;
-  text-align:left;
-`;
-
-const CloseButton = styled(Button)`
-  margin-left:10px;
-`;
-
-
-const EditButton = styled.img`
-  width:15px;
-  height:15px;
-  margin-left:5px;
-  cursor:pointer;
-`
+import { Table} from 'antd';
 
 interface IProps {
   currentUser: IUserInfo;
@@ -75,7 +54,7 @@ class PartsTable extends React.Component<IProps, IState> {
 
   public render() {
 
-    const { Column, ColumnGroup } = Table;
+    const { Column } = Table;
     const {count, first, offset} = this.props;
     const pager = {total: count, pageSize: first, current: Math.floor(offset/first)+1}
 

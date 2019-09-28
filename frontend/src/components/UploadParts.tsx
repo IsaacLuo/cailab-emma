@@ -6,32 +6,17 @@ import { Dispatch } from 'redux';
 import {connect} from 'react-redux';
 
 import styled from 'styled-components';
-import { RouteComponentProps, withRouter, Redirect, Link } from 'react-router-dom';
-import { IUserInfo, IProject, IStoreState } from '../types';
-import { Table, Divider, Tag } from 'antd';
-import { Form, Icon, Input, Button } from 'antd';
+import { RouteComponentProps, withRouter} from 'react-router-dom';
+import { IUserInfo,IStoreState } from '../types';
 
 //my components
 import NewPartForm from './NewPartForm'
 import PartsTable from './PartsTable';
-import { AnyARecord } from 'dns';
 
 const Panel = styled.div`
   margin:30px;
   text-align:left;
 `;
-
-const CloseButton = styled(Button)`
-  margin-left:10px;
-`;
-
-
-const EditButton = styled.img`
-  width:15px;
-  height:15px;
-  margin-left:5px;
-  cursor:pointer;
-`
 
 interface IProps extends RouteComponentProps {
   currentUser: IUserInfo;

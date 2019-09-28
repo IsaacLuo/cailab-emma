@@ -1,21 +1,12 @@
 import * as React from 'react';
-import * as d3 from 'd3';
-
-
 import Button from 'react-bootstrap/Button';
-import InputGroup from 'react-bootstrap/InputGroup';
-import FormControl, { FormControlProps } from 'react-bootstrap/FormControl';
 import {SHORTCUTS} from '../graphElements';
 import { IProject, IStoreState, IConnector } from '../types';
-import { saveProjectAs } from '../backendCalls';
 
-import { RouteComponentProps, withRouter, Redirect, Link } from 'react-router-dom';
+import { RouteComponentProps, withRouter, Link } from 'react-router-dom';
 import { Dispatch } from 'redux';
 import {connect} from 'react-redux';
 import {
-  SHOW_LOGIN_WINDOW,
-  LOGOUT,
-  GET_CURENT_USER,
   GET_PROJECT,
   SAVE_PROJECT_HISTORY,
   SET_CURRENT_PROJECT,
@@ -424,20 +415,20 @@ class PartSelector extends React.Component<IProps, IState> {
     // this.saveProjectHistory();
   }
 
-  private onChangeFileName = (event: React.FormEvent<FormControlProps>) => {
-    const projectName = (event.target as FormControlProps).value!;
-    this.setState({projectName});
-  }
+  // private onChangeFileName = (event: React.FormEvent<FormControlProps>) => {
+  //   const projectName = (event.target as FormControlProps).value!;
+  //   this.setState({projectName});
+  // }
 
-  private loadProject() {
-    if (this.props.preloadedProject) {
-      const project: IProject = this.props.preloadedProject;
-      project.parts.forEach((part, idx) => {
-        this.state.partsProp[idx].activated = part.activated;
-        this.state.partsProp[idx].selected = part.selected;
-      });
-    }
-  }
+  // private loadProject() {
+  //   if (this.props.preloadedProject) {
+  //     const project: IProject = this.props.preloadedProject;
+  //     project.parts.forEach((part, idx) => {
+  //       this.state.partsProp[idx].activated = part.activated;
+  //       this.state.partsProp[idx].selected = part.selected;
+  //     });
+  //   }
+  // }
 
   private saveProjectHistory = () => {
     console.debug('save history')
@@ -530,7 +521,7 @@ class PartSelector extends React.Component<IProps, IState> {
       }
       {renderingParts.map((partGroup, i) => {
         const singlePartGroup = partGroup.filter((part,j)=>part.len!==2)
-        const pos8 = partGroup.findIndex((part,j)=>part.len===2);
+        // const pos8 = partGroup.findIndex((part,j)=>part.len===2);
         return <g
           key={i}
         >
@@ -677,7 +668,7 @@ class PartSelector extends React.Component<IProps, IState> {
     const nodeArray = [p];
     let nodeIdx = 0;
     while (nodeIdx < nodeArray.length) {
-      p = nodeArray[nodeIdx];
+      const p = nodeArray[nodeIdx];
       graph[p].forEach( (v, i) => {
         if (graph[p][i] > 0) {
           // console.log(`${p} vs ${i}`)
@@ -686,7 +677,7 @@ class PartSelector extends React.Component<IProps, IState> {
           if (l < pathChain[i].d) {
             pathChain[i].d = l;
             pathChain[i].prev = p;
-            const loc = nodeArray.indexOf(i);
+            // const loc = nodeArray.indexOf(i);
             // if(loc === -1) {
             nodeArray.push(i);
             // } else {

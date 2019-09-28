@@ -1,30 +1,18 @@
-import { IProject, IStoreState, IPartDetail, IPlatesListItem, IPlatesListItemWithDetail, IPartDefinition } from '../../types';
+import { IProject, IStoreState, IPlatesListItem, IPlatesListItemWithDetail, IPartDefinition } from '../../types';
 
 import * as React from 'react'
 import { withRouter, RouteComponentProps } from 'react-router';
 import { Dispatch } from 'redux';
 import {connect} from 'react-redux';
 import {
-  SHOW_LOGIN_WINDOW,
-  LOGOUT,
-  GET_CURENT_USER,
   GET_PROJECT,
   SAVE_PROJECT_HISTORY,
-  SET_CURRENT_PROJECT,
-  SET_PART_DETAIL,
   GO_TO_STEP_3,
-  GET_PLATE_LIST,
-  SET_CURRENT_SELECTED_PLATE,
-  GET_PLATE_DETAIL,
   GET_PART_DEFINITIONS,
 } from '../../redux/actions';
-import {Dropdown, Button, Breadcrumb} from 'react-bootstrap';
-import {SHORTCUTS} from '../../graphElements';
+import {Button, Breadcrumb} from 'react-bootstrap';
 import styled from 'styled-components';
-
-import STORE_PARTS from '../../parts.json';
 import PART_NAMES from '../../partNames';
-import { Link } from 'react-router-dom';
 import { AutoComplete, Input, Icon } from 'antd';
 import { positionNames } from '../../utilities/positionNames';
 import { PUT_PART_INTO_POSITION } from './actions';
@@ -108,7 +96,7 @@ class PartsDropDown extends React.Component<IProps, IState> {
     // let pos8Ignored:boolean = !!(nextProps.project.parts[7].selected && nextProps.project.parts[7].partDetail && nextProps.project.parts[7].partDetail.len === 2);
 
     const nextButtonVisible = nextProps.project.parts.every(
-      (part)=> part.selected && part.partDefinition!==undefined || !part.selected
+      (part)=> (part.selected && part.partDefinition!==undefined) || !part.selected
     );
 
     const readyToSaveProjectHistory = (nextButtonVisible && !prevState.nextButtonVisible) 
@@ -171,6 +159,7 @@ class PartsDropDown extends React.Component<IProps, IState> {
                     style={{width:50, height:50}}
                     key={`${i}.${j}`}
                     src={partDesc.icon}
+                    alt=""
                   />
                 )
               }

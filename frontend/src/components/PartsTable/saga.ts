@@ -1,6 +1,6 @@
 import { IAction, IStoreState } from './../../types';
 import {GET_PARTS, SET_PARTS} from './actions';
-import {call, all, fork, put, takeLatest, select} from 'redux-saga/effects';
+import {call, put, takeLatest, select} from 'redux-saga/effects';
 import Axios from 'axios';
 import conf from '../../conf';
 function* getParts(action:IAction) {

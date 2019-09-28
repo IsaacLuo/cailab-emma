@@ -6,15 +6,11 @@ import { Dispatch } from 'redux';
 import {connect} from 'react-redux';
 
 import styled from 'styled-components';
-import { RouteComponentProps, withRouter, Redirect, Link } from 'react-router-dom';
+import { RouteComponentProps, withRouter, Link } from 'react-router-dom';
 import { IUserInfo, IProject, IStoreState } from '../types';
 import {Button, InputGroup, FormControl, FormControlProps} from 'react-bootstrap';
 
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
-
-import { listMyProjects } from '../backendCalls';
 import { 
   SET_CURRENT_PROJECT, 
   CREATE_PROJECT, 
@@ -22,7 +18,6 @@ import {
   DELETE_PROJECT, 
   RENAME_PROJECT,
 } from '../redux/actions';
-import ProjectWizard from './ProjectWizard';
 import pencilSVG from '../icons/tiny-pencil.svg'
 import Form from 'react-bootstrap/Form'
 

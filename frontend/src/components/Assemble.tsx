@@ -1,13 +1,11 @@
 import * as React from 'react'
-import {Dropdown, Button, Table, Breadcrumb} from 'react-bootstrap';
+import {Button, Table, Breadcrumb} from 'react-bootstrap';
 import styled from 'styled-components';
-
-import CONNECTORS from '../connectors.json'
-import {IFeature, DNASeq} from '../gbGenerator';
+import {DNASeq} from '../gbGenerator';
 import vectorReceiver from '../vectorReceiver.json';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { connect } from 'react-redux';
-import { IStoreState, IPartDetail, IProject, IPartSequence, IConnector } from '../types.js';
+import { IStoreState, IProject, IPartSequence, IConnector } from '../types.js';
 import { Dispatch } from 'redux';
 import { 
   GET_PROJECT,
@@ -15,19 +13,11 @@ import {
   SAVE_ASSEMBLY,
   GET_ALL_CONNECTORS,
 } from '../redux/actions';
-import { Link } from 'react-router-dom';
 import qs from 'qs';
 
 const Panel = styled.div`
   margin:100px;
   text-align:left;
-`;
-
-const SelectionRow = styled.div`
-  display:flex;
-`;
-const SVGIcon = styled.div`
-  width:220px;
 `;
 
 const RedSpan = styled.span`

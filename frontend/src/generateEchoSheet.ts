@@ -1,5 +1,5 @@
 import { IAssembly } from './types'
-import papaparse from 'papaparse'
+// import papaparse from 'papaparse'
 import { wellIdToWellName } from './utilities/wellIdConverter';
 
 const DEFAULT_BACKBONE_LENGTH = 1840;
@@ -51,7 +51,7 @@ export function generateEchoSheet(assemblyList:IAssembly[], partLocations:any) {
       const plasmidVolume = calcDNAVolume(calcDNAMass(DEFAULT_FMOL, plasmidLength));
 
       if(!partLocations[id]) {
-        throw `${name} not found in the plate definition`;
+        throw new Error(`${name} not found in the plate definition`);
       }
 
       sheet.push(['PartPlate', '384LDV_AQ_B', partLocations[id].wellName , 'Assay1', dstWellName, echoRound(plasmidVolume), 0, 0]);

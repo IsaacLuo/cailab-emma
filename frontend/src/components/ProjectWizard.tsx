@@ -1,13 +1,9 @@
 import * as React from 'react'
-import {Dropdown, Button, Table, Breadcrumb} from 'react-bootstrap';
+import {Button, Breadcrumb} from 'react-bootstrap';
 import styled from 'styled-components';
-
-import CONNECTORS from '../connectors.json'
-import {IFeature, DNASeq} from '../gbGenerator';
-import vectorReceiver from '../vectorReceiver.json';
-import { withRouter, RouteComponentProps, Redirect } from 'react-router';
+import { withRouter, RouteComponentProps, } from 'react-router';
 import { connect } from 'react-redux';
-import { IStoreState, IUserInfo, IProject} from '../types.js';
+import { IStoreState, IProject} from '../types.js';
 import { Dispatch } from 'redux';
 import { CREATE_PROJECT } from '../redux/actions';
 import queryString from 'query-string';
@@ -148,7 +144,7 @@ class ProjectWizard extends React.Component<IProps, IState> {
         {
           title:'Single protein',
           nextStep:()=>{
-            if (this.state.selected2 ===1 || this.state.selected2===2 && this.state.selected6) {
+            if (this.state.selected2 ===1 || (this.state.selected2===2 && this.state.selected6)) {
               if(this.state.selectTargetingVector1 && this.state.selected1 !== 'Episomal (+ selection)' && this.state.selected1 !== 'Linear DNA – random integration') {
                 return 'TargetingVectorPreFinal';
               }
@@ -168,7 +164,7 @@ class ProjectWizard extends React.Component<IProps, IState> {
         {
           title:'Fusion protein',
           nextStep:()=>{
-            if (this.state.selected2 ===1 || this.state.selected2===2 && this.state.selected6) {
+            if (this.state.selected2 ===1 || (this.state.selected2===2 && this.state.selected6)) {
               if(this.state.selectTargetingVector1 && this.state.selected1 !== 'Episomal (+ selection)' && this.state.selected1 !== 'Linear DNA – random integration') {
                 return 'TargetingVectorPreFinal';
               }
@@ -192,7 +188,7 @@ class ProjectWizard extends React.Component<IProps, IState> {
         {
           title:'p2A',
           nextStep:()=>{
-            if (this.state.selected2 ===1 || this.state.selected2===2 && this.state.selected6) {
+            if (this.state.selected2 ===1 || (this.state.selected2===2 && this.state.selected6)) {
               if(this.state.selectTargetingVector1 && this.state.selected1 !== 'Episomal (+ selection)' && this.state.selected1 !== 'Linear DNA – random integration') {
                 return 'TargetingVectorPreFinal';
               }
@@ -212,7 +208,7 @@ class ProjectWizard extends React.Component<IProps, IState> {
         {
           title:'IRES',
           nextStep:()=>{
-            if (this.state.selected2 ===1 || this.state.selected2===2 && this.state.selected6) {
+            if (this.state.selected2 ===1 || (this.state.selected2===2 && this.state.selected6)) {
               if(this.state.selectTargetingVector1 && this.state.selected1 !== 'Episomal (+ selection)' && this.state.selected1 !== 'Linear DNA – random integration') {
                 return 'TargetingVectorPreFinal';
               }
@@ -293,7 +289,7 @@ class ProjectWizard extends React.Component<IProps, IState> {
         </PanelContent>
         <Footer>
           <OptionButton variant="light" onClick={this.resetWizard}>
-            <img src={resetIcon} width="20" height="20"/>
+            <img src={resetIcon} width="20" height="20" alt=""/>
           </OptionButton>
         </Footer>
         </WizardCard>
@@ -316,14 +312,14 @@ class ProjectWizard extends React.Component<IProps, IState> {
     const { 
       selected1, 
       selected2,
-      selected3,
+      // selected3,
       selected4,
-      selected5,
-      selected6,
+      // selected5,
+      // selected6,
       selected7,
-      selectTargetingVector1,
-      selectTargetingVector2,
-      selectTransposonBasedVector
+      // selectTargetingVector1,
+      // selectTargetingVector2,
+      // selectTransposonBasedVector
     } = this.state;
 
     let presetParts:number[] = [];

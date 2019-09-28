@@ -1,15 +1,12 @@
 import * as React from 'react'
-import {Dropdown, Button, Table, Breadcrumb} from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
 import styled from 'styled-components';
 
-import CONNECTORS from '../connectors.json'
-import {IFeature, DNASeq} from '../gbGenerator';
-import vectorReceiver from '../vectorReceiver.json';
 import { withRouter, RouteComponentProps, Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import { IStoreState, IUserInfo} from '../types.js';
 import { Dispatch } from 'redux';
-import { GET_PROJECT, GET_CURENT_USER } from '../redux/actions';
+import { GET_CURENT_USER } from '../redux/actions';
 
 const Panel = styled.div`
   display:flex;
@@ -84,12 +81,12 @@ class MainPage extends React.Component<IProps, IState> {
 
   private onClickLogin = () => {
     const width = 400;
-    const height = 560;
+    const height = 600;
     const top = (window.screen.availHeight / 2) - (height / 2);
     const left = (window.screen.availWidth / 2) - (width / 2);
 
     window.addEventListener('message', this.onLogginWindowClosed, false);
-    const subWindow = window.open(
+    window.open(
       'https://auth.cailab.org/login',
       'cailablogin',
 // tslint:disable-next-line: max-line-length
@@ -103,7 +100,7 @@ class MainPage extends React.Component<IProps, IState> {
     const left = (window.screen.availWidth / 2) - (width / 2);
 
     window.addEventListener('message', this.onLogginWindowClosed, false);
-    const subWindow = window.open(
+    window.open(
       'https://auth.cailab.org/guestLogin',
       'cailablogin',
 // tslint:disable-next-line: max-line-length
@@ -111,7 +108,7 @@ class MainPage extends React.Component<IProps, IState> {
     );
   }
   private onLogginWindowClosed = (messageEvent: MessageEvent) => {
-    const {origin, data} = messageEvent;
+    const {data} = messageEvent;
     if (data.event === 'closed' && data.success === true) {
       console.log('login');
       this.props.getCurrentUser();

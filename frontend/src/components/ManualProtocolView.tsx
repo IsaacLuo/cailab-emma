@@ -1,14 +1,10 @@
 // step 4: generate protocol of manual or auto Emma Project
 import * as React from 'react'
-import {Dropdown, Button, Table, Breadcrumb} from 'react-bootstrap';
+import {Table, Breadcrumb} from 'react-bootstrap';
 import styled from 'styled-components';
-
-import CONNECTORS from '../connectors.json'
-import {IFeature, DNASeq} from '../gbGenerator';
-import vectorReceiver from '../vectorReceiver.json';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { connect } from 'react-redux';
-import { IStoreState, IPartDetail, IProject, IPartSequence } from '../types.js';
+import { IStoreState, IProject, IPartSequence } from '../types.js';
 import { Dispatch } from 'redux';
 import { GET_ASSEMBLY } from '../redux/actions';
 import NumericInput from "react-numeric-input";
@@ -79,9 +75,6 @@ class ManualProtocolView extends React.Component<IProps, IState> {
     if (!this.props.assembly) {
       return <div>loading</div>
     }
-
-    // const sampleCount = this.props.project.parts.filter(v=>v.selected).length + this.props.project.connectorIndexes.length;
-    const sampleCount = this.props.assembly? this.props.assembly.length : 0;
 
     const dnaVolumeSum = this.props.assembly!.reduce((sum,v,i)=>{
       const vectorLen = v.sequence.length+backboneLength;

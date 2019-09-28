@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { withRouter, RouteComponentProps } from 'react-router';
+
 import { connect } from 'react-redux';
 import { IStoreState, IPartName} from '../types.js';
 import { Dispatch } from 'redux';
-import { Select, Button } from 'antd';
-import styled from 'styled-components';
+import { Select} from 'antd';
 const { Option } = Select;
 
 

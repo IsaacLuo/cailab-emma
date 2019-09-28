@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { RouteComponentProps, withRouter, Redirect, Link } from 'react-router-dom';
+import { RouteComponentProps, withRouter} from 'react-router-dom';
 import { Dispatch } from 'redux';
 import {connect} from 'react-redux';
 import {
@@ -47,13 +47,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 class ProjectHistory extends React.Component<IProps, IState> {
-  // public static getDerivedStateFromProps(props: IProps, state: IState): IState|null {
-  //   return null;
-  // }
-  constructor(props: IProps) {
-    super(props);
-    
-  }
 
   public shouldComponentUpdate(np: IProps, ns: IState) {
     return true;

@@ -6,8 +6,8 @@ import { Dispatch } from 'redux';
 import {connect} from 'react-redux';
 
 import styled from 'styled-components';
-import { RouteComponentProps, withRouter, Redirect, Link } from 'react-router-dom';
-import { IUserInfo, IProject, IStoreState } from '../types';
+import { RouteComponentProps, withRouter} from 'react-router-dom';
+import { IStoreState } from '../types';
 
 //my components
 
@@ -31,16 +31,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 class UploadParts extends React.Component<IProps, IState> {
-
-  public static getDervidedStateFromProps(props: IProps, state: IState) {
-
-  }
-
-  constructor(props: IProps) {
-    super(props);
-  }
-
-
   public render() {
     return (
       <Panel>
@@ -50,9 +40,6 @@ class UploadParts extends React.Component<IProps, IState> {
         </div>
       </Panel>
     );
-  }
-
-  public componentWillUnmount() {
   }
 }
 

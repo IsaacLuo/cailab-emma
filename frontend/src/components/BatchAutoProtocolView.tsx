@@ -1,23 +1,19 @@
 // step 4: generate protocol of manual or auto Emma Project
 import * as React from 'react'
-import {useCallback} from 'react'
-import {Dropdown, Button, Table, Breadcrumb} from 'react-bootstrap';
+import {Button, Table, Breadcrumb} from 'react-bootstrap';
 import styled from 'styled-components';
 
-import CONNECTORS from '../connectors.json'
-import {IFeature, DNASeq} from '../gbGenerator';
-import vectorReceiver from '../vectorReceiver.json';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { connect } from 'react-redux';
-import { IStoreState, IAssembly, IPlatesListItem, IPlatesListItemWithDetail, IPartDefinition, IPlateMapItem, IPartSequence} from '../types.js';
+import { IStoreState, IAssembly, IPlatesListItem, IPlatesListItemWithDetail, IPlateMapItem, IPartSequence} from '../types.js';
 import { Dispatch } from 'redux';
 import { GET_ASSEMBLY_LIST, GET_PLATE_LIST, GET_PLATE_DETAIL } from '../redux/actions';
-import {useDropzone} from 'react-dropzone'
+
 import papaparse from 'papaparse'
 import { generateEchoSheet, generateMasterMixEchoSheet, calcDNAVolume, calcDNAMass } from '../generateEchoSheet';
 import NumericInput from "react-numeric-input";
 import { AutoComplete, Input, Icon } from 'antd';
-import { wellIdToWellName } from '../utilities/wellIdConverter';
+
 
 // const MyDropzone = styled(Dropzone)`
 //   height: 30px;
@@ -44,22 +40,9 @@ const Title2 = styled.h2`
 const Li = styled.li`
 `;
 
-const WellNameInput = styled.input`
-  width: 50px;
-  padding: 5px;
-`;
 
 const Calced = styled.span`
   text-decoration:underline;
-`;
-
-const DropzoneDiv = styled.div`
-  height:80px;
-  border: solid 1px black;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 `;
 
 function download(filename:string, text:string) {
@@ -130,7 +113,6 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
     let preparedMasterMixVolume = state.preparedMasterMixVolume;
     let downloadProtocolEnabled = state.downloadProtocolEnabled;
     let warningMessage = state.warningMessage;
-    let plateMap;
     const missingPartNames:string[] = [];
     // const partVolumesSum = partVolumes.reduce((a,b)=>a+b)
     if (props.assemblyProjects) {
@@ -163,6 +145,7 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
                 return true;
               } else {
                 missingPartNames.push(part.name);
+                return false;
               }
             }
             ))
