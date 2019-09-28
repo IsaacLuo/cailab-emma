@@ -102,6 +102,7 @@ export interface IPlatesListItemWithDetail extends IPlatesListItem{
 
 export interface IPlateMapItem {
   _id:string;
+  ctype: string;
   name: string;
   labName: string;
   wellId: number;
@@ -175,6 +176,8 @@ export interface IAssembly {
     ctype: string,
     name: string,
     sequence: string,
+    partId?: string,
+    connectorId?: string,
   }>
 }
 
@@ -200,6 +203,13 @@ export interface IPartDefinition {
   }
 }
 
+export interface IPlateContent {
+  _id: string;
+  ctype: string;
+  part?: IPartDefinition;
+  connector?: IConnector;
+}
+
 export interface IPlateDefinition {
   owner: string;
   group: string;
@@ -210,5 +220,5 @@ export interface IPlateDefinition {
   name: string;
   barcode: string;
   description:string;
-  parts: Array<IPartDefinition|string>;
+  content: Array<IPlateContent>;
 }

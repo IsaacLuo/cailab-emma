@@ -455,6 +455,13 @@ async (ctx:Ctx, next:Next)=> {
   }
 });
 
+router.post('/graphql', async (ctx:Ctx, next:Next)=> {
+  console.log(ctx.request.body);
+  await next();
+});
+
+app.use(router.routes());
+
 const apolloServer = new ApolloServer({schema: GraphqlSchema});
 apolloServer.applyMiddleware({app, path:'/graphql'});
 
@@ -478,6 +485,6 @@ apolloServer.applyMiddleware({app, path:'/graphql'});
 
 // -----------------------------------------------------------------------------------------------
 
-app.use(router.routes());
+
 app.listen(8000, '0.0.0.0');
 log4js.getLogger().info('start listening at 8000');

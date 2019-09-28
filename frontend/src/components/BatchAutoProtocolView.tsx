@@ -149,17 +149,17 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
         waterVolumes.push(1000-masterMixVolumeNL);
       }
     }
-
-    if (props.currentPlateMap && props.assemblyProjects) {
+    const locationDict:any = {};
+    if (props.currentPlateMap && props.assemblyProjects && props.currentPlateMap.length!==0 && props.assemblyProjects.length !== 0) {
       const plateMap = props.currentPlateMap.filter(v=>v);
-      const locationDict:any = {};
       plateMap.forEach((item:IPlateMapItem) => locationDict[item._id] = item);
-
+      console.log(plateMap, locationDict, props.assemblyProjects);
       if(props.assemblyProjects.every(
         (project:IAssembly)=>
           project.finalParts.every(
             (part:IPartSequence)=> {
               if (locationDict[part.connectorId || part.partId!]) {
+                console.log(locationDict[part.connectorId || part.partId!]);
                 return true;
               } else {
                 missingPartNames.push(part.name);
@@ -184,6 +184,7 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
       preparedMasterMixVolume,
       downloadProtocolEnabled,
       warningMessage,
+      partLocations: locationDict,
     };
   }
 
@@ -495,6 +496,7 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
   private onClickMainEchoScript = () => {
     if (this.props.assemblyProjects) {
       try {
+        console.debug(this.props);
         const echoSheet = generateEchoSheet(this.props.assemblyProjects, this.state.partLocations);
         console.log(echoSheet);
         const csv = papaparse.unparse(echoSheet);

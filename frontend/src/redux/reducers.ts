@@ -1,4 +1,4 @@
-import { IUserInfo, IPartSelectorState, IWizardState } from './../types';
+import { IUserInfo, IPartSelectorState, IWizardState, IConnector, IPlateContent } from './../types';
 import {combineReducers} from 'redux';
 
 import {
@@ -196,13 +196,14 @@ function appReducer(state: IAppState = DEFAULT_STATE, action: IAction) {
       return {...state, platesList: action.data};
     case SET_CURRENT_SELECTED_PLATE:{
       const currentSelectedPlate = action.data;
-      const plateMap = currentSelectedPlate.parts.map(
-        (part:IPartDefinition, wellId:number) => {
-          if (part) {
+      const plateMap = currentSelectedPlate.content.map(
+        (content:IPlateContent, wellId:number) => {
+          if (content) {
           return {
-            _id: part._id,
-            name: part.part.name,
-            labName: part.part.labName,
+            _id: content._id,
+            ctype: content.ctype,
+            name: content.ctype === 'connector'? content.connector!.name : content.part!.part.name,
+            labName: content.ctype === 'connector'? 'connector' : content.part!.part.labName,
             wellId: wellId,
             wellName: wellIdToWellName(wellId),
           };

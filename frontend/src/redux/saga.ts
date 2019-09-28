@@ -309,17 +309,17 @@ export function* getPlateDetail(action:IAction) {
             barcode
             description
             plateType
-            parts {
+            content {
               _id
+              ctype
               part {
+                part{
+                  name
+                  labName
+                }
+              }
+              connector {
                 name
-                labName
-                comment
-                position
-                category
-                sequence
-                plasmidLength
-                backboneLength
               }
             }
         }
