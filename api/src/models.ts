@@ -1,7 +1,7 @@
-import { IConnector } from './../../frontend/src/types';
 import { 
   IUser,
-  IProject, 
+  IProject,
+  IConnector, 
 } from './types';
 import mongoose, { Model, Document } from 'mongoose'
 import {Schema} from 'mongoose'
@@ -44,7 +44,7 @@ export const ConnectorSchema = new Schema({
   index: Number,
 })
 
-interface IConnectorSchema {
+interface ConnectorSchema {
   _id: any;
   name: string;
   posBegin: number;
@@ -53,7 +53,7 @@ interface IConnectorSchema {
   index: number
 }
 
-export interface IConnectorModel extends IConnectorSchema, Document {}
+export interface IConnectorModel extends IConnector, Document {}
 export const Connector:Model<IConnectorModel> = mongoose.model('Connector', ConnectorSchema, 'connectors');
 
 export const ProjectSchema = new Schema({
