@@ -19,13 +19,16 @@ function* getPlates(action:IAction) {
         name
         barcode
         description
-        parts {
-            _id
-            permission
+        content {
+          connector{
+            name
+          }
+          part {
             part{
                 name
                 labName
             }
+          }
         }
       }
   }`,

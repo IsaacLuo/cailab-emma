@@ -65,7 +65,8 @@ export const plateDefinitions = {
       .find({})
       .skip(params.pagination.offset)
       .limit(params.pagination.first)
-      .populate({path:'parts', options:{retainNullValues:true}})
+      .populate({path:'content.connector', options:{retainNullValues:true}})
+      .populate({path:'content.part', options:{retainNullValues:true}})
       .exec();
   }
 }
