@@ -8,7 +8,8 @@ import { IUserInfo, IProject, IStoreState } from '../types';
 import {
   SHOW_LOGIN_WINDOW,
   LOGOUT,
-  GET_CURENT_USER,
+  GET_CURRENT_USER,
+  CAILAB_INSTANCE_LOGIN,
 } from '../redux/actions';
 import { Menu } from 'antd';
 
@@ -29,6 +30,7 @@ interface IProps extends RouteComponentProps {
   showLoginWindow: () => void;
   getCurrentUser: () => void;
   logout: () => void;
+  cailabInstanceLogin: ()=>void;
 }
 interface IState {
   projectList: IProject[];
@@ -40,7 +42,8 @@ const mapStateToProps = (state: IStoreState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   showLoginWindow: () => dispatch({type: SHOW_LOGIN_WINDOW}),
-  getCurrentUser: () => dispatch({type: GET_CURENT_USER}),
+  cailabInstanceLogin: ()=>dispatch({type:CAILAB_INSTANCE_LOGIN}),
+  getCurrentUser: () => dispatch({type: GET_CURRENT_USER}),
   logout: () => dispatch({type: LOGOUT}),
 });
 
@@ -113,7 +116,7 @@ class MyComponent extends React.Component<IProps, IState> {
     const {data} = messageEvent;
     if (data.event === 'closed' && data.success === true) {
       console.log('login');
-      this.props.getCurrentUser();
+      this.props.cailabInstanceLogin();
     }
     window.removeEventListener('message', this.onLogginWindowClosed);
   }

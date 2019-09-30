@@ -30,6 +30,8 @@ import {
   SET_CURRENT_SELECTED_PLATE,
   SET_PART_DIFINITIONS,
   SET_ALL_CONNECTORS,
+  SET_SHARED_PROJECTS,
+  SET_PROJECT_PERMISSION,
 } from './actions';
 
 import partsTableReducer from '../components/PartsTable/reducer'
@@ -49,11 +51,13 @@ const defaultCurrentProject: IProject = {
     parts: Array(26).fill(undefined).map((v,i)=>({activated: false, selected: false, position:i})),
     connectors: [],
     ignorePos8: false,
+    permission: 0x600,
   };
 
 const DEFAULT_STATE: IAppState = {
   currentUser: defaultUser,
   myProjects: [],
+  sharedProjects: [],
   currentProject: defaultCurrentProject,
   currentAssembly: undefined,
   stashHistory: undefined,
@@ -226,6 +230,26 @@ function appReducer(state: IAppState = DEFAULT_STATE, action: IAction) {
         ...state,
         connectors: action.data,
       }
+    case SET_SHARED_PROJECTS:
+
+      return {
+        ...state,
+        sharedProjects: action.data,
+      };
+    
+    case SET_PROJECT_PERMISSION: {
+      const {_id, val} = action.data;
+      const myProjects = [...state.myProjects];
+      myProjects.forEach(v=>{
+        if (v._id === _id) {
+          v.permission = val;
+        }
+      });
+      return {
+        ...state,
+        myProjects,
+      }
+    }
   }
   return state;
 }

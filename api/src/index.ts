@@ -6,7 +6,7 @@ import Router from 'koa-router';
 import log4js from 'log4js';
 import conf from '../conf';
 import crypto from 'crypto';
-import {Project, Assembly, AssemblyList, IPartDefinition, PartDefinition, PlateDefinition} from './models';
+import {Project, Assembly, AssemblyList, IPartDefinition, PartDefinition, PlateDefinition, User} from './models';
 import jwt from 'jsonwebtoken';
 import cors from 'koa-cors';
 import mongoose from 'mongoose';
@@ -61,6 +61,20 @@ router.get('/', async (ctx:koa.ParameterizedContext<any, {}>)=> {
   ctx.body={message:'server: cailab-emma'};
 })
 
+router.post('/api/session', 
+userMust(beUser),
+async (ctx:Ctx, next:Next)=> {
+  const user = ctx.state.user;
+  
+  if (user) {
+    const {_id, name, email, groups} = user;
+    await User.updateOne({_id: user._id}, {_id, name, email, groups, lastLogin: new Date(), lastIP: ctx.request.ip}, {upsert:true}).exec();
+    ctx.body = {message:'OK', user,};
+  } else {
+    ctx.throw(401, 'user is not logged in');
+  }
+});
+
 router.get('/api/user/current', async (ctx:Ctx, next:Next)=> {
   const user = ctx.state.user;
   ctx.body = {message:'OK', user,};
@@ -106,6 +120,7 @@ async (ctx:Ctx, next:Next)=> {
           createdAt: '$createdAt',
           updatedAt: '$updatedAt',
           owner: '$owner',
+          permission: '$permission',
         }
       },
 
@@ -122,7 +137,13 @@ userMust(beAnyOne, beUser, beGuest),
 async (ctx:Ctx, next:Next)=> {
   const user = ctx.state.user;
   if (user) {
-    const project = await Project.findOne({_id:ctx.params.id, owner: user._id})
+    const project = await Project.findOne({
+      _id:ctx.params.id, 
+      $or:[
+        {owner: user._id},
+        {permission: {$bitsAllSet: 4}},
+      ],
+    })
       .populate('parts.partDefinition')
       .populate('connectors')
       .exec();
@@ -171,7 +192,11 @@ async (ctx:Ctx, next:Next)=> {
   if (user) {
     const now = new Date();
     const {id} = ctx.params;
-    const projectCount = await Project.countDocuments({_id:id, owner: {$ne:user._id}}).exec();
+    const projectCount = await Project.countDocuments({
+      _id:id, 
+      owner: {$ne:user._id}, 
+      permission: {$bitsAllClear: 2},
+    }).exec();
     if (projectCount>0) {
       ctx.throw(401, 'unable to modify projects of other users');
     }
@@ -191,6 +216,9 @@ async (ctx:Ctx, next:Next)=> {
       version: project.version,
       parts: project.parts,
       connectors: project.connectors,
+      permission: project.permission,
+      owner: project.owner,
+      group: project.group,
       createdAt: project.createdAt,
       updatedAt: project.updatedAt,
       history: [],
@@ -255,6 +283,61 @@ async (ctx:Ctx, next:Next)=> {
   console.log('guest project deleted', res.n, res.ok);
 }
 );
+
+router.post('/api/project/:id/clone',
+userMust(beUser),
+async (ctx:Ctx, next:Next)=> {
+  const user = ctx.state.user;
+  if (user) {
+    const now = new Date();
+
+    const project = await Project.findOne({
+      _id:ctx.params.id, 
+      $or:[
+        {owner: user._id},
+        {permission: {$bitsAllSet: 4}},
+      ],
+    }).exec();
+    if (!project) {
+      ctx.throw(404);
+    }
+
+    delete project._id;
+    ctx.body = await Project.create({
+      connectors: project.connectors,
+      name: 'clone of ' + project.name,
+      version: project.version,
+      parts: project.parts,
+      owner: ctx.state.user!._id,
+      permission: project.permission,
+      createdAt: now,
+      updatedAt: project.updatedAt,
+    });
+
+  } else {
+    ctx.throw(401);
+  }
+},
+);
+
+router.get('/api/sharedProjects',
+userMust(beUser),
+async (ctx:Ctx, next:Next)=> {
+  const user = ctx.state.user;
+  // console.log(user._id);
+  if (user) {
+    const projects = await Project.find({
+      owner:{$ne: user._id},
+      permission: {$bitsAllSet:4},
+    })
+    .select('_id name owner updatedAt')
+    .populate({path:'owner', model: 'User', select: 'name email'})
+    .exec();
+    ctx.body = projects;
+  } else {
+    ctx.throw(401);
+  }
+})
 
 router.delete('/api/project/:id/history/:index',
 userMust(beAnyOne, beUser, beGuest),
@@ -381,6 +464,14 @@ async (ctx:Ctx, next:Next)=> {
   }else {
     ctx.throw(404);
   }
+});
+
+router.put('/api/project/:id/permission',
+userMust(beUser),
+async (ctx:Ctx, next:Next)=> {
+  const {id} = ctx.params;
+  const {permission} = ctx.request.body;
+  ctx.body = await Project.updateOne({_id:id, owner: ctx.state.user._id}, {permission}).exec();
 });
 
 // -----------------------------------------------------------------------------------------------

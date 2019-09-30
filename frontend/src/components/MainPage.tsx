@@ -6,7 +6,7 @@ import { withRouter, RouteComponentProps, Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import { IStoreState, IUserInfo} from '../types.js';
 import { Dispatch } from 'redux';
-import { GET_CURENT_USER } from '../redux/actions';
+import { CAILAB_INSTANCE_LOGIN, GET_CURRENT_USER } from '../redux/actions';
 
 const Panel = styled.div`
   display:flex;
@@ -42,6 +42,7 @@ const ButtomArea = styled.div`
 
 interface IProps extends RouteComponentProps {
   currentUser:IUserInfo,
+  cailabInstanceLogin:()=>void,
   getCurrentUser:()=>void,
 }
 interface IState {
@@ -52,7 +53,8 @@ const mapStateToProps = (state: IStoreState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  getCurrentUser: () => dispatch({type: GET_CURENT_USER}),
+  cailabInstanceLogin: () => dispatch({type: CAILAB_INSTANCE_LOGIN}),
+  getCurrentUser: ()=>dispatch({type:GET_CURRENT_USER}),
 });
 
 class MainPage extends React.Component<IProps, IState> {
@@ -111,7 +113,7 @@ class MainPage extends React.Component<IProps, IState> {
     const {data} = messageEvent;
     if (data.event === 'closed' && data.success === true) {
       console.log('login');
-      this.props.getCurrentUser();
+      this.props.cailabInstanceLogin();
     }
     window.removeEventListener('message', this.onLogginWindowClosed);
   }

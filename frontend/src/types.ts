@@ -62,6 +62,8 @@ export interface IProject {
   _id?: string;
   name: string;
   version?: string;
+  owner?:any;
+  permission: number;
   parts: ISelectedPart[];
   ignorePos8?: boolean;
   connectors: IConnector[];
@@ -121,6 +123,7 @@ export interface IAppState {
   // the app is initializing(fetching data from server first time)
   currentUser: IUserInfo;
   myProjects: IProject[];
+  sharedProjects: IProject[];
   currentProject: IProject;
   stashHistory?: IProject;
   currentAssembly?: IPartSequence[];

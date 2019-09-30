@@ -2,7 +2,7 @@ import {
   IProject, IPartDetail, IPartSequence,
 } from '../types';
 import {
-GET_CURENT_USER,
+GET_CURRENT_USER,
 SET_CURRENT_USER,
 LOGOUT,
 GET_MY_PROJECTS,
@@ -37,6 +37,11 @@ GET_PART_DEFINITIONS,
 SET_PART_DIFINITIONS,
 GET_ALL_CONNECTORS,
 SET_ALL_CONNECTORS,
+CAILAB_INSTANCE_LOGIN,
+GET_SHARED_PROJECTS,
+SET_SHARED_PROJECTS,
+CLONE_PROJECT,
+SET_PROJECT_PERMISSION,
 } from './actions';
 
 import STORE_PARTS from '../parts.json';
@@ -57,6 +62,13 @@ import conf from '../conf';
 
 import {NotificationManager} from 'react-notifications';
 
+export function* cailabInstanceLogin(action: IAction) {
+  try {
+    const res = yield call(axios.post, conf.serverURL + '/api/session', {}, {withCredentials: true});
+    yield put({type: GET_CURRENT_USER, data: undefined});
+  } catch (error) {
+  }
+}
 
 export function* getCurrentUser(action: IAction) {
   try {
@@ -384,8 +396,43 @@ export function* getAllConnectors(action:IAction) {
   }
 }
 
+export function* getSharedProjects(action:IAction) {
+  try {
+    const response = yield call(axios.get, conf.serverURL + `/api/sharedProjects`, {withCredentials: true});
+    const projects: IProject[] = response.data.map(
+      (v: any) => ({
+        ...v, 
+        createdAt: new Date(v.createdAt), 
+        updatedAt: new Date(v.updatedAt),
+        }),
+    );
+    yield put({type: SET_SHARED_PROJECTS, data:projects});
+  } catch (error) {
+    console.warn('unable to get shared projects', error);
+  }
+}
+export function* cloneProject(action:IAction) {
+  const {_id, cb} = action.data;
+  try {
+    const response = yield call(axios.post, conf.serverURL + `/api/project/${_id}/clone`, {}, {withCredentials: true});
+    yield call(cb, response.data._id);
+  } catch (error) {
+    console.warn('unable clone project', error);
+  }
+}
+
+export function* setProjectPermission(action:IAction) {
+  const {_id, val} = action.data;
+  try {
+    yield call(axios.put, conf.serverURL + `/api/project/${_id}/permission`, {permission:val}, {withCredentials: true});
+  } catch (error) {
+    console.warn('unable set permission', error);
+  }
+}
+
 export function* watchUsers() {
-  yield takeLatest(GET_CURENT_USER, getCurrentUser);
+  yield takeLatest(CAILAB_INSTANCE_LOGIN, cailabInstanceLogin);
+  yield takeLatest(GET_CURRENT_USER, getCurrentUser);
   yield takeLatest(LOGOUT, logout);
   yield takeLatest(GET_MY_PROJECTS, getMyProjects);
   yield takeLatest(GET_PROJECT, getProject);
@@ -405,6 +452,9 @@ export function* watchUsers() {
   yield takeLatest(GET_PLATE_DETAIL, getPlateDetail);
   yield takeLatest(GET_PART_DEFINITIONS, getPartDefinitions);
   yield takeLatest(GET_ALL_CONNECTORS, getAllConnectors);
+  yield takeLatest(GET_SHARED_PROJECTS, getSharedProjects);
+  yield takeLatest(CLONE_PROJECT, cloneProject);
+  yield takeLatest(SET_PROJECT_PERMISSION, setProjectPermission);
 }
 
 export default function* rootSaga() {

@@ -10,6 +10,8 @@ export const UserSchema = new Schema({
   email: String,
   name: String, // user's full name
   groups: [String], // array of group name, 'guest', 'users', 'visitors', or 'administrators'
+  lastLogin: Date,
+  lastIP: String,
 });
 
 export interface IUserModel extends IUser, Document{
@@ -63,8 +65,12 @@ export const ProjectSchema = new Schema({
     ref: 'Connector',
   }],
   // connectorIndexes: [Number],
-  owner: Schema.Types.ObjectId,
+  owner: {
+    type:Schema.Types.ObjectId,
+    ref: 'User'
+  },
   group: String,
+  permission: Number,
   createdAt: Date,
   updatedAt: Date,
   history: [Schema.Types.Mixed],

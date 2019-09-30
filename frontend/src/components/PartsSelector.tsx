@@ -449,7 +449,7 @@ class PartSelector extends React.Component<IProps, IState> {
           parts: this.state.partsProp
             .map((part, position) => ({activated: part.activated, selected: part.selected, position}))
             .filter((part)=>part.selected),
-          // connectorIndexes,
+          permission: 0x600,
           connectors:usingConnectors,
           updatedAt: new Date(),
         };

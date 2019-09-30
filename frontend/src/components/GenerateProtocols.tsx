@@ -11,6 +11,7 @@ import {
   GET_MY_PROJECTS, 
   POST_ASSEMBLY_LIST,
   SET_ASSEMBLY_LIST_ID,
+  GET_SHARED_PROJECTS,
 } from '../redux/actions';
 import qs from 'qs';
 
@@ -22,8 +23,10 @@ const Panel = styled.div`
 interface IProps extends RouteComponentProps {
   currentUser: IUserInfo;
   projects: IProject[];
+  sharedProjects: IProject[];
   assemblyListId?: string;
   getMyProjects: ()=>void;
+  getSharedProjects: ()=>void;
   onLoadProject: (project: IProject) => void;
   onSaveAssemblyList: (projectIds:string[])=>Promise<any>;
   resetAssemblyList:()=>void;
@@ -39,11 +42,13 @@ interface IState {
 const mapStateToProps = (state: IStoreState) => ({
   currentUser: state.app.currentUser,
   projects: state.app.myProjects,
+  sharedProjects: state.app.sharedProjects,
   assemblyListId: state.app.assemblyListId,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   getMyProjects: () => dispatch({type:GET_MY_PROJECTS}),
+  getSharedProjects: ()=> dispatch({type:GET_SHARED_PROJECTS}),
   onLoadProject: (project: IProject) => dispatch({type: SET_CURRENT_PROJECT, data: project}),
   onSaveAssemblyList: async (projectIds: string[]) => new Promise((resolve:any)=>dispatch({type:POST_ASSEMBLY_LIST, data: projectIds, cb:resolve,})),
   resetAssemblyList: ()=>dispatch({type:SET_ASSEMBLY_LIST_ID, data:undefined}),
@@ -146,6 +151,7 @@ class GenerateProtocols extends React.Component<IProps, IState> {
 
   private async getProjectList() {
     this.props.getMyProjects();
+    this.props.getSharedProjects();
   }
 }
 

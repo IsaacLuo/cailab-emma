@@ -19,10 +19,8 @@ export interface ITokenContent extends IUserEssential{
 }
 
 export interface IUser extends IUserEssential {
-  createdAt?: Date,
-  updatedAt?: Date,
-  passwordHash?: string, // empty if user signed up using google account
-  passwordSalt?: string, // empty if user signed up using google account
+  lastLogin?: Date,
+  lastIP?: string,
 }
 
 export interface ICustomState {
@@ -43,6 +41,9 @@ export interface IProject {
   parts: ISelectedPart[];
   connectors: IConnector[];
   history: IProject[];
+  owner: any;
+  group: string;
+  permission: number;
   createdAt: Date;
   updatedAt: Date;
 }
