@@ -355,6 +355,7 @@ export function* getPartDefinitions(action:IAction) {
           permission
           part {
             position
+            len
             name
             labName
             category

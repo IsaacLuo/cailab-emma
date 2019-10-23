@@ -100,7 +100,8 @@ function appReducer(state: IAppState = DEFAULT_STATE, action: IAction) {
         return state;
       }
 
-      const ignorePos8 = (position === 7 && partDefinition.part.len === 2);
+      const ignorePos8 = position === 7 ? (partDefinition.part.len === 2) : !!state.currentProject.ignorePos8;
+      // console.log(partDefinition.part, ignorePos8);
       const currentProject = {
         ...state.currentProject,
         parts: [...state.currentProject.parts],

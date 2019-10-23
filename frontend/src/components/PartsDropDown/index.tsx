@@ -96,7 +96,7 @@ class PartsDropDown extends React.Component<IProps, IState> {
     // let pos8Ignored:boolean = !!(nextProps.project.parts[7].selected && nextProps.project.parts[7].partDetail && nextProps.project.parts[7].partDetail.len === 2);
 
     const nextButtonVisible = nextProps.project.parts.every(
-      (part)=> (part.selected && part.partDefinition!==undefined) || !part.selected
+      (part)=> (part.selected && (part.partDefinition!==undefined || part.position === 8 && nextProps.project.ignorePos8)) || !part.selected
     );
 
     const readyToSaveProjectHistory = (nextButtonVisible && !prevState.nextButtonVisible) 
@@ -146,7 +146,7 @@ class PartsDropDown extends React.Component<IProps, IState> {
       {parts.map((part,i)=>
       <React.Fragment key={i}>
         {part.selected &&
-          (part.partName === 'ignored'
+          (i === 8 && this.props.project.ignorePos8
           ?
           <SelectionRow>position 9 is disabled</SelectionRow>
           : 

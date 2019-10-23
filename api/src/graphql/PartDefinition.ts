@@ -17,6 +17,7 @@ export const PartType = new GraphQLObjectType({
   name: 'part',
   fields: {
     position: { type: GraphQLString },
+    len: {type:GraphQLInt},
     name: { type: GraphQLString },
     labName: { type: GraphQLString },
     category: { type: GraphQLString },
