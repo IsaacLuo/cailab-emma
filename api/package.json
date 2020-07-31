@@ -3,20 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@types/koa": "^2.0.50",
-    "@types/koa-router": "^7.0.42",
-    "@types/mongoose": "^5.5.18",
-    "apollo-server-koa": "^2.9.4",
-    "cross-env": "^6.0.0",
-    "graphql": "^14.5.8",
+    "@types/koa": "^2.11.3",
+    "@types/koa-router": "^7.4.1",
+    "@types/mongoose": "^5.7.34",
+    "apollo-server-koa": "^2.16.1",
+    "cross-env": "^7.0.2",
+    "graphql": "^15.3.0",
     "jsonwebtoken": "^8.5.1",
-    "koa": "^2.8.2",
-    "koa-body": "^4.1.1",
+    "koa": "^2.13.0",
+    "koa-body": "^4.2.0",
     "koa-cors": "^0.0.16",
-    "koa-jwt": "^3.6.0",
-    "koa-router": "^7.4.0",
-    "log4js": "^5.1.0",
-    "mongoose": "^5.7.1"
+    "koa-jwt": "^4.0.0",
+    "koa-router": "^9.1.0",
+    "log4js": "^6.3.0",
+    "mongoose": "^5.9.26"
   },
   "scripts": {
     "start": "ts-node src/index.ts",
@@ -29,8 +29,8 @@
     "shell": "ts-node"
   },
   "devDependencies": {
-    "nodemon": "^1.19.3",
-    "ts-node": "^8.4.1",
-    "typescript": "^3.6.3"
+    "nodemon": "^2.0.4",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.7"
   }
 }
