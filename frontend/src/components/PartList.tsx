@@ -2,16 +2,17 @@
  * the panel of selecting projects after loggin
  */
 import * as React from 'react';
-import { Dispatch } from 'redux';
-import {connect} from 'react-redux';
+// import { Dispatch } from 'redux';
+// import {connect} from 'react-redux';
 
 import styled from 'styled-components';
-import { RouteComponentProps, withRouter} from 'react-router-dom';
-import { IStoreState } from '../types';
+// import { RouteComponentProps, withRouter} from 'react-router-dom';
+// import { IStoreState } from '../types';
 
 //my components
 
 import PartsTable from './PartsTable';
+import PartTabs from './PartTabs';
 
 
 const Panel = styled.div`
@@ -19,28 +20,15 @@ const Panel = styled.div`
   text-align:left;
 `;
 
-interface IProps extends RouteComponentProps {
-}
-interface IState {
-}
-
-const mapStateToProps = (state: IStoreState) => ({
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-});
-
-class UploadParts extends React.Component<IProps, IState> {
-  public render() {
-    return (
-      <Panel>
-        <div style={{marginTop:30}}>
-          <h3>Parts</h3>
-          <PartsTable/>
-        </div>
-      </Panel>
-    );
-  }
+const PartList = () => {
+  return (
+    <Panel>
+      <div style={{marginTop:30}}>
+        <h3>Parts</h3>
+        <PartTabs/>
+      </div>
+    </Panel>
+  );
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(UploadParts));
+export default PartList;

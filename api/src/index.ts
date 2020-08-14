@@ -1,4 +1,6 @@
-import { ICustomState, IProject } from './types';
+/// <reference path="@types/index.d.ts" />
+
+// import { ICustomState, IProject } from './types';
 import koa from 'koa';
 import koaBody from 'koa-body';
 import middleware from './middleware'
@@ -6,7 +8,7 @@ import Router from 'koa-router';
 import log4js from 'log4js';
 import conf from '../conf';
 import crypto from 'crypto';
-import {Project, Assembly, AssemblyList, IPartDefinition, PartDefinition, PlateDefinition, User} from './models';
+import {Project, Assembly, AssemblyList, PartDefinition, PlateDefinition, User} from './models';
 import jwt from 'jsonwebtoken';
 import cors from 'koa-cors';
 import mongoose from 'mongoose';
@@ -19,7 +21,7 @@ const GUEST_ID = '000000000000000000000000';
 const app = new koa();
 const router = new Router();
 
-type Ctx = koa.ParameterizedContext<ICustomState, {}>;
+type Ctx = koa.ParameterizedContext<ICustomState>;
 type Next = ()=>Promise<any>;
 
 app.use(cors({credentials: true}));
@@ -173,8 +175,11 @@ async (ctx:Ctx, next:Next)=> {
         name,
         version: '1.0',
         parts,
-        connetorIndexes: [],
+        connectors: [],
+        // connetorIndexes: [],
         owner: user._id,
+        group: '',
+        permission: 666,
         createdAt: now,
         updatedAt: now,
         history: [],
@@ -304,10 +309,11 @@ async (ctx:Ctx, next:Next)=> {
 
     delete project._id;
     ctx.body = await Project.create({
-      connectors: project.connectors,
       name: 'clone of ' + project.name,
       version: project.version,
       parts: project.parts,
+      connectors: project.connectors,
+      history: [],
       owner: ctx.state.user!._id,
       permission: project.permission,
       createdAt: now,
@@ -434,7 +440,7 @@ async (ctx:Ctx, next:Next)=> {
   
   ctx.body = await PartDefinition.find({
     $or: [
-      {owner: userId},
+      {owner: {$in:userId}},
       {groups, permission:{$bitsAllSet:0x40}},
       {permission:{$bitsAllSet:0x04}},
     ]
@@ -454,7 +460,7 @@ async (ctx:Ctx, next:Next)=> {
   const res = await PartDefinition.deleteMany({
     _id: id,
     $or: [
-      {owner: userId},
+      {owner: {$in:userId}},
       {groups, permission:{$bitsAllSet:0x40}},
       {permission:{$bitsAllSet:0x04}},
     ]
@@ -475,52 +481,55 @@ async (ctx:Ctx, next:Next)=> {
 });
 
 // -----------------------------------------------------------------------------------------------
-router.post('/api/plateDefinition',
-userMust(beUser, beAdmin),
-async (ctx:Ctx, next:Next)=> {
-  const userId = ctx.state.user._id;
-  console.log(userId);
-  if(!ctx.request.body) {
-    ctx.throw(403);
-  }
-  console.log(ctx.request.body);
-  if (!ctx.request.body.owner || ctx.request.body.owner === '') {
-    ctx.request.body.owner = userId;
-  }
-  if(beAdmin(ctx) && userId !== ctx.request.body.owner) {
-    ctx.throw(401, 'cannot set owner to others');
-  }
-  await next();
-},
-async (ctx:Ctx, next:Next)=> {
-  const {owner, group, permission, plateType, name, barcode, parts} = ctx.request.body;
-  const now = new Date();
-  console.log('create plate');
-  // const partIds = parts.filter(v=>v!=='' && v!== undefined);
-  const partIds = parts.map(v=>v===''?undefined:v);
-  console.log('partIds', partIds);
-  if (partIds === []) {
-    ctx.throw(403, 'no parts');
-  }
-  const partsCount = await PartDefinition.find({_id:partIds}).countDocuments().exec();
-  const uniquePartSize = new Set(partIds.filter(v=>v)).size;
-  console.log('partsCount', partsCount, uniquePartSize);
-  if (partsCount < uniquePartSize) {
-    ctx.throw(404, 'some part not found in database');
-  }
-  ctx.body = await PlateDefinition.create({
-    owner,
-    group,
-    createdAt: now,
-    updatedAt: now,
-    permission,
-    plateType,
-    name,
-    barcode,
-    parts:partIds,
-  });
-  // ctx.body = {message:'OK'};
-});
+// router.post('/api/plateDefinition',
+// userMust(beUser, beAdmin),
+// async (ctx:Ctx, next:Next)=> {
+//   const userId = ctx.state.user._id;
+//   console.log(userId);
+//   if(!ctx.request.body) {
+//     ctx.throw(403);
+//   }
+//   console.log(ctx.request.body);
+//   if (!ctx.request.body.owner || ctx.request.body.owner === '') {
+//     ctx.request.body.owner = userId;
+//   }
+//   if(beAdmin(ctx) && userId !== ctx.request.body.owner) {
+//     ctx.throw(401, 'cannot set owner to others');
+//   }
+//   await next();
+// },
+// async (ctx:Ctx, next:Next)=> {
+//   const {owner, group, permission, plateType, name, barcode, parts}
+//   :{owner:string, group:string, permission:number, plateType:'96'|'384', name: string, barcode:string, parts:any[]}
+//    = ctx.request.body;
+//   const now = new Date();
+//   console.log('create plate');
+//   // const partIds = parts.filter(v=>v!=='' && v!== undefined);
+//   const partIds = parts.map(v=>v===''?undefined:v);
+//   console.log('partIds', partIds);
+//   if (partIds === []) {
+//     ctx.throw(403, 'no parts');
+//   }
+//   const partsCount = await PartDefinition.find({_id:partIds}).countDocuments().exec();
+//   const uniquePartSize = new Set(partIds.filter(v=>v)).size;
+//   console.log('partsCount', partsCount, uniquePartSize);
+//   if (partsCount < uniquePartSize) {
+//     ctx.throw(404, 'some part not found in database');
+//   }
+//   if (plateType !== '96' && plateType !== '384') throw new Error('plate type incorrect');
+//   ctx.body = await PlateDefinition.create({
+//     owner,
+//     group,
+//     createdAt: now,
+//     updatedAt: now,
+//     permission,
+//     plateType,
+//     name,
+//     barcode,
+//     content: parts.
+//   });
+//   // ctx.body = {message:'OK'};
+// });
 
 // -----------------------------------------------------------------------------------------------
 router.get('/api/plateDefinition/:id',

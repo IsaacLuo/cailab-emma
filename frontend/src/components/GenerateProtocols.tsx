@@ -82,7 +82,7 @@ class GenerateProtocols extends React.Component<IProps, IState> {
       validProjects: props.projects.filter(v=>v.assemblies),
       checkedProjectIds,
       projects: props.projects,
-      preselected: queryObj.preselected,
+      preselected: queryObj.preselected as string[],
     };
   }
 

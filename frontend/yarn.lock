@@ -5163,7 +5163,7 @@ eslint-visitor-keys@^1.0.0, eslint-visitor-keys@^1.1.0:
   resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-1.3.0.tgz#30ebd1ef7c2fdff01c3a4f151044af25fab0523e"
   integrity sha512-6J72N8UNa462wa/KFODt/PJ3IU60SDpC3QXC1Hjc1BXXpfL2C9R5+AU7jhe0F6GREqVMh4Juu+NY7xn+6dipUQ==
 
-eslint@^6.6.0:
+eslint@^6.5.1, eslint@^6.6.0:
   version "6.8.0"
   resolved "https://registry.yarnpkg.com/eslint/-/eslint-6.8.0.tgz#62262d6729739f9275723824302fb227c8c93ffb"
   integrity sha512-K+Iayyo2LtyYhDSYwz5D5QdWw0hCacNzyq1Y821Xna2xSJj7cijoLLYmLxTQgcgZ9mC61nryMy9S7GRbYpI5Ig==
@@ -10466,6 +10466,13 @@ recursive-readdir@2.2.2:
   integrity sha512-nRCcW9Sj7NuZwa2XvH9co8NPeXUBhZP7CRKJtU+cS6PW9FpCIFoI5ib0NT1ZrbNuPoRy0ylyCaUL8Gih4LSyFg==
   dependencies:
     minimatch "3.0.4"
+
+redux-react-hook@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/redux-react-hook/-/redux-react-hook-4.0.1.tgz#ff3ff92984c3815676208edb0528712cf2fb7bba"
+  integrity sha512-/CGTTHGt3YggK1GmTO9ZUHk+rb+Ff5vA4uL/Lg+afNqzqyKuIkOZ67T/zzwold1TQTZjSJ/wGJYmNgT8YW8UCA==
+  dependencies:
+    eslint "^6.5.1"
 
 redux-saga@^1.1.3:
   version "1.1.3"

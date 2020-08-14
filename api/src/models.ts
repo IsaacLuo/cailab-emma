@@ -1,8 +1,5 @@
-import { 
-  IUser,
-  IProject,
-  IConnector, 
-} from './types';
+/// <reference path="@types/index.d.ts" />
+
 import mongoose, { Model, Document } from 'mongoose'
 import {Schema} from 'mongoose'
 
@@ -167,7 +164,7 @@ export interface IPart {
 }
 
 export interface IPartDefinition {
-  owner: string;
+  owner: any;
   group: string;
   createdAt: Date;
   updatedAt: Date;
@@ -194,7 +191,7 @@ export interface IPlateDefinition {
   plateType: '96'|'384';
   name: string;
   barcode: string;
-  description:string;
+  description?:string;
   content: Array<IPlateDefinitionContent|string>;
 }
 
@@ -226,6 +223,6 @@ export const PlateDefinitionSchema = new Schema({
 });
 
 export interface IPlateDefinitionModel extends IPlateDefinition, Document {}
-export const PlateDefinition:Model<IPartDefinitionModel> = mongoose.model('PlateDefinition', PlateDefinitionSchema, 'plate_definitions');
+export const PlateDefinition:Model<IPlateDefinitionModel> = mongoose.model('PlateDefinition', PlateDefinitionSchema, 'plate_definitions');
 
 

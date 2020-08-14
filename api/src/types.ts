@@ -40,6 +40,7 @@ export interface IConnector {
   posBegin: number;
   posEnd: number;
   sequence: string;
+  index: number;
 }
 
 export interface IProject {
@@ -50,8 +51,8 @@ export interface IProject {
   connectors: IConnector[];
   history: IProject[];
   owner: any;
-  group: string;
-  permission: number;
+  group?: string;
+  permission?: number;
   createdAt: Date;
   updatedAt: Date;
 }

@@ -138,7 +138,7 @@ class PlateMapEditor extends React.Component<IProps, IState> {
         </p>
 
         <p>
-        <Input.TextArea placeholder="description" autosize={{ minRows: 2, maxRows: 6 }} onChange={this.handleChangeDescription}/>
+        <Input.TextArea placeholder="description" autoSize={{ minRows: 2, maxRows: 6 }} onChange={this.handleChangeDescription}/>
         </p>
 
         <Radio.Group onChange={this.onChangePlateType} value={this.state.plateType}>

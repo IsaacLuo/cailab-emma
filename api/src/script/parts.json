@@ -2,6 +2,7 @@
     {
         "parts": [
             {
+                "pos":0,
                 "position": "1",
                 "name": "5'HA-hAAVS1-new",
                 "labName": "YCe3323",
@@ -11,6 +12,7 @@
                 "sequence": "TAGGgcacctctccatcctcttgctttctttgcctggacaccccgttctcctgtggattcgggtcacctctcactcctttcatttgggcagctcccctaccccccttacctctctagtctgtgctagctcttccagccccctgtcatggcatcttccaggggtccgagagctcagctagtcttcttcctccaacccgggcccCtatgtccacttcaggacagcatgtttgctgcctccagggatcctgtgtccccgagctgggaccaccttatattcccagggccggttaatgtggctctggttctgggtacttttatctgtcccctccaccccacagtggggccactagggacaggattggtgacagaaaagccccatccttaggcctcctccttcctagtctcctgatattGGgtctaacccccacctcctgttaggcagattccttatctggtgacacacccccatttcctggagccatctctctccttgccagaacctctaaggtttgcttacgatggagccagagaggatcctgggagggagaGcttggcagggggtgggagggaagggggggatgcgtgacctgcccggttctcagtggccaccctgcgctaccctctcccagaacctgagctgctctgacgcggctgtctggtgcgtttcactgatcctggtgctgcagcttccttacacttcccaagaggagaagcagtttggaaaaacaaaatcagaataagttggtcctgagttctaactttggctcttcacctttctagTccccaatttatattgttcctccgtgcgtcagttttacctgtgagataaggccagtagccaGccccgtcctggcagggctgtggtgaggaggggggtgtccgtgtggaaaactccctttgtgagaatggtgcgtATGG"
             },
             {
+                "pos":0,
                 "position": "1",
                 "name": "5'-ITR-PB",
                 "labName": "YCe2748",
@@ -23,6 +25,7 @@
                 "srcFile": "HC_Kan_5'-ITR-PB_p1.dna"
             },
             {
+                "pos":0,
                 "position": "1",
                 "name": "Chimeric-5'LTR",
                 "labName": "YCe3777",
@@ -39,6 +42,7 @@
     {
         "parts": [
             {
+                "pos":1,
                 "position": "2",
                 "name": "Minimal_UCOE",
                 "labName": "YCe3987",
@@ -51,6 +55,7 @@
                 "srcFile": "HC_Kan_Minimal_UCOE_p2.dna"
             },
             {
+                "pos":1,
                 "position": "2",
                 "name": "Insulator_FB",
                 "labName": "YCe1911",
@@ -67,6 +72,7 @@
     {
         "parts": [
             {
+                "pos":2,
                 "position": "3",
                 "name": "CAGp",
                 "labName": "YCe1759",
@@ -76,6 +82,7 @@
                 "sequence": "GACTGGATCTGATATCATCGTCGACATTGATTATTGACTAGTTATTAATAGTAATCAATTACGGGGTCATTAGTTCATAGCCCATATATGGAGTTCCGCGTTACATAACTTACGGTAAATGGCCCGCCTGGCTGACCGCCCAACGACCCCCGCCCATTGACGTCAATAATGACGTATGTTCCCATAGTAACGCCAATAGGGACTTTCCATTGACGTCAATGGGTGGACTATTTACGGTAAACTGCCCACTTGGCAGTACATCAAGTGTATCATATGCCAAGTACGCCCCCTATTGACGTCAATGACGGTAAATGGCCCGCCTGGCATTATGCCCAGTACATGACCTTATGGGACTTTCCTACTTGGCAGTACATCTACGTATTAGTCATCGCTATTACCATGGTCGAGGTGAGCCCCACGTTCTGCTTCACTCTCCCCATCTCCCCCCCCTCCCCACCCCCAATTTTGTATTTATTTATTTTTTAATTATTTTGTGCAGCGATGGGGGCGGGGGGGGGGGGGGCGCGCGCCAGGCGGGGCGGGGCGGGGCGAGGGGCGGGGCGGGGCGAGGCGGAGAGGTGCGGCGGCAGCCAATCAGAGCGGCGCGCTCCGAAAGTTTCCTTTTATGGCGAGGCGGCGGCGGCGGCGGCCCTATAAAAAGCGAAGCGCGCGGCGGGCGGGAGTCGCTGCGTTGGGAC"
             },
             {
+                "pos":2,
                 "position": "3",
                 "name": "CMVp_Tet",
                 "labName": "YCe2054",
@@ -88,6 +95,7 @@
                 "srcFile": "HC_Kan_CMVp_Tet_p3.dna"
             },
             {
+                "pos":2,
                 "position": "3",
                 "name": "EF1ap",
                 "labName": "YCe2050",
@@ -100,6 +108,7 @@
                 "srcFile": "HC_Kan_EF1ap_p3.dna"
             },
             {
+                "pos":2,
                 "position": "3",
                 "name": "TRE3Gp",
                 "labName": "YCe1757",
@@ -112,6 +121,7 @@
                 "srcFile": "HC_Kan_TRE3Gp_p3.dna"
             },
             {
+                "pos":2,
                 "position": "3",
                 "name": "EF-1ap_core",
                 "labName": "YCe4400",
@@ -124,6 +134,7 @@
                 "srcFile": "HC_Kan_EF-1ap_core_p3.dna"
             },
             {
+                "pos":2,
                 "position": "3",
                 "name": "HSV_TKp",
                 "labName": "YCe4401",
@@ -140,6 +151,7 @@
     {
         "parts": [
             {
+                "pos":3,
                 "position": "4",
                 "name": "LacI -operator",
                 "labName": "YCe2774",
@@ -152,6 +164,7 @@
                 "srcFile": "HC_Kan_LacI -operator_p4.dna"
             },
             {
+                "pos":3,
                 "position": "4",
                 "name": "Kt-L7Ae - Weiss",
                 "labName": "YCe2766",
@@ -168,6 +181,7 @@
     {
         "parts": [
             {
+                "pos":4,
                 "position": "5",
                 "name": "K1-K1 -L7Ae",
                 "labName": "Yce3161",
@@ -180,6 +194,7 @@
                 "srcFile": "HC_Kan_K1-K1 -L7Ae_p5.dna"
             },
             {
+                "pos":4,
                 "position": "5",
                 "name": "Kt-Kt -L7Ae-Weiss",
                 "labName": "YCe2768",
@@ -196,6 +211,7 @@
     {
         "parts": [
             {
+                "pos":5,
                 "position": "6",
                 "name": "ATG-BoxC (L7Ae)",
                 "labName": "YCe2056",
@@ -208,6 +224,7 @@
                 "srcFile": "HC_Kan_Kozak_ATG_BoxC_(L7Ae)_p6.dna"
             },
             {
+                "pos":5,
                 "position": "6",
                 "name": "Kozak_ATG",
                 "labName": "YCe1895",
@@ -220,6 +237,7 @@
                 "srcFile": "HC_Kan_Kozak-ATG_p6.dna"
             },
             {
+                "pos":5,
                 "position": "6",
                 "name": "Nt-IgKL sequence",
                 "labName": "YCe2735",
@@ -232,6 +250,7 @@
                 "srcFile": "HC_Kan_Nt-IgKL secre_p6.dna"
             },
             {
+                "pos":5,
                 "position": "6",
                 "name": "Nt-MLS",
                 "labName": "YCe1885",
@@ -244,6 +263,7 @@
                 "srcFile": "HC_Kan_MLS_p6.dna"
             },
             {
+                "pos":5,
                 "position": "6",
                 "name": "Nt-myristoylation signal",
                 "labName": "YCe2760",
@@ -256,6 +276,7 @@
                 "srcFile": "HC_Kan_Nt-Myristoylation sign_p6.dna"
             },
             {
+                "pos":5,
                 "position": "6",
                 "name": "Nt-Palmytolination sequence",
                 "labName": "YCe2058",
@@ -268,6 +289,7 @@
                 "srcFile": "HC_Kan_Palm_p6.dna"
             },
             {
+                "pos":5,
                 "position": "6",
                 "name": "Nt-SV40-NLS",
                 "labName": "YCe1903",
@@ -284,7 +306,7 @@
     {
         "parts": [
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "Sp-dCas9",
                 "labName": "YCe4018",
                 "category": "CRISPR/Cas9 system",
@@ -296,7 +318,7 @@
                 "srcFile": "HC_Kan_Sp-dCas9_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "Nano-LCF",
                 "labName": "YCe3933",
                 "category": "Reporter",
@@ -308,7 +330,7 @@
                 "srcFile": "HC_Kan_Nano-LCF_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "Sp-Cas9",
                 "labName": "YCe4414",
                 "category": "CRISPR/Cas9 system",
@@ -320,7 +342,7 @@
                 "srcFile": "HC_Kan_Sp-Cas9_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "dCas9N(1-1153)_IntN",
                 "labName": "YCe4415",
                 "category": "CRISPR/Cas9 system",
@@ -332,7 +354,7 @@
                 "srcFile": "HC_Kan_dCas9N(1-1153)_IntN_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "mCherry",
                 "labName": "YCe3325",
                 "category": "Fluorescent Reporter",
@@ -344,7 +366,7 @@
                 "srcFile": "HC_Kan_mCherry_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "BxB1",
                 "labName": "Yce2743",
                 "category": "Site-specific recombinases",
@@ -356,7 +378,7 @@
                 "srcFile": "HC_Kan_BxB1_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "L7Ae - Weiss",
                 "labName": "YCe2772",
                 "category": "RNA-Binding proteins",
@@ -368,7 +390,7 @@
                 "srcFile": "HC_Kan_L7Ae_Weiss_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "L7Ae ",
                 "labName": "YCe2032",
                 "category": "RNA-Binding proteins",
@@ -380,7 +402,7 @@
                 "srcFile": "HC_Kan_L7Ae_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "mKate2",
                 "labName": "YCe2778",
                 "category": "Fluorescent Reporter",
@@ -392,7 +414,7 @@
                 "srcFile": "HC_Kan_mKate2_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "mNeoGreen",
                 "labName": "YCe1893",
                 "category": "Fluorescent Reporter",
@@ -404,7 +426,7 @@
                 "srcFile": "HC_Kan_mNeoGreen_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "mRuby2",
                 "labName": "YCe1881",
                 "category": "Fluorescent Reporter",
@@ -416,7 +438,7 @@
                 "srcFile": "HC_Kan_mRuby2_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "mTagBFP2",
                 "labName": "YCe2048",
                 "category": "Fluorescent Reporter",
@@ -425,7 +447,7 @@
                 "sequence": "CAGCGTGTCTAAGGGCGAAGAGCTGATTAAGGAGAACATGCACATGAAGCTGTACATGGAGGGCACCGTGGACAACCATCACTTCAAGTGCACATCCGAGGGCGAAGGCAAGCCCTACGAGGGCACCCAGACCATGAGAATCAAGGTGGTCGAGGGCGGCCCTCTCCCCTTCGCCTTCGACATCCTGGCTACTAGCTTCCTCTACGGCAGCAAGACCTTCATCAACCACACCCAGGGCATCCCCGACTTCTTCAAGCAGTCCTTCCCTGAGGGCTTCACATGGGAGAGAGTCACCACATACGAAGACGGGGGCGTGCTGACCGCTACCCAGGACACCAGCCTCCAGGACGGCTGCCTCATCTACAACGTCAAGATCAGAGGGGTGAACTTCACATCCAACGGCCCTGTGATGCAGAAGAAAACACTCGGCTGGGAGGCCTTCACCGAAACGCTGTACCCCGCTGACGGCGGCCTGGAAGGCAGAAACGACATGGCCCTGAAGCTCGTGGGCGGGAGCCATCTGATCGCAAACGCCAAGACCACATATAGATCCAAGAAACCCGCTAAGAACCTCAAGATGCCTGGCGTCTACTATGTGGACTACAGACTGGAAAGAATCAAGGAGGCCAACAACGAaACCTACGTCGAGCAGCACGAGGTGGCAGTGGCCAGATACTGCGACCTCCCTAGCAAACTGGGGCACAAGCTTAATTCAGGC"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "Lac-repressor",
                 "labName": "YCe2776",
                 "category": "Transcriptional repressor",
@@ -437,7 +459,7 @@
                 "srcFile": "HC_Kan_LacI_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "ATOH1",
                 "labName": "YCe4198",
                 "category": "cDNA endogenous Transcription Factor",
@@ -449,7 +471,7 @@
                 "srcFile": "HC_Kan_ATOH1_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "ATOH8",
                 "labName": "YCe4199",
                 "category": "cDNA endogenous Transcription Factor",
@@ -461,7 +483,7 @@
                 "srcFile": "HC_Kan_ATOH8_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "BTG2",
                 "labName": "YCe4200",
                 "category": "cDNA endogenous Transcription Factor",
@@ -473,7 +495,7 @@
                 "srcFile": "HC_Kan_BTG2_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "c-MYC",
                 "labName": "YCe4201",
                 "category": "cDNA endogenous Transcription Factor",
@@ -485,7 +507,7 @@
                 "srcFile": "HC_Kan_cMYC_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "CDK4",
                 "labName": "YCe4202",
                 "category": "cDNA endogenous Transcription Factor",
@@ -497,7 +519,7 @@
                 "srcFile": "HC_Kan_CDK4_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "ETV1",
                 "labName": "YCe4204",
                 "category": "cDNA endogenous Transcription Factor",
@@ -509,7 +531,7 @@
                 "srcFile": "HC_Kan_ETV1_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "CIITA",
                 "labName": "YCe4203",
                 "category": "cDNA endogenous Transcription Factor",
@@ -521,7 +543,7 @@
                 "srcFile": "HC_Kan_CIITA_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "ETV4",
                 "labName": "YCe4205",
                 "category": "cDNA endogenous Transcription Factor",
@@ -533,7 +555,7 @@
                 "srcFile": "HC_Kan_ETV4_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "FOXA1",
                 "labName": "YCe4206",
                 "category": "cDNA endogenous Transcription Factor",
@@ -545,7 +567,7 @@
                 "srcFile": "HC_Kan_FOXA1_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "HES6",
                 "labName": "YCe4207",
                 "category": "cDNA endogenous Transcription Factor",
@@ -557,7 +579,7 @@
                 "srcFile": "HC_Kan_HES6_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "HNF1B",
                 "labName": "YCe4208",
                 "category": "cDNA endogenous Transcription Factor",
@@ -569,7 +591,7 @@
                 "srcFile": "HC_Kan_HNF1B_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "HNF4A(7)",
                 "labName": "YCe4209",
                 "category": "cDNA endogenous Transcription Factor",
@@ -581,7 +603,7 @@
                 "srcFile": "HC_Kan_HNF4A(7)_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "HNF4A(8)",
                 "labName": "YCe4210",
                 "category": "cDNA endogenous Transcription Factor",
@@ -593,7 +615,7 @@
                 "srcFile": "HC_Kan_HNF4A(8)_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "HOXP",
                 "labName": "YCe4211",
                 "category": "cDNA endogenous Transcription Factor",
@@ -602,7 +624,7 @@
                 "sequence": "GCAGCCTCAGGCCCATACCCTGACCACCCTGAGCAGCGAACCTGGACAGAGCCAGAGAACCCATATCAAGACCGAACAGCTGAGCCCTAGCCATTACAGCGAACAGCAGCAGCATAGCCCTCAGCAGATCGCCTACAGCCCTTTCAACCTGCCTCATTACAGCCCTAGCTACCCTCAGCTCGGCGGAaACCGCGAGCGGCCCCACAGAGGACCAGGTGGAAATCCTGGAGTACAACTTCAACAAGGTCGACAAGCACCCGGATTCCACCACGCTGTGCCTCATCGCGGCCGAGGCAGGCCTTTCCGAGGAGGAaACCCAGAAATGGTTTAAGCAGCGCCTGGCAAAGTGGCGGCGCTCAGAAGGCCTGCCCTCAGAGTGCAGATCCGTCACAGACTCAGGCCCATTACAGCGAACAGCAGCAGCATAGCCCTCAGCAGATCGCCTACAGCCCTTTCAACCTGCCTCATTACAGCCCTAGCTACCCT"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "NEUROD1",
                 "labName": "YCe4212",
                 "category": "cDNA endogenous Transcription Factor",
@@ -614,7 +636,7 @@
                 "srcFile": "HC_Kan_NEUROD1_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "NFIB",
                 "labName": "YCe4213",
                 "category": "cDNA endogenous Transcription Factor",
@@ -626,7 +648,7 @@
                 "srcFile": "HC_Kan_NFIB_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "NGN3",
                 "labName": "YCe4265",
                 "category": "cDNA endogenous Transcription Factor",
@@ -638,7 +660,7 @@
                 "srcFile": "HC_Kan_NGN3_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "NKX2.2",
                 "labName": "YCe4266",
                 "category": "cDNA endogenous Transcription Factor",
@@ -650,7 +672,7 @@
                 "srcFile": "HC_Kan_NKX2.2_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "PEG10",
                 "labName": "YCe4267",
                 "category": "cDNA endogenous Transcription Factor",
@@ -662,7 +684,7 @@
                 "srcFile": "HC_Kan_PEG10_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "PPARD",
                 "labName": "YCe4268",
                 "category": "cDNA endogenous Transcription Factor",
@@ -674,7 +696,7 @@
                 "srcFile": "HC_Kan_PPARD_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "RFX3",
                 "labName": "YCe4269",
                 "category": "cDNA endogenous Transcription Factor",
@@ -686,7 +708,7 @@
                 "srcFile": "HC_Kan_RFX3_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "RXRA",
                 "labName": "YCe4270",
                 "category": "cDNA endogenous Transcription Factor",
@@ -698,7 +720,7 @@
                 "srcFile": "HC_Kan_RXRA_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "SOX2",
                 "labName": "YCe4271",
                 "category": "cDNA endogenous Transcription Factor",
@@ -710,7 +732,7 @@
                 "srcFile": "HC_Kan_SOX2_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "TOX",
                 "labName": "YCe4272",
                 "category": "cDNA endogenous Transcription Factor",
@@ -722,7 +744,7 @@
                 "srcFile": "HC_Kan_TOX_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "TOX3",
                 "labName": "YCe4273",
                 "category": "cDNA endogenous Transcription Factor",
@@ -734,7 +756,7 @@
                 "srcFile": "HC_Kan_TOX3_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "MS2",
                 "labName": "YCe4410",
                 "category": "RNA-Binding proteins",
@@ -743,7 +765,7 @@
                 "sequence": "CAGCGCTTCAAACTTTACTCAGTTCGTGCTCGTGGACAATGGTGGGACAGGGGATGTGACAGTGGCTCCTTCTAATTTCGCTAATGGGGTGGCAGAGTGGATCAGCTCCAACTCACGGAGCCAGGCCTACAAGGTGACATGCAGCGTCAGGCAGTCTAGTGCCCAGAAGAGAAAGTATACCATCAAGGTGGAGGTCCCCAAAGTGGCTACCCAGACAGTGGGCGGAGTCGAACTGCCTGTCGCCGCTTGGAGGTCCTACCTGAACATGGAGCTCACTATCCCAATTTTCGCTACCAATTCTGACTGTGAACTCATCGTGAAGGCAATGCAGGGGCTCCTCAAAGACGGTAATCCTATCCCTTCCGCCATCGCCGCTAACTCAGGTATCTACAGCGCTGGAGGAGGTGGAAGCGGAGGAGGAGGAAGCGGAGGAGGAGGTAGCGGACCTAAGAAAAAGAGGAAGGTGGCGGCCGCTTCAGGC"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "PP7",
                 "labName": "YCe4411",
                 "category": "RNA-Binding proteins",
@@ -755,7 +777,7 @@
                 "srcFile": "HC_Kan_PP7_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "Sp-dCas9N(1-1153)_IntN",
                 "labName": "YCe4415",
                 "category": "CRISPR/Cas9 system",
@@ -764,7 +786,7 @@
                 "sequence": "CAGCCCTAAGAAGAAGCGCAAGGTGGGAGGAGGAAGCCCTGGAGGAGGAGGAAGCATGGACAAGAAGTACAGCATCGGACTGGCCATCGGAACCAACAGCGTGGGATGGGCCGTGATCACCGACGAGTACAAGGTGCCTAGCAAGAAGTTCAAGGTGCTGGGAAACACCGACCGCCACAGCATCAAGAAGAACCTGATCGGAGCCCTGCTGTTCGACAGCGGGGAAACCGCCGAGGCCACCCGCCTGAAGCGCACCGCCCGCCGCCGCTACACCCGCCGCAAGAACCGCATCTGCTACCTGCAGGAGATCTTCAGCAACGAGATGGCCAAGGTGGACGACAGCTTCTTCCACCGCCTGGAGGAGAGCTTCCTGGTGGAGGAGGACAAGAAGCACGAGCGCCACCCTATCTTCGGAAACATCGTGGACGAGGTGGCCTACCACGAGAAGTACCCTACCATCTACCACCTGCGCAAGAAGCTGGTGGACAGCACCGACAAGGCCGACCTGCGCCTGATCTACCTGGCCCTGGCCCACATGATCAAGTTCCGCGGACACTTCCTGATCGAGGGGGACCTGAACCCTGACAACAGCGACGTGGACAAGCTGTTCATCCAGCTGGTGCAGACCTACAACCAGCTGTTCGAGGAGAACCCTATCAACGCCAGCGGAGTGGACGCCAAGGCCATCCTGAGCGCCCGCCTGAGCAAGAGCCGCCGCCTGGAGAACCTGATCGCCCAGCTGCCTGGAGAGAAGAAGAACGGACTGTTCGGAAACCTGATCGCCCTGAGCCTGGGACTGACCCCTAACTTCAAGAGCAACTTCGACCTGGCCGAGGACGCCAAGCTGCAGCTGAGCAAGGACACCTACGACGACGACCTGGACAACCTGCTGGCCCAGATCGGCGACCAGTACGCCGACCTGTTCCTGGCCGCCAAGAACCTGAGCGACGCCATCCTGCTGAGCGACATCCTGCGCGTGAACACCGAGATCACCAAGGCCCCTCTGAGCGCCAGCATGATCAAGCGCTACGACGAGCACCACCAGGACCTGACCCTGCTGAAGGCCCTGGTGCGCCAGCAGCTGCCTGAGAAGTACAAGGAGATCTTCTTCGACCAGAGCAAGAACGGATACGCCGGATACATCGACGGAGGAGCCAGCCAGGAGGAGTTCTACAAGTTCATCAAGCCTATCCTGGAGAAGATGGACGGAACCGAGGAGCTGCTGGTGAAGCTGAACCGCGAGGACCTGCTGCGCAAGCAGCGCACCTTCGACAACGGAAGCATCCCTCACCAGATCCACCTGGGAGAGCTGCACGCCATCCTGCGCCGCCAGGAGGACTTCTACCCTTTCCTGAAGGACAACCGCGAGAAGATCGAGAAGATCCTGACCTTCCGCATCCCTTACTACGTGGGACCTCTGGCCCGCGGAAACAGCCGCTTCGCCTGGATGACCCGCAAGAGCGAGGAAACCATCACCCCTTGGAACTTCGAGGAGGTGGTGGACAAGGGAGCCAGCGCCCAGAGCTTCATCGAGCGCATGACCAACTTCGACAAGAACCTGCCTAACGAGAAGGTGCTGCCTAAGCACAGCCTGCTGTACGAGTACTTCACCGTGTACAACGAGCTGACCAAGGTGAAGTACGTGACCGAGGGAATGCGCAAGCCTGCCTTCCTGAGCGGAGAGCAGAAGAAGGCCATCGTGGACCTGCTGTTCAAGACCAACCGCAAGGTGACCGTGAAGCAGCTGAAGGAGGACTACTTCAAGAAGATCGAGTGCTTCGACAGCGTGGAGATCAGCGGAGTGGAGGACCGCTTCAACGCCAGCCTGGGAACCTACCACGACCTGCTGAAGATCATCAAGGACAAGGACTTCCTGGACAACGAGGAGAACGAGGACATCCTGGAGGACATCGTGCTGACCCTGACCCTGTTCGAGGACCGCGAGATGATCGAGGAGCGCCTGAAGACCTACGCCCACCTGTTCGACGACAAGGTGATGAAGCAGCTGAAGCGCCGCCGCTACACCGGATGGGGACGCCTGAGCCGCAAGCTGATCAACGGAATCCGCGACAAGCAGAGCGGAAAGACCATCCTGGACTTCCTGAAGAGCGACGGATTCGCCAACCGCAACTTCATGCAGCTGATCCACGACGACAGCCTGACCTTCAAGGAGGACATCCAGAAGGCCCAGGTGAGCGGACAGGGAGACAGCCTGCACGAGCACATCGCCAACCTGGCCGGAAGCCCTGCCATCAAGAAGGGAATCCTGCAGACCGTGAAGGTGGTGGACGAGCTGGTGAAGGTGATGGGACGCCACAAGCCTGAGAACATCGTGATCGAGATGGCCCGCGAGAACCAGACCACCCAGAAGGGACAGAAGAACAGCCGCGAGCGCATGAAGCGCATCGAGGAGGGAATCAAGGAGCTGGGAAGCCAGATCCTGAAGGAGCACCCTGTGGAGAACACCCAGCTGCAGAACGAGAAGCTGTACCTGTACTACCTGCAGAACGGACGCGACATGTACGTGGACCAGGAGCTGGACATCAACCGCCTGAGCGACTACGACGTGGACGCCATCGTGCCTCAGAGCTTCCTGAAGGACGACAGCATCGACAACAAGGTGCTGACCCGCAGCGACAAGAACCGCGGAAAGAGCGACAACGTGCCTAGCGAGGAGGTGGTGAAGAAGATGAAGAACTACTGGCGCCAGCTGCTGAACGCCAAGCTGATCACCCAGCGCAAGTTCGACAACCTGACCAAGGCCGAGCGCGGAGGACTGAGCGAGCTGGACAAGGCCGGATTCATCAAGCGCCAGCTGGTGGAAACCCGCCAGATCACCAAGCACGTGGCCCAGATCCTGGACAGCCGCATGAACACCAAGTACGACGAGAACGACAAGCTGATCCGCGAGGTGAAGGTGATCACCCTGAAGAGCAAGCTGGTGAGCGACTTCCGCAAGGACTTCCAGTTCTACAAGGTGCGCGAGATCAACAACTACCACCACGCCCACGACGCCTACCTGAACGCCGTGGTGGGAACCGCCCTGATCAAGAAGTACCCTAAGCTGGAGAGCGAGTTCGTGTACGGAGACTACAAGGTGTACGACGTGCGCAAGATGATCGCCAAGAGCGAGCAGGAGATCGGAAAGGCCACCGCCAAGTACTTCTTCTACAGCAACATCATGAACTTCTTCAAGACCGAGATCACCCTGGCCAACGGAGAGATCCGCAAGCGCCCTCTGATCGAAACCAACGGAGAAACCGGAGAGATCGTGTGGGACAAGGGACGCGACTTCGCCACCGTGCGCAAGGTGCTGAGCATGCCTCAGGTGAACATCGTGAAGAAGACCGAGGTGCAGACCGGAGGATTCAGCAAGGAGAGCATCCTGCCTAAGCGCAACAGCGACAAGCTGATCGCCCGCAAGAAGGACTGGGACCCTAAGAAGTACGGAGGATTCGACAGCCCTACCGTGGCCTACAGCGTGCTGGTGGTGGCCAAGGTGGAGAAGGGAAAGTGCCTGGACCTGAAGACCCAGGTGCAGACCCCTCAGGGAATGAAGGAGATCAGCAACATCCAGGTGGGCGACCTGGTGCTGAGCAACACCGGATACAACGAGGTGCTGAACGTGTTCCCTAAGAGCAAGAAGAAGAGCTACAAGATCACCCTGGAGGACGGAAAGGAGATCATCTGCAGCGAGGAGCACCTGTTCCCTACCCAGACCGGAGAGATGAACATCAGCGGAGGACTGAAGGAGGGAATGTGCCTGTACGTGAAGGAGTCAGGC"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "ACSL1",
                 "labName": "YCe4428",
                 "category": "cDNA endogenous Transcription Factor",
@@ -776,7 +798,7 @@
                 "srcFile": "HC_Kan_ACSL1_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "FOXA2",
                 "labName": "YCe4430",
                 "category": "cDNA endogenous Transcription Factor",
@@ -788,7 +810,7 @@
                 "srcFile": "HC_Kan_FOXA2_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "GATA4",
                 "labName": "YCe4432",
                 "category": "cDNA endogenous Transcription Factor",
@@ -800,7 +822,7 @@
                 "srcFile": "HC_Kan_GATA4_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "HES1",
                 "labName": "YCe4433",
                 "category": "cDNA endogenous Transcription Factor",
@@ -812,7 +834,7 @@
                 "srcFile": "HC_Kan_HES1_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "HES5",
                 "labName": "YCe4435",
                 "category": "cDNA endogenous Transcription Factor",
@@ -824,7 +846,7 @@
                 "srcFile": "HC_Kan_HES5_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "HNF6",
                 "labName": "YCe4437",
                 "category": "cDNA endogenous Transcription Factor",
@@ -836,7 +858,7 @@
                 "srcFile": "HC_Kan_HNF6 (ONECUT1)_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "PDX1",
                 "labName": "YCe4440",
                 "category": "cDNA endogenous Transcription Factor",
@@ -848,7 +870,7 @@
                 "srcFile": "HC_Kan_PDX1_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "PTF1A",
                 "labName": "YCe4442",
                 "category": "cDNA endogenous Transcription Factor",
@@ -860,7 +882,7 @@
                 "srcFile": "HC_Kan_PTF1A_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "SOX21",
                 "labName": "YCe4449",
                 "category": "cDNA endogenous Transcription Factor",
@@ -872,7 +894,7 @@
                 "srcFile": "HC_Kan_SOX21_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "SOX8",
                 "labName": "YCe4451",
                 "category": "cDNA endogenous Transcription Factor",
@@ -884,7 +906,7 @@
                 "srcFile": "HC_Kan_SOX8_p7.dna"
             },
             {
-                "position": "7",
+                "pos":6, "position": "7",
                 "name": "ZIC1",
                 "labName": "YCe4452",
                 "category": "cDNA endogenous Transcription Factor",
@@ -897,7 +919,7 @@
     {
         "parts": [
             {
-                "position": "8a",
+                "pos":7, "position": "8a",
                 "len": 2,
                 "name": "Linker 1",
                 "labName": "YCe2746",
@@ -910,7 +932,7 @@
                 "srcFile": "HC_Kan_Linker1_p8.dna"
             },
             {
-                "position": "8a",
+                "pos":7, "position": "8a",
                 "len": 2,
                 "name": "Linker 2",
                 "labName": "YCe1909",
@@ -923,7 +945,7 @@
                 "srcFile": "HC_Kan_Linker2_p8.dna"
             },
             {
-                "position": "8a",
+                "pos":7, "position": "8a",
                 "len": 2,
                 "name": "p2A-Porcine teschovirus-1 ",
                 "labName": "YCe1883",
@@ -936,7 +958,7 @@
                 "srcFile": "HC_Kan_p2A_p8.dna"
             },
             {
-                "position": "8a",
+                "pos":7, "position": "8a",
                 "name": "hPEST",
                 "labName": "YCe3934",
                 "category": "Peptide Tags",
@@ -948,7 +970,7 @@
                 "srcFile": "HC_Kan_hPEST_8a.dna"
             },
             {
-                "position": "8a",
+                "pos":7, "position": "8a",
                 "name": "Ct-KDEL",
                 "labName": "YCe1897",
                 "category": "Peptide Tags",
@@ -964,7 +986,7 @@
     {
         "parts": [
             {
-                "position": "8b",
+                "pos":8, "position": "8b",
                 "name": "IRES2",
                 "labName": "YCe1760",
                 "category": "IRES (Internal Ribosome Entry Sequence)",
@@ -980,7 +1002,7 @@
     {
         "parts": [
             {
-                "position": "9",
+                "pos":9, "position": "9",
                 "name": "TET-1",
                 "labName": "YCe3989",
                 "category": "Effector Domain ",
@@ -992,7 +1014,7 @@
                 "srcFile": "HC_Kan_TET1_p9.dna"
             },
             {
-                "position": "9",
+                "pos":9, "position": "9",
                 "name": "Nano-Luciferase",
                 "labName": "YCe3772",
                 "category": "Reporter",
@@ -1004,7 +1026,7 @@
                 "srcFile": "HC_Kan_Nano-LCF_p9.dna"
             },
             {
-                "position": "9",
+                "pos":9, "position": "9",
                 "name": "BSDR",
                 "labName": "YCe2762",
                 "category": "Selection Markers",
@@ -1016,7 +1038,7 @@
                 "srcFile": "HC_Kan_BDSR_p7.dna"
             },
             {
-                "position": "9",
+                "pos":9, "position": "9",
                 "name": "PuroR",
                 "labName": "YCe1899",
                 "category": "Selection Markers",
@@ -1028,7 +1050,7 @@
                 "srcFile": "HC_Kan_PuroR_p9.dna"
             },
             {
-                "position": "9",
+                "pos":9, "position": "9",
                 "name": "DmrC",
                 "labName": "YCe2052",
                 "category": "Dimerization domain",
@@ -1040,7 +1062,7 @@
                 "srcFile": "HC_Kan_DmrC_p9.dna"
             },
             {
-                "position": "9",
+                "pos":9, "position": "9",
                 "name": "Fyrefly Luciferase -3XFLAG",
                 "labName": "YCe3322",
                 "category": "Bioluminescent Reporters",
@@ -1052,7 +1074,7 @@
                 "srcFile": "HC_Kan_LCF-3FLAG_p9.dna"
             },
             {
-                "position": "9",
+                "pos":9, "position": "9",
                 "name": "mNeoGreen",
                 "labName": "YCe1887",
                 "category": "Fluorescent Reporter",
@@ -1064,7 +1086,7 @@
                 "srcFile": "HC_Kan_mNeoGreen_p9.dna"
             },
             {
-                "position": "9",
+                "pos":9, "position": "9",
                 "name": "mRuby2",
                 "labName": "YCe2026",
                 "category": "Fluorescent Reporter",
@@ -1076,7 +1098,7 @@
                 "srcFile": "HC_Kan_mRuby2_p9.dna"
             },
             {
-                "position": "9",
+                "pos":9, "position": "9",
                 "name": "mTagBFP2",
                 "labName": "YCe2034",
                 "category": "Fluorescent Reporter",
@@ -1088,7 +1110,7 @@
                 "srcFile": "HC_Kan_mTagBFP2_p9.dna"
             },
             {
-                "position": "9",
+                "pos":9, "position": "9",
                 "name": "a-Tubulin",
                 "labName": "YCe1907",
                 "category": "Structural proteins",
@@ -1100,7 +1122,7 @@
                 "srcFile": "HC_Kan_Tubulin_p9.dna"
             },
             {
-                "position": "9",
+                "pos":9, "position": "9",
                 "name": "ATOH1",
                 "labName": "YCe4274",
                 "category": "cDNA endogenous Transcription Factor",
@@ -1109,7 +1131,7 @@
                 "sequence": "GCGTCCTCCCGCCTGCTGCATGCAGAAGAGTGGGCTGAAGTGAAGGAGTTGGGAGAtCACCATCGCCAGCCCCAGCCGCATCATCTCCCGCAACCGCCGCCGCCGCCGCAGCCACCTGCAACTTTGCAGGCGAGAGAGCATCCCGTCTACCCGCCTGAGCTGTCCCTCCTGGACAGCACCGACCCACGCGCCTGGCTGGCTCCCACTTTGCAGGGCATCTGCACGGCACGCGCCGCCCAGTATTTGCTACATTCCCCGGAGCTGGGTGCCTCAGAGGCCGCTGCGCCCCGGGACGAGGTGGACGGCCGGGGGGAGCTGGTAAGGAGGAGCAGCGGCGGTGCCAGCAGCAGCAAGAGCCCCGGGCCGGTGAAAGTGCGGGAACAGCTGTGCAAGCTGAAAGGCGGGGTGGTGGTAGACGAGCTGGGCTGCAGCCGCCAACGGGCCCCTTCCAGCAAACAGGTGAATGGGGTGCAGAAGCAGAGgCGGCTAGCAGCCAACGCCAGGGAGCGGCGCAGGATGCATGGGCTGAACCACGCCTTCGACCAGCTGCGCAATGTTATCCCGTCGTTCAACAACGACAAGAAGCTGTCCAAATATGAaACCCTGCAGATGGCCCAAATCTACATCAACGCCTTGTCCGAGCTGCTACAAACGCCCAGCGGAGGGGAACAGCCACCGCCGCCTCCAGCCTCCTGCAAAAGCGACCACCACCACCTTCGCACCGCGGCCTCCTATGAAGGGGGCGCGGGCAACGCGACCGCAGCTGGGGCTCAGCAGGCTTCCGGAGGGAGCCAGCGGCCGACCCCGCCCGGGAGTTGCCGGACTCGCTTCTCAGCCCCAGCTTCTGCGGGAGGGTACTCGGTGCAGCTGGACGCTCTGCACTTCTCGACTTTCGAGGACAGCGCCCTGACAGCGATGATGGCGCAAAAGAATTTGTCTCCTTCTCTCCCCGGGAGCATCTTGCAGCCAGTGCAGGAGGAAAACAGCAAAACTTCGCCTCGGTCCCACAGAAGCGACGGGGAATTTTCCCCCCATTCCCATTACAGTGACTCGGATGAGGCAAGTTAATAATGCT"
             },
             {
-                "position": "9",
+                "pos":9, "position": "9",
                 "name": "BTG2",
                 "labName": "YCe4275",
                 "category": "cDNA endogenous Transcription Factor",
@@ -1118,7 +1140,7 @@
                 "sequence": "GCGTCCAGCCACGGGAAGGGAACCGACATGCTCCCGGAGATCGCCGCCGCCGTGGGCTTCCTCTCCAGCCTCCTGAGGACCCGGGGCTGCGTGAGCGAGCAGAGGCTTAAGGTCTTCAGCGGGGCGCTCCAGGAGGCACTCACAGAGCACTACAAACACCACTGGTTTCCCGAAAAGCCGTCCAAGGGCTCCGGCTACCGCTGCATTCGCATCAACCACAAGATGGACCCCATCATCAGCAGGGTGGCCAGCCAGATCGGACTCAGCCAGCCCCAGCTGCACCAGCTGCTGCCCAGCGAGCTGACCCTGTGGGTGGACCCCTATGAGGTGTCCTACCGCATTGGGGAGGACGGCTCCATCTGCGTCTTGTACGAGGAGGCCCCACTGGCCGCCTCCTGTGGGCTCCTCACCTGCAAGAACCAAGTGCTGCTGGGCCGGAGCAGCCCCTCCAAGAACTACGTGATGGCAGTCTCCAGCTAATAATGCT"
             },
             {
-                "position": "9",
+                "pos":9, "position": "9",
                 "name": "c-MYC",
                 "labName": "YCe4276",
                 "category": "cDNA endogenous Transcription Factor",
@@ -1127,7 +1149,7 @@
                 "sequence": "GCGTCCGATTTTTTTCGGGTAGTGGAAAACCAGCAGCCTCCCGCGACGATGCCCCTCAACGTTAGCTTCACCAACAGGAACTATGACCTCGACTACGACTCGGTGCAGCCGTATTTCTACTGCGACGAGGAGGAGAACTTCTACCAGCAGCAGCAGCAGAGCGAGCTGCAGCCCCCGGCGCCCAGCGAGGATATCTGGAAGAAATTCGAGCTGCTGCCCACCCCGCCCCTGTCCCCTAGCCGCCGCTCCGGGCTCTGCTCGCCCTCCTACGTTGCGGTCACACCCTTCTCCCTTCGGGGAGACAACGACGGCGGTGGCGGGAGCTTCTCCACGGCCGACCAGCTGGAGATGGTGACCGAGCTGCTGGGAGGAGACATGGTGAACCAGAGTTTCATCTGCGACCCGGACGACGAaACCTTCATCAAAAACATCATCATCCAGGACTGTATGTGGAGCGGCTTCTCGGCCGCCGCCAAGCTCGTgTCAGAGAAGCTGGCCTCCTACCAGGCTGCGCGCAAAGACAGCGGCAGCCCGAACCCCGCCCGCGGCCACAGCGTCTGCTCCACCTCCAGCTTGTACCTGCAGGATCTGAGCGCCGCCGCCTCAGAGTGCATCGACCCCTCGGTGGTCTTCCCCTACCCTCTCAACGACAGCAGCTCGCCCAAGTCCTGCGCCTCGCAAGACTCCAGCGCCTTCTCTCCGTCCTCGGATTCTCTGCTCTCCTCGACGGAGTCCTCCCCGCAGGGCAGCCCCGAGCCCCTGGTGCTCCATGAGGAGACACCGCCCACCACCAGCAGCGACTCTGAGGAGGAACAAGAAGATGAGGAAGAAATCGATGTTGTTTCTGTGGAAAAGAGGCAGGCTCCTGGCAAAAGGTCAGAGTCTGGATCACCTTCTGCTGGAGGCCACAGCAAACCTCCTCACAGCCCACTGGTCCTCAAGAGGTGCCACGTgTCCACACATCAGCACAACTACGCAGCGCCTCCCTCCACTCGGAAGGACTATCCTGCTGCCAAGAGGGTCAAGTTGGACAGTGTCAGAGTCCTGAGACAGATCAGCAACAACCGAAAATGCACCAGCCCCAGGTCCTCGGACACCGAGGAGAATGTCAAGAGGCGAACACACAACGTCTTGGAGCGCCAGAGGAGGAACGAGCTAAAACGGAGCTTTTTTGCCCTGCGTGACCAGATCCCGGAGTTGGAAAACAATGAAAAGGCCCCCAAGGTAGTTATCCTTAAAAAAGCCACAGCATACATCCTGTCCGTCCAAGCAGAGGAGCAAAAGCTCATTTCTGAAGAGGACTTGTTGCGGAAACGACGAGAACAGTTGAAACACAAACTTGAACAGCTACGGAACTCTTGTGCGTAATAATGCT"
             },
             {
-                "position": "9",
+                "pos":9, "position": "9",
                 "name": "CDKN4",
                 "labName": "YCe4277",
                 "category": "cDNA endogenous Transcription Factor",
@@ -1136,7 +1158,7 @@
                 "sequence": "GCGTCCGCTACCTCTCGATATGAGCCAGTGGCTGAAATTGGTGTCGGTGCCTATGGGACAGTGTACAAGGCCCGTGATCCCCACAGTGGCCACTTTGTGGCCCTCAAGAGTGTGAGAGTCCCCAATGGAGGAGGAGGTGGAGGAGGCCTTCCCATCAGCACAGTTCGTGAGGTGGCTTTACTGAGGCGACTGGAGGCTTTTGAGCATCCCAATGTTGTCCGGCTGATGGACGTCTGTGCCACATCCCGAACTGACCGGGAGATCAAGGTAACCCTGGTGTTTGAGCATGTAGACCAGGACCTAAGGACATATCTGGACAAGGCACCCCCACCAGGCTTGCCAGCCGAAACGATCAAGGATCTGATGCGCCAGTTTCTAAGAGGCCTAGATTTCCTTCATGCCAATTGCATCGTTCACCGAGATCTGAAGCCAGAGAACATTCTGGTGACAAGTGGTGGAACAGTCAAGCTGGCTGACTTTGGCCTGGCCAGAATCTACAGCTACCAGATGGCACTTACACCCGTGGTTGTTACACTCTGGTACCGAGCTCCCGAAGTTCTTCTGCAGTCCACATATGCAACACCTGTGGACATGTGGAGTGTTGGCTGTATCTTTGCAGAGATGTTTCGTCGAAAGCCTCTCTTCTGTGGAAACTCTGAAGCCGACCAGTTGGGCAAAATCTTTGACCTGATTGGGCTGCCTCCAGAGGATGACTGGCCTCGAGATGTATCCCTGCCCCGTGGAGCCTTTCCCCCCAGAGGGCCCCGCCCAGTGCAGTCGGTGGTACCTGAGATGGAGGAGTCGGGAGCACAGCTGCTGCTGGAAATGCTGACTTTTAACCCACACAAGCGAATCTCTGCCTTTCGAGCTCTGCAGCACTCTTATCTACATAAGGATGAAGGTAATCCGGAGTAATAATGCT"
             },
             {
-                "position": "9",
+                "pos":9, "position": "9",
                 "name": "CIITA",
                 "labName": "YCe4278",
                 "category": "cDNA endogenous Transcription Factor",
@@ -1145,7 +1167,7 @@
                 "sequence": "GCGTCCCGTTGCCTGGCTCCACGCCCTGCTGGGTCCTACCTGTCAGAGCCCCAAGGCAGCTCACAGTGTGCCACCATGGAGTTGGGGCCCCTAGAAGGTGGCTACCTGGAGCTTCTTAACAGCGATGCTGACCCCCTGTGCCTCTACCACTTCTATGACCAGATGGACCTGGCTGGAGAAGAAGAGATTGAGCTCTACTCAGAACCCGACACAGACACCATCAACTGCGACCAGTTCAGCAGGCTGTTGTGTGACATGGAAGGTGATGAAGAaACCAGGGAGGCTTATGCCAATATCGCGGAACTGGACCAGTATGTCTTCCAGGACTCCCAGCTGGAGGGCCTGAGCAAGGACATTTTCAAGCACATAGGACCAGATGAAGTGATCGGTGAGAGTATGGAGATGCCAGCAGAAGTTGGGCAGAAAAGTCAGAAAAGACCCTTCCCAGAGGAGCTTCCGGCAGACCTGAAGCACTGGAAGCCAGTGCCTTTCTCCAGTTCCTCGTTGAGCTGCCTGAATCTCCCTGAGGGACCCATCCAGTTTGTCCCCACCATCTCCACTCTGCCCCATGGGCTCTGGCAAATCTCTGAGGCTGGAACAGGGGTgTCCAGTATATTCATCTACCATGGTGAGGTGCCCCAGGCCAGCCAAGTACCCCCTCCCAGTGGATTCACTGTCCACGGCCTCCCAACATCTCCAGACCGGCCAGGCTCCACCAGCCCCTTCGCTCCATCAGCCACTGACCTGCCCAGCATGCCTGAACCTGCCCTGACCTCCCGAGCAAACATGACAGAGCACAAGACGTCCCCCACCCAATGCCCGGCAGCTGGAGAGGTCagcAACAAGCTTCCAAAATGGCCTGGTCTAGCCTGGTCACCGTGCCTGGGTCTGAGGCCCTCCCTCCACAGGGCTGCCTTGAGCGACACGGTGGCGCTGTGGGAGTCCCTGCAGCAGCATGGGGAaACCAAGCTACTTCAGGCAGCAGAGGAGAAGTTCACCATCGAGCCTTTCAAAGCCAAGTCCCTGAAGGATGTGGAAGACCTGGGAAAGCTTGTGCAGACTCAGAGGACGAGAAGTTCCTCGGAAGACACAGCTGGGGAGCTCCCTGCTGTTCGGGACCTAAAGAAACTGGAGTTTGCGCTGGGCCCTGTCTCAGGCCCCCAGGCTTTCCCCAAACTGGTGCGGATCCTCACGGCCTTTTCCTCCCTGCAGCATCTGGACCTGGATGCGCTGAGTGAGAACAAGATCGGGGACGAGGGTGTCTCGCAGCTCTCAGCCACCTTCCCCCAGCTGAAGTCCTTGGAAACCCTCAATCTGTCCCAGAACAACATCACTGACCTGGGTGCCTACAAACTCGCCGAGGCCCTGCCTTCGCTCGCTGCATCCCTGCTCAGGCTAAGCTTGTACAATAACTGCATCTGCGACGTGGGAGCCGAGAGCTTGGCTCGTGTGCTTCCGGACATGGTGTCCCTCCGGGTGATGGACGTCCAGTACAACAAGTTCACGGCTGCCGGGGCCCAGCAGCTCGCTGCCAGCCTTCGGAGGTGTCCTCATGTGGAaACGCTGGCGATGTGGACGCCCACCATCCCATTCAGTGTCCAGGAACACCTGCAACAACAGGATTCACGGATCAGCCTGAGATAATAATGCT"
             },
             {
-                "position": "9",
+                "pos":9, "position": "9",
                 "name": "ETV1",
                 "labName": "YCe4279",
                 "category": "cDNA endogenous Transcription Factor",
@@ -1154,7 +1176,7 @@
                 "sequence": "GCGTCCCTTCAAGATTTAAGTGCAAGTGTCTTCTTTCCACCTTGTTCACAACACAGAACGTTAGCTCAGGTACCTGACAATGATGAGCAGTTTGTACCAGACTATCAGGCTGAAAGTTTGGCTTTTCATGGCCTGCCACTGAAAATCAAGAAAGAACCCCACAGTCCATGTTCAGAAATCAGCTCTGCCTGCAGTCAAGAACAGCCCTTTAAATTCAGCTATGGAGAAAAGTGCCTGTACAATGTCAGTGCCTATGATCAGAAGCCACAAGTGGGAATGAGGCCCTCCAACCCCCCCACACCATCCAGCACGCCAGTGTCCCCACTGCATCATGCATCTCCAAACTCAACTCATACACCGAAACCTGACCGGGCCTTCCCAGCTCACCTCCCTCCATCGCAGTCCATACCAGATAGCAGCTACCCCATGGACCACAGATTTCGCCGCCAGCTTTCTGAACCCTGTAACTCCTTTCCTCCTTTGCCGACGATGCCAAGGGAAGGACGTCCTATGTACCAACGCCAGATGTCTGAGCCAAACATCCCCTTCCCACCACAAGGCTTTAAGCAGGAGTACCACGACCCAGTGTATGAACACAACACCATGGTTGGCAGTGCGGCCAGCCAAAGCTTTCCCCCTCCTCTGATGATTAAACAGGAACCCAGAGATTTTGCATATGACTCAGAAGTGCCTAGCTGCCACTCCATTTATATGAGGCAAGAAGGCTTCCTGGCTCATCCCAGCAGAACAGAAGGCTGTATGTTTGAAAAGGGCCCCAGGCAGTTTTATGATGACACCTGTGTTGTCCCAGAAAAATTCGATGGAGACATCAAACAAGAGCCAGGAATGTATCGGGAAGGACCCACATACCAACGGCGAGGATCACTTCAGCTCTGGCAGTTTTTGGTAGCTCTTCTGGATGACCCTTCAAATTCTCATTTTATTGCCTGGACTGGTCGAGGCATGGAATTTAAACTGATTGAGCCTGAAGAGGTGGCCCGACGTTGGGGCATTCAGAAAAACAGGCCAGCTATGAACTATGATAAACTTAGCCGTTCACTCCGCTATTACTATGAGAAAGGAATTATGCAAAAGGTGGCTGGAGAGAGATATGTCTACAAGTTTGTGTGTGATCCAGAAGCCCTTTTCTCCATGGCCTTTCCAGATAATCAGCGTCCACTGCTGAAGACAGACATGGAACGTCACATCAACGAGGAGGACACAGTGCCTCTTTCTCACTTTGATGAGAGCATGGCCTACATGCCGGAAGGGGGCTGCTGCAACCCCCACCCCTACAACGAAGGCTACGTGTATTAATAATGCT"
             },
             {
-                "position": "9",
+                "pos":9, "position": "9",
                 "name": "ETV4",
                 "labName": "YCe4280",
                 "category": "cDNA endogenous Transcription Factor",
@@ -1163,7 +1185,7 @@
                 "sequence": "GCGTCCGAGCGGAGGATGAAAGCCGGATACTTGGACCAGCAAGTGCCCTACACCTTCAGCAGCAAATCGCCCGGAAATGGGAGCTTGCGCGAAGCGCTGATCGGCCCGCTGGGGAAGCTCATGGACCCGGGCTCCCTGCCGCCCCTCGACTCTGAAGATCTCTTCCAGGATCTAAGTCACTTCCAGGAaACGTGGCTCGCTGAAGCTCAGGTACCAGACAGTGATGAGCAGTTTGTTCCTGATTTCCATTCAGAAAACCTAGCTTTCCACAGCCCCACCACCAGGATCAAGAAGGAGCCCCAGAGTCCCCGCACAGACCCGGCCCTGTCCTGCAGCAGGAAGCCGCCACTCCCCTACCACCATGGCGAGCAGTGCCTTTACTCCAGTGCCTATGACCCCCCCAGACAAATCGCCATCAAGTCCCCTGCCCCTGGTGCCCTTGGACAGTCGCCCCTACAGCCCTTTCCCCGGGCAGAGCAACGGAATTTCCTGAGATCCTCTGGCACCTCCCAGCCCCACCCTGGCCATGGGTACCTCGGGGAACATAGCTCCGTCTTCCAGCAGCCCCTGGACATTTGCCACTCCTTCACATCTCAGGGAGGGGGCCGGGAACCCCTCCCAGCCCCCTACCAACACCAGCTGTCGGAGCCCTGCCCACCCTATCCCCAGCAGAGCTTTAAGCAAGAATACCATGATCCCCTGTATGAACAGGCGGGCCAGCCAGCCGTGGACCAGGGTGGGGTCAATGGGCACAGGTACCCAGGGGCGGGGGTGGTGATCAAACAGGAACAGACGGACTTCGCCTACGACTCAGATGTCACCGGGTGCGCATCAATGTACCTCCACACAGAGGGCTTCTCTGGGCCCTCTCCAGGTGACGGGGCCATGGGCTATGGCTATGAGAAACCTCTGCGACCATTCCCAGATGATGTCTGCGTTGTCCCTGAGAAATTTGAAGGAGACATCAAGCAGGAAGGGGTCGGTGCATTTCGAGAGGGGCCGCCCTACCAGCGCCGGGGTGCCCTGCAGCTGTGGCAATTTCTGGTGGCCTTGCTGGATGACCCAACAAATGCCCATTTCATTGCCTGGACGGGCCGGGGAATGGAGTTCAAGCTCATTGAGCCTGAGGAGGTCGCCAGGCTCTGGGGCATCCAGAAGAACCGGCCAGCCATGAATTACGACAAGCTGAGCCGCTCGCTCCGATACTATTATGAGAAAGGCATCATGCAGAAGGTGGCTGGTGAGCGTTACGTGTACAAGTTTGTGTGTGAGCCCGAGGCCCTCTTCTCTTTGGCCTTCCCGGACAATCAGCGTCCAGCTCTCAAGGCTGAGTTTGACCGGCCTGTCAGTGAGGAGGACACAGTCCCTTTGTCCCACTTGGATGAGAGCCCCGCCTACCTCCCAGAGCTGGCTGGCCCCGCCCAGCCATTTGGCCCCAAGGGTGGCTACTCTTACTAATAATGCT"
             },
             {
-                "position": "9",
+                "pos":9, "position": "9",
                 "name": "FOXA1",
                 "labName": "YCe4384",
                 "category": "cDNA endogenous Transcription Factor",
@@ -1172,7 +1194,7 @@
                 "sequence": "GCGTCCTTAGGAACTGTGAAGATGGAAGGGCATGAAACCAGCGACTGGAACAGCTACTACGCAGACACGCAGGAGGCCTACTCCTCCGTCCCGGTCAGCAACATGAACTCAGGCCTGGGCTCCATGAACTCCATGAACACCTACATGACCATGAACACCATGACTACGAGCGGCAACATGACCCCGGCGTCCTTCAACATGTCCTATGCCAACCCGGGCCTAGGGGCCGGCCTGAGTCCCGGCGCAGTAGCCGGCATGCCGGGGGGCTCGGCGGGCGCCATGAACAGCATGACTGCGGCCGGCGTGACGGCCATGGGTACGGCGCTGAGCCCGAGCGGCATGGGCGCCATGGGTGCGCAGCAGGCGGCCTCCATGAATGGCCTGGGCCCCTACGCGGCCGCCATGAACCCGTGCATGAGCCCCATGGCGTACGCGCCGTCCAACCTGGGCCGCAGCCGCGCGGGCGGCGGCGGCGACGCCAAGACGTTCAAGCGCAGCTACCCGCACGCCAAGCCGCCCTACTCGTACATCTCGCTCATCACCATGGCCATCCAGCAGGCGCCCAGCAAGATGCTCACGCTGAGCGAGATCTACCAGTGGATCATGGACCTCTTCCCCTATTACCGGCAGAACCAGCAGCGCTGGCAGAACTCCATCCGCCACTCGCTGTCCTTCAATGACTGCTTCGTCAAGGTGGCACGCTCCCCGGACAAGCCGGGCAAGGGCTCCTACTGGACGCTGCACCCGGACTCCGGCAACATGTTCGAGAACGGCTGCTACTTGCGCCGCCAGAAGCGCTTCAAGTGCGAGAAGCAGCCGGGGGCCGGCGGCGGGGGCGGGAGCGGAAGCGGGGGCAGCGGCGCCAAGGGCGGCCCTGAGAGCCGCAAGGACCCCTCTGGCGCCTCTAACCCCAGCGCCGACTCGCCCCTCCATCGGGGTGTGCACGGGAAGACCGGCCAGCTAGAGGGCGCGCCGGCCCCCGGGCCCGCCGCCAGCCCCCAGACTCTGGACCACAGTGGGGCGACGGCGACAGGGGGCGCCTCGGAGTTGAAGACTCCAGCCTCCTCAACTGCGCCCCCCATAAGCTCCGGGCCCGGGGCGCTGGCCTCTGTGCCCGCCTCTCACCCGGCACACGGCTTGGCACCCCACGAGTCCCAGCTGCACCTGAAAGGGGACCCCCACTACTCCTTCAACCACCCGTTCTCCATCAACAACCTCATGTCCTCCTCGGAGCAGCAGCATAAGCTGGACTTCAAGGCATACGAACAGGCACTGCAATACTCGCCTTACGGCTCTACGTTGCCCGCCAGCCTGCCTCTAGGCAGCGCCTCGGTGACCACCAGGAGCCCCATCGAGCCCTCAGCCCTGGAGCCGGCGTACTACCAAGGTGTGTATTCCAGACCCGTCCTAAACACTTCCTAATAATGCT"
             },
             {
-                "position": "9",
+                "pos":9, "position": "9",
                 "name": "HES6",
                 "labName": "YCe4385",
                 "category": "cDNA endogenous Transcription Factor",
@@ -1181,7 +1203,7 @@
                 "sequence": "GCGTCCGCGCCACCCGCGGCGCCTGGCCGGGACCGTGTGGGCCGTGAGGATGAGGACGGCTGGGAaACGCGAGGGGACCGCAAGGCCCGGAAGCCCCTGGTGGAGAAGAAGCGGCGCGCGCGGATCAACGAGAGCCTGCAGGAGCTGCGGCTGCTGCTGGCGGGCGCCGAGGTGCAGGCCAAGCTGGAGAACGCCGAAGTGCTGGAGCTGACGGTGCGGCGGGTCCAGGGTGTGCTGCGGGGCCGGGCGCGCGAGCGCGAGCAGCTGCAGGCGGAAGCGAGCGAGCGCTTCGCTGCCGGCTACATCCAGTGCATGCACGAGGTGCACACGTTCGTGTCCACGTGCCAGGCCATCGACGCTACCGTCGCTGCCGAGCTCCTGAACCATCTGCTCGAGTCCATGCCGCTGCGTGAGGGCAGCAGCTTCCAGGATCTGCTGGGGGACGCCCTGGCGGGGCCACCTAGAGCCCCTGGACGGAGTGGCTGGCCTGCGGGGGGCGCTCCGGGATCCCCAATACCCAGCCCCCCGGGTCCTGGGGACGACCTGTGCTCCGACCTGGAGGAGGCCCCTGAGGCTGAACTGAGTCAGGCTCCTGCTGAGGGGCCCGACTTGGTGCCCGCAGCCCTGGGCAGCCTGACCACAGCCCAAATTGCCCGGAGTGTCTGGAGGCCTTGGTAATAATGCT"
             },
             {
-                "position": "9",
+                "pos":9, "position": "9",
                 "name": "HNF1B",
                 "labName": "YCe4386",
                 "category": "cDNA endogenous Transcription Factor",
@@ -1190,7 +1212,7 @@
                 "sequence": "GCGTCCGTGTCCAAGCTCACGTCGCTCCAGCAAGAACTCCTGAGCGCCCTGCTGAGCTCCGGGGTCACCAAGGAGGTGCTGGTTCAGGCCTTGGAGGAGTTGCTGCCATCCCCGAACTTCGGGGTGAAGCTGGAaACGCTGCCCCTGTCCCCTGGCAGCGGGGCCGAGCCCGACACCAAGCCGGTCTTCCATACTCTCACCAACGGCCACGCCAAGGGCCGCTTGTCCGGCGACGAGGGCTCCGAGGACGGCGACGACTATGACACACCTCCCATCCTCAAGGAGCTGCAGGCGCTCAACACCGAGGAGGCGGCGGAGCAGCGGGCGGAGGTGGACCGGATGCTCAGTGAGGACCCTTGGAGGGCTGCTAAAATGATCAAGGGTTACATGCAGCAACACAACATCCCCCAGAGGGAGGTGGTCGATGTCACCGGCCTGAACCAGTCGCACCTCTCCCAGCATCTCAACAAGGGCACCCCTATGAAGACCCAGAAGCGTGCCGCTCTGTACACCTGGTACGTCAGAAAGCAACGAGAGATCCTCCGACAATTCAACCAGACAGTCCAGAGTTCTGGAAATATGACAGACAAAAGCAGTCAGGATCAGCTGCTGTTTCTCTTTCCAGAGTTCAGTCAACAGAGCCATGGGCCTGGGCAGTCCGATGATGCCTGCTCTGAGCCCACCAACAAGAAGATGCGCCGCAACCGGTTCAAATGGGGGCCCGCGTCCCAGCAAATCTTGTACCAGGCCTACGATCGGCAAAAGAACCCCAGCAAGGAAGAGAGAGAGGCCTTAGTGGAGGAATGCAACAGGGCAGAATGTTTGCAGCGAGGGGTGTCCCCCTCCAAAGCCCACGGCCTGGGCTCCAACTTGGTCACTGAGGTCCGTGTCTACAACTGGTTTGCAAACCGCAGGAAGGAGGAGGCATTCCGGCAAAAGCTGGCCATGGACGCCTATAGCTCCAACCAGACTCACAGCCTGAACCCTCTGCTCTCCCACGGCTCCCCCCACCACCAGCCCAGCTCCTCTCCTCCAAACAAGCTGTCAGGAGTGCGCTACAGCCAGCAGGGAAACAATGAGATCACTTCCTCCTCAACAATCAGTCACCATGGCAACAGCGCCATGGTGACCAGCCAGTCGGTTTTACAGCAAGTCTCCCCAGCCAGCCTGGACCCAGGCCACAATCTCCTCTCACCTGATGGTAAAATGATCTCAGTCTCAGGAGGAGGTTTGCCCCCAGTCAGCACCTTGACGAATATCCACAGCCTCTCCCACCATAATCCCCAGCAATCTCAAAACCTCATCATGACACCCCTCTCTGGAGTCATGGCAATTGCACAAAGCCTCAACACCTCCCAAGCACAGAGTGTCCCTGTCATCAACAGTGTGGCCGGCAGCCTGGCAGCCCTGCAGCCCGTCCAGTTCTCCCAGCAGCTGCACAGCCCTCACCAGCAGCCCCTCATGCAGCAGAGCCCAGGCAGCCACATGGCCCAGCAGCCCTTCATGGCAGCTGTGACTCAGCTGCAGAACTCACACATGTACGCACACAAGCAGGAACCCCCCCAGTATTCCCACACCTCCCGGTTTCCATCTGCAATGGTGGTCACAGATACCAGCAGCATCAGTACACTCACCAACATGTCTTCAAGTAAACAGTGTCCTCTACAAGCCTGGTAATAATGCT"
             },
             {
-                "position": "9",
+                "pos":9, "position": "9",
                 "name": "HNF4A(7)",
                 "labName": "YCe4387",
                 "category": "cDNA endogenous Transcription Factor",
@@ -1199,7 +1221,7 @@
                 "sequence": "GCGTCCGTCAGCGTGAACGCGCCCCTCGGGGCTCCAGTGGAGAGTTCTTACGACACGTCCCCATCAGAAGGCACCAACCTCAACGCGCCCAACAGCCTGGGTGTCAGCGCCCTGTGTGCCATCTGCGGGGACCGGGCCACGGGCAAACACTACGGTGCCTCGAGCTGTGACGGCTGCAAGGGCTTCTTCCGGAGGAGCGTGCGGAAGAACCACATGTACTCCTGCAGATTTAGCCGGCAGTGCGTGGTGGACAAAGACAAGAGGAACCAGTGCCGCTACTGCAGGCTCAAGAAATGCTTCCGGGCTGGCATGAAGAAGGAAGCCGTCCAGAATGAGCGGGACCGGATCAGCACTCGAAGGTCAAGCTATGAGGACAGCAGCCTGCCCTCCATCAATGCGCTCCTGCAGGCGGAGGTCCTGTCCCGACAGATCACCTCCCCCGTgTCCGGGATCAACGGCGACATTCGGGCGAAGAAGATTGCCAGCATCGCAGATGTGTGTGAGTCCATGAAGGAGCAGCTGCTGGTTCTCGTTGAGTGGGCCAAGTACATCCCAGCTTTCTGCGAGCTCCCCCTGGACGACCAGGTGGCCCTGCTCAGAGCCCATGCTGGCGAGCACCTGCTGCTCGGAGCCACCAAGAGATCCATGGTGTTCAAGGACGTGCTGCTCCTAGGCAATGACTACATTGTCCCTCGGCACTGCCCGGAGCTGGCGGAGATGAGCCGGGTGTCCATACGCATCCTTGACGAGCTGGTGCTGCCCTTCCAGGAGCTGCAGATCGATGACAATGAGTATGCCTACCTCAAAGCCATCATCTTCTTTGACCCAGATGCCAAGGGGCTGAGCGATCCAGGGAAGATCAAGCGGCTGCGTTCCCAGGTGCAGGTGAGCTTGGAGGACTACATCAACGACCGCCAGTATGACTCGCGTGGCCGCTTTGGAGAGCTGCTGCTGCTGCTGCCCACCTTGCAGAGCATCACCTGGCAGATGATCGAGCAGATCCAGTTCATCAAGCTCTTCGGCATGGCCAAGATTGACAACCTGTTGCAGGAGATGCTGCTGGGAGGGTCCCCCAGCGATGCACCCCATGCCCACCACCCCCTGCACCCTCACCTGATGCAGGAACATATGGGAACCAACGTCATCGTTGCCAACACAATGCCCACTCACCTCAGCAACGGACAGATGTCCACCCCTGAaACCCCACAGCCCTCACCGCCAGGTGGCTCAGGGTCTGAGCCCTATAAGCTCCTGCCGGGAGCCGTCGCCACAATCGTCAAGCCCCTCTCTGCCATCCCCCAGCCGACCATCACCAAGCAGGAAGTTATCTAATAATGCT"
             },
             {
-                "position": "9",
+                "pos":9, "position": "9",
                 "name": "HNF4A(8)",
                 "labName": "YCe4388",
                 "category": "cDNA endogenous Transcription Factor",
@@ -1208,7 +1230,7 @@
                 "sequence": "GCGTCCGTCAGCGTGAACGCGCCCCTCGGGGCTCCAGTGGAGAGTTCTTACGACACGTCCCCATCAGAAGGCACCAACCTCAACGCGCCCAACAGCCTGGGTGTCAGCGCCCTGTGTGCCATCTGCGGGGACCGGGCCACGGGCAAACACTACGGTGCCTCGAGCTGTGACGGCTGCAAGGGCTTCTTCCGGAGGAGCGTGCGGAAGAACCACATGTACTCCTGCAGATTTAGCCGGCAGTGCGTGGTGGACAAAGACAAGAGGAACCAGTGCCGCTACTGCAGGCTCAAGAAATGCTTCCGGGCTGGCATGAAGAAGGAAGCCGTCCAGAATGAGCGGGACCGGATCAGCACTCGAAGGTCAAGCTATGAGGACAGCAGCCTGCCCTCCATCAATGCGCTCCTGCAGGCGGAGGTCCTGTCCCGACAGATCACCTCCCCCGTgTCCGGGATCAACGGCGACATTCGGGCGAAGAAGATTGCCAGCATCGCAGATGTGTGTGAGTCCATGAAGGAGCAGCTGCTGGTTCTCGTTGAGTGGGCCAAGTACATCCCAGCTTTCTGCGAGCTCCCCCTGGACGACCAGGTGGCCCTGCTCAGAGCCCATGCTGGCGAGCACCTGCTGCTCGGAGCCACCAAGAGATCCATGGTGTTCAAGGACGTGCTGCTCCTAGGCAATGACTACATTGTCCCTCGGCACTGCCCGGAGCTGGCGGAGATGAGCCGGGTGTCCATACGCATCCTTGACGAGCTGGTGCTGCCCTTCCAGGAGCTGCAGATCGATGACAATGAGTATGCCTACCTCAAAGCCATCATCTTCTTTGACCCAGATGCCAAGGGGCTGAGCGATCCAGGGAAGATCAAGCGGCTGCGTTCCCAGGTGCAGGTGAGCTTGGAGGACTACATCAACGACCGCCAGTATGACTCGCGTGGCCGCTTTGGAGAGCTGCTGCTGCTGCTGCCCACCTTGCAGAGCATCACCTGGCAGATGATCGAGCAGATCCAGTTCATCAAGCTCTTCGGCATGGCCAAGATTGACAACCTGTTGCAGGAGATGCTGCTGGGAGGGTCCCCCAGCGATGCACCCCATGCCCACCACCCCCTGCACCCTCACCTGATGCAGGAACATATGGGAACCAACGTCATCGTTGCCAACACAATGCCCACTCACCTCAGCAACGGACAGATGTGTGAGTGGCCCCGACCCAGGGGACAGGCAGCCACCCCTGAaACCCCACAGCCCTCACCGCCAGGTGGCTCAGGGTCTGAGCCCTATAAGCTCCTGCCGGGAGCCGTCGCCACAATCGTCAAGCCCCTCTCTGCCATCCCCCAGCCGACCATCACCAAGCAGGAAGTTATCTAATAATGCT"
             },
             {
-                "position": "9",
+                "pos":9, "position": "9",
                 "name": "ACSL1",
                 "labName": "YCe4429",
                 "category": "cDNA endogenous Transcription Factor",
@@ -1217,7 +1239,7 @@
                 "sequence": "GCGTCCGAAAGCTCTGCCAAGATGGAGAGCGGCGGCGCCGGCCAGCAGCCCCAGCCGCAGCCCCAGCAGCCCTTCCTGCCGCCCGCAGCCTGTTTCTTTGCCACGGCCGCAGCCGCGGCGGCCGCAGCCGCCGCAGCGGCAGCGCAGAGCGCGCAGCAGCAGCAGCAGCAGCAGCAGCAGCAGCAGCAGGCGCCGCAGCTGAGgCCGGCGGCCGACGGCCAGCCCTCAGGGGGCGGTCACAAGTCAGCGCCCAAGCAAGTCAAGCGACAGCGCTCGTCTTCGCCCGAACTGATGCGCTGCAAACGCCGGCTCAACTTCAGCGGCTTTGGCTACAGCCTGCCGCAGCAGCAGCCGGCCGCCGTGGCGCGCCGCAACGAGCGCGAGCGCAACCGCGTCAAGTTGGTCAACCTGGGCTTTGCCACCCTTCGGGAGCACGTCCCCAACGGCGCGGCCAACAAGAAGATGAGTAAGGTGGAGACACTGCGCTCGGCGGTCGAGTACATCCGCGCGCTGCAGCAGCTGCTGGACGAGCATGACGCGGTGAGCGCCGCCTTCCAGGCAGGCGTCCTGTCGCCCACCATCTCCCCCAACTACTCCAACGACTTGAACTCCATGGCCGGCTCGCCGGTtTCATCCTACTCGTCGGACGAGGGCTCTTACGACCCGCTCAGCCCCGAGGAGCAGGAGCTTCTCGACTTCACCAACTGGTTCTAATAATGCT"
             },
             {
-                "position": "9",
+                "pos":9, "position": "9",
                 "name": "FOXA2",
                 "labName": "YCe4431",
                 "category": "cDNA endogenous Transcription Factor",
@@ -1226,7 +1248,7 @@
                 "sequence": "GCGTCCCTGGGAGCGGTGAAGATGGAAGGGCACGAGCCGTCCGACTGGAGCAGCTACTATGCAGAGCCCGAGGGCTACTCCTCCGTGAGCAACATGAACGCCGGCCTGGGGATGAACGGCATGAACACGTACATGAGCATGTCGGCGGCCGCCATGGGCAGCGGCTCGGGCAACATGAGCGCGGGCTCCATGAACATGTCGTCGTACGTGGGCGCTGGCATGAGCCCGTCCCTGGCGGGGATGTCCCCCGGCGCGGGCGCCATGGCGGGCATGGGCGGCTCGGCCGGGGCGGCCGGCGTGGCGGGCATGGGGCCGCACTTGAGTCCCAGCCTGAGCCCGCTCGGGGGGCAGGCGGCCGGGGCCATGGGCGGCCTGGCCCCCTACGCCAACATGAACTCCATGAGCCCCATGTACGGGCAGGCGGGCCTGAGCCGCGCCCGCGACCCCAAGACCTACAGGCGCAGCTACACGCACGCAAAGCCGCCCTACTCGTACATCTCGCTCATCACCATGGCCATCCAGCAGAGCCCCAACAAGATGCTGACGCTGAGCGAGATCTACCAGTGGATCATGGACCTCTTCCCCTTCTACCGGCAGAACCAGCAGCGCTGGCAGAACTCCATCCGCCACTCGCTCTCCTTCAACGACTGTTTCCTGAAGGTGCCCCGCTCGCCCGACAAGCCCGGCAAGGGCTCCTTCTGGACCCTGCACCCTGACTCGGGCAACATGTTCGAGAACGGCTGCTACCTGCGCCGCCAGAAGCGCTTCAAGTGCGAGAAGCAGCTGGCGCTGAAGGAGGCCGCAGGCGCCGCCGGCAGCGGCAAGAAGGCGGCCGCCGGAGCCCAGGCCTCACAGGCTCAACTCGGGGAGGCCGCCGGGCCGGCCTCCGAGACTCCGGCGGGCACCGAGTCGCCTCACTCGAGCGCCTCCCCGTGCCAGGAGCACAAGCGAGGGGGCCTGGGAGAGCTGAAGGGGACGCCGGCTGCGGCGCTGAGCCCCCCAGAGCCGGCGCCCTCTCCCGGGCAGCAGCAGCAGGCCGCGGCCCACCTGCTGGGCCCGCCCCACCACCCGGGCCTGCCGCCTGAGGCCCACCTGAAGCCGGAACACCACTACGCCTTCAACCACCCGTTCTCCATCAACAACCTCATGTCCTCGGAGCAGCAGCACCACCACAGCCACCACCACCACCAACCCCACAAAATGGACCTCAAGGCCTACGAACAGGTGATGCACTACCCCGGCTACGGTTCCCCCATGCCTGGCAGCTTGGCCATGGGCCCGGTCACGAACAAAACGGGCCTGGACGCCTCGCCCCTGGCCGCAGATACCTCCTACTACCAGGGGGTGTACTCCCGGCCCATTATGAACTCCTCTTAATAATGCT"
             },
             {
-                "position": "9",
+                "pos":9, "position": "9",
                 "name": "HES1",
                 "labName": "YCe4434",
                 "category": "cDNA endogenous Transcription Factor",
@@ -1235,7 +1257,7 @@
                 "sequence": "GCGTCCCCAGCTGATATAATGGAGAAAAATTCCTCGTCCCCGGTGGCTGCTACCCCAGCCAGTGTCAACACGACACCGGATAAACCAAAGACAGCATCTGAGCACAGAAAGTCATCAAAGCCTATTATGGAGAAAAGACGAAGAGCAAGAATAAATGAAAGTCTGAGCCAGCTGAAAACACTGATTTTGGATGCTCTGAAGAAAGATAGCTCGCGGCATTCCAAGCTGGAGAAGGCGGACATTCTGGAAATGACAGTGAAGCACCTCCGGAACCTGCAGCGGGCGCAGATGACGGCTGCGCTGAGCACAGACCCAAGTGTGCTGGGGAAGTACCGAGCCGGCTTCAGCGAGTGCATGAACGAGGTGACCCGCTTCCTGTCCACGTGCGAGGGCGTTAATACCGAGGTGCGCACTCGGCTGCTCGGCCACCTGGCCAACTGCATGACCCAGATCAATGCCATGACCTACCCCGGGCAGCCGCACCCCGCCTTGCAGGCGCCGCCACCGCCCCCACCGGGACCCGGCGGCCCCCAGCACGCGCCGTTCGCGCCGCCGCCGCCACTCGTGCCCATCCCCGGGGGCGCGGCGCCCCCTCCCGGCGGCGCCCCCTGCAAGCTGGGCAGCCAGGCTGGAGAGGCGGCTAAGGTGTTTGGAGGCTTCCAGGTGGTACCGGCTCCCGATGGCCAGTTTGCTTTCCTCATTCCCAACGGGGCCTTCGCGCACAGCGGCCCTGTCATCCCCGTCTACACCAGCAACAGCGGCACCTCCGTGGGCCCCAACGCAGTGTCACCTTCCAGCGGCCCCTCGCTTACGGCGGACTCCATGTGGAGGCCGTGGCGGAACTAATAATGCT"
             },
             {
-                "position": "9",
+                "pos":9, "position": "9",
                 "name": "HES5",
                 "labName": "YCe4436",
                 "category": "cDNA endogenous Transcription Factor",
@@ -1244,7 +1266,7 @@
                 "sequence": "GCGTCCGCCCCCAGCACTGTGGCCGTGGAGCTGCTCAGCCCCAAAGAGAAAAACCGACTGCGGAAGCCGGTGGTGGAGAAGATGCGCCGCGACCGCATCAACAGCAGCATCGAGCAGCTGAAGCTGCTGCTGGAGCAGGAGTTCGCGCGGCACCAGCCCAACTCCAAGCTGGAGAAGGCCGACATCCTGGAGATGGCTGTCAGCTACCTGAAGCACAGCAAAGCCTTCGTCGCCGCCGCCGGCCCCAAGAGCCTGCACCAGGACTACAGCGAAGGCTACTCGTGGTGCCTGCAGGAGGCCGTGCAGTTCCTGACGCTCCACGCCGCCAGCGACACGCAGATGAAGCTGCTGTACCACTTCCAGCGGCCCCCGGCCGCGCCCGCCGCGCCCGCCAAGGAGCCCAAGGCGCCGGGCGCCGCGCCCCCGCCCGCGCTCTCCGCCAAGGCCACCGCCGCCGCCGCCGCCGCGCACCAGCCCGCCTGCGGCCTCTGGCGGCCCTGGTAATAATGCT"
             },
             {
-                "position": "9",
+                "pos":9, "position": "9",
                 "name": "HNF6",
                 "labName": "YCe4438",
                 "category": "cDNA endogenous Transcription Factor",
@@ -1253,7 +1275,7 @@
                 "sequence": "GCGTCCAACGCGCAGCTGACCATGGAAGCGATCGGCGAGCTGCACGGGGTGAGCCATGAGCCGGTGCCCGCCCCTGCCGACCTGCTGGGCGGCAGCCCCCACGCGCGCAGCTCCGTGGCGCACCGCGGCAGCCACCTGCCCCCCGCGCACCCGCGCTCCATGGGCATGGCGTCCCTGCTGGACGGCGGCAGCGGCGGCGGAGATTACCACCACCACCACCGGGCCCCTGAGCACAGCCTGGCCGGCCCCCTGCATCCCACCATGACCATGGCCTGCGAGACTCCCCCAGGTATGAGCATGCCCACCACCTACACCACCTTGACCCCTCTGCAGCCGCTGCCTCCCATCTCCACAGTCTCGGACAAGTTCCCCCACCATCACCACCACCACCATCACCACCACCACCCGCACCACCACCAGCGCCTGGCGGGCAACGTGAGCGGTAGCTTCACGCTCATGCGGGATGAGCGCGGGCTGGCCTCCATGAATAACCTCTATACCCCCTACCACAAGGACGTGGCCGGCATGGGCCAGAGCCTCTCGCCCCTCTCCAGCTCCGGTCTGGGCAGCATCCACAACTCCCAGCAAGGGCTCCCCCACTATGCCCACCCGGGGGCCGCCATGCCCACCGACAAGATGCTCACCCCCAACGGCTTCGAAGCCCACCACCCGGCCATGCTCGGCCGCCACGGGGAGCAGCACCTCACGCCCACCTCGGCCGGCATGGTGCCCATCAACGGCCTTCCTCCGCACCATCCCCACGCCCACCTGAACGCCCAGGGCCACGGGCAACTCCTGGGCACAGCCCGGGAGCCCAACCCTTCGGTGACCGGCGCGCAGGTCAGCAATGGAAGTAATTCAGGGCAGATGGAAGAGATCAATACCAAAGAGGTGGCGCAGCGTATCACCACCGAGCTCAAGCGCTACAGCATCCCACAGGCCATCTTCGCGCAGAGGGTGCTCTGCCGCTCCCAGGGGACCCTCTCGGACCTGCTGCGCAACCCCAAACCCTGGAGCAAACTCAAATCCGGCCGGGAaACCTTCCGGAGGATGTGGAAGTGGCTGCAGGAGCCGGAGTTCCAGCGCATGTCCGCGCTCCGCTTAGCAGCATGCAAAAGGAAAGAACAAGAACATGGGAAGGATAGAGGCAACACACCCAAAAAGCCCAGGTTGGTCTTCACAGATGTCCAGCGTCGAACTCTACATGCAATATTCAAGGAAAATAAGCGTCCATCCAAAGAATTGCAAATCACCATTTCCCAGCAGCTGGGGTTGGAGCTGAGCACTGTCAGCAACTTCTTCATGAACGCAAGAAGGAGGAGTCTGGACAAGTGGCAGGACGAGGGCAGCTCCAATTCAGGCAACTCATCTTCTTCATCAAGCACTTGTACCAAAGCATAATAATGCT"
             },
             {
-                "position": "9",
+                "pos":9, "position": "9",
                 "name": "DMN3A",
                 "labName": "YCe4406",
                 "category": "Effector Domain ",
@@ -1262,7 +1284,7 @@
                 "sequence": "GCGTCCCCCAGCCGCCTGCAGATGTTCTTCGCCAACAACCACGACCAGGAGTTCGACCCTCCTAAGGTGTACCCTCCCGTGCCTGCCGAGAAGCGCAAGCCCATCCGCGTGCTGAGCCTGTTCGACGGCATCGCCACCGGCCTGCTGGTGCTGAAGGACCTGGGCATCCAGGTGGACCGCTACATCGCCAGCGAGGTGTGCGAGGACAGCATCACCGTGGGCATGGTGCGCCACCAGGGCAAGATCATGTACGTGGGCGACGTGCGCAGCGTGACCCAGAAGCACATCCAGGAGTGGGGACCCTTCGACCTGGTGATCGGCGGCAGCCCCTGCAACGACCTGAGCATCGTGAACCCTGCCCGCAAGGGCCTGTACGAGGGCACCGGCAGACTGTTCTTCGAGTTCTACCGCCTGCTGCACGACGCCAGACCCAAGGAGGGCGACGACAGACCCTTCTTCTGGCTGTTCGAAAACGTGGTGGCCATGGGCGTGAGCGACAAGAGAGACATCAGCCGCTTCCTGGAGAGCAACCCTGTGATGATCGACGCCAAGGAGGTGAGCGCTGCCCACCGCGCTCGCTACTTCTGGGGCAACCTGCCTGGCATGAACCGCCCTCTGGCTAGCACCGTGAACGACAAGCTGGAGCTGCAGGAGTGCCTGGAGCACGGCAGAATCGCCAAGTTCAGCAAGGTGCGCACCATCACCACCCGCAGCAACAGCATCAAGCAGGGCAAGGACCAGCACTTCCCCGTGTTCATGAACGAGAAGGAAGACATCCTGTGGTGCACCGAGATGGAAAGAGTGTTCGGCTTCCCTGTGCACTACACCGACGTGAGCAACATGAGCCGCCTGGCCAGACAGCGCCTGCTGGGCCGCAGCTGGAGCGTGCCTGTGATCCGCCACCTGTTCGCCCCTCTGAAGGAGTACTTCGCCTGCGTGTGATAATGCT"
             },
             {
-                "position": "9",
+                "pos":9, "position": "9",
                 "name": "KRAB",
                 "labName": "YCe4407",
                 "category": "Effector Domain ",
@@ -1274,7 +1296,7 @@
                 "srcFile": "HC_Kan_KRAB_p9.dna"
             },
             {
-                "position": "9",
+                "pos":9, "position": "9",
                 "name": "p65-HSF1",
                 "labName": "YCe4408",
                 "category": "Effector Domain ",
@@ -1286,7 +1308,7 @@
                 "srcFile": "HC_Kan_p65-HSF1_p9.dna"
             },
             {
-                "position": "9",
+                "pos":9, "position": "9",
                 "name": "VPR",
                 "labName": "YCe4409",
                 "category": "Effector Domain ",
@@ -1302,7 +1324,7 @@
     {
         "parts": [
             {
-                "position": "10",
+                "pos":10, "position": "10",
                 "name": "Tet-Aptazyme",
                 "labName": "YCe2042",
                 "category": "RNA regulatory sequences",
@@ -1314,7 +1336,7 @@
                 "srcFile": "HC_Kan_Tet-Aptazyme_p10.dna"
             },
             {
-                "position": "10",
+                "pos":10, "position": "10",
                 "name": "3'LTR",
                 "labName": "YCe3766",
                 "category": "Long terminal repeats (LTR)",
@@ -1330,7 +1352,7 @@
     {
         "parts": [
             {
-                "position": "11",
+                "pos":11, "position": "11",
                 "name": "SV40 polyA",
                 "labName": "YCe1889",
                 "category": "PolyA transcription terminators",
@@ -1352,7 +1374,7 @@
     {
         "parts": [
             {
-                "position": "14",
+                "pos":14, "position": "14",
                 "name": "CAGp",
                 "labName": "YCe3771",
                 "category": "Promoters",
@@ -1364,7 +1386,7 @@
                 "srcFile": "HC_Kan_CAGp_p14.dna"
             },
             {
-                "position": "14",
+                "pos":14, "position": "14",
                 "name": "CMVp",
                 "labName": "YCe2788",
                 "category": "Promoters",
@@ -1376,7 +1398,7 @@
                 "srcFile": "HC_Kan_CMVp_p14.dna"
             },
             {
-                "position": "14",
+                "pos":14, "position": "14",
                 "name": "SV40p",
                 "labName": "YCe1762",
                 "category": "Promoters",
@@ -1392,7 +1414,7 @@
     {
         "parts": [
             {
-                "position": "15",
+                "pos":15, "position": "15",
                 "name": "PuroR",
                 "labName": "YCe2046",
                 "category": "Selection Markers",
@@ -1408,7 +1430,7 @@
     {
         "parts": [
             {
-                "position": "16",
+                "pos":16, "position": "16",
                 "name": "bGH polyA",
                 "labName": "YCe2030",
                 "category": "PolyA transcription terminators",
@@ -1427,7 +1449,7 @@
     {
         "parts": [
             {
-                "position": "18",
+                "pos":18, "position": "18",
                 "name": "min-CMVp",
                 "labName": "YCe4003",
                 "category": "Promoters",
@@ -1436,7 +1458,7 @@
                 "sequence": "CGTCTCaCGGTGTAGGCGTGTACGGTGGGAGGTCTATATAAGCAGAGCTCGTTTAGTGAACCGTCAGATCTAATTCGTCGACTGGGTGCaGAGACG"
             },
             {
-                "position": "18",
+                "pos":18, "position": "18",
                 "name": "YB-TATA",
                 "labName": "YCe4004",
                 "category": "Promoters",
@@ -1445,7 +1467,7 @@
                 "sequence": ""
             },
             {
-                "position": "18",
+                "pos":18, "position": "18",
                 "name": "minSV40p",
                 "labName": "YCe4010",
                 "category": "Promoters",
@@ -1454,7 +1476,7 @@
                 "sequence": "CGTCTCaCGGTTGCATCTCAATTAGTCAGCAACCATAGTCCCGCCCCTAACTCCGCCCATCCCGCCCCTAACTCCGCCCAGTTCCGCCCATTCTCCGCCCCATCGCTGACTAATTTTTTTTATTTATGCAGAGGCCGAGGCCGCCTCGGCCTCTGAGCTATTCCAGAAGTAGTGAGGAGGCTTTTTTGGAGGCCTAGGCTTTTGCAAAAAGCTTAAGCTCCCGGGAGCTTGTGTGCaGAGACG"
             },
             {
-                "position": "18",
+                "pos":18, "position": "18",
                 "name": "CMVp",
                 "labName": "YCe2038",
                 "category": "Promoters",
@@ -1466,7 +1488,7 @@
                 "srcFile": "HC_Kan_CMVp_p18.dna"
             },
             {
-                "position": "18",
+                "pos":18, "position": "18",
                 "name": "EF1ap",
                 "labName": "YCe2741",
                 "category": "Promoters",
@@ -1482,7 +1504,7 @@
     {
         "parts": [
             {
-                "position": "19",
+                "pos":19, "position": "19",
                 "name": "Nano-LCF",
                 "labName": "YCe4002",
                 "category": "Reporter",
@@ -1491,7 +1513,7 @@
                 "sequence": "GTGCCCGCCACCATGGTCTTCACACTCGAAGATTTCGTTGGGGACTGGCGACAGACAGCCGGCTACAACCTGGACCAAGTCCTTGAACAGGGAGGTGTGTCCAGTTTGTTTCAGAATCTCGGGGTGTCCGTAACTCCGATCCAAAGGATTGTCCTGAGCGGTGAAAATGGGCTGAAGATCGACATCCATGTCATCATCCCGTATGAAGGTCTGAGCGGCGACCAAATGGGCCAGATCGAAAAAATTTTTAAGGTGGTGTACCCTGTGGATGATCATCACTTTAAGGTGATCCTGCACTATGGCACACTGGTAATCGACGGGGTTACGCCGAACATGATCGACTATTTCGGACGGCCGTATGAAGGCATCGCCGTGTTCGACGGCAAAAAGATCACTGTAACAGGGACCCTGTGGAACGGCAACAAAATTATCGACGAGCGCCTGATCAACCCCGACGGCTCCCTGCTGTTCCGAGTAACCATCAACGGAGTGACCGGCTGGCGGCTGTGCGAACGCATTCTGGCGAGCGaGAGACG"
             },
             {
-                "position": "19",
+                "pos":19, "position": "19",
                 "name": "Sp-dCas9",
                 "labName": "YCe4066",
                 "category": "CRISPR/Cas9 system",
@@ -1503,7 +1525,7 @@
                 "srcFile": "HC_Kan_Sp-dCas9_p19.dna"
             },
             {
-                "position": "19",
+                "pos":19, "position": "19",
                 "name": "mNeoGreen",
                 "labName": "YCe2036",
                 "category": "Fluorescent Reporter",
@@ -1515,7 +1537,7 @@
                 "srcFile": "HC_Kan_mNeoGreen_p19.dna"
             },
             {
-                "position": "19",
+                "pos":19, "position": "19",
                 "name": "mRuby2",
                 "labName": "YCe2044",
                 "category": "Fluorescent Reporter",
@@ -1527,7 +1549,7 @@
                 "srcFile": "HC_Kan_mRuby2_p19.dna"
             },
             {
-                "position": "19",
+                "pos":19, "position": "19",
                 "name": "mTagBFP2",
                 "labName": "YCe2062",
                 "category": "Fluorescent Reporter",
@@ -1539,7 +1561,7 @@
                 "srcFile": "HC_Kan_mTagBFP2_p19.dna"
             },
             {
-                "position": "19",
+                "pos":19, "position": "19",
                 "name": "Tet-ON-3G",
                 "labName": "YCe1755",
                 "category": "Transcription Factor ",
@@ -1551,7 +1573,7 @@
                 "srcFile": "HC_Kan_Tet-ON-3G_p19.dna"
             },
             {
-                "position": "19",
+                "pos":19, "position": "19",
                 "name": "HOXP",
                 "labName": "YCe4389",
                 "category": "cDNA endogenous Transcription Factor",
@@ -1560,7 +1582,7 @@
                 "sequence": "GCCTCATTACAGCCCTAGCTACCCTGTGCCCGCCACCATGTCGGCGGAaACCGCGAGCGGCCCCACAGAGGACCAGGTGGAAATCCTGGAGTACAACTTCAACAAGGTCGACAAGCACCCGGATTCCACCACGCTGTGCCTCATCGCGGCCGAGGCAGGCCTTTCCGAGGAGGAaACCCAGAAATGGTTTAAGCAGCGCCTGGCAAAGTGGCGGCGCTCAGAAGGCCTGCCCTCAGAGTGCAGATCCGTCACAGACAGCGCCATTACAGCGAACAGCAGCAGCATA"
             },
             {
-                "position": "19",
+                "pos":19, "position": "19",
                 "name": "NEUROD1",
                 "labName": "YCe4390",
                 "category": "cDNA endogenous Transcription Factor",
@@ -1569,7 +1591,7 @@
                 "sequence": "GTGCCCGCCACCATGACCAAATCGTACAGCGAGAGTGGGCTGATGGGCGAGCCTCAGCCCCAAGGTCCTCCAAGCTGGACAGACGAGTGTCTCAGTTCTCAGGACGAGGAGCACGAGGCAGACAAGAAGGAGGACGACCTCGAAACCATGAACGCAGAGGAGGACTCACTGAGGAACGGGGGAGAGGAGGAGGACGAAGATGAGGACCTGGAAGAGGAGGAAGAAGAGGAAGAGGAGGATGACGATCAAAAGCCCAAGAGgCGCGGCCCCAAAAAGAAGAAGATGACTAAGGCTCGCCTGGAGCGTTTTAAATTGAGgCGCATGAAGGCTAACGCCCGGGAGCGGAACCGCATGCACGGACTGAACGCGGCGCTAGACAACCTGCGCAAGGTGGTGCCTTGCTATTCTAAGACGCAGAAGCTGTCCAAAATCGAGACTCTGCGCTTGGCCAAGAACTACATCTGGGCTCTGTCGGAGATCCTGCGCTCAGGCAAAAGCCCAGACCTGGTgTCCTTCGTTCAGACGCTTTGCAAGGGCTTATCCCAACCCACCACCAACCTGGTTGCGGGCTGCCTGCAACTCAATCCTCGGACTTTTCTGCCTGAGCAGAACCAGGACATGCCCCCCCACCTGCCGACGGCCAGCGCTTCCTTCCCTGTACACCCCTACTCCTACCAGTCGCCTGGGCTGCCCAGTCCGCCTTACGGTACCATGGACAGCTCCCATGTCTTCCACGTTAAGCCTCCGCCGCACGCCTACAGCGCAGCGCTGGAGCCCTTCTTTGAAAGCCCTCTGACTGATTGCACCAGCCCTTCCTTTGATGGACCCCTCAGCCCGCCGCTCAGCATCAATGGCAACTTCTCTTTCAAACACGAACCGTCCGCCGAGTTTGAGAAAAATTATGCCTTTACCATGCACTATCCTGCAGCGACACTGGCAGGGGCCCAAAGCCACGGATCAATCTTCTCAGGCACCGCTGCCCCTCGCTGCGAGATCCCCATAGACAATATTATGTCCTTCGATAGCCATTCACATCATGAGCGAGTCATGAGTGCCCAGCTCAATGCCATATTTCATGATAGCG"
             },
             {
-                "position": "19",
+                "pos":19, "position": "19",
                 "name": "NFIB",
                 "labName": "YCe4391",
                 "category": "cDNA endogenous Transcription Factor",
@@ -1578,7 +1600,7 @@
                 "sequence": "GTGCCCGCCACCATGGAAAGAATCCCAGTGTCTGTGGACTTCTGGGTTGTCTGCTGTGCAGTTCTGAAATGTAACCCTGGGATTCCTAAAAGAATGTCAACTCTGTGCTTTGGATTTTCTGATGAATTTCACCCATTCATCGAGGCACTTCTTCCACATGTCCGTGCAATTGCCTATACTTGGTTCAACCTGCAGGCTCGAAAACGCAAGTACTTTAAAAAGCATGAGAAGCGAATGTCAAAGGATGAAGAAAGAGCAGTCAAAGATGAGCTTCTCAGTGAAAAGCCTGAAATCAAACAGAAGTGGGCATCCAGGCTCCTTGCCAAACTGCGCAAAGATATTCGCCAGGAGTATCGAGAGGACTTTGTGCTCACCGTGACTGGCAAGAAGCACCCGTGCTGTGTCTTATCCAATCCCGACCAGAAGGGTAAGATTAGGAGAATCGACTGCCTGCGACAGGCAGACAAAGTCTGGCGTCTGGATCTAGTCATGGTGATCCTGTTCAAAGGCATCCCCTTGGAAAGTACCGATGGAGAGCGGCTCATGAAATCCCCACATTGCACAAACCCAGCACTTTGTGTCCAGCCACATCATATCACAGTATCAGTTAAGGAGCTTGATTTGTTTTTGGCATACTACGTGCAGGAGCAAGATTCTGGACAATCAGGAAGTCCAAGCCACAATGATCCTGCCAAGAATCCTCCAGGTTACCTTGAGGATAGTTTTGTAAAATCTGGAGTCTTCAATGTATCAGAACTTGTAAGAGTATCCAGAACGCCCATAACCCAGGGAACTGGAGTCAACTTCCCAATTGGAGAAATCCCAAGCCAACCATACTATCATGACATGAACTCGGGGGTCAATCTTCAGAGGTCcCTGTCTTCTCCACCAAGCAGCAAAAGACCCAAAACTATATCCATAGATGAAAATATGGAACCAAGTCCTACAGGAGACTTTTACCCCTCTCCAAGTTCACCAGCTGCTGGAAGTCGAACATGGCACGAAAGAGATCAAGATATGTCTTCTCCGACTACTATGAAGAAGCCTGAAAAGCCATTGTTCAGCTCTGCATCTCCACAGGATTCTTCCCCAAGACTGAGCACTTTCCCCCAGCACCACCATCCCGGAATACCTGGAGTTGCACACAGTGTCATCTCAACTCGAACTCCACCTCCACCTTCACCGTTGCCATTTCCAACACAAGCTATCCTTCCTCCAGCCCCATCGAGCTACTTTTCTCATCCAACAATCAGATATCCTCCCCACCTGAATCCTCAGGATACTCTGAAGAACTATGTACCTTCTTATGACCCATCCAGTCCACAAACCAGCCAGTCCTGGTACCTGGGCAGCG"
             },
             {
-                "position": "19",
+                "pos":19, "position": "19",
                 "name": "NGN3",
                 "labName": "YCe4392",
                 "category": "cDNA endogenous Transcription Factor",
@@ -1587,7 +1609,7 @@
                 "sequence": "GTGCCCGCCACCATGACGCCTCAACCCTCGGGTGCGCCCACTGTCCAAGTGACCCGTGAaACGGAGCGGTCCTTCCCCAGAGCCTCGGAAGACGAAGTGACCTGCCCCACGTCCGCCCCGCCCAGCCCCACTCGCACACGGGGGAACTGCGCAGAGGCGGAAGAGGGAGGCTGCCGAGGGGCCCCGAGGAAGCTCCGGGCACGGCGCGGGGGACGCAGCCGGCCTAAGAGCGAGTTGGCACTGAGCAAGCAGCGACGGAGTCGGCGAAAGAAGGCCAACGACCGCGAGCGCAATCGAATGCACAACCTCAACTCGGCACTGGACGCCCTGCGCGGTGTCCTGCCCACCTTCCCAGACGACGCGAAGCTCACCAAGATCGAaACGCTGCGCTTCGCCCACAACTACATCTGGGCGCTGACTCAAACGCTGCGCATAGCGGACCACAGCTTGTACGCGCTGGAGCCGCCGGCGCCGCACTGCGGGGAGCTGGGCAGCCCAGGCGGTTCCCCCGGGGACTGGGGGTCCCTCTACTCCCCAGTCTCCCAGGCTGGCAGCCTGAGTCCCGCCGCGTCGCTGGAGGAGCGACCCGGGCTGCTGGGGGCCACCTTTTCCGCCTGCTTGAGCCCAGGCAGTCTGGCTTTCTCAGATTTTCTGAGCG"
             },
             {
-                "position": "19",
+                "pos":19, "position": "19",
                 "name": "NKX2.2",
                 "labName": "YCe4393",
                 "category": "cDNA endogenous Transcription Factor",
@@ -1596,7 +1618,7 @@
                 "sequence": "GTGCCCGCCACCATGTCGCTGACCAACACAAAGACGGGGTTTTCGGTCAAGGACATCTTAGACCTGCCGGACACCAACGATGAGGAGGGCTCTGTGGCCGAAGGTCCGGAGGAAGAGAACGAGGGGCCCGAGCCAGCCAAGAGGGCCGGGCCGCTGGGGCAGGGCGCCCTGGACGCGGTGCAGAGCCTGCCCCTGAAGAACCCCTTCTACGACAGCAGCGACAACCCGTACACGCGCTGGCTGGCCAGCACCGAGGGCCTTCAGTACTCCCTGCACGGTCTGGCTGCCGGGGCGCCCCCTCAGGACTCAAGCTCCAAGTCCCCGGAGCCCTCGGCCGACGAGTCACCGGACAATGACAAGGAGACaCCGGGCGGCGGGGGGGACGCCGGCAAGAAGCGAAAGCGGCGAGTGCTTTTCTCCAAGGCGCAGACCTACGAGCTGGAGCGGCGCTTTCGGCAGCAGCGGTACCTGTCGGCGCCCGAGCGCGAACACCTGGCCAGCCTCATCCGCCTCACGCCCACGCAGGTCAAGATCTGGTTCCAGAACCACCGCTACAAGATGAAGCGCGCCCGGGCCGAGAAAGGTATGGAGGTGACGCCCCTGCCCTCGCCGCGCCGGGTGGCCGTGCCCGTCTTGGTCAGGGACGGCAAACCATGTCACGCGCTCAAAGCCCAGGACCTGGCAGCCGCCACCTTCCAGGCGGGCATTCCCTTTTCTGCCTACAGCGCGCAGTCGCTGCAGCACATGCAGTACAACGCCCAGTACAGCTCGGCCAGCACCCCCCAGTACCCGACAGCACACCCCCTGGTCCAGGCCCAGCAGTGGACTTGGAGCG"
             },
             {
-                "position": "19",
+                "pos":19, "position": "19",
                 "name": "PEG10",
                 "labName": "YCe4394",
                 "category": "cDNA endogenous Transcription Factor",
@@ -1605,7 +1627,7 @@
                 "sequence": "GTGCCCGCCACCATGCGAAATAAGCGGGTTTTGAAAACAAAAAAAAGAAGGAGTGGAAGAGGGGGCCAGGATCCAGGCCTCCATCCCCACAGAAGTGAAGCTACAGCTGGGAGaTCTCCTCCCACCCCAACCGTCACCCTGGGTCCCGACTGCCCACCTCCTCCTCCTCCCCCTCCCCCCAACAACAACAACAACAACAACTCCAAGCACACCGGCCATAAGAGTGCGTGTGTCCCCAACATGACCGAACGAAGAAGGGACGAGCTCTCTGAAGAGATCAACAACTTAAGAGAGAAGGTCATGAAGCAGTCGGAGGAGAACAACAACCTGCAGAGCCAGGTGCAGAAGCTCACAGAGGAGAACACCACCCTTCGAGAGCAAGTGGAACCCACCCCTGAGGATGAGGATGATGACATCGAGCTCCGCGGTGCTGCAGCAGCTGCTGCCCCACCCCCTCCAATAGAGGAAGAGTGCCCAGAAGACCTCCCAGAGAAGTTCGATGGCAACCCAGACATGCTGGCTCCTTTCATGGCCCAGTGCCAGATCTTCATGGAAAAGAGCACCAGGGATTTCTCAGTTGATCGTGTCCGTGTCTGCTTCGTGACAAGCATGATGACCGGCCGTGCTGCCCGTTGGGCCTCAGCAAAGCTGGAGCGCTCCCACTACCTGATGCACAACTACCCAGCTTTCATGATGGAAATGAAGCATGTCTTTGAAGACCCTCAGAGGCGAGAGGTTGCCAAACGCAAGATCAGACGCCTGCGCCAAGGCATGGGGTCTGTCATCGACTACTCCAATGCTTTCCAGATGATTGCCCAGGACCTGGATTGGAACGAGCCTGCGCTGATTGACCAGTACCACGAGGGCCTCAGCGACCACATTCAGGAGGAGCTCTCCCACCTCGAGGTCGCCAAGTCGCTGTCTGCTCTGATTGGGCAGTGCATTCACATTGAGAGAAGGCTGGCCAGGGCTGCTGCAGCTCGCAAGCCACGCTCGCCACCCCGGGCGCTGGTGTTGCCTCACATTGCAAGCCACCACCAGGTAGATCCAACCGAGCCGGTGGGAGGTGCCCGCATGCGCCTGACGCAGGAAGAAAAAGAAAGACGCAGAAAGCTGAACCTGTGCCTCTACTGTGGAACAGGAGGTCACTACGCTGACAATTGTCCTGCCAAGGCCTCAAAGTCTTCGCCGGCGGGAAACTCCCCGGCCCCGCTGAGCG"
             },
             {
-                "position": "19",
+                "pos":19, "position": "19",
                 "name": "PPARD",
                 "labName": "YCe4395",
                 "category": "cDNA endogenous Transcription Factor",
@@ -1614,7 +1636,7 @@
                 "sequence": "GTGCCCGCCACCATGGAGCAGCCACAGGAGGAAGCCCCTGAGGTCCGGGAAGAGGAGGAGAAAGAGGAAGTGGCAGAGGCAGAAGGAGCCCCAGAGCTCAATGGGGGACCACAGCATGCACTTCCTTCCAGCAGCTACACAGACCTCTCCCGGAGCTCCTCGCCACCCTCACTGCTGGACCAACTGCAGATGGGCTGTGACGGGGCCTCATGCGGCAGCCTCAACATGGAGTGCCGGGTGTGCGGGGACAAGGCATCGGGCTTCCACTACGGTGTTCATGCATGTGAGGGGTGCAAGGGCTTCTTCCGTCGTACGATCCGCATGAAGCTGGAGTACGAGAAGTGTGAGCGCAGCTGCAAGATTCAGAAGAAGAACCGCAACAAGTGCCAGTACTGCCGCTTCCAGAAGTGCCTGGCACTGGGCATGTCACACAACGCTATCCGTTTTGGTCGGATGCCGGAGGCTGAGAAGAGGAAGCTGGTGGCAGGGCTGACTGCAAACGAGGGGAGCCAGTACAACCCACAGGTGGCCGACCTGAAGGCCTTCTCCAAGCACATCTACAATGCCTACCTGAAAAACTTCAACATGACCAAAAAGAAGGCCCGCAGCATCCTCACCGGCAAAGCCAGCCACACGGCGCCCTTTGTGATCCACGACATCGAGACATTGTGGCAGGCAGAGAAGGGGCTGGTGTGGAAGCAGTTGGTGAATGGCCTGCCTCCCTACAAGGAGATCAGCGTGCACGTCTTCTACCGCTGCCAGTGCACCACAGTGGAaACCGTGCGGGAGCTCACTGAGTTCGCCAAGAGCATCCCCAGCTTCAGCAGCCTCTTCCTCAACGACCAGGTTACCCTTCTCAAGTATGGCGTGCACGAGGCCATCTTCGCCATGCTGGCCTCTATCGTCAACAAGGACGGGCTGCTGGTAGCCAACGGCAGTGGCTTTGTCACCCGTGAGTTCCTGCGCAGCCTCCGCAAACCCTTCAGTGATATCATTGAGCCTAAGTTTGAATTTGCTGTCAAGTTCAACGCCCTGGAACTTGATGACAGTGACCTGGCCCTATTCATTGCGGCCATCATTCTGTGTGGAGAtCGGCCAGGCCTCATGAACGTTCCACGGGTGGAGGCTATCCAGGACACCATCCTGCGTGCCCTCGAATTCCACCTGCAGGCCAACCACCCTGATGCCCAGTACCTCTTCCCCAAGCTGCTGCAGAAGATGGCTGACCTGCGGCAACTGGTCACCGAGCACGCCCAGATGATGCAGCGGATCAAGAAGACCGAAACCGAaACCTCGCTGCACCCTCTGCTCCAGGAGATCTACAAGGACATGTACAGCG"
             },
             {
-                "position": "19",
+                "pos":19, "position": "19",
                 "name": "RXRA",
                 "labName": "YCe4396",
                 "category": "cDNA endogenous Transcription Factor",
@@ -1623,7 +1645,7 @@
                 "sequence": "GTGCCCGCCACCATGGACACCAAACATTTCCTGCCGCTCGATTTCTCCACCCAGGTGAACTCCTCCCTCACCTCCCCGACGGGGCGAGGCTCCATGGCTGCCCCCTCGCTGCACCCGTCCCTGGGGCCTGGCATCGGCTCCCCGGGACAGCTGCATTCTCCCATCAGCACCCTGAGCTCCCCCATCAACGGCATGGGCCCGCCTTTCTCGGTCATCAGCTCCCCCATGGGCCCCCACTCCATGTCGGTGCCCACCACACCCACCCTGGGCTTCAGCACTGGCAGCCCCCAGCTCAGCTCACCTATGAACCCCGTCAGCAGCAGCGAGGACATCAAGCCCCCCCTGGGCCTCAATGGCGTCCTCAAGGTCCCCGCCCACCCCTCAGGAAACATGGCTTCCTTCACCAAGCACATCTGCGCCATCTGCGGGGACCGCTCCTCAGGCAAGCACTATGGAGTGTACAGCTGCGAGGGGTGCAAGGGCTTCTTCAAGCGGACGGTGCGCAAGGACCTGACCTACACCTGCCGCGACAACAAGGACTGCCTGATTGACAAGCGGCAGCGGAACCGGTGCCAGTACTGCCGCTACCAGAAGTGCCTGGCCATGGGCATGAAGCGGGAAGCCGTGCAGGAGGAGCGGCAGCGTGGCAAGGACCGGAACGAGAATGAGGTGGAGTCGACCAGCAGCGCCAACGAGGACATGCCGGTGGAGAGGATCCTGGAGGCTGAGCTGGCCGTGGAGCCCAAGACCGAaACCTACGTGGAGGCAAACATGGGGCTGAACCCCAGCTCGCCGAACGACCCTGTCACCAACATTTGCCAAGCAGCCGACAAACAGCTTTTCACCCTGGTGGAGTGGGCCAAGCGGATCCCACACTTCTCAGAGCTGCCCCTGGACGACCAGGTCATCCTGCTGCGGGCAGGCTGGAATGAGCTGCTCATCGCCTCCTTCTCCCACCGCTCCATCGCCGTGAAGGACGGGATCCTCCTGGCCACCGGGCTGCACGTCCACCGGAACAGCGCCCACAGCGCAGGGGTGGGCGCCATCTTTGACAGGGTGCTGACGGAGCTTGTGTCCAAGATGCGGGACATGCAGATGGACAAGACGGAGCTGGGCTGCCTGCGCGCCATCGTCCTCTTTAACCCTGACTCCAAGGGGCTCTCGAACCCGGCCGAGGTGGAGGCGCTGAGGGAGAAGGTCTATGCGTCCTTGGAGGCCTACTGCAAGCACAAGTACCCAGAGCAGCCGGGAAGGTTCGCTAAGCTCTTGCTCCGCCTGCCGGCTCTGCGCTCCATCGGGCTCAAATGCCTGGAACATCTCTTCTTCTTCAAGCTCATCGGGGACACACCCATTGACACCTTCCTTATGGAGATGCTGGAGGCGCCGCACCAAATGACTAGCG"
             },
             {
-                "position": "19",
+                "pos":19, "position": "19",
                 "name": "SOX2",
                 "labName": "YCe4397",
                 "category": "cDNA endogenous Transcription Factor",
@@ -1632,7 +1654,7 @@
                 "sequence": "GTGCCCGCCACCATGTACAACATGATGGAaACGGAGCTGAAGCCGCCGGGCCCGCAGCAAACTTCGGGGGGCGGCGGCGGCAACTCCACCGCGGCGGCGGCCGGCGGCAACCAGAAAAACAGCCCGGACCGCGTCAAGCGGCCCATGAATGCCTTCATGGTGTGGTCCCGCGGGCAGCGGCGCAAGATGGCCCAGGAGAACCCCAAGATGCACAACTCGGAGATCAGCAAGCGCCTGGGCGCCGAGTGGAAACTTTTGTCGGAGACaGAGAAGCGGCCGTTCATCGACGAGGCTAAGCGGCTGCGAGCGCTGCACATGAAGGAGCACCCGGATTATAAATACCGGCCCCGGCGGAAAACCAAGACGCTCATGAAGAAGGATAAGTACACGCTGCCCGGCGGGCTGCTGGCCCCCGGCGGCAATAGCATGGCGAGCGGGGTCGGGGTGGGCGCCGGCCTGGGCGCGGGCGTGAACCAGCGCATGGACAGTTACGCGCACATGAACGGCTGGAGCAACGGCAGCTACAGCATGATGCAGGACCAGCTGGGCTACCCGCAGCACCCGGGCCTCAATGCGCACGGCGCAGCGCAGATGCAGCCCATGCACCGCTACGACGTGAGCGCCCTGCAGTACAACTCCATGACCAGCTCGCAGACCTACATGAACGGCTCGCCCACCTACAGCATGTCCTACTCGCAGCAGGGCACCCCTGGCATGGCTCTTGGCTCCATGGGTTCGGTGGTCAAGTCCGAGGCCAGCTCCAGCCCCCCTGTGGTTACCTCTTCCTCCCACTCCAGGGCGCCCTGCCAGGCCGGGGACCTCCGGGACATGATCAGCATGTATCTCCCCGGCGCCGAGGTGCCGGAACCCGCCGCCCCCAGCAGACTTCACATGTCCCAGCACTACCAGAGCGGCCCGGTGCCCGGCACGGCCATTAACGGCACACTGCCCCTCTCACACATGAGCG"
             },
             {
-                "position": "19",
+                "pos":19, "position": "19",
                 "name": "TOX",
                 "labName": "YCe4398",
                 "category": "cDNA endogenous Transcription Factor",
@@ -1641,7 +1663,7 @@
                 "sequence": "GTGCCCGCCACCATGGACGTAAGATTTTATCCACCTCCAGCCCAGCCCGCCGCTGCGCCCGACGCTCCCTGTCTGGGACCTTCTCCCTGCCTGGACCCCTACTATTGCAACAAGTTTGACGGTGAGAACATGTATATGAGCATGACAGAGCCGAGCCAGGACTATGTGCCAGCCAGCCAGTCCTACCCTGGTCCAAGCCTGGAAAGTGAAGACTTCAACATTCCACCAATTACTCCTCCTTCCCTCCCAGACCACTCGCTGGTGCACCTGAATGAAGTTGAGTCTGGTTACCATTCTCTGTGTCACCCCATGAACCATAATGGCCTGCTACCATTTCATCCACAAAACATGGACCTCCCTGAAATCACAGTCTCCAATATGCTGGGCCAGGATGGAACACTGCTTTCTAATTCCATTTCTGTGATGCCAGATATACGAAACCCAGAAGGAACTCAGTACAGTTCCCATCCTCAGATGGCAGCCATGAGgCCAAGGGGCCAGCCTGCAGACATCAGGCAGCAGCCAGGAATGATGCCACATGGCCAGCTGACTACCATTAACCAGTCACAGCTAAGTGCTCAACTTGGTTTGAATATGGGAGGAAGCAATGTTCCCCACAACTCACCATCTCCACCTGGAAGCAAGTCTGCAACTCCTTCACCATCCAGTTCAGTGCATGAAGATGAAGGCGATGATACCTCTAAGATCAATGGTGGAGAGAAGCGGCCTGCCTCTGATATGGGGAAAAAACCAAAAACTCCCAAAAAGAAGAAGAAGAAGGATCCCAATGAGCCCCAGAAGCCTGTGTCTGCCTATGCGTTATTCTTTCGTGATACTCAGGCCGCCATCAAGGGCCAAAATCCAAACGCTACCTTTGGCGAAGTCTCTAAAATTGTGGCTTCAATGTGGGACGGTTTAGGAGAAGAGCAAAAACAGGTCTATAAAAAGAAAACCGAGGCTGCGAAGAAGGAGTACCTGAAGCAACTCGCAGCATACAGAGCCAGCCTTGTATCCAAGAGCTACAGTGAACCTGTTGACGTGAAGACATCTCAACCTCCTCAGCTGATCAATTCGAAGCCGTCGGTGTTCCATGGGCCCAGCCAGGCCCACTCGGCCCTGTACCTAAGTTCCCACTATCACCAACAACCGGGAATGAATCCTCACCTAACTGCCATGCATCCTAGTCTCCCCAGGAACATAGCCCCCAAGCCGAATAACCAAATGCCAGTGACTGTCTCTATAGCAAACATGGCTGTGTCCCCTCCTCCTCCCCTCCAGATCAGCCCGCCTCTTCACCAGCATCTCAACATGCAGCAGCACCAGCCGCTCACCATGCAGCAGCCCCTTGGGAACCAGCTCCCCATGCAGGTCCAGTCTGCCTTACACTCACCCACCATGCAGCAAGGATTTACTCTTCAACCCGACTATCAGACTATTATCAATCCTACATCTACAGCTGCACAAGTTGTCACCCAGGCAATGGAGTATGTGCGTTCGGGGTGCAGAAATCCTCCCCCACAACCGGTGGACTGGAATAACGACTACTGCAGTAGTGGGGGCATGCAGAGGGACAAAGCACTGTACCTTACTAGCG"
             },
             {
-                "position": "19",
+                "pos":19, "position": "19",
                 "name": "TOX3",
                 "labName": "YCe4399",
                 "category": "cDNA endogenous Transcription Factor",
@@ -1650,7 +1672,7 @@
                 "sequence": "GTGCCCGCCACCATGGATGTGAGGTTCTACCCCGCGGCGGCCGGGGACCCTGCCAGCCTGGACTTCGCGCAGTGCCTGGGGTACTACGGCTACAGCAAGTTTGGAAATAATAATAACTATATGAATATGGCTGAGGCGAACAATGCGTTCTTCGCTGCCAGTGAGCAGACATTCCACACACCAAGCCTTGGGGACGAGGAATTCGAAATTCCACCAATCACGCCTCCTCCAGAGTCAGACCCTGCCCTAGGCATGCCGGATGTACTGCTACCCTTTCAAGCCCTCAGCGATCCATTGCCTTCCCAGGGAAGTGAATTCACACCCCAGTTTCCCCCTCAAAGCCTGGACCTCCCTTCCATTACAATCTCAAGAAATCTCGTGGAACAAGATGGCGTGCTTCATAGCAGTGGGTTGCATATGGATCAGAGCCACACACAAGTGTCCCAGTACCGGCAGGATCCCTCCCTGATCATGCGGTCCATCGTCCACATGACCGATGCTGCGCGTTCTGGGGTCATGCCTCCTGCCCAGCTCACCACCATCAACCAGTCTCAGCTCAGCGCCCAGTTGGGGTTGAATTTGGGAGGTGCCAGTATGCCTCACACATCTCCTTCACCTCCAGCAAGCAAATCAGCCACTCCCTCCCCTTCCAGCTCCATCAATGAAGAGGATGCTGATGAAGCCAACAGAGCCATTGGAGAGAAAAGAGCTGCTCCAGACTCTGGCAAGAAGCCCAAGACTCCAAAGAAAAAGAAAAAGAAAGATCCCAATGAGCCACAGAAGCCAGTGTCAGCATATGCCCTGTTTTTCAGAGACACACAGGCTGCAATTAAAGGTCAAAACCCCAATGCAACCTTTGGAGAaGTCTCAAAAATTGTAGCATCTATGTGGGACAGCCTTGGAGAAGAACAAAAGCAGGTATATAAAAGGAAAACAGAAGCTGCCAAAAAAGAATACCTGAAGGCCCTGGCGGCATACAGGGCCAGCCTCGTTTCTAAGGCTGCTGCTGAGTCAGCAGAAGCCCAGACCATCCGTTCTGTTCAGCAGACCCTGGCGTCGACCAATCTAACATCCTCTCTCCTTCTCAACACTCCACTGTCTCAACATGGAACAGTGTCAGCATCACCTCAGACTCTCCAGCAATCCCTCCCTAGGTCAATCGCTCCCAAACCCTTAACCATGAGACTCCCCATGAACCAGATTGTCACATCAGTCACCATTGCAGCCAACATGCCCTCGAACATTGGGGCTCCACTGATAAGCTCCATGGGAACGACCATGGTTGGCTCAGCACCCTCCACCCAAGTGAGTCCTTCGGTGCAAACCCAGCAGCATCAGATGCAATTGCAGCAGCAGCAGCAGCAGCAACAACAACAGATGCAACAGATGCAGCAGCAGCAACTCCAGCAGCACCAAATGCATCAGCAAATCCAGCAGCAGATGCAGCAGCAGCATTTCCAGCACCACATGCAGCAGCACCTGCAGCAGCAGCAGCAGCATCTCCAGCAGCAAATTAATCAACAGCAGCTGCAGCAGCAGCTGCAGCAGCGCCTCCAGCTGCAGCAGCTGCAACACATGCAGCACCAGTCTCAGCCTTCTCCTCGGCAGCACTCCCCTGTCGCCTCTCAGATAACATCCCCCATCCCTGCCATCGGGAGCCCCCAGCCAGCCTCTCAGCAGCACCAGTCGCAAATACAGTCTCAGACACAGACTCAAGTATTATCGCAGGTCAGTATTTTCAGCG"
             },
             {
-                "position": "19",
+                "pos":19, "position": "19",
                 "name": "IntC_dCas9(1154-1368)",
                 "labName": "YCe4412",
                 "category": "CRISPR/Cas9 system",
@@ -1662,7 +1684,7 @@
                 "srcFile": "HC_Kan_IntC-dCas9(1154-1368)_p19.dna"
             },
             {
-                "position": "19",
+                "pos":19, "position": "19",
                 "name": "RFX3",
                 "labName": "YCe4413",
                 "category": "cDNA endogenous Transcription Factor",
@@ -1671,7 +1693,7 @@
                 "sequence": "GTGCCCGCCACCATGCAGACATCAGAGACTGGGTCGGACACAGGCTCGACAGTGACCTTACAAACATCTGTGGCTAGTCAAGCAGCAGTGCCTACGCAGGTGGTACAGCAAGTACCAGTACAACAACAGGTACAGCAGGTACAGACTGTGCAGCAGGTACAACATGTCTATCCCGCTCAGGTGCAGTATGTGGAAGGAAGCGATACTGTCTATACCAATGGAGCAATCCGAACAACAACGTATCCTTACACAGAGACACAGATGTACAGCCAAAATACTGGAGGGAATTACTTTGATACTCAAGGGAGTTCCGCCCAGGTGACTACCGTGGTgTCATCCCACAGTATGGTGGGCACTGGTGGGATTCAGATGGGCGTCACAGGAGGACAACTCATCAGCAGCTCTGGAGGAACCTATCTGATCGGCAACTCAATGGAGAATTCTGGTCACTCAGTGACACACACAACTCGGGCCTCCCCAGCGACAATTGAAATGGCGATTGAaACGCTGCAAAAGTCTGACGGTCTGTCCACTCACAGAAGCTCTCTTCTCAACAGCCATCTCCAGTGGCTGTTGGACAATTATGAGACAGCAGAAGGAGTGAGCCTTCCCAGAAGCACTCTGTACAACCACTACCTTCGACACTGTCAGGAACACAAACTGGACCCAGTCAATGCTGCCTCTTTTGGAAAATTAATAAGATCAATTTTTATGGGGCTACGAACCAGGAGATTGGGCACTAGAGGAAACTCCAAATACCACTACTATGGGATTCGTGTCAAGCCAGATTCCCCTCTTAATCGTCTGCAAGAAGACATGCAGTATATGGCTATGAGACAACAACCCATGCAACAGAAACAAAGGTACAAGCCTATGCAGAAAGTGGATGGGGTTGCAGATGGTTTCACAGGAAGTGGTCAACAGACAGGCACATCTGTTGAGCAAACTGTAATTGCCCAAAGCCAACATCATCAACAGTTTTTAGATGCATCTCGAGCACTTCCAGAGTTTGGAGAAGTTGAAATCTCTTCTCTGCCAGATGGTACTACCTTTGAGGATATCAAGTCACTGCAGAGTCTTTATAGAGAGCACTGTGAGGCAATATTGGACGTTGTTGTGAATCTTCAATTTAGCCTGATAGAAAAATTGTGGCAAACATTCTGGCGCTATTCTCCCTCTACTCCAACTGATGGCACTACCATTACCGAATCGAGGTCAGAATCAACATCTTTTCCAATTCATTTTCATGGCAGCG"
             },
             {
-                "position": "19",
+                "pos":19, "position": "19",
                 "name": "PDX1",
                 "labName": "YCe4439",
                 "category": "cDNA endogenous Transcription Factor",
@@ -1680,7 +1702,7 @@
                 "sequence": "GTGCCCGCCACCATGAACGGCGAGGAGCAGTACTACGCGGCCACGCAGCTTTACAAGGACCCATGCGCGTTCCAGCGAGGCCCGGCGCCGGAGTTCAGCGCCAGCCCCCCTGCGTGCCTGTACATGGGCCGCCAGCCCCCGCCGCCGCCGCCGCACCCGTTCCCTGGCGCCCTGGGCGCGCTGGAGCAGGGCAGCCCCCCGGACATCTCCCCGTACGAGGTGCCCCCCCTCGCCGACGACCCCGCGGTGGCGCACCTTCACCACCACCTCCCGGCTCAGCTCGCGCTCCCCCACCCGCCCGCCGGGCCCTTCCCGGAGGGAGCCGAGCCGGGCGTCCTGGAGGAGCCCAACCGCGTCCAGCTGCCTTTCCCATGGATGAAGTCTACCAAAGCTCACGCGTGGAAAGGCCAGTGGGCAGGCGGCGCCTACGCTGCGGAGCCGGAGGAGAACAAGCGGACGCGCACGGCCTACACGCGCGCACAGCTGCTAGAGCTGGAGAAGGAGTTCCTATTCAACAAGTACATCTCACGGCCGCGCCGGGTGGAGCTGGCTGTCATGTTGAACTTGACCGAGAGACACATCAAGATCTGGTTCCAAAACCGCCGCATGAAGTGGAAAAAGGAGGAGGACAAGAAGCGCGGCGGCGGGACAGCTGTCGGGGGTGGCGGGGTCGCGGAGCCTGAGCAGGACTGCGCCGTGACCTCCGGCGAGGAGCTTCTGGCGCTGCCGCCGCCGCCGCCCCCCGGAGGTGCTGTGCCGCCCGCTGCCCCCGTTGCCGCCCGAGAGGGCCGCCTGCCGCCTGGCCTTAGCGCGTCGCCACAGCCCTCCAGCGTCGCGCCTCGGCGGCCGCAGGAACCACGAAGCG"
             },
             {
-                "position": "19",
+                "pos":19, "position": "19",
                 "name": "PTF1A",
                 "labName": "YCe4441",
                 "category": "cDNA endogenous Transcription Factor",
@@ -1689,7 +1711,7 @@
                 "sequence": "GTGCCCGCCACCATGGACGCGGTGTTGCTGGAGCACTTCCCCGGGGGCCTAGACGCCTTTCCTTCTTCGTACTTCGACGAGGACGACTTCTTCACCGACCAGTCTTCACGGGACCCCCTGGAGGACGGCGATGAGCTGCTGGCGGACGAGCAGGCCGAGGTGGAGTTCCTTAGCCACCAGCTCCACGAGTACTGCTACCGCGACGGGGCGTGCCTGCTGCTGCAGCCCGCGCCCCCGGCCGCCCCGCTAGCGCTCGCCCCGCCGTCCTCGGGGGGCCTCGGTGAGCCAGACGACGGCGGCGGCGGCGGCTACTGCTGCGAaACGGGGGCGCCCCCAGGCGGCTTCCCCTACTCGCCCGGCTCGCCGCCCTCGTGCCTGGCCTACCCGTGCGCCGGGGCGGCAGTACTGTCTCCCGGGGCGCGGCTGCGCGGCCTGAGCGGAGCGGCGGCTGCGGCGGCGCGGCGCCGGCGGCGGGTGCGCTCCGAGGCGGAGCTGCAGCAGCTGCGGCAGGCGGCCAACGTGCGCGAGCGGCGGCGCATGCAGTCCATCAACGACGCCTTCGAGGGGCTGCGCTCGCACATCCCCACGCTGCCCTACGAGAAGCGCCTCTCCAAGGTGGACACGCTGCGCCTGGCCATCGGCTACATCAACTTCCTCAGCGAGCTCGTGCAGGCCGACCTGCCCTTGCGCGGCGGTGGCGCGGGCGGCTGCGGGGGGCCGGGCGGCGGCGGGCGCCTGGGCGGGGACAGCCCGGGCAGCCAGGCCCAGAAGGTCATCATCTGCCATCGGGGCACCCGGTCCCCCTCCCCCAGCGACCCTGATTATGGCCTCCCTCCCCTAGCAGGACACTCTCTCTCATGGACTGATGAAAAACAACTCAAGGAACAAAATATTATCCGAACAGCCAAAGTCTGGACCCCAGAGGACCCCAGAAAACTCAACAGCAAATCTTCCTTCAACAACATAGAAAACGAACCACCATTTGAGTTTGTGTCCAGCG"
             },
             {
-                "position": "19",
+                "pos":19, "position": "19",
                 "name": "SOX11",
                 "labName": "YCe4443",
                 "category": "cDNA endogenous Transcription Factor",
@@ -1698,7 +1720,7 @@
                 "sequence": "GTGCCCGCCACCATGGTGCAGCAGGCGGAGAGCTTGGAAGCGGAGAGCAACCTGCCCCGGGAGGCGCTGGACACGGAGGAGGGCGAATTCATGGCTTGCAGCCCGGTGGCCCTGGACGAGAGCGACCCAGACTGGTGCAAGACGGCGTCGGGCCACATCAAGCGGCCGATGAACGCGTTCATGGTATGGTCCAAGATCGAACGCAGGAAGATCATGGAGCAGTCTCCGGACATGCACAACGCCGAGATCTCCAAGAGGCTGGGCAAGCGCTGGAAAATGCTGAAGGACAGCGAGAAGATCCCGTTCATCCGGGAGGCGGAGCGGCTGCGGCTCAAGCACATGGCCGACTACCCCGACTACAAGTACCGGCCCCGGAAAAAGCCCAAAATGGACCCCTCGGCCAAGCCCAGCGCCAGCCAGAGCCCAGAGAAGAGCGCGGCCGGCGGCGGCGGCGGGAGCGCGGGCGGAGGCGCGGGCGGTGCCAAGACCTCCAAGGGCTCCAGCAAGAAATGCGGCAAGCTCAAGGCCCCCGCGGCCGCGGGCGCCAAGGCGGGCGCGGGCAAGGCGGCCCAGTCCGGGGACTACGGGGGCGCGGGCGACGACTACGTGCTGGGCAGCCTGCGCGTGAGCGGCTCGGGCGGCGGCGGCGCGGGCAAGACGGTCAAGTGCGTGTTTCTGGATGAGGACGACGACGACGACGACGACGACGACGAGCTGCAGCTGCAGATCAAACAGGAGCCGGACGAGGAGGACGAGGAACCACCGCACCAGCAGCTCCTGCAGCCGCCGGGGCAGCAGCCGTCGCAGCTGCTGAGgCGCTACAACGTCGCCAAAGTGCCCGCCAGCCCTACGCTGAGCAGCTCGGCGGAGTCCCCCGAGGGAGCGAGCCTCTACGACGAGGTGCGGGCCGGCGCGACCTCGGGCGCCGGGGGCGGCAGCCGCCTCTACTACAGCTTCAAGAACATCACCAAGCAGCACCCGCCGCCGCTCGCGCAGCCCGCGCTGTCGCCCGCGTCCTCGCGCTCGGTGTCCACCTCCTCGTCCAGCAGCAGCGGCAGCAGCAGCGGCAGCAGCGGCGAGGACGCCGACGACCTGATGTTCGACCTGAGCTTGAATTTCTCTCAAAGCGCGCACAGCGCCAGCGAGCAGCAGCTGGGGGGCGGCGCGGCGGCCGGGAACCTGTCCCTGTCGCTGGTGGATAAGGATTTGGATTCGTTCAGCGAGGGCAGCCTGGGCTCCCACTTCGAGTTCCCCGACTACTGCACGCCGGAGCTGAGCGAGATGATCGCGGGGGACTGGCTGGAGGCGAACTTCTCCGACCTGGTGTTCACATATAGCG"
             },
             {
-                "position": "19",
+                "pos":19, "position": "19",
                 "name": "SOX21",
                 "labName": "YCe4448",
                 "category": "cDNA endogenous Transcription Factor",
@@ -1707,7 +1729,7 @@
                 "sequence": "GTGCCCGCCACCATGTCCAAGCCGGTGGACCACGTCAAGCGGCCCATGAACGCCTTCATGGTGTGGTCGCGGGCTCAGCGGCGCAAGATGGCCCAGGAGAACCCCAAGATGCACAACTCGGAGATCAGCAAGCGCTTGGGCGCCGAGTGGAAACTGCTCACAGAGTCGGAGAAGCGGCCGTTCATCGACGAGGCCAAGCGTCTACGCGCCATGCACATGAAGGAGCACCCCGACTACAAGTACCGGCCGCGGCGCAAGCCCAAGACGCTGCTCAAGAAGGACAAGTTCGCCTTCCCGGTGCCCTACGGCCTGGGCGGCGTGGCGGACGCCGAGCACCCTGCGCTCAAGGCGGGCGCCGGGCTGCACGCGGGGGCGGGCGGCGGCCTGGTGCCTGAGTCGCTGCTCGCCAATCCCGAGAAGGCGGCCGCGGCCGCCGCCGCTGCCGCCGCACGCGTCTTCTTCCCGCAGTCGGCCGCTGCCGCCGCCGCTGCCGCCGCCGCCGCCGCCGCGGGCAGCCCCTACTCGCTGCTCGACCTGGGCTCCAAAATGGCAGAGATCTCGTCGTCCTCGTCCGGCCTCCCGTACGCGTCGTCGCTGGGCTACCCGACCGCGGGCGCGGGCGCCTTCCACGGCGCGGCGGCGGCGGCTGCAGCGGCGGCCGCCGCCGCCGGGGGGCACACGCACTCGCACCCCAGCCCGGGCAACCCGGGCTACATGATCCCGTGCAACTGCAGCGCGTGGCCCAGCCCCGGGCTGCAGCCGCCGCTCGCCTACATCCTGCTGCCGGGCATGGGCAAGCCCCAGCTGGACCCCTACCCCGCGGCCTACGCTGCCGCGCTAAGCG"
             },
             {
-                "position": "19",
+                "pos":19, "position": "19",
                 "name": "SOX8",
                 "labName": "YCe4450",
                 "category": "cDNA endogenous Transcription Factor",
@@ -1716,7 +1738,7 @@
                 "sequence": "GTGCCCGCCACCATGCTGGACATGAGCGAGGCCCGCTCCCAGCCGCCCTGCAGCCCGTCCGGCACCGCCAGCTCCATGTCGCACGTGGAGGACTCGGACTCGGACGCGCCGCCGTCcCCCGCCGGCTCCGAGGGCCTGGGCCGCGCGGGGGTCGCGGTGGGGGGCGCCCGGGGCGACCCGGCGGAGGCGGCGGACGAGCGCTTCCCGGCCTGCATCCGCGACGCCGTGTCGCAGGTGCTCAAGGGCTACGACTGGAGTCTGGTGCCCATGCCGGTGCGCGGCGGCGGCGGCGGCGCGCTCAAAGCCAAGCCGCATGTGAAGCGGCCCATGAACGCATTCATGGTGTGGGCGCAGGCGGCGCGCCGCAAGCTGGCCGACCAGTACCCGCACCTGCACAACGCCGAGCTCAGCAAGACGCTGGGCAAGCTGTGGCGCTTGCTGAGCGAGAGCGAGAAGCGGCCCTTCGTGGAGGAGGCAGAGCGCCTTCGCGTGCAGCACAAGAAGGACCACCCCGACTACAAGTACCAGCCACGGCGCAGGAAGAGCGCCAAAGCCGGCCACAGCGACTCCGACTCGGGCGCGGAGCTGGGACCCCACCCTGGCGGCGGTGCCGTGTACAAGGCTGAAGCAGGGCTTGGAGATGGGCACCACCATGGCGACCACACAGGGCAGACCCACGGGCCGCCCACCCCGCCCACCACCCCCAAGACGGAGCTGCAGCAGGCGGGCGCCAAGCCGGAGCTGAAGCTGGAGGGACGCCGGCCGGTGGACAGCGGGCGCCAGAACATCGACTTCAGCAACGTGGACATCTCGGAGCTCAGCAGCGAGGTCATGGGCACCATGGACGCCTTCGACGTCCACGAGTTCGACCAGTACCTGCCCCTGGGCGGCCCCGCCCCACCCGAGCCGGGCCAGGCCTATGGGGGCGCCTACTTCCACGCCGGGGCGTCCCCCGTGTGGGCCCACAAGAGTGCCCCGTCGGCCTCCGCGTCGCCCACCGAaACGGGTCCCCCACGGCCGCACATCAAGACGGAGCAGCCGAGCCCCGGCCACTACGGCGACCAGCCCCGAGGCTCGCCCGACTACGGTTCCTGCAGCGGCCAGTCCAGCGCCACCCCGGCCGCCCCCGCCGGCCCCTTCGCCGGCTCACAGGGCGACTATGGCGACCTGCAGGCCTCCAGCTACTATGGTGCCTACCCTGGCTACGCACCCGGCCTCTACCAGTACCCCTGCTTCCACTCGCCGCGCCGGCCCTACGCCTCACCCCTGCTCAACGGCCTGGCCCTGCCGCCCGCCCACAGCCCCACCAGTCACTGGGACCAGCCGGTGTACACCACCCTGACCAGGCCCAGCG"
             },
             {
-                "position": "19",
+                "pos":19, "position": "19",
                 "name": "Sp-dCas9-FokI",
                 "labName": "YCe4464",
                 "category": "CRISPR/Cas9 system",
@@ -1732,7 +1754,7 @@
     {
         "parts": [
             {
-                "position": "20",
+                "pos":20, "position": "20",
                 "len": 2,
                 "name": "Ct-minute-NES",
                 "labName": "YCe2758",
@@ -1742,7 +1764,7 @@
                 "sequence": "AGCGGAATGACCAAGAAGTTCGGCACCCTGACCATCTAATGGA"
             },
             {
-                "position": "20",
+                "pos":20, "position": "20",
                 "len": 2,
                 "name": "Ct-NES",
                 "labName": "YCe2028",
@@ -1752,7 +1774,7 @@
                 "sequence": "AGCGGAGCCCTGGCCCTGAAGCTGGCCGGACTGGACATCGGAGGCTAATGGA"
             },
             {
-                "position": "20",
+                "pos":20, "position": "20",
                 "name": "Linker 3",
                 "labName": "YCe2060",
                 "category": "Peptide Linker",
@@ -1764,7 +1786,7 @@
                 "srcFile": "HC_Kan_Linker3_p20dna.dna"
             },
             {
-                "position": "20",
+                "pos":20, "position": "20",
                 "name": "p2A-Porcine teschovirus-1 ",
                 "labName": "YCe2064",
                 "category": "2A-like peptide sequences ",
@@ -1776,7 +1798,7 @@
                 "srcFile": "HC_Kan_p2A_p20.dna"
             },
             {
-                "position": "20",
+                "pos":20, "position": "20",
                 "name": "IRES2",
                 "labName": "YCe3752",
                 "category": "IRES (Internal Ribosome Entry Sequence)",
@@ -1789,7 +1811,7 @@
     {
         "parts": [
             {
-                "position": "21",
+                "pos":21, "position": "21",
                 "name": "TET-1",
                 "labName": "YCe3935",
                 "category": "Effector Domain ",
@@ -1801,7 +1823,7 @@
                 "srcFile": "HC_Kan_TET1_p21.dna"
             },
             {
-                "position": "21",
+                "pos":21, "position": "21",
                 "name": "GCN4-v4",
                 "labName": "YCe4065",
                 "category": "Dimerization",
@@ -1813,7 +1835,7 @@
                 "srcFile": "HC_Kan_GCN4-v4_p21.dna"
             },
             {
-                "position": "21",
+                "pos":21, "position": "21",
                 "name": "DmrA",
                 "labName": "YCe1905",
                 "category": "Dimerization domain",
@@ -1825,7 +1847,7 @@
                 "srcFile": "HC_Kan_DmrA_p21.dna"
             },
             {
-                "position": "21",
+                "pos":21, "position": "21",
                 "name": "mKate2",
                 "labName": "YCe2784",
                 "category": "Fluorescent Reporter",
@@ -1837,7 +1859,7 @@
                 "srcFile": "HC_Kan_mKate2_p21.dna"
             },
             {
-                "position": "21",
+                "pos":21, "position": "21",
                 "name": "mNeoGreen",
                 "labName": "YCe3153",
                 "category": "Fluorescent Reporter",
@@ -1849,7 +1871,7 @@
                 "srcFile": "HC_Kan_mNeoGreen_p21.dna"
             },
             {
-                "position": "21",
+                "pos":21, "position": "21",
                 "name": "mRuby2",
                 "labName": "YCe3155",
                 "category": "Fluorescent Reporter",
@@ -1861,7 +1883,7 @@
                 "srcFile": "HC_Kan_mRuby2_p21.dna"
             },
             {
-                "position": "21",
+                "pos":21, "position": "21",
                 "name": "mTagBFP2",
                 "labName": "YCe3157",
                 "category": "Fluorescent Reporter",
@@ -1873,7 +1895,7 @@
                 "srcFile": "HC_Kan_mTagBFP2_p21.dna"
             },
             {
-                "position": "21",
+                "pos":21, "position": "21",
                 "name": "PuroR",
                 "labName": "YCe2040",
                 "category": "Selection Markers",
@@ -1885,7 +1907,7 @@
                 "srcFile": "HC_Kan_PuroR_p21.dna"
             },
             {
-                "position": "21",
+                "pos":21, "position": "21",
                 "name": "DMN3A",
                 "labName": "YCe4402",
                 "category": "Effector Domain ",
@@ -1894,7 +1916,7 @@
                 "sequence": "TGGACCCAGCCGCCTGCAGATGTTCTTCGCCAACAACCACGACCAGGAGTTCGACCCTCCTAAGGTGTACCCTCCCGTGCCTGCCGAGAAGCGCAAGCCCATCCGCGTGCTGAGCCTGTTCGACGGCATCGCCACCGGCCTGCTGGTGCTGAAGGACCTGGGCATCCAGGTGGACCGCTACATCGCCAGCGAGGTGTGCGAGGACAGCATCACCGTGGGCATGGTGCGCCACCAGGGCAAGATCATGTACGTGGGCGACGTGCGCAGCGTGACCCAGAAGCACATCCAGGAGTGGGGACCCTTCGACCTGGTGATCGGCGGCAGCCCCTGCAACGACCTGAGCATCGTGAACCCTGCCCGCAAGGGCCTGTACGAGGGCACCGGCAGACTGTTCTTCGAGTTCTACCGCCTGCTGCACGACGCCAGACCCAAGGAGGGCGACGACAGACCCTTCTTCTGGCTGTTCGAAAACGTGGTGGCCATGGGCGTGAGCGACAAGAGAGACATCAGCCGCTTCCTGGAGAGCAACCCTGTGATGATCGACGCCAAGGAGGTGAGCGCTGCCCACCGCGCTCGCTACTTCTGGGGCAACCTGCCTGGCATGAACCGCCCTCTGGCTAGCACCGTGAACGACAAGCTGGAGCTGCAGGAGTGCCTGGAGCACGGCAGAATCGCCAAGTTCAGCAAGGTGCGCACCATCACCACCCGCAGCAACAGCATCAAGCAGGGCAAGGACCAGCACTTCCCCGTGTTCATGAACGAGAAGGAAGACATCCTGTGGTGCACCGAGATGGAAAGAGTGTTCGGCTTCCCTGTGCACTACACCGACGTGAGCAACATGAGCCGCCTGGCCAGACAGCGCCTGCTGGGCCGCAGCTGGAGCGTGCCTGTGATCCGCCACCTGTTCGCCCCTCTGAAGGAGTACTTCGCCTGCGTGTGATAAGTTG"
             },
             {
-                "position": "21",
+                "pos":21, "position": "21",
                 "name": "KRAB",
                 "labName": "YCe4403",
                 "category": "Effector Domain ",
@@ -1906,7 +1928,7 @@
                 "srcFile": "HC_Kan_KRAB_p21.dna"
             },
             {
-                "position": "21",
+                "pos":21, "position": "21",
                 "name": "p65-HSF1",
                 "labName": "YCe4404",
                 "category": "Effector Domain ",
@@ -1918,7 +1940,7 @@
                 "srcFile": "HC_Kan_p65-HSF1_p21.dna"
             },
             {
-                "position": "21",
+                "pos":21, "position": "21",
                 "name": "VPR",
                 "labName": "YCe4405",
                 "category": "Effector Domain ",
@@ -1930,7 +1952,7 @@
                 "srcFile": "HC_Kan_VPR_p21.dna"
             },
             {
-                "position": "21",
+                "pos":21, "position": "21",
                 "name": "LSD1",
                 "labName": "YCe4463",
                 "category": "Effector Domain ",
@@ -1946,7 +1968,7 @@
     {
         "parts": [
             {
-                "position": "22",
+                "pos":22, "position": "22",
                 "name": "PGK polyA",
                 "labName": "YCe1901",
                 "category": "PolyA transcription terminators",
@@ -1962,7 +1984,7 @@
     {
         "parts": [
             {
-                "position": "23",
+                "pos":23, "position": "23",
                 "name": "Insulator_FB",
                 "labName": "YCe3151",
                 "category": "Insulators",
@@ -1978,7 +2000,7 @@
     {
         "parts": [
             {
-                "position": "24",
+                "pos":24, "position": "24",
                 "name": "3'HA-hAAVS1",
                 "labName": "YCe3324",
                 "category": "Homology Arm",
@@ -1987,7 +2009,7 @@
                 "sequence": "CACGCCGCCTCTACTCCCTTTCTCTTTCTCCATCCTTCTTTCCTTAAAGAGTCCCCAGTGCTATCTGGGACATATTCCTCCGCCCAGAGCAGGGTCCCGCTTCCCTAAGGCCCTGCTCTGGGCTTCTGGGTTTGAGTCCTTGGCAAGCCCAGGAGAGGCGCTCAGGCTTCCCTGTCCCCCTTCCTCGTCCACCATCTCATGCCCCTGGCTCTCCTGCCCCTTCCCTACAGGGGTTCCTGGCTCTGCTCTTCAGACTGAGCCCCGTTCCCCTGCATCCCCGTTCCCCTGCATCCCCCTTCCCCTGCATCCCCCAGAGGCCCCAGGCCACCTACTTGGCCTGGACCCCACGAGAGGCCACCCCAGCCCTGTCTACCAGGCTGCCTTTTGGGTGGATTCTCCTCCAACTGTGGGGTGACTGCTTGGCAAACTCACTCTTCGGGGTATCCCAGGAGGCCTGGAGCATTGGGGTGGGCTGGGGTTCAGAGAGGAGGGATTCCCTTCTCAGGTTACGTGGCCAAGAAGCAGGGGAGCTGGGTTTGGGTCAGGTCTGGGTGTGGGGTGACCAGCTTATGCTGTTTGCCCAGGACAGCCTAGTTTTAGCACTGAAACCCTCAGTCTAATGGTTACAAATAAAGCAACTG"
             },
             {
-                "position": "24",
+                "pos":24, "position": "24",
                 "name": "3'-ITR-PB",
                 "labName": "YCe2750",
                 "category": "inverted terminal repeat sequences (ITRs)",
@@ -2003,7 +2025,7 @@
     {
         "parts": [
             {
-                "position": "25",
+                "pos":25, "position": "25",
                 "name": "SV40-ORI",
                 "labName": "YCe1891",
                 "category": "Episomal elements",

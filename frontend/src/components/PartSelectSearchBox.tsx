@@ -48,7 +48,7 @@ class PartSelectSearchBox extends React.Component<IProps, IState> {
     }
   }
   public render() {
-    const options = this.state.filteredPartNames.map(d => <Option key={d._id}>{`${d.name}(${d.labName})`}</Option>);
+    const options = this.state.filteredPartNames.map(d => <Option key={d._id} value={d._id}>{`${d.name}(${d.labName})`}</Option>);
     return <Select
         showSearch
         labelInValue

@@ -60,9 +60,24 @@ export const partDefinitions = {
       type: PaginationArgType, 
         defaultValue: { offset: 0, first: 10 } 
       },
+    posFilter: {
+      type: GraphQLString,
+      defaultValue: '',
+    },
+    categoryFilter: {
+      type: GraphQLString,
+      defaultValue: '',
+    }
   },
   resolve (root, params, options) {
-    return PartDefinition.find({}).skip(params.pagination.offset).limit(params.pagination.first).exec();
+    const condition:any = {};
+    if(params.posFilter!==null) {
+      condition['part.position'] = params.posFilter;
+    }
+    if(params.categoryFilter!==null && params.categoryFilter!=='All' ) {
+      condition['part.category'] = params.categoryFilter;
+    }
+    return PartDefinition.find(condition).skip(params.pagination.offset).limit(params.pagination.first).exec();
   }
 }
 

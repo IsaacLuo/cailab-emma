@@ -66,7 +66,7 @@ class MainPage extends React.Component<IProps, IState> {
   public render() {
     if(this.props.currentUser._id !== '') {
       console.log('logged in, redirect');
-      return <Redirect to='/projects'/>
+      return <Redirect to='/dashboard'/>
     } else {
       return <Panel>
         <RectDiaglog>

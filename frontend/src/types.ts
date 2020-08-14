@@ -149,6 +149,8 @@ export interface IPartsTableState {
   first: number;
   offset: number;
   count:number;
+  posFilter: string|null;
+  categoryFilter: string|null;
 }
 
 export interface IPlatesTableState {

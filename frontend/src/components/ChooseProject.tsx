@@ -249,9 +249,9 @@ class ChooseProject extends React.Component<IProps, IState> {
     
   }
 
-  private onChangeFileName = (event: React.FormEvent<FormControlProps>) => {
-    const projectName = (event.target as FormControlProps).value!;
-    this.setState({projectName});
+  private onChangeFileName = (event:any) => {
+    const projectName = (event.target as FormControlProps).value! as string|undefined;
+    if (projectName) this.setState({projectName});
   }
   private async getProjectList() {
     this.props.getMyProjects();

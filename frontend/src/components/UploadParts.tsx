@@ -47,7 +47,7 @@ class UploadParts extends React.Component<IProps, IState> {
     return (
       <Panel>
         <div style={{marginTop:30}}>
-        <h3>create a project</h3>
+        <h3>create a new part</h3>
 
         <NewPartForm/>
         <PartsTable/>

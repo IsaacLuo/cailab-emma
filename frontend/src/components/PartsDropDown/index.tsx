@@ -13,9 +13,12 @@ import {
 import {Button, Breadcrumb} from 'react-bootstrap';
 import styled from 'styled-components';
 import PART_NAMES from '../../partNames';
-import { AutoComplete, Input, Icon } from 'antd';
+import { AutoComplete, Input } from 'antd';
 import { positionNames } from '../../utilities/positionNames';
 import { PUT_PART_INTO_POSITION } from './actions';
+
+import {SearchOutlined} from '@ant-design/icons';
+
 
 
 const Panel = styled.div`
@@ -187,11 +190,11 @@ class PartsDropDown extends React.Component<IProps, IState> {
                     </AutoComplete.Option>)
                 }
                 placeholder="input here"
-                optionLabelProp="value"
+                // optionLabelProp="value"
                 onSearch={this.handleSearchPartName.bind(this, i)}
                 onSelect={this.handleSelectPart.bind(this, i)}
               >
-                <Input suffix={<Icon type="search" className="certain-category-icon" />} />
+                <Input suffix={<SearchOutlined className="certain-category-icon" />} />
               </AutoComplete>
               <PartDetailDescription>
                 {part.partDefinition && `${part.partDefinition.part.name} (${part.partDefinition.part.labName}):  ${part.partDefinition.part.comment}`}

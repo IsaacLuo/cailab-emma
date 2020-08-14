@@ -1,0 +1,66 @@
+{
+  "1": [
+    "Long terminal repeats (LTR)",
+    "Homology Arm",
+    "inverted terminal repeat sequences (ITRs)"
+  ],
+  "2": ["Insulators"],
+  "3": ["Promoters"],
+  "4": ["RNA regulatory sequences", "DNA binding element"],
+  "5": ["RNA regulatory sequences"],
+  "6": ["RNA regulatory sequences", "Peptide Tags", "Kozak sequence + ATG"],
+  "7": [
+    "RNA-Binding proteins",
+    "Transcriptional repressor",
+    "Reporter",
+    "Site-specific recombinases",
+    "CRISPR/Cas9 system",
+    "cDNA endogenous Transcription Factor",
+    "Fluorescent Reporter"
+  ],
+  "8a": ["Peptide Tags", "2A-like peptide sequences ", "Peptide Linker"],
+  "8b": ["IRES (Internal Ribosome Entry Sequence)"],
+  "9": [
+    "Structural proteins",
+    "Effector Domain ",
+    "Bioluminescent Reporters",
+    "Dimerization domain",
+    "Reporter",
+    "Selection Markers",
+    "cDNA endogenous Transcription Factor",
+    "Fluorescent Reporter"
+  ],
+  "10": ["RNA regulatory sequences", "Long terminal repeats (LTR)"],
+  "11": ["PolyA transcription terminators"],
+  "12": [],
+  "13": [],
+  "14": ["Promoters"],
+  "15": ["Selection Markers"],
+  "16": ["PolyA transcription terminators"],
+  "17": ["unknown"],
+  "18": ["Promoters"],
+  "19": [
+    "Reporter",
+    "Transcription Factor ",
+    "CRISPR/Cas9 system",
+    "cDNA endogenous Transcription Factor",
+    "Fluorescent Reporter"
+  ],
+  "20": [
+    "IRES (Internal Ribosome Entry Sequence)",
+    "Peptide Tags",
+    "2A-like peptide sequences ",
+    "Peptide Linker"
+  ],
+  "21": [
+    "Effector Domain ",
+    "Dimerization domain",
+    "Dimerization",
+    "Selection Markers",
+    "Fluorescent Reporter"
+  ],
+  "22": ["PolyA transcription terminators"],
+  "23": ["Insulators"],
+  "24": ["inverted terminal repeat sequences (ITRs)", "Homology Arm"],
+  "25": ["Episomal elements"]
+}

@@ -13,6 +13,7 @@ import store from './redux/store';
 import {detect} from 'detect-browser';
 import MainPage from './components/MainPage';
 import ProjectWizard from './components/ProjectWizard';
+import {StoreContext} from 'redux-react-hook';
 
 import 'react-notifications/lib/notifications.css';
 import { NotificationContainer } from 'react-notifications';
@@ -25,6 +26,27 @@ import PartList from './components/PartList';
 import 'antd/dist/antd.css';
 import PlateMapEditor from './components/PlateMapEditor';
 import PlatesTable from './components/PlatesTable';
+import Dashboard from './components/Dashboard';
+import styled from 'styled-components';
+import PartsDecisions from './components/PartsDecisions';
+import { Menu } from 'antd';
+
+const AppArea = styled.div`
+  display:flex;
+  flex-direction:column;
+  min-height: 98vh;
+`;
+
+const AppAreaMain = styled.div`
+  flex-grow: 1;
+`;
+
+const FootBar = styled.footer`
+  background-color: #001529;
+  color: #fff;
+  height: 100px;
+  text-align: center;
+`
 
 interface IState {
   currentUser: IUserInfo;
@@ -58,13 +80,17 @@ class App extends Component<any, IState> {
     }
 
     return (
+      <StoreContext.Provider value={store}>
       <Provider store={store}>
       <Router>
       <Route path='/' exact={true} component = {MainPage}/>
       <Route path='/:anything' render={()=>
         <React.Fragment>
-          <NotificationContainer/>
+        <NotificationContainer/>
+        <AppArea>  
           <UserBar/>
+          <AppAreaMain>
+          <Route path='/dashboard' exact={true} component = {Dashboard}/>
           <Route path='/projects' exact={true} component = {ChooseProject}/>
           <Route
             path='/project/:id'
@@ -116,18 +142,31 @@ class App extends Component<any, IState> {
             component = {PlateMapEditor}
           />
 
-<Route
+          <Route
             path='/plates'
             component = {PlatesTable}
           />
+
+          <Route
+            path='/partsDecisions'
+            component = {PartsDecisions}
+          />
           
+          </AppAreaMain>
+          <FootBar>
+            foot bar
+          </FootBar>
+          
+        </AppArea>
         </React.Fragment>
       }/>
       
       
 
     </Router>
-    </Provider>);
+    </Provider>
+    </StoreContext.Provider>
+    );
   }
 
   private onFinishStep1 = (result: any) => {

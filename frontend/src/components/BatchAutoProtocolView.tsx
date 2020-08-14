@@ -12,7 +12,9 @@ import { GET_ASSEMBLY_LIST, GET_PLATE_LIST, GET_PLATE_DETAIL } from '../redux/ac
 import papaparse from 'papaparse'
 import { generateEchoSheet, generateMasterMixEchoSheet, calcDNAVolume, calcDNAMass } from '../generateEchoSheet';
 import NumericInput from "react-numeric-input";
-import { AutoComplete, Input, Icon } from 'antd';
+import { AutoComplete, Input } from 'antd';
+
+import {SearchOutlined} from '@ant-design/icons';
 
 
 // const MyDropzone = styled(Dropzone)`
@@ -382,7 +384,7 @@ class BatchAutoProtocolView extends React.Component<IProps, IState> {
         onSearch={this.handleSearchPlateName}
         onSelect={this.handleSelectPlate}
       >
-        <Input suffix={<Icon type="search" className="certain-category-icon" />} />
+        <Input suffix={<SearchOutlined className="certain-category-icon" />} />
       </AutoComplete>
 
       {/* <this.MyDropzone/> */}

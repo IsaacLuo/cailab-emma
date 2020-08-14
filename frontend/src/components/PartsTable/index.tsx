@@ -8,7 +8,7 @@ import { IUserInfo, IStoreState } from '../../types';
 import { 
   GET_PARTS,
 } from './actions';
-import { Table} from 'antd';
+import { Table, Tabs} from 'antd';
 
 interface IProps {
   currentUser: IUserInfo;
@@ -16,8 +16,10 @@ interface IProps {
   first:number;
   count:number;
   parts: any;
+  posFilter?: string;
+  categoryFilter?: string;
 
-  dispatchGetParts: (offset:number, first:number) => void;
+  dispatchGetParts: (offset:number, first:number,posFilter?:string, categoryFilter?:string) => void;
 }
 interface IState {
   parts: any;
@@ -29,10 +31,12 @@ const mapStateToProps = (state: IStoreState) => ({
   offset: state.partsTable.offset,
   first: state.partsTable.first,
   count: state.partsTable.count,
+  posFilter: state.partsTable.posFilter,
+  categoryFilter: state.partsTable.categoryFilter,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  dispatchGetParts: (offset:number, first:number, ) => dispatch({type:GET_PARTS, data:{offset, first}}),
+  dispatchGetParts: (offset:number, first:number, posFilter?:string, categoryFilter?:string) => dispatch({type:GET_PARTS, data:{offset, first, posFilter, categoryFilter}}),
 });
 
 class PartsTable extends React.Component<IProps, IState> {
@@ -48,12 +52,19 @@ class PartsTable extends React.Component<IProps, IState> {
     }
   }
 
+  public componentWillReceiveProps(np:IProps) {
+    this.props.dispatchGetParts(this.props.offset, this.props.first, this.props.posFilter, this.props.categoryFilter);
+  }
+
   public componentDidMount() {
-    this.props.dispatchGetParts(this.props.offset, this.props.first);
+    this.props.dispatchGetParts(this.props.offset, this.props.first, this.props.posFilter, this.props.categoryFilter);
+  }
+
+  public componentWillUpdate() {
+    
   }
 
   public render() {
-
     const { Column } = Table;
     const {count, first, offset} = this.props;
     const pager = {total: count, pageSize: first, current: Math.floor(offset/first)+1}
@@ -61,20 +72,20 @@ class PartsTable extends React.Component<IProps, IState> {
     return (
       <React.Fragment>
       <Table 
-        dataSource={this.props.parts} 
+        dataSource={this.state.parts} 
         pagination={pager} 
         onChange={this.onChangeTable}
         rowKey={(record:any) => record._id}
       >
-        <Column title="Pos" dataIndex="part.position" key="part.position"/>
-        <Column title="Name" dataIndex="part.name" key="part.name"/>
-        <Column title="labName" dataIndex="part.labName" key="part.labName"/>
-        <Column title="category" dataIndex="part.category" key="part.category"/>
-        <Column title="comment" dataIndex="part.comment" key="part.comment"/>
+        <Column title="Pos" dataIndex="position" key="position"/>
+        <Column title="Name" dataIndex="name" key="name"/>
+        <Column title="labName" dataIndex="labName" key="labName"/>
+        <Column title="category" dataIndex="category" key="category"/>
+        <Column title="comment" dataIndex="comment" key="comment"/>
         <Column
           title="Action"
           key="action"
-          render={(text, record) => (
+          render={(text, record:any) => (
             <span>
             </span>
           )}
@@ -89,4 +100,4 @@ class PartsTable extends React.Component<IProps, IState> {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PartsTable);
+export default connect(mapStateToProps, mapDispatchToProps)(PartsTable as any);

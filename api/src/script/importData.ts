@@ -16,8 +16,8 @@ async function main() {
         conf.secret.mongoDB.url,
         {
           useNewUrlParser: true,
-          user: conf.secret.mongoDB.username,
-          pass: conf.secret.mongoDB.password, 
+          // user: conf.secret.mongoDB.username,
+          // pass: conf.secret.mongoDB.password, 
         }
       );
       break;
@@ -46,6 +46,7 @@ async function main() {
         updatedAt: now,
         permission: 0x666,
         part: {
+          pos: p.pos,
           position: p.position,
           len:p.len,
           name: p.name,
