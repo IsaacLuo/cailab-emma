@@ -29,6 +29,8 @@ import PlatesTable from './components/PlatesTable';
 import Dashboard from './components/Dashboard';
 import styled from 'styled-components';
 import PartsDecisions from './components/PartsDecisions';
+import PlatesDecisions from './components/PlatesDecisions';
+import ProjectsDecisions from './components/ProjectsDecisions'
 import { Menu } from 'antd';
 
 const AppArea = styled.div`
@@ -150,6 +152,16 @@ class App extends Component<any, IState> {
           <Route
             path='/partsDecisions'
             component = {PartsDecisions}
+          />
+
+          <Route
+            path='/platesDecisions'
+            component = {PlatesDecisions}
+          />
+
+          <Route
+            path='/projectDecisions'
+            component= {ProjectsDecisions}
           />
           
           </AppAreaMain>

@@ -1,8 +1,41 @@
 import * as React from 'react'
 import { Form, Input, Button, Select } from 'antd';
-import { newPart } from './saga';
 import { Tooltip } from '@material-ui/core';
 import { QuestionCircleOutlined } from '@ant-design/icons';
+import { useDispatch } from 'react-redux';
+import { NEW_PART } from './actions';
+
+const PART_4BP = {
+  '1': ['TAGG', 'ATGG'], //1
+  '2': ['ATGG', 'GACT'], //2
+  '3': ['GACT', 'GGAC'], //3
+  '4': ['GGAC', 'TCCG'], //4
+  '5': ['TCCG', 'CCAG'], //6
+  '6': ['CCAG', 'CAGC'],
+  '7': ['CAGC', 'AGGC'],
+  '8': ['AGGC', 'GCGT'],
+  '8a': ['AGGC', 'ATCC'],
+  '8b': ['ATCC', 'GCGT'],
+  '9': ['GCGT', 'TGCT'],
+  '10': ['TGCT', 'GGTA'],
+  '11': ['GGTA', 'CGTC'],
+  '12': ['CGTC', 'TCAC'],
+  '13': ['TCAC', 'CTAC'],
+  '14': ['CTAC', 'GCAA'],
+  '15': ['GCAA', 'CCCT'],
+  '16': ['CCCT', 'GCTC'],
+  '17': ['GCTC','CGTC'],
+  '18': ['CGTC', 'GACG'],
+  '19': ['GTGC', 'AGCG'],
+  '20': ['AGCG', 'TGGA'],
+  '21': ['TGGA', 'GTTG'],
+  '22': ['GTTG', 'CGAA'],
+  '23': ['CGAA', 'CACG'],
+  '24': ['CACG', 'ACTG'],
+  '25': ['ACTG', 'ACGA'],
+};
+
+const PART_4BP_KEYS = ['1', '2', '3', '4', '5', '6', '7', '8', '8a', '8b', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25'];
 
 const { Option } = Select;
 const layout = {
@@ -22,45 +55,18 @@ const tailLayout = {
 
 const NewPartForm = () => {
   const [form] = Form.useForm();
-
-  const onGenderChange = (value:any) => {
-    switch (value) {
-      case 'male':
-        form.setFieldsValue({
-          note: 'Hi, man!',
-        });
-        return;
-
-      case 'female':
-        form.setFieldsValue({
-          note: 'Hi, lady!',
-        });
-        return;
-
-      case 'other':
-        form.setFieldsValue({
-          note: 'Hi there!',
-        });
-    }
-  };
+  const dispatch = useDispatch();
 
   const onFinish = (values:any) => {
-    console.log(values);
+    dispatch({type:NEW_PART, data: values})
   };
 
   const onReset = () => {
     form.resetFields();
   };
 
-  const onFill = () => {
-    form.setFieldsValue({
-      note: 'Hello world!',
-      gender: 'male',
-    });
-  };
-
   return (
-    <Form {...layout} form={form} name="control-hooks" onFinish={onFinish}>
+    <Form {...layout} form={form} initialValues={{ position:'1' }} name="control-hooks" onFinish={onFinish}>
       <Form.Item
         name="position"
         label={ <span>Position&nbsp; <Tooltip title="from 1 to 23 (and 8a, 8b)">
@@ -73,46 +79,75 @@ const NewPartForm = () => {
           },
         ]}
       >
-        <Input />
+        <Select>
+          {PART_4BP_KEYS.map((v,i)=>
+            <Select.Option value={v} key={i}>{v}</Select.Option>
+          )}
+        </Select>
       </Form.Item>
       <Form.Item
-        name="gender"
-        label="Gender"
+        name="name"
+        label="Name"
         rules={[
           {
             required: true,
           },
         ]}
       >
-        <Select
-          placeholder="Select a option and change input text above"
-          onChange={onGenderChange}
-          allowClear
-        >
-          <Option value="male">male</Option>
-          <Option value="female">female</Option>
-          <Option value="other">other</Option>
-        </Select>
+        <Input/>
       </Form.Item>
       <Form.Item
-        noStyle
-        shouldUpdate={(prevValues, currentValues) => prevValues.gender !== currentValues.gender}
+        name="labName"
+        label="Lab Name"
+        rules={[
+          {
+            required: true,
+          },
+        ]}
       >
-        {({ getFieldValue }) =>
-          getFieldValue('gender') === 'other' ? (
-            <Form.Item
-              name="customizeGender"
-              label="Customize Gender"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          ) : null
-        }
+        <Input/>
+      </Form.Item>
+      <Form.Item
+        name="category"
+        label="Category"
+        rules={[
+          {
+            required: true,
+          },
+        ]}
+      >
+        <Input/>
+      </Form.Item>
+      <Form.Item
+        name="comment"
+        label="Comment"
+        rules={[
+          {
+            required: false,
+          },
+        ]}
+      >
+        <Input/>
+      </Form.Item>
+      <Form.Item
+        name="sequence"
+        label="Sequence"
+        rules={[
+          {
+            required: true,
+            validator: async(rule, value) => {
+              const overhangs = PART_4BP[form.getFieldValue('position') as keyof typeof PART_4BP];
+              const reg = new RegExp(`^${overhangs[0]}[A|T|C|G]+${overhangs[1]}$`,'i');
+              if (reg.test(value)) {
+                return Promise.resolve();
+              } else {
+                return Promise.reject(`the sequence should begin with ${overhangs[0]} and end with ${overhangs[1]}, full of AGCT and no spaces`);
+              }
+            }
+          },
+        ]}
+      >
+        <Input/>
       </Form.Item>
       <Form.Item {...tailLayout}>
         <Button type="primary" htmlType="submit">
@@ -120,9 +155,6 @@ const NewPartForm = () => {
         </Button>
         <Button htmlType="button" onClick={onReset}>
           Reset
-        </Button>
-        <Button type="link" htmlType="button" onClick={onFill}>
-          Fill form
         </Button>
       </Form.Item>
     </Form>

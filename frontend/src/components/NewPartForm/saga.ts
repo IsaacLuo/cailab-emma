@@ -4,6 +4,7 @@ import {call,put, takeLatest} from 'redux-saga/effects';
 import axios from 'axios';
 import conf from '../../conf';
 import { GET_PARTS } from '../PartsTable/actions';
+import { notification} from 'antd';
 
 export function* newPart(action:IAction) {
   try {
@@ -11,7 +12,8 @@ export function* newPart(action:IAction) {
     yield put({type: GET_PARTS, data:response.data});
     yield put({type: RESET_FORM, data:true});
   } catch (error) {
-    console.warn('unable to logout');
+    notification.error({message:'error in creating new parts', description:'could not send request to the server'});
+    console.warn('error in creating new parts');
   }
 }
 

@@ -11,7 +11,7 @@ import { IUserInfo,IStoreState } from '../types';
 
 //my components
 import NewPartForm from './NewPartForm'
-import PartsTable from './PartsTable';
+import PartTabs from './PartTabs';
 
 const Panel = styled.div`
   margin:30px;
@@ -50,7 +50,7 @@ class UploadParts extends React.Component<IProps, IState> {
         <h3>create a new part</h3>
 
         <NewPartForm/>
-        <PartsTable/>
+        <PartTabs/>
           
         </div>
       </Panel>

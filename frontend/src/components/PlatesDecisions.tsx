@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import {useDispatch, useMappedState} from 'redux-react-hook';
-import { Modal, Input, Progress, Button} from 'antd';
+import React from 'react';
+import {Button} from 'antd';
 import styled from 'styled-components'
-import { Row, Col, Divider } from 'antd';
+import { Row, Col} from 'antd';
 import { Link } from 'react-router-dom';
 
 const OperationPanel = styled.div`
@@ -33,57 +32,42 @@ const OperationBottomArea = styled.div`
   margin-bottom:20px;
 `
 
-const Dashboard = () => {
+const PlatesDecisions = () => {
   return <div style={{marginTop: 100}}>
     <Row gutter={40}>
-      <Col className="gutter-row" xs={0} md={0} lg={3} />
-      <Col className="gutter-row" xs={24} md={24} lg={6}>
+      <Col className="gutter-row" xs={0} md={0} lg={4} />
+      <Col className="gutter-row" xs={24} md={24} lg={8}>
         <OperationPanel>
           <OpeationHeader>
-            Parts
+            Browse Plates
           </OpeationHeader>
           <OperationDescription>
-            create some parts, prepare the components for the EMMA assembly
+            To see what plates do we have and what parts in it.
           </OperationDescription>
           <OperationBottomArea>
-            <Link to="/partsDecisions">
+            <Link to="/plates">
               <Button type='primary'>start</Button>
             </Link>
           </OperationBottomArea>
         </OperationPanel>
       </Col>
-      <Col className="gutter-row" xs={24} md={24} lg={6} >
+      <Col className="gutter-row" xs={24} md={24} lg={8} >
       <OperationPanel>
           <OpeationHeader>
-            Plates
+            Create A Plate
           </OpeationHeader>
           <OperationDescription>
-            Design a plate, put your parts in it, and ready for building a protocol for automatic assembly
+            Create a new plate and fill parts into it
           </OperationDescription>
           <OperationBottomArea>
-            <Link to="/platesDecisions">
+            <Link to="/plate/new">
               <Button type='primary'>start</Button>
             </Link>
           </OperationBottomArea>
         </OperationPanel>
-      </Col>
-      <Col className="gutter-row" xs={24} md={24} lg={6} >
-        <OperationPanel>
-            <OpeationHeader>
-              Projects
-            </OpeationHeader>
-            <OperationDescription>
-              Start your building process here.
-            </OperationDescription>
-            <OperationBottomArea>
-              <Link to="/projectDecisions">
-              <Button type='primary'>start</Button>
-              </Link>
-            </OperationBottomArea>
-          </OperationPanel>
       </Col>
     </Row>
   </div>
 }
 
-export default Dashboard;
+export default PlatesDecisions;
