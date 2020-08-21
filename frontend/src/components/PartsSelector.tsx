@@ -370,7 +370,17 @@ class PartSelector extends React.Component<IProps, IState> {
           {this.genParts()}
           {this.genSpecialParts()}
         </g>
-        <g transform={`translate(${this.baseX},${this.baseY + 300})`}>
+
+        <g transform={`translate(${this.baseX},${this.baseY + 200})`}>
+          <circle cx={10} cy={0} r={10} fill="#bfbfbf" stroke="black" strokeWidth={1}/>
+          <text x={25} y={0} alignmentBaseline="middle" >unselected</text>
+          <circle cx={10} cy={30} r={10} fill="#ffffcc" stroke="black" strokeWidth={1}/>
+          <text x={25} y={30} alignmentBaseline="middle">need to be selected</text>
+          <circle cx={10} cy={60} r={10} fill="#ccffcc" stroke="black" strokeWidth={1}/>
+          <text x={25} y={60} alignmentBaseline="middle">selected</text>
+        </g>
+        
+        <g transform={`translate(${this.baseX},${this.baseY + 350})`}>
           {this.genSelectedParts()}
         </g>
         <g id='part-selector' />
@@ -617,7 +627,8 @@ class PartSelector extends React.Component<IProps, IState> {
             strokeWidth='3'
           />
         }
-        {
+
+        {/* {
           partsProp[i].activated && !partsProp[i].selected &&
           <g>
             <path
@@ -630,7 +641,7 @@ class PartSelector extends React.Component<IProps, IState> {
               select
             </text>
           </g>
-        }
+        } */}
       </g>,
       );
   }

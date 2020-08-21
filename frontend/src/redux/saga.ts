@@ -84,7 +84,8 @@ export function* getCurrentUser(action: IAction) {
       fullName: 'guest',
       groups: ['guest'],
     }});
-    window.location.href = '/';
+    if (window.location.pathname!== '/')
+      window.location.pathname = '/';
   }
 }
 

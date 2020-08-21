@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import {useDispatch, useMappedState} from 'redux-react-hook';
-import { Modal, Input, Progress, Button} from 'antd';
+import React, { useState } from 'react';
+import {Button} from 'antd';
 import styled from 'styled-components'
-import { Row, Col, Divider } from 'antd';
+import { Row, Col} from 'antd';
 import { Link } from 'react-router-dom';
+import { Modal, Form, Input } from 'antd';
+import {CREATE_PROJECT} from '../redux/actions';
+import {useDispatch} from 'redux-react-hook';
+import { useHistory } from "react-router-dom";
 
 const OperationPanel = styled.div`
   background:#0092ff22;
@@ -34,6 +37,15 @@ const OperationBottomArea = styled.div`
 `
 
 const Dashboard = () => {
+
+  const [newProjectDlgVisible, setnewProjectDlgVisible] = useState(false);
+
+  const [projectName, setProjectName] = useState('');
+
+  const history = useHistory();
+
+  const dispatch = useDispatch();
+
   return <div style={{marginTop: 100}}>
     <Row gutter={40}>
       <Col className="gutter-row" xs={0} md={0} lg={3} />
@@ -55,15 +67,13 @@ const Dashboard = () => {
       <Col className="gutter-row" xs={24} md={24} lg={6} >
       <OperationPanel>
           <OpeationHeader>
-            Plates
+            Design
           </OpeationHeader>
           <OperationDescription>
-            Design a plate, put your parts in it, and ready for building a protocol for automatic assembly
+            Create your assembly
           </OperationDescription>
           <OperationBottomArea>
-            <Link to="/platesDecisions">
-              <Button type='primary'>start</Button>
-            </Link>
+            <Button type='primary' onClick={()=>setnewProjectDlgVisible(true)}>start</Button>
           </OperationBottomArea>
         </OperationPanel>
       </Col>
@@ -73,16 +83,35 @@ const Dashboard = () => {
               Projects
             </OpeationHeader>
             <OperationDescription>
-              Start your building process here.
+              Browse the projects you've created and shared by others
             </OperationDescription>
             <OperationBottomArea>
-              <Link to="/projectDecisions">
-              <Button type='primary'>start</Button>
+              <Link to="/projectList">
+                <Button type='primary'>start</Button>
               </Link>
             </OperationBottomArea>
           </OperationPanel>
       </Col>
     </Row>
+    <Modal
+      title="New Project"
+      visible={newProjectDlgVisible}
+      okButtonProps={{disabled:projectName === ''}}
+      onOk={async ()=>{
+        dispatch({type: CREATE_PROJECT, data:{name:projectName, history}});
+        setnewProjectDlgVisible(false);
+      }}
+      onCancel={()=>setnewProjectDlgVisible(false)}
+    >
+      <Form>
+        <Form.Item
+          label="Project Name"
+          name="projectName"
+        >
+        <Input value={projectName} onChange={(event)=>setProjectName(event.target.value)}/>
+      </Form.Item>
+    </Form>
+    </Modal>
   </div>
 }
 

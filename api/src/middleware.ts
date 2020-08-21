@@ -58,14 +58,21 @@ export default function middleware (app:koa) {
       switch (mongooseState) {
         case 3:
         case 0:
+          console.log(process.env.NODE_ENV);
+          if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === undefined) {
+          await mongoose.connect(
+            'mongodb://localhost:27017/emma_devel'
+          );
+          } else {
         await mongoose.connect(
-          conf.secret.mongoDB.url,
-          {
-            useNewUrlParser: true,
-            // user: conf.secret.mongoDB.username,
-            // pass: conf.secret.mongoDB.password, 
+            conf.secret.mongoDB.url,
+            {
+              useNewUrlParser: true,
+              user: conf.secret.mongoDB.username,
+              pass: conf.secret.mongoDB.password, 
+            }
+          );
           }
-        );
         break;
       }
     } catch(error) {
