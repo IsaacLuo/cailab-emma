@@ -58,7 +58,7 @@ const ProjectsDecisions = () => {
             projects you've created and shared by others
           </OperationDescription>
           <OperationBottomArea>
-            <Link to="/plates">
+            <Link to="/projectList">
               <Button type='primary'>start</Button>
             </Link>
           </OperationBottomArea>

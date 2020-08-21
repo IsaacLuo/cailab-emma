@@ -104,7 +104,7 @@ class GenerateProtocols extends React.Component<IProps, IState> {
     return (
       <Panel>
         <Breadcrumb>
-          <Breadcrumb.Item href='/projects'>Home</Breadcrumb.Item>
+          <Breadcrumb.Item href='/dashboard'>Home</Breadcrumb.Item>
           <Breadcrumb.Item active>select projects</Breadcrumb.Item>
         </Breadcrumb>
 

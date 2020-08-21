@@ -32,6 +32,7 @@ import PartsDecisions from './components/PartsDecisions';
 import PlatesDecisions from './components/PlatesDecisions';
 import ProjectsDecisions from './components/ProjectsDecisions'
 import { Menu } from 'antd';
+import ProjectList from './components/ProjectList';
 
 const AppArea = styled.div`
   display:flex;
@@ -163,7 +164,12 @@ class App extends Component<any, IState> {
             path='/projectDecisions'
             component= {ProjectsDecisions}
           />
-          
+
+          <Route
+            path='/projectList'
+            component= {ProjectList}
+          />
+
           </AppAreaMain>
           <FootBar>
             foot bar

@@ -1,5 +1,6 @@
 import * as React from 'react';
-import Button from 'react-bootstrap/Button';
+// import Button from 'react-bootstrap/Button';
+import {Button} from 'antd';
 import {SHORTCUTS} from '../graphElements';
 import { IProject, IStoreState, IConnector } from '../types';
 
@@ -19,6 +20,8 @@ import styled from 'styled-components';
 
 import PART_NAMES from '../partNames';
 import ProjectHistory from './ProjectHistory';
+
+const PART_ICON_COUNT = [3,2,1,1,1,2,1,3,3,1,2,1,1,1,1,1,1,1,1,1,4,1,1,1,2,1];
 
 const MyDocument = styled.div`
   margin-left:50px;
@@ -306,7 +309,7 @@ class PartSelector extends React.Component<IProps, IState> {
   public render() {
     return <div>
       <Breadcrumb>
-        <Breadcrumb.Item href='/projects'>Home</Breadcrumb.Item>
+        <Breadcrumb.Item href='/dashboard'>Home</Breadcrumb.Item>
         <Breadcrumb.Item active>step 1: Design a template ({this.props.preloadedProject.name})</Breadcrumb.Item>
       </Breadcrumb>
 
@@ -390,21 +393,22 @@ class PartSelector extends React.Component<IProps, IState> {
       {this.state.pathValid ?
       <div>
         <Link to={`/project/${(this.props.match.params as any).id}/step2`}>
-          <Button variant='primary' size='lg' onClick={this.onClickNext}>next</Button>
+          <Button type='primary' onClick={this.onClickNext}>next</Button>
         </Link>
       </div>
       :
       <div style={{textAlign: 'left'}}>
       </div>
       }
-      <Row>
+      <ProjectHistory/>
+      {/* <Row>
         <Col>
           <IconLegend/>
         </Col>
         <Col>
           <ProjectHistory/>
         </Col>
-      </Row>
+      </Row> */}
       </MyDocument>
     </div>;
   }
@@ -474,36 +478,39 @@ class PartSelector extends React.Component<IProps, IState> {
     // let x = this.baseX-w;
     if (partsProp.find((v) => v.activated && !v.selected)) {
       const requiredParts = this.partNames.filter((v, i) => partsProp[i].activated && !partsProp[i].selected);
-      return  <g>
-        <text x='0' y='-10'>
-          {`${requiredParts.length > 1 ? 'these parts' : 'this part'} must be selected `}
-        </text>
-        {requiredParts.map((partGroup, i) =>
-        <g
-          key={i}
-        >
-          {
-            partGroup.map((part, j) =>
-            <image
-              key={`${i}.${j}`}
-              x={w * i + 10}
-              y={j * 50 + 10}
-              width='30' height='30' xlinkHref={part.icon}
-            />)
-          }
-          <rect
-            x={w * i}
-            y={0}
-            width={w}
-            height={w * partGroup.length}
-            fill='#ffff0033'
-            stroke='black'
-            strokeWidth='1'
-          />
-        </g>,
-        )
-      }
-      </g>;
+      return <g><text x='0' y='-10'>
+            {`please select more parts`}
+          </text></g>
+    //   return  <g>
+    //     <text x='0' y='-10'>
+    //       {`${requiredParts.length > 1 ? 'these parts' : 'this part'} must be selected `}
+    //     </text>
+    //     {requiredParts.map((partGroup, i) =>
+    //     <g
+    //       key={i}
+    //     >
+    //       {
+    //         partGroup.map((part, j) =>
+    //         <image
+    //           key={`${i}.${j}`}
+    //           x={w * i + 10}
+    //           y={j * 50 + 10}
+    //           width='30' height='30' xlinkHref={part.icon}
+    //         />)
+    //       }
+    //       <rect
+    //         x={w * i}
+    //         y={0}
+    //         width={w}
+    //         height={w * partGroup.length}
+    //         fill='#ffff0033'
+    //         stroke='black'
+    //         strokeWidth='1'
+    //       />
+    //     </g>,
+    //     )
+    //   }
+    //   </g>;
     }
     const renderingParts = this.partNames.filter((v, i) => partsProp[i].activated && partsProp[i].selected);
     if (this.props.onNewPathGenerated) {
@@ -609,6 +616,20 @@ class PartSelector extends React.Component<IProps, IState> {
             stroke='black'
             strokeWidth='3'
           />
+        }
+        {
+          partsProp[i].activated && !partsProp[i].selected &&
+          <g>
+            <path
+              d = {`M ${w * i + 10} ${PART_ICON_COUNT[i]*w + 25} L ${w * i + w/2} ${PART_ICON_COUNT[i]*w + 10} L ${w * i + w - 10} ${PART_ICON_COUNT[i]*w + 25} M ${w * i + w/2} ${PART_ICON_COUNT[i]*w +10 } L ${w * i + w/2} ${PART_ICON_COUNT[i]*w + 35}`}
+              stroke='red'
+              strokeWidth='2'
+              fill='none'
+            />
+            <text x={w * i + w/2} y={PART_ICON_COUNT[i]*w + 40} textAnchor="middle" alignmentBaseline="hanging">
+              select
+            </text>
+          </g>
         }
       </g>,
       );

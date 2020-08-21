@@ -119,7 +119,7 @@ class Assemble extends React.Component<IProps, IState> {
 
     return <React.Fragment>
       <Breadcrumb>
-        <Breadcrumb.Item href='/projects'>Home</Breadcrumb.Item>
+        <Breadcrumb.Item href='/dashboard'>Home</Breadcrumb.Item>
         <Breadcrumb.Item href={`/project/${this.props.project._id}`}>step 1</Breadcrumb.Item>
         <Breadcrumb.Item href={`/project/${this.props.project._id}/step2`}>step 2</Breadcrumb.Item>
         <Breadcrumb.Item active>step 3: generate genbank ({this.props.project.name})</Breadcrumb.Item>

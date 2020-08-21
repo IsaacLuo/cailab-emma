@@ -275,7 +275,7 @@ class ProjectWizard extends React.Component<IProps, IState> {
     }
     return <React.Fragment>
       <Breadcrumb>
-        <Breadcrumb.Item href='/projects'>Home</Breadcrumb.Item>
+        <Breadcrumb.Item href='/dashboard'>Home</Breadcrumb.Item>
         <Breadcrumb.Item active>project wizard</Breadcrumb.Item>
       </Breadcrumb>
       <h1>Project Wizard ({this.state.projectName})</h1>
