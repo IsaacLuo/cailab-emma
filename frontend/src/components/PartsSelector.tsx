@@ -12,6 +12,8 @@ import {
   SAVE_PROJECT_HISTORY,
   SET_CURRENT_PROJECT,
   GET_ALL_CONNECTORS,
+  DELAY_SHOW_TOOL_TIP,
+  HIDE_TOOL_TIP,
 } from '../redux/actions';
 
 import IconLegend from './IconLegend';
@@ -69,12 +71,16 @@ interface IProps extends RouteComponentProps {
   preloadedProject: IProject;
   resetCount: number;
   connectors: IConnector[];
+  tooltipIcon: string|undefined;
+  tooltipTitle: string|undefined;
   onNewPathGenerated?: (newPath: any) => void;
   onClickNext?: (newPath: any) => void;
   onLoadProject: (projectId: string) => void;
   saveProjectHistory: (project: IProject) => void;
   onNewValidProjectGenerated: (project: IProject) => void;
   dispatchGetAllConnectors:()=>void;
+  dispatchShowToolTip:(partDescription:any)=>void;
+  dispatchHideToolTip: ()=>void;
 }
 interface IState {
   shortcuts: IShortcut[];
@@ -91,6 +97,8 @@ const mapStateToProps = (state: IStoreState) => ({
   // key: state.app.currentProject.updatedAt,
   resetCount: state.partSelector.resetCount,
   connectors: state.app.connectors,
+  tooltipIcon: state.app.tooltipIcon,
+  tooltipTitle: state.app.tooltipTitle,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -98,6 +106,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   saveProjectHistory: (project: IProject) => dispatch({type:SAVE_PROJECT_HISTORY, data: project}),
   onNewValidProjectGenerated: (project: IProject) => dispatch({type:SET_CURRENT_PROJECT, data: project}),
   dispatchGetAllConnectors: ()=>dispatch({type:GET_ALL_CONNECTORS}),
+  dispatchShowToolTip: (partDescription:any) => dispatch ({type:DELAY_SHOW_TOOL_TIP, data:partDescription}),
+  dispatchHideToolTip: () => dispatch ({type:HIDE_TOOL_TIP}),
+
 });
 
 class PartSelector extends React.Component<IProps, IState> {
@@ -318,7 +329,7 @@ class PartSelector extends React.Component<IProps, IState> {
         <h1>{this.props.preloadedProject.name}</h1>
       </MyDocument> */}
 
-      <svg width='1500' height='650'>
+      <svg width='1500' height='700'>
         <defs>
           <marker
             id='selected-arrow'
@@ -370,8 +381,20 @@ class PartSelector extends React.Component<IProps, IState> {
           {this.genParts()}
           {this.genSpecialParts()}
         </g>
-
-        <g transform={`translate(${this.baseX},${this.baseY + 200})`}>
+        {
+          this.props.tooltipIcon && this.props.tooltipTitle &&
+            <g transform={`translate(${this.baseX},${this.baseY + 180})`}>
+              <rect x={0} y={0}
+                width={500} height={30}
+                fill="#efef00"
+                strokeWidth={1}
+                stroke="black"
+              />
+              <image x={5} width={30} height={30} xlinkHref={this.props.tooltipIcon}/>
+              <text x={50} y={15} alignmentBaseline="central">{this.props.tooltipTitle}</text>
+            </g>
+        }
+        <g transform={`translate(${this.baseX},${this.baseY + 240})`}>
           <circle cx={10} cy={0} r={10} fill="#bfbfbf" stroke="black" strokeWidth={1}/>
           <text x={25} y={0} alignmentBaseline="middle" >unselected</text>
           <circle cx={10} cy={30} r={10} fill="#ffffcc" stroke="black" strokeWidth={1}/>
@@ -380,7 +403,7 @@ class PartSelector extends React.Component<IProps, IState> {
           <text x={25} y={60} alignmentBaseline="middle">selected</text>
         </g>
         
-        <g transform={`translate(${this.baseX},${this.baseY + 350})`}>
+        <g transform={`translate(${this.baseX},${this.baseY + 400})`}>
           {this.genSelectedParts()}
         </g>
         <g id='part-selector' />
@@ -401,7 +424,7 @@ class PartSelector extends React.Component<IProps, IState> {
         </InputGroup>
       </div> */}
       {this.state.pathValid ?
-      <div>
+      <div style={{marginBottom:50}}>
         <Link to={`/project/${(this.props.match.params as any).id}/step2`}>
           <Button type='primary' onClick={this.onClickNext}>next</Button>
         </Link>
@@ -599,15 +622,6 @@ class PartSelector extends React.Component<IProps, IState> {
       <g
         key={i}
       >
-        {
-          partGroup.filter((part,j)=>part.len!==2).map((part, j) =>
-          <image
-            key={`${i}.${j}`}
-            x={w * i + 10}
-            y={j * 50 + 10}
-            width='30' height='30' xlinkHref={part.icon}
-          />)
-        }
         <rect
           x={w * i}
           y={0}
@@ -620,6 +634,21 @@ class PartSelector extends React.Component<IProps, IState> {
           className='clickable'
           onClick={this.clickPart.bind(this, i)}
         />
+
+        {
+          partGroup.filter((part,j)=>part.len!==2).map((part, j) =>
+          <image
+            key={`${i}.${j}`}
+            x={w * i + 10}
+            y={j * 50 + 10}
+            width='30' height='30' xlinkHref={part.icon}
+            onClick={this.clickPart.bind(this, i)}
+            style={{cursor:'pointer'}}
+            onMouseEnter={()=>this.props.dispatchShowToolTip(PART_NAMES[i][j])}
+            onMouseLeave={()=>this.props.dispatchHideToolTip()}
+          />)
+        }
+        
         { partsProp[i].activated &&
           <path
             d = {`M ${w * i} -2 L ${w * i + w} -2`}
@@ -651,12 +680,7 @@ class PartSelector extends React.Component<IProps, IState> {
     const {partsProp} = this.state;
     
     return <g>
-      {parts.map((part, j)=><image
-            key={`${j}`}
-            x={50 * 7.5 + 10}
-            y={j * 50 + 60}
-            width='30' height='30' xlinkHref={part.icon}
-          />)}
+      
       <rect
           x={50 * 7}
           y={50}
@@ -669,6 +693,15 @@ class PartSelector extends React.Component<IProps, IState> {
           className='clickable'
           onClick={this.clickPart.bind(this, 7)}
         />
+      {parts.map((part, j)=><image
+            key={`${j}`}
+            x={50 * 7.5 + 10}
+            y={j * 50 + 60}
+            width='30' height='30' xlinkHref={part.icon}
+            style={{cursor:'pointer'}}
+            onMouseEnter={()=>this.props.dispatchShowToolTip(PART_NAMES[7][j+1])}
+            onMouseLeave={()=>this.props.dispatchHideToolTip()}
+          />)}
     </g>
   }
 

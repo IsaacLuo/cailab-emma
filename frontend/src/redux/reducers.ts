@@ -32,6 +32,8 @@ import {
   SET_ALL_CONNECTORS,
   SET_SHARED_PROJECTS,
   SET_PROJECT_PERMISSION,
+  SHOW_TOOL_TIP,
+  HIDE_TOOL_TIP,
 } from './actions';
 
 import partsTableReducer from '../components/PartsTable/reducer'
@@ -70,6 +72,8 @@ const DEFAULT_STATE: IAppState = {
   currentAvailableParts: [],
   currentPlateMap: [],
   connectors: [],
+  tooltipIcon: undefined,
+  tooltipTitle: undefined,
 };
 
 function appReducer(state: IAppState = DEFAULT_STATE, action: IAction) {
@@ -251,6 +255,19 @@ function appReducer(state: IAppState = DEFAULT_STATE, action: IAction) {
         myProjects,
       }
     }
+    case SHOW_TOOL_TIP:
+      const {icon, title} = action.data;
+      return {
+        ...state,
+        tooltipIcon: icon,
+        tooltipTitle: title,
+      }
+    case HIDE_TOOL_TIP:
+      return {
+        ...state,
+        tooltipIcon: undefined,
+        tooltipTitle: undefined,
+      }
   }
   return state;
 }

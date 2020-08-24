@@ -42,13 +42,15 @@ GET_SHARED_PROJECTS,
 SET_SHARED_PROJECTS,
 CLONE_PROJECT,
 SET_PROJECT_PERMISSION,
+DELAY_SHOW_TOOL_TIP,
+SHOW_TOOL_TIP,
 } from './actions';
 
 import STORE_PARTS from '../parts.json';
 
 import {IAction, IStoreState, IUserInfo} from '../types';
 // redux saga
-import {call, all, fork, put, takeLatest, select} from 'redux-saga/effects';
+import {call, all, fork, put, takeLatest, select, delay} from 'redux-saga/effects';
 // redux actions
 
 // other saga
@@ -460,11 +462,22 @@ export function* watchUsers() {
   yield takeLatest(SET_PROJECT_PERMISSION, setProjectPermission);
 }
 
+export function* delayShowTooltip(action:IAction) {
+  yield delay(500);
+  yield put({type:SHOW_TOOL_TIP, data:action.data});
+}
+
+export function* watchPartSelector() {
+  yield takeLatest(DELAY_SHOW_TOOL_TIP, delayShowTooltip);
+  
+}
+
 export default function* rootSaga() {
   yield all([
     fork(watchUsers),
     fork(watchPartsTable),
     fork(watchPlatesTable),
     fork(watchNewPartForm),
+    fork(watchPartSelector),
   ]);
 }

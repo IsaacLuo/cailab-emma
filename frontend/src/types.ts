@@ -136,6 +136,8 @@ export interface IAppState {
   currentPlateMap: IPlateMapItem[];
   currentAvailableParts: IPartDefinition[];
   connectors: IConnector[];
+  tooltipIcon: string|undefined;
+  tooltipTitle: string|undefined;
 }
 export interface IPartSelectorState {
   resetCount: number;
