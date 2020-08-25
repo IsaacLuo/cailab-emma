@@ -71,13 +71,13 @@ export const partDefinitions = {
   },
   resolve (root, params, options) {
     const condition:any = {};
-    if(params.posFilter!==null) {
+    if(params.posFilter!==null && params.posFilter!=='') {
       condition['part.position'] = params.posFilter;
     }
-    if(params.categoryFilter!==null && params.categoryFilter!=='All' ) {
+    if(params.categoryFilter!==null && params.categoryFilter!=='' &&  params.categoryFilter!=='All' ) {
       condition['part.category'] = params.categoryFilter;
     }
-    return PartDefinition.find(condition).skip(params.pagination.offset).limit(params.pagination.first).exec();
+    return PartDefinition.find(condition).skip(params.pagination.offset).limit(params.pagination.first).sort('part.name').exec();
   }
 }
 

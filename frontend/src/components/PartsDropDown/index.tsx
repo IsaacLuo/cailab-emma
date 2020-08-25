@@ -176,18 +176,19 @@ class PartsDropDown extends React.Component<IProps, IState> {
               <AutoComplete
                 className="auto-complete"
                 dropdownClassName="auto-compolete-dropdown"
-                dropdownMatchSelectWidth={true}
-                dropdownStyle={{ width: 300 }}
+                dropdownMatchSelectWidth={500}
+                style={{ width: 300 }}
                 size="large"
-                style={{ width: '100%' }}
-                dataSource={
+                // options = {[{value: 100}]}
+                options={
                   storeParts
                   .filter((sample:any)=>sample && sample.part.position === positionNames[i])
                   .filter((sample:any)=> !this.state.searchString[i] || sample.part.name.toLowerCase().indexOf(this.state.searchString[i]) >= 0)
-                  .map((sample:any,j:number) => 
-                    <AutoComplete.Option value={sample.part.name as string} key={sample._id as string}>
-                      {sample.part.name}
-                    </AutoComplete.Option>)
+                  .map((sample:any,j:number) => {
+                    // <AutoComplete.Option value={sample.part.name as string} key={sample._id as string}>
+                    return {value: sample.part.name}
+                    // </AutoComplete.Option>
+                  })
                 }
                 placeholder="input here"
                 // optionLabelProp="value"
