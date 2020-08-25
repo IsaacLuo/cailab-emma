@@ -8,7 +8,8 @@ import { IUserInfo, IStoreState } from '../../types';
 import { 
   GET_PARTS,
 } from './actions';
-import { Table, Tabs} from 'antd';
+import { Table, Tabs, Button, Modal } from 'antd';
+import { BarsOutlined } from '@ant-design/icons';
 
 interface IProps {
   currentUser: IUserInfo;
@@ -87,6 +88,22 @@ class PartsTable extends React.Component<IProps, IState> {
           key="action"
           render={(text, record:any) => (
             <span>
+              <Button type="link"
+                onClick={()=>{
+                  Modal.info({
+                    title: `sequence of ${record.name}`,
+                    width: 800,
+                    content: (
+                      <div>
+                        <p>{record.sequence}</p>
+                      </div>
+                    ),
+                    onOk() {},
+                  });
+                }}
+              >
+              <BarsOutlined />sequence
+              </Button>
             </span>
           )}
         />

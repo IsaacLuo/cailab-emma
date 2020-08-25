@@ -145,8 +145,8 @@ class Assemble extends React.Component<IProps, IState> {
                   <RedSpan>
                     {v.sequence.substr(0,4)}
                   </RedSpan>
-                  {/* {v.sequence.substring(4, v.sequence.length-4)} */}
-                    ...({v.sequence.length-8} bp)...
+                  {v.sequence.substring(4, v.sequence.length-4)}
+                    {/* ...({v.sequence.length-8} bp)... */}
                   <RedSpan>
                     {v.sequence.substr(v.sequence.length-4,4)}
                   </RedSpan>

@@ -27,6 +27,7 @@ function* getParts(action:IAction) {
     category
     subCategory
     comment
+    sequence
 	}
 }}`,
   variables: {

@@ -186,7 +186,7 @@ class PartsDropDown extends React.Component<IProps, IState> {
                   .filter((sample:any)=> !this.state.searchString[i] || sample.part.name.toLowerCase().indexOf(this.state.searchString[i]) >= 0)
                   .map((sample:any,j:number) => {
                     // <AutoComplete.Option value={sample.part.name as string} key={sample._id as string}>
-                    return {value: sample.part.name}
+                    return {value: sample.part.name, key:sample._id}
                     // </AutoComplete.Option>
                   })
                 }
@@ -242,6 +242,7 @@ class PartsDropDown extends React.Component<IProps, IState> {
 
   private handleSelectPart = (pos:number, value:any, option:any) => {
     const id = option.key;
+    console.log(pos, value, option);
     this.props.dispatchPutPartIntoPosition(pos, id);
   }
   

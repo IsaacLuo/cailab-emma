@@ -9,8 +9,9 @@ import { IUserInfo,IStoreState } from '../../types';
 import { 
   GET_PLATES,
 } from './actions';
-import { Table} from 'antd';
+import { Table, Button} from 'antd';
 import { wellIdToWellName } from '../../utilities/wellIdConverter';
+import { BarsOutlined } from '@ant-design/icons';
 
 interface IProps {
   currentUser: IUserInfo;
@@ -85,6 +86,7 @@ class PartsTable extends React.Component<IProps, IState> {
           key="action"
           render={(text, record) => (
             <span>
+
             </span>
           )}
         />
