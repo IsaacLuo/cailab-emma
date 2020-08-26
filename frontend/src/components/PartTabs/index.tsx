@@ -16,6 +16,7 @@ import tabs from '../../tabs.json';
 import PartsTable from '../PartsTable';
 import styled from 'styled-components';
 import { useMappedState } from 'redux-react-hook';
+import PART_NAMES from '../../partNames';
 
 const Panel = styled.div`
 display:flex;
@@ -39,15 +40,22 @@ const PartTabs = () => {
     <React.Fragment>
     <div>
       <MessageHeader>Select a position and category</MessageHeader>
-    <Tabs defaultActiveKey="1" onChange={(e)=>dispatch({type:SET_ACTIVE_POSITION, data:e})}>
-      {POSITIONS.map((posName:string) => (
-        <Tabs.TabPane tab={posName} key={posName}>
+    <Tabs defaultActiveKey="1" onChange={(e)=>dispatch({type:SET_ACTIVE_POSITION, data:e})}
+    >
+      {POSITIONS.map((posName:string, i:number) => (
+        <Tabs.TabPane tab={
+        <div>
+          <div><img src={PART_NAMES[i][0].icon} width={20} height={20}/></div>
+          <div style={{textAlign:'center'}}>{posName}</div>
+        </div>
+        } key={posName}>
         </Tabs.TabPane>
       ))}
     </Tabs>
     <Panel>
       <div>
-        <Tabs tabPosition="left" defaultActiveKey="All" onChange={(e)=>dispatch({type:SET_ACTIVE_CATEGORY, data:e})}>
+        <Tabs tabPosition="left" defaultActiveKey="All" onChange={(e)=>dispatch({type:SET_ACTIVE_CATEGORY, data:e})}
+        >
           {
             partsTableState.posFilter && 
           (
