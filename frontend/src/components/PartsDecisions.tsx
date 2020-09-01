@@ -3,6 +3,7 @@ import {Button} from 'antd';
 import styled from 'styled-components'
 import { Row, Col} from 'antd';
 import { Link } from 'react-router-dom';
+import {Breadcrumb} from 'react-bootstrap';
 
 const OperationPanel = styled.div`
   background:#0092ff22;
@@ -33,7 +34,12 @@ const OperationBottomArea = styled.div`
 `
 
 const PartsDecisions = () => {
-  return <div style={{marginTop: 100}}>
+  return <React.Fragment>
+  <Breadcrumb>
+    <Breadcrumb.Item href='/dashboard'>Home</Breadcrumb.Item>
+    <Breadcrumb.Item active>parts</Breadcrumb.Item>
+  </Breadcrumb>
+  <div style={{marginTop: 100}}>
     <Row gutter={40}>
       <Col className="gutter-row" xs={0} md={0} lg={4} />
       <Col className="gutter-row" xs={24} md={24} lg={8}>
@@ -67,7 +73,41 @@ const PartsDecisions = () => {
         </OperationPanel>
       </Col>
     </Row>
+    <Row gutter={40}>
+      <Col className="gutter-row" xs={0} md={0} lg={4} />
+      <Col className="gutter-row" xs={24} md={24} lg={8}>
+        <OperationPanel>
+          <OpeationHeader>
+            Browse Plates
+          </OpeationHeader>
+          <OperationDescription>
+            To see plates in the database
+          </OperationDescription>
+          <OperationBottomArea>
+            <Link to="/plates">
+              <Button type='primary'>start</Button>
+            </Link>
+          </OperationBottomArea>
+        </OperationPanel>
+      </Col>
+      <Col className="gutter-row" xs={24} md={24} lg={8} >
+      <OperationPanel>
+          <OpeationHeader>
+            Define a new plate
+          </OpeationHeader>
+          <OperationDescription>
+            create a plate for automatic assembly
+          </OperationDescription>
+          <OperationBottomArea>
+            <Link to="/plate/new">
+              <Button type='primary'>start</Button>
+            </Link>
+          </OperationBottomArea>
+        </OperationPanel>
+      </Col>
+    </Row>
   </div>
+  </React.Fragment>
 }
 
 export default PartsDecisions;

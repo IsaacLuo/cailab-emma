@@ -8,7 +8,7 @@ import {connect} from 'react-redux';
 import styled from 'styled-components';
 import { RouteComponentProps, withRouter, Link } from 'react-router-dom';
 import { IUserInfo, IProject, IStoreState } from '../types';
-import {Button, InputGroup, FormControl, FormControlProps} from 'react-bootstrap';
+import {Button, InputGroup, FormControl, FormControlProps, Breadcrumb} from 'react-bootstrap';
 
 import Switch from '@material-ui/core/Switch';
 import { 
@@ -107,63 +107,70 @@ class ProjectList extends React.Component<IProps, IState> {
 
   public render() {
     return (
-      <Panel>
-        <div style={{marginTop:30}}>
-          <h3>your projects</h3>
-          {this.props.projects.map((v:IProject, i) =>
-          <div key={i}>
-            
-              {this.state.editingProjectId === v._id
-                ?
-                <Form.Control 
-                  type="text" 
-                  placeholder="Normal text" 
-                  value={this.state.editingProjectName} 
-                  onChange={(event:any)=>this.setState({editingProjectName:event.target.value})}
-                  onBlur={this.saveProjectName}
-                />
-                :
-                <div style={{display:'flex', alignItems:'center'}}>
-                  
-                    <Button variant='link' onClick={this.onClickOpenProject.bind(this, v)}>
-                      <span>{v.name}</span>
-                    </Button>
-                    {v.updatedAt && <span style={{color: '#777', fontSize: '80%', marginRight:20}}> {v.updatedAt.toLocaleDateString()}</span>}
-                  
-                    <Switch 
-                      checked={!!(v.permission&0x004)}
-                      onChange={this.onChangePublicSwitch.bind(this, v._id!)}/>
-                    <span style={{marginRight:20}}>share to others</span>
-            
-                  <EditButton src={pencilSVG} onClick={this.onClickRenameProject.bind(this, v._id!, v.name)}/>
-                  <CloseButton variant="text" size="sm" onClick={this.props.deleteProject.bind(this, v._id!)}>X</CloseButton>
-                  </div>
-                }
-            
-          </div>,
-          )}
-        </div>
-
-        <div style={{marginTop:30}}>
-          <h3>public projects</h3>
-          {this.props.sharedProjects.map((v, i) =>
-          <div key={i}>
-            <div style={{display:'flex', alignItems:'center'}}>
+      <React.Fragment>
+        <Breadcrumb>
+          <Breadcrumb.Item href='/dashboard'>Home</Breadcrumb.Item>
+          <Breadcrumb.Item active>open a project</Breadcrumb.Item>
+        </Breadcrumb>
+      
+        <Panel>
+          <div style={{marginTop:30}}>
+            <h3>your projects</h3>
+            {this.props.projects.map((v:IProject, i) =>
+            <div key={i}>
               
-                <Button variant='link' onClick={this.onClickCloneProject.bind(this, v)}>
-                  <span>{v.name}</span>
-                </Button>
-                {v.owner && <span style={{color: '#777', fontSize: '80%', marginRight:20}}> {v.owner.name}</span>}
-                {v.updatedAt && <span style={{color: '#777', fontSize: '80%', marginRight:20}}> {v.updatedAt.toLocaleDateString()}</span>}
-                <Button variant='link' onClick={this.onClickCloneProject.bind(this, v)}>
-                  <span>fork</span>
-                </Button>
-              </div>
-          </div>,
-          )}
-        </div>
-        
-      </Panel>
+                {this.state.editingProjectId === v._id
+                  ?
+                  <Form.Control 
+                    type="text" 
+                    placeholder="Normal text" 
+                    value={this.state.editingProjectName} 
+                    onChange={(event:any)=>this.setState({editingProjectName:event.target.value})}
+                    onBlur={this.saveProjectName}
+                  />
+                  :
+                  <div style={{display:'flex', alignItems:'center'}}>
+                    
+                      <Button variant='link' onClick={this.onClickOpenProject.bind(this, v)}>
+                        <span>{v.name}</span>
+                      </Button>
+                      {v.updatedAt && <span style={{color: '#777', fontSize: '80%', marginRight:20}}> {v.updatedAt.toLocaleDateString()}</span>}
+                    
+                      <Switch 
+                        checked={!!(v.permission&0x004)}
+                        onChange={this.onChangePublicSwitch.bind(this, v._id!)}/>
+                      <span style={{marginRight:20}}>share to others</span>
+              
+                    <EditButton src={pencilSVG} onClick={this.onClickRenameProject.bind(this, v._id!, v.name)}/>
+                    <CloseButton variant="text" size="sm" onClick={this.props.deleteProject.bind(this, v._id!)}>X</CloseButton>
+                    </div>
+                  }
+              
+            </div>,
+            )}
+          </div>
+
+          <div style={{marginTop:30}}>
+            <h3>public projects</h3>
+            {this.props.sharedProjects.map((v, i) =>
+            <div key={i}>
+              <div style={{display:'flex', alignItems:'center'}}>
+                
+                  <Button variant='link' onClick={this.onClickCloneProject.bind(this, v)}>
+                    <span>{v.name}</span>
+                  </Button>
+                  {v.owner && <span style={{color: '#777', fontSize: '80%', marginRight:20}}> {v.owner.name}</span>}
+                  {v.updatedAt && <span style={{color: '#777', fontSize: '80%', marginRight:20}}> {v.updatedAt.toLocaleDateString()}</span>}
+                  <Button variant='link' onClick={this.onClickCloneProject.bind(this, v)}>
+                    <span>fork</span>
+                  </Button>
+                </div>
+            </div>,
+            )}
+          </div>
+          
+        </Panel>
+      </React.Fragment>
     );
   }
 

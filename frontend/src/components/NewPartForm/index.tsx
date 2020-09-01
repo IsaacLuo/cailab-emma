@@ -4,6 +4,7 @@ import { Tooltip } from '@material-ui/core';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { NEW_PART } from './actions';
+import { Breadcrumb } from 'react-bootstrap';
 
 const PART_4BP = {
   '1': ['TAGG', 'ATGG'], //1
@@ -66,6 +67,7 @@ const NewPartForm = () => {
   };
 
   return (
+    <React.Fragment>
     <Form {...layout} form={form} initialValues={{ position:'1' }} name="control-hooks" onFinish={onFinish}>
       <Form.Item
         name="position"
@@ -158,6 +160,7 @@ const NewPartForm = () => {
         </Button>
       </Form.Item>
     </Form>
+    </React.Fragment>
   );
 };
 

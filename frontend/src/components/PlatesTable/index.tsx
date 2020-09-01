@@ -12,6 +12,7 @@ import {
 import { Table, Button} from 'antd';
 import { wellIdToWellName } from '../../utilities/wellIdConverter';
 import { BarsOutlined } from '@ant-design/icons';
+import { Breadcrumb } from 'react-bootstrap';
 
 interface IProps {
   currentUser: IUserInfo;
@@ -62,6 +63,11 @@ class PartsTable extends React.Component<IProps, IState> {
 
     return (
       <React.Fragment>
+        <Breadcrumb>
+          <Breadcrumb.Item href='/dashboard'>Home</Breadcrumb.Item>
+          <Breadcrumb.Item href='/partsDecisions'>parts</Breadcrumb.Item>
+          <Breadcrumb.Item active>plate list</Breadcrumb.Item>
+        </Breadcrumb>
       <Table
         dataSource={this.props.plates} 
         pagination={pager} 

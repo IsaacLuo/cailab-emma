@@ -16,6 +16,7 @@ import {
 } from '../redux/actions';
 import { Input, Modal, Button, Radio } from 'antd';
 import { wellPosToWellId } from '../utilities/wellIdConverter';
+import { Breadcrumb } from 'react-bootstrap';
 
 const Panel = styled.div`
   margin:30px;
@@ -129,6 +130,13 @@ class PlateMapEditor extends React.Component<IProps, IState> {
       rowTitles = 'ABCDEFGHIJKLMNOP'.split('');
     }
     return (
+      <React.Fragment>
+        <Breadcrumb>
+          <Breadcrumb.Item href='/dashboard'>Home</Breadcrumb.Item>
+          <Breadcrumb.Item href='/partsDecisions'>parts</Breadcrumb.Item>
+          <Breadcrumb.Item active>new plate</Breadcrumb.Item>
+        </Breadcrumb>
+      
       <Panel>
         <p>
         <Input placeholder="plate name" onChange={this.handleChangePlateName}/>
@@ -202,6 +210,7 @@ class PlateMapEditor extends React.Component<IProps, IState> {
         </Modal>
         
       </Panel>
+      </React.Fragment>
     );
   }
 

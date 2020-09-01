@@ -12,6 +12,7 @@ import { IUserInfo,IStoreState } from '../types';
 //my components
 import NewPartForm from './NewPartForm'
 import PartTabs from './PartTabs';
+import { Breadcrumb } from 'react-bootstrap';
 
 const Panel = styled.div`
   margin:30px;
@@ -45,6 +46,12 @@ class UploadParts extends React.Component<IProps, IState> {
 
   public render() {
     return (
+      <React.Fragment>
+        <Breadcrumb>
+          <Breadcrumb.Item href='/dashboard'>Home</Breadcrumb.Item>
+          <Breadcrumb.Item href='/partsDecisions'>parts</Breadcrumb.Item>
+          <Breadcrumb.Item active>new part</Breadcrumb.Item>
+        </Breadcrumb>
       <Panel>
         <div style={{marginTop:30}}>
         <h3>create a new part</h3>
@@ -54,6 +61,7 @@ class UploadParts extends React.Component<IProps, IState> {
           
         </div>
       </Panel>
+      </React.Fragment>
     );
   }
 }

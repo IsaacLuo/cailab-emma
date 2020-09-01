@@ -29,9 +29,6 @@ import PlatesTable from './components/PlatesTable';
 import Dashboard from './components/Dashboard';
 import styled from 'styled-components';
 import PartsDecisions from './components/PartsDecisions';
-import PlatesDecisions from './components/PlatesDecisions';
-import ProjectsDecisions from './components/ProjectsDecisions'
-import { Menu } from 'antd';
 import ProjectList from './components/ProjectList';
 
 const AppArea = styled.div`
@@ -74,13 +71,13 @@ class App extends Component<any, IState> {
   }
 
   public render() {
-    const browser = detect();
-    if (browser && browser.name !== 'chrome') {
-      return (<h1>
-        your browser {browser.name} on {browser.os} is not supported right now.
-        <a href='https://www.google.com/chrome/'>download chrome here</a>
-        </h1>);
-    }
+    // const browser = detect();
+    // if (browser && browser.name !== 'chrome') {
+    //   return (<h1>
+    //     your browser {browser.name} on {browser.os} is not supported right now.
+    //     <a href='https://www.google.com/chrome/'>download chrome here</a>
+    //     </h1>);
+    // }
 
     return (
       <StoreContext.Provider value={store}>
@@ -154,17 +151,7 @@ class App extends Component<any, IState> {
             path='/partsDecisions'
             component = {PartsDecisions}
           />
-
-          <Route
-            path='/platesDecisions'
-            component = {PlatesDecisions}
-          />
-
-          <Route
-            path='/projectDecisions'
-            component= {ProjectsDecisions}
-          />
-
+          
           <Route
             path='/projectList'
             component= {ProjectList}
