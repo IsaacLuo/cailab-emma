@@ -586,5 +586,5 @@ apolloServer.applyMiddleware({app, path:'/graphql'});
 // -----------------------------------------------------------------------------------------------
 
 
-app.listen(8000, '0.0.0.0');
-log4js.getLogger().info('start listening at 8000');
+app.listen(10402, '0.0.0.0');
+log4js.getLogger().info('start listening at 10402');

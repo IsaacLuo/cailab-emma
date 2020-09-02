@@ -5,7 +5,7 @@ const conf = {
 };
 
 if (process.env.NODE_ENV === 'development') {
-  conf.serverURL = 'http://local.cailab.org:8000'
+  conf.serverURL = 'http://local.cailab.org:10402'
 }
 
 export default conf;
