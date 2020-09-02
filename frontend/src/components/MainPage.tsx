@@ -73,8 +73,8 @@ class MainPage extends React.Component<IProps, IState> {
           <Title>CAILAB-EMMA</Title>
           <ButtomArea>
           <Button variant='primary' onClick={this.onClickLogin}>Login to Cailab</Button>
-          or
-          <Button variant='link' onClick={this.onClickLoginGuest}>Try as guest</Button>
+          {/* or
+          <Button variant='link' onClick={this.onClickLoginGuest}>Try as guest</Button> */}
           </ButtomArea>
         </RectDiaglog>
       </Panel>
