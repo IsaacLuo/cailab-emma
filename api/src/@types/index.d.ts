@@ -40,6 +40,7 @@ declare interface IConnector {
   posBegin: number;
   posEnd: number;
   sequence: string;
+  index?:number;
 }
 
 declare interface IProject {
@@ -54,6 +55,7 @@ declare interface IProject {
   permission?: number;
   createdAt: Date;
   updatedAt: Date;
+  index?: number;
 }
 
 declare interface IPart {

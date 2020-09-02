@@ -183,7 +183,7 @@ export interface IPlateDefinitionContent {
 }
 
 export interface IPlateDefinition {
-  owner: string;
+  owner?: string;
   group: string;
   createdAt: Date;
   updatedAt: Date;
