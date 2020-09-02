@@ -1,5 +1,5 @@
 const conf = {
-  serverURL: 'https://api.emma-dev.cailab.org',
+  serverURL: 'https://api.emma.cailab.org',
   authServerURL: 'https://api.auth.cailab.org',
   GUEST_ID: '000000000000000000000000',
 };
