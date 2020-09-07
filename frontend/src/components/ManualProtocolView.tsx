@@ -6,7 +6,7 @@ import { withRouter, RouteComponentProps } from 'react-router';
 import { connect } from 'react-redux';
 import { IStoreState, IProject, IPartSequence } from '../types.js';
 import { Dispatch } from 'redux';
-import { GET_ASSEMBLY } from '../redux/actions';
+import { GET_ASSEMBLY, GET_PROJECT } from '../redux/actions';
 import NumericInput from "react-numeric-input";
 
 // const backboneLength = 1839;
@@ -51,7 +51,10 @@ const mapStateToProps = (state: IStoreState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onLoadProject: (projectId: string) => dispatch({type: GET_ASSEMBLY, data: projectId}),
+  onLoadProject: (projectId: string) => {
+    dispatch({type: GET_PROJECT, data: projectId});
+    dispatch({type: GET_ASSEMBLY, data: projectId});
+  },
 });
 
 class ManualProtocolView extends React.Component<IProps, IState> {
