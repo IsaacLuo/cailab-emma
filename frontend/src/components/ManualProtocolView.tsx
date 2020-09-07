@@ -248,7 +248,7 @@ class ManualProtocolView extends React.Component<IProps, IState> {
           <tr>
             <td>25 mM ATP solution</td>
             <td>0.5µL</td>
-            <td>{toCeilFixed(0.5*this.state.sampleCount, 2)}µL</td>
+            <td>{toCeilFixed(0.5*this.state.sampleCount, 1)}µL</td>
           </tr>
         </Table>
         <Li>
