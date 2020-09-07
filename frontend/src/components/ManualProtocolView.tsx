@@ -32,6 +32,8 @@ const Title2 = styled.h2`
 const Li = styled.li`
 `;
 
+const toCeilFixed = (x:number, digits:number)=>(Math.ceil(x*Math.pow(10,digits))/Math.pow(10,digits)).toFixed(digits)
+
 interface IProps extends RouteComponentProps {
   project: IProject;
   assembly?: IPartSequence[];
@@ -112,7 +114,7 @@ class ManualProtocolView extends React.Component<IProps, IState> {
       <ol>
         <Li>On ice, prepare a Golden Gate assembly MM. For each reaction, mix together
             1 µL 10X T4 DNA Ligase Reaction Buffer, 0.1 µL BSA, 0.5 µL FastDigest Esp3I
-            and 0.25 µL T4 DNA ligase 400 U/µL. Multiply the volume for each component
+            and {toCeilFixed(0.25, 1)} µL T4 DNA ligase 400 U/µL. Multiply the volume for each component
             by the number of reactions. Mix the final solution gently.
         </Li>
         <Table bordered hover>
@@ -134,29 +136,29 @@ class ManualProtocolView extends React.Component<IProps, IState> {
           <tr>
             <th>T4 Ligase Reaction Buffer</th>
             <td>1µL</td>
-            <td>{(this.state.preparedMasterMixVolume/10).toFixed(3)}µL</td>
+            <td>{toCeilFixed(this.state.preparedMasterMixVolume/10, 1)}µL</td>
           </tr>
           <tr>
             <th>BSA</th>
             <td>0.1µL</td>
-            <td>{(this.state.preparedMasterMixVolume/100).toFixed(3)}µL</td>
+            <td>{toCeilFixed(this.state.preparedMasterMixVolume/100, 1)}µL</td>
           </tr>
           <tr>
             <th>Fast Digest Esp3I</th>
             <td>0.5µL</td>
-            <td>{(this.state.preparedMasterMixVolume*0.05).toFixed(3)}µL</td>
+            <td>{toCeilFixed(this.state.preparedMasterMixVolume*0.05, 1)}µL</td>
           </tr>
           <tr>
             <th>T4 DNA Ligase</th>
-            <td>0.25µL</td>
-            <td>{(this.state.preparedMasterMixVolume*0.025).toFixed(3)}µL</td>
+            <td>{toCeilFixed(0.25, 1)}µL</td>
+            <td>{toCeilFixed(this.state.preparedMasterMixVolume*0.025, 1)}µL</td>
           </tr>
         </Table>
         <Li>
           Next, place on ice 0.2mL PCR tubes. Add an equimolar amount of 
           each part plasmid (13fmol)
           and 0.5µL of the receiver vector (10 ng/µL). 
-          Add nuclease-free water to a final volume of 8.15µL. 
+          Add nuclease-free water to a final volume of {toCeilFixed(8.15, 1)}µL. 
         </Li>
         <Table bordered hover>
           <tr>
@@ -175,8 +177,8 @@ class ManualProtocolView extends React.Component<IProps, IState> {
                 <td>{i+1}</td>
                 <td>{v.name}</td>
                 <td>{vectorLen}</td>
-                <td>{dnaMass.toFixed(3)}ng</td>
-                <td>{dnaVolume.toFixed(3)}µL</td>
+                <td>{dnaMass.toFixed(2)}ng</td>
+                <td>{toCeilFixed(dnaVolume,1)}µL</td>
               </tr>})
           }
           <tr>
@@ -191,7 +193,7 @@ class ManualProtocolView extends React.Component<IProps, IState> {
             <td>water</td>
             <td/>
             <td/>
-            <td>{(10-1.85-dnaVolumeSum-0.5).toFixed(3)}µL</td>
+            <td>{toCeilFixed(10-1.85-dnaVolumeSum-0.5, 1)}µL</td>
           </tr>
         </Table>
         <Li>
@@ -217,8 +219,8 @@ class ManualProtocolView extends React.Component<IProps, IState> {
         </Li>
         <Li>
           Next, on ice prepare a Plasmid-Safe™ ATP-Dependent DNase mix. 
-          For each sample, mix together 0.25 µL of Plasmid-Safe™ ATP-Dependent DNase 10 U/µL and 0.5 µL of 25 mM ATP solution. 
-          Distribute 0.75µL in each Golden Gate reaction tube. Mix gently and incubate at 37 °C for 15 min.
+          For each sample, mix together {toCeilFixed(0.25,1)} µL of Plasmid-Safe™ ATP-Dependent DNase 10 U/µL and 0.5 µL of 25 mM ATP solution. 
+          Distribute {toCeilFixed(0.75, 1)}µL in each Golden Gate reaction tube. Mix gently and incubate at 37 °C for 15 min.
         </Li>
         <Table bordered hover>
           <tr>
@@ -237,13 +239,13 @@ class ManualProtocolView extends React.Component<IProps, IState> {
           </tr>
           <tr>
             <td>Plasmid-Safe™ ATP-Dependent DNase 10 U/µL</td>
-            <td>0.25µL</td>
-            <td>{(0.25*this.state.sampleCount).toFixed(2)}µL</td>
+            <td>{toCeilFixed(0.25, 1)}µL</td>
+            <td>{toCeilFixed(0.25*this.state.sampleCount, 1)}µL</td>
           </tr>
           <tr>
             <td>25 mM ATP solution</td>
             <td>0.5µL</td>
-            <td>{(0.5*this.state.sampleCount).toFixed(2)}µL</td>
+            <td>{toCeilFixed(0.5*this.state.sampleCount, 2)}µL</td>
           </tr>
         </Table>
         <Li>
