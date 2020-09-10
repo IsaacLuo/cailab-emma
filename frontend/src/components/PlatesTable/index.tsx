@@ -13,6 +13,7 @@ import { Table, Button} from 'antd';
 import { wellIdToWellName } from '../../utilities/wellIdConverter';
 import { BarsOutlined } from '@ant-design/icons';
 import { Breadcrumb } from 'react-bootstrap';
+import PlateContentTable from '../PlateContentTable';
 
 interface IProps {
   currentUser: IUserInfo;
@@ -74,15 +75,8 @@ class PartsTable extends React.Component<IProps, IState> {
         onChange={this.onChangeTable}
         rowKey={(record:any) => record._id}
         expandedRowRender={record => 
-        <div style={{ margin: 0 }}>{
-          record.content.map((v:any, i:number)=>
-            v &&
-            v.part ?
-            <div key={i}>{wellIdToWellName(i)} {`${v.part.part.name}(${v.part.part.labName})`}</div>
-            :
-            <div key={i}>{wellIdToWellName(i)} {`${v.connector.name}`}</div>
-
-          ).filter((v:any)=>v)}
+        <div style={{ margin: 0 }}>
+          <PlateContentTable plate={record}/>
         </div>}
       >
         <Column title="Name" dataIndex="name" key="name"/>

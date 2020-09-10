@@ -55,7 +55,18 @@ async function main() {
     updatedAt: now,
     permission: 0x666,
     plateType: "384",
-    name: 'default',
+    name: 'default plate 1',
+    barcode: '0000000',
+    group:'',
+  });
+
+  await PlateDefinition.create({
+    content: [...connectorIds, ...partIds],
+    createdAt: now,
+    updatedAt: now,
+    permission: 0x666,
+    plateType: "384",
+    name: 'default plate 2',
     barcode: '0000000',
     group:'',
   });
