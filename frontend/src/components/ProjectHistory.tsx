@@ -67,12 +67,12 @@ class ProjectHistory extends React.Component<IProps, IState> {
         <HistoryLink variant="text" onClick={this.resetProject}>
           <HistoryTitle>{stashHistory.updatedAt?new Date(stashHistory.updatedAt).toLocaleString(): 'latest'}</HistoryTitle>
         {stashHistory.parts.filter(vv=>vv.selected).map((vv, j)=>
-        <svg width={projectHistoryIconSize} height="60" key={j}>
-        {partNames[vv.position].map((vvv, k)=>
+        <svg width={projectHistoryIconSize} height={projectHistoryIconSize+10} key={j}>
+        {partNames[vv.position].filter((vvv,k)=>k<1).map((vvv, k)=>
             <image
               key={`${j}.${k}`}
               x={0}
-              y={k * 20 + 10}
+              y={k * projectHistoryIconSize + 5}
               width={projectHistoryIconSize} height={projectHistoryIconSize} xlinkHref={vvv.icon}
             />)
         }
@@ -86,12 +86,12 @@ class ProjectHistory extends React.Component<IProps, IState> {
         <HistoryTitle>{his.updatedAt ? new Date(his.updatedAt).toLocaleString() : 'unknown date'}</HistoryTitle>
         
         {his.parts.map((vv, j)=>
-        <svg width={projectHistoryIconSize} height="60" key={j}>
-        {partNames[vv.position].map((vvv, k)=>
+        <svg width={projectHistoryIconSize} height={projectHistoryIconSize+10} key={j}>
+        {partNames[vv.position].filter((vvv,k)=>k<1).map((vvv, k)=>
             <image
               key={`${j}.${k}`}
               x={0}
-              y={k * 20 + 10}
+              y={k * projectHistoryIconSize + 5}
               width={projectHistoryIconSize} height={projectHistoryIconSize} xlinkHref={vvv.icon}
             />)
         }
