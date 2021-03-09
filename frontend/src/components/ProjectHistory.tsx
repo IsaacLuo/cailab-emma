@@ -20,6 +20,11 @@ const HistoryCard = styled.div`
 `;
 
 const HistoryLink = styled(Button)`
+
+`;
+
+const HistoryTitle = styled('span')`
+margin-right:20px;
 `;
 
 const CloseButton = styled(Button)`
@@ -55,19 +60,20 @@ class ProjectHistory extends React.Component<IProps, IState> {
   public render() {
     const history = this.props.project.history;
     const stashHistory = this.props.stashHistory || this.props.project;
+    const projectHistoryIconSize = 30;
     return <div>
       <h3>Project History</h3>
       <HistoryCard>
         <HistoryLink variant="text" onClick={this.resetProject}>
-          {stashHistory.updatedAt?new Date(stashHistory.updatedAt).toLocaleString(): 'latest'}
+          <HistoryTitle>{stashHistory.updatedAt?new Date(stashHistory.updatedAt).toLocaleString(): 'latest'}</HistoryTitle>
         {stashHistory.parts.filter(vv=>vv.selected).map((vv, j)=>
-        <svg width="15" height="50" key={j}>
+        <svg width={projectHistoryIconSize} height="60" key={j}>
         {partNames[vv.position].map((vvv, k)=>
             <image
               key={`${j}.${k}`}
               x={0}
               y={k * 20 + 10}
-              width='15' height='15' xlinkHref={vvv.icon}
+              width={projectHistoryIconSize} height={projectHistoryIconSize} xlinkHref={vvv.icon}
             />)
         }
         </svg>
@@ -77,16 +83,16 @@ class ProjectHistory extends React.Component<IProps, IState> {
       {history && history.map((his:IProject, i:number)=>
       <HistoryCard key={i}>
         <HistoryLink variant="text" onClick={this.onClickLoadProjectHistory.bind(this,i)}>
-          {his.updatedAt ? new Date(his.updatedAt).toLocaleString() : 'unknown date'}
+        <HistoryTitle>{his.updatedAt ? new Date(his.updatedAt).toLocaleString() : 'unknown date'}</HistoryTitle>
         
         {his.parts.map((vv, j)=>
-        <svg width="15" height="50" key={j}>
+        <svg width={projectHistoryIconSize} height="60" key={j}>
         {partNames[vv.position].map((vvv, k)=>
             <image
               key={`${j}.${k}`}
               x={0}
               y={k * 20 + 10}
-              width='15' height='15' xlinkHref={vvv.icon}
+              width={projectHistoryIconSize} height={projectHistoryIconSize} xlinkHref={vvv.icon}
             />)
         }
         </svg>
