@@ -13,7 +13,7 @@ function* getParts(action:IAction) {
   }
   const result = yield call(Axios.post, conf.serverURL + '/graphql', {
     query: `query ($first: Int, $offset: Int, $posFilter: String, $categoryFilter: String){
-    partDefinitionCount
+    partDefinitionCount(posFilter: $posFilter, categoryFilter: $categoryFilter)
     partDefinitions(pagination:{first:$first, offset:$offset}, posFilter: $posFilter, categoryFilter: $categoryFilter)
 {
   _id

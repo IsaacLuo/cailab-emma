@@ -58,7 +58,7 @@ export const partDefinitions = {
   args: {
     pagination: { 
       type: PaginationArgType, 
-        defaultValue: { offset: 0, first: 10 } 
+        defaultValue: { offset: 0, first: 1000 } 
       },
     posFilter: {
       type: GraphQLString,
@@ -97,8 +97,25 @@ export const partDefinition = {
 
 export const partDefinitionCount = {
   type: GraphQLInt,
+  args: {
+    posFilter: {
+      type: GraphQLString,
+      defaultValue: '',
+    },
+    categoryFilter: {
+      type: GraphQLString,
+      defaultValue: '',
+    }
+  },
   resolve (root, params, options) {
-    return PartDefinition.countDocuments().exec();
+    const condition:any = {};
+    if(params.posFilter!==null && params.posFilter!=='') {
+      condition['part.position'] = params.posFilter;
+    }
+    if(params.categoryFilter!==null && params.categoryFilter!=='' &&  params.categoryFilter!=='All' ) {
+      condition['part.category'] = params.categoryFilter;
+    }
+    return PartDefinition.countDocuments(condition).exec();
   }
 }
 

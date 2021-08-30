@@ -113,7 +113,8 @@ class PartsTable extends React.Component<IProps, IState> {
   }
 
   private onChangeTable = (pagination:any, filters:any, sorter:any) => {
-    this.props.dispatchGetParts((pagination.current-1)*this.props.first, this.props.first);
+    const {posFilter, categoryFilter} = this.props;
+    this.props.dispatchGetParts((pagination.current-1)*this.props.first, this.props.first, posFilter, categoryFilter);
   }
 }
 

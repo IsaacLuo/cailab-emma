@@ -10,7 +10,7 @@ export default function partsTableReducer(state: IPartsTableState = {
 }, action: IAction) {
   switch (action.type) {
     case SET_PARTS:
-      return {...state, parts: action.data.parts};
+      return {...state, parts: action.data.parts, count: action.data.count, offset: action.data.offset};
     case SET_ACTIVE_POSITION:
       return {...state, posFilter: action.data, categoryFilter: null, offset:0};
     case SET_ACTIVE_CATEGORY:
