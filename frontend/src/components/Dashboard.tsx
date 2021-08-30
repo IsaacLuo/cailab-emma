@@ -17,7 +17,7 @@ const OperationPanel = styled.div`
   padding-top: 40px;
   margin:40px;
 `
-const OpeationHeader = styled.div`
+const OperationHeader = styled.div`
   font-size: 200%;
   margin-bottom: 40px;
 `
@@ -51,9 +51,9 @@ const Dashboard = () => {
       <Col className="gutter-row" xs={0} md={0} lg={3} />
       <Col className="gutter-row" xs={24} md={24} lg={6}>
         <OperationPanel>
-          <OpeationHeader>
+          <OperationHeader>
             Parts
-          </OpeationHeader>
+          </OperationHeader>
           <OperationDescription>
             create some parts, prepare the components for the EMMA assembly
           </OperationDescription>
@@ -66,9 +66,9 @@ const Dashboard = () => {
       </Col>
       <Col className="gutter-row" xs={24} md={24} lg={6} >
       <OperationPanel>
-          <OpeationHeader>
+          <OperationHeader>
             Design
-          </OpeationHeader>
+          </OperationHeader>
           <OperationDescription>
             Create your assembly
           </OperationDescription>
@@ -79,9 +79,9 @@ const Dashboard = () => {
       </Col>
       <Col className="gutter-row" xs={24} md={24} lg={6} >
         <OperationPanel>
-            <OpeationHeader>
+            <OperationHeader>
               Projects
-            </OpeationHeader>
+            </OperationHeader>
             <OperationDescription>
               Browse the projects you've created and shared by others
             </OperationDescription>

@@ -158,9 +158,6 @@ class App extends Component<any, IState> {
           />
 
           </AppAreaMain>
-          <FootBar>
-            foot bar
-          </FootBar>
           
         </AppArea>
         </React.Fragment>

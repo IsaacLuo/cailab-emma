@@ -13,7 +13,7 @@ const OperationPanel = styled.div`
   padding-top: 40px;
   margin:40px;
 `
-const OpeationHeader = styled.div`
+const OperationHeader = styled.div`
   font-size: 200%;
   margin-bottom: 40px;
 `
@@ -38,9 +38,9 @@ const NewProjectForm = () => {
       <Col className="gutter-row" xs={0} md={0} lg={8} />
       <Col className="gutter-row" xs={24} md={24} lg={8}>
         <OperationPanel>
-          <OpeationHeader>
+          <OperationHeader>
             Create A New Project
-          </OpeationHeader>
+          </OperationHeader>
           <OperationDescription>
             
           </OperationDescription>

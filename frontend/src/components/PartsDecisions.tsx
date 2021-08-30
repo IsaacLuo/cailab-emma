@@ -14,7 +14,7 @@ const OperationPanel = styled.div`
   padding-top: 40px;
   margin:40px;
 `
-const OpeationHeader = styled.div`
+const OperationHeader = styled.div`
   font-size: 200%;
   margin-bottom: 40px;
 `
@@ -44,11 +44,11 @@ const PartsDecisions = () => {
       <Col className="gutter-row" xs={0} md={0} lg={4} />
       <Col className="gutter-row" xs={24} md={24} lg={8}>
         <OperationPanel>
-          <OpeationHeader>
+          <OperationHeader>
             Browse Parts
-          </OpeationHeader>
+          </OperationHeader>
           <OperationDescription>
-            to see what parts we have currently
+            To see what parts we have currently
           </OperationDescription>
           <OperationBottomArea>
             <Link to="/parts">
@@ -59,9 +59,9 @@ const PartsDecisions = () => {
       </Col>
       <Col className="gutter-row" xs={24} md={24} lg={8} >
       <OperationPanel>
-          <OpeationHeader>
+          <OperationHeader>
             Create A Part
-          </OpeationHeader>
+          </OperationHeader>
           <OperationDescription>
             Create a part by filling a form
           </OperationDescription>
@@ -77,9 +77,9 @@ const PartsDecisions = () => {
       <Col className="gutter-row" xs={0} md={0} lg={4} />
       <Col className="gutter-row" xs={24} md={24} lg={8}>
         <OperationPanel>
-          <OpeationHeader>
+          <OperationHeader>
             Browse Plates
-          </OpeationHeader>
+          </OperationHeader>
           <OperationDescription>
             To see plates in the database
           </OperationDescription>
@@ -92,11 +92,11 @@ const PartsDecisions = () => {
       </Col>
       <Col className="gutter-row" xs={24} md={24} lg={8} >
       <OperationPanel>
-          <OpeationHeader>
+          <OperationHeader>
             Define a new plate
-          </OpeationHeader>
+          </OperationHeader>
           <OperationDescription>
-            create a plate for automatic assembly
+            Create a plate for automatic assembly
           </OperationDescription>
           <OperationBottomArea>
             <Link to="/plate/new">
