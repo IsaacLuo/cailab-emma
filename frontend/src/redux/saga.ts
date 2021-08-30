@@ -66,15 +66,23 @@ import {NotificationManager} from 'react-notifications';
 
 export function* cailabInstanceLogin(action: IAction) {
   try {
-    const res = yield call(axios.post, conf.serverURL + '/api/session', {}, {withCredentials: true});
+    const res:any = yield call(axios.post, conf.serverURL + '/api/session', {}, {withCredentials: true});
     yield put({type: GET_CURRENT_USER, data: undefined});
   } catch (error) {
   }
 }
 
 export function* getCurrentUser(action: IAction) {
+  if(process.env.NODE_ENV === 'development') {
+    yield put({type: SET_CURRENT_USER, data: {
+      _id: '5c88cea93c27125df4ff9f4a',
+      fullName: 'Yisha Luo',
+      groups: ["users","administrators","emma/users","lims/users"],
+    }});
+    return;
+  }
   try {
-    const res = yield call(axios.get, conf.authServerURL + '/api/user/current', {withCredentials: true});
+    const res:any = yield call(axios.get, conf.authServerURL + '/api/user/current', {withCredentials: true});
     const currentUser: IUserInfo = yield select((state: IStoreState) => state.app.currentUser);
     if (currentUser._id !== res.data.user._id) {
       yield put({type: GET_MY_PROJECTS});

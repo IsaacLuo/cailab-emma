@@ -7,3 +7,4 @@
 /api/secret.ts
 /api/logs/access.log*
 /_gsdata_
+node_modules

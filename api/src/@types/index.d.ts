@@ -7,7 +7,7 @@ declare interface IGLobalConfig {
 }
 
 declare interface IUserEssential {
-  _id: any,
+  _id?: any,
   email: string,
   name: string, // user's full name
   groups: string[], // array of group name, 'guest', 'users', 'visitors', or 'administrators'
@@ -35,7 +35,7 @@ declare interface ISelectedPart {
 }
 
 declare interface IConnector {
-  _id: any;
+  _id?: any;
   name: string;
   posBegin: number;
   posEnd: number;
@@ -44,7 +44,7 @@ declare interface IConnector {
 }
 
 declare interface IProject {
-  _id: any;
+  _id?: any;
   name: string;
   version: string,
   parts: ISelectedPart[];

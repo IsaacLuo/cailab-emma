@@ -7,7 +7,7 @@ export interface IGLobalConfig {
 }
 
 export interface IUserEssential {
-  _id: any,
+  _id?: any,
   email: string,
   name: string, // user's full name
   groups: string[], // array of group name, 'guest', 'users', 'visitors', or 'administrators'
@@ -35,7 +35,7 @@ export interface ISelectedPart {
 }
 
 export interface IConnector {
-  _id: any;
+  _id?: any;
   name: string;
   posBegin: number;
   posEnd: number;
@@ -44,7 +44,7 @@ export interface IConnector {
 }
 
 export interface IProject {
-  _id: any;
+  _id?: any;
   name: string;
   version: string,
   parts: ISelectedPart[];

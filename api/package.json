@@ -1,5 +1,5 @@
 {
-  "name": "cailab-auth-api",
+  "name": "@emma/api",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -16,14 +16,16 @@
     "koa-jwt": "^4.0.0",
     "koa-router": "^9.1.0",
     "log4js": "^6.3.0",
-    "mongoose": "^5.9.26"
+    "mongoose": "^5.9.26",
+    "nodemon": "^2.0.12"
   },
   "scripts": {
     "start": "ts-node src/index.ts",
     "build": "cross-env NODE_ENV=production tsc",
     "production": "cross-env NODE_ENV=production node build/src/index.js",
-    "dev": "node ./node_modules/nodemon/bin/nodemon.js",
-    "debug": "node ./node_modules/nodemon/bin/nodemon.js --inspect",
+    "dev": "nodemon --config api/nodemon.json",
+    "dev2": "nodemon",
+    "debug": "node ../node_modules/nodemon/bin/nodemon.js --inspect",
     "importDB": "ts-node src/script/importData.ts",
     "testScript": "ts-node src/script/test.ts",
     "shell": "ts-node"

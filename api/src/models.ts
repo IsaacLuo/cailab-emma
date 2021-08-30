@@ -11,11 +11,11 @@ export const UserSchema = new Schema({
   lastIP: String,
 });
 
-export interface IUserModel extends IUser, Document{
+// export interface IUserModel extends IUser, Document{
+//   _id: any;
+// }
 
-}
-
-export const User:Model<IUserModel> = mongoose.model('User', UserSchema, 'users');
+export const User = mongoose.model<IUser>('User', UserSchema, 'users');
 
 export const PartDetailSchema = new Schema({
   name: String,
@@ -42,7 +42,7 @@ export const ConnectorSchema = new Schema({
 })
 
 interface ConnectorSchema {
-  _id: any;
+  _id?: any;
   name: string;
   posBegin: number;
   posEnd: number;
@@ -51,7 +51,7 @@ interface ConnectorSchema {
 }
 
 export interface IConnectorModel extends IConnector, Document {}
-export const Connector:Model<IConnectorModel> = mongoose.model('Connector', ConnectorSchema, 'connectors');
+export const Connector = mongoose.model<IConnector>('Connector', ConnectorSchema, 'connectors');
 
 export const ProjectSchema = new Schema({
   name: String,
@@ -77,7 +77,7 @@ export interface IProjectModel extends IProject, Document{
 
 }
 
-export const Project:Model<IProjectModel> = mongoose.model('Project', ProjectSchema, 'projects');
+export const Project = mongoose.model<IProject>('Project', ProjectSchema, 'projects');
 
 export const AssemblySchema = new Schema({
   project: {
@@ -110,7 +110,7 @@ export interface IAssembly {
 }
 
 export interface IAssemblyModel extends IAssembly, Document {}
-export const Assembly:Model<IAssemblyModel> = mongoose.model('Assembly', AssemblySchema, 'assemblies');
+export const Assembly = mongoose.model<IAssembly>('Assembly', AssemblySchema, 'assemblies');
 
 export const AssemblyListSchema = new Schema({
   assemblies: [{
@@ -126,7 +126,7 @@ export interface IAssemblyList {
   createdAt: Date;
 }
 export interface IAssemblyListModel extends IAssemblyList, Document {}
-export const AssemblyList:Model<IAssemblyListModel> = mongoose.model('AssemblyList', AssemblyListSchema, 'assembly_lists');
+export const AssemblyList = mongoose.model<IAssemblyList>('AssemblyList', AssemblyListSchema, 'assembly_lists');
 
 
 export const PartDefinitionSchema = new Schema({
@@ -172,7 +172,7 @@ export interface IPartDefinition {
   part: IPart;
 }
 export interface IPartDefinitionModel extends IPartDefinition, Document {}
-export const PartDefinition:Model<IPartDefinitionModel> = mongoose.model('PartDefinition', PartDefinitionSchema, 'part_definitions');
+export const PartDefinition = mongoose.model<IPartDefinition>('PartDefinition', PartDefinitionSchema, 'part_definitions');
 
 
 export interface IPlateDefinitionContent {
@@ -195,6 +195,19 @@ export interface IPlateDefinition {
   content: Array<IPlateDefinitionContent|string>;
 }
 
+const PlateDefinitionContent = {
+  _id: Schema.Types.ObjectId,
+  ctype: String,
+  part: {
+    type: Schema.Types.ObjectId,
+    ref: 'PartDefinition',
+  }, 
+  connector: {
+    type: Schema.Types.ObjectId,
+    ref: 'Connector',
+  },
+}
+
 export const PlateDefinitionSchema = new Schema({
   owner: {
     type: Schema.Types.ObjectId,
@@ -208,21 +221,10 @@ export const PlateDefinitionSchema = new Schema({
   name: String,
   barcode: String,
   description: String,
-  content: [{
-    _id: Schema.Types.ObjectId,
-    ctype: String,
-    part: {
-      type: Schema.Types.ObjectId,
-      ref: 'PartDefinition',
-    }, 
-    connector: {
-      type: Schema.Types.ObjectId,
-      ref: 'Connector',
-    },
-  }]
+  content: [PlateDefinitionContent],
 });
 
 export interface IPlateDefinitionModel extends IPlateDefinition, Document {}
-export const PlateDefinition:Model<IPlateDefinitionModel> = mongoose.model('PlateDefinition', PlateDefinitionSchema, 'plate_definitions');
+export const PlateDefinition = mongoose.model<IPlateDefinition>('PlateDefinition', PlateDefinitionSchema, 'plate_definitions');
 
 

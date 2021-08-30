@@ -60,7 +60,8 @@ function beGuest (ctx:Ctx, next?:Next) {
 }
 
 router.get('/', async (ctx:koa.ParameterizedContext<any, {}>)=> {
-  ctx.body={message:'server: cailab-emma'};
+  console.log(JSON.stringify(ctx.request));
+  ctx.body={message:'server: cailab-emma', request:ctx.request.origin, ctx};
 })
 
 router.post('/api/session', 
@@ -83,7 +84,7 @@ router.get('/api/user/current', async (ctx:Ctx, next:Next)=> {
   if (user) {
     const now = Math.floor(Date.now() / 1000);
     const eta = ctx.state.user.exp - now;
-    ctx.body.eta = eta;
+    ctx.body = {message:'OK', user, eta};
   }
 });
 
@@ -352,7 +353,7 @@ async (ctx:Ctx, next:Next)=> {
   const {time} = ctx.request.query;
   const project = await Project.findById(id).exec();
   const history = project.history[index]
-  if(history && history.updatedAt.getTime()===new Date(time).getTime()) {
+  if(history && history.updatedAt.getTime()===new Date(time as string).getTime()) {
     project.history.splice(index,1);
     await project.save();
     ctx.body={project};
