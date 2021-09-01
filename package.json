@@ -1,0 +1,17 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "npm-run-all --parallel api-dev frontend-dev",
+    "api-dev": "yarn workspace @emma/api dev",
+    "frontend-dev": "yarn workspace @emma/frontend start"
+  },
+  "engines": {
+    "node": ">= 14.0.0",
+    "npm": "please-use-yarn"
+  },
+  "workspaces": [
+    "api",
+    "frontend"
+  ],
+  "devDependencies": {}
+}

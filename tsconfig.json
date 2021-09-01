@@ -6,14 +6,15 @@
       "noImplicitAny": false,
       "sourceMap": true,
       "outDir": "build",
-      "rootDir": ".",
       "resolveJsonModule": true,
-      "esModuleInterop": true,
-      "skipLibCheck": true,
+      "esModuleInterop": true
   },
+  "references": [
+    { "path": "./api" },
+    { "path": "./frontend" }
+  ],
   "exclude": [
       "**/node_modules",
-      "../node_modules",
       "**/*.spec.ts",
       "**/*.test.ts",
       "build"
