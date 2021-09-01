@@ -87,7 +87,9 @@ export function* getCurrentUser(action: IAction) {
     if (currentUser._id !== res.data.user._id) {
       yield put({type: GET_MY_PROJECTS});
     }
-    yield put({type: SET_CURRENT_USER, data: res.data.user});
+    yield put({ type: SET_CURRENT_USER, data: res.data.user });
+    if (window.location.pathname === '/')
+      window.location.pathname = '/';
   } catch (error) {
     yield put({type: SET_CURRENT_USER, data: {
       _id: '',
