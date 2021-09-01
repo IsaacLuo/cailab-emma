@@ -210,7 +210,7 @@ export function* gotoStep3(action:IAction) {
     const callback:()=>{} = action.data.callback;
 
     //check position 9
-    project.
+    // project.
 
     yield call(axios.put, conf.serverURL + `/api/project/${project._id}`, project, {withCredentials: true});
     callback();
