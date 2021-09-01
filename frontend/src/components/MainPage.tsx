@@ -46,6 +46,7 @@ interface IProps extends RouteComponentProps {
   getCurrentUser:()=>void,
 }
 interface IState {
+  showRefresh:boolean
 }
 
 const mapStateToProps = (state: IStoreState) => ({
@@ -61,6 +62,7 @@ class MainPage extends React.Component<IProps, IState> {
   constructor (props:IProps) {
     super(props);
     props.getCurrentUser();
+    this.state.showRefresh = false;
   }
 
   public render() {
@@ -75,6 +77,7 @@ class MainPage extends React.Component<IProps, IState> {
           <Button variant='primary' onClick={this.onClickLogin}>Login to Cailab</Button>
           {/* or
           <Button variant='link' onClick={this.onClickLoginGuest}>Try as guest</Button> */}
+            {this.state.showRefresh && <a href="/">If no reponse after login, click here to refresh</a>}
           </ButtomArea>
         </RectDiaglog>
       </Panel>
@@ -94,6 +97,7 @@ class MainPage extends React.Component<IProps, IState> {
 // tslint:disable-next-line: max-line-length
       `toolbar=no,location=no,status=no,menubar=no,scrollbar=yes,resizable=yes,width=${width},height=${height},top=${top},left=${left}`,
     );
+    this.setState({ showRefresh: true });
   }
   private onClickLoginGuest = () => {
     const width = 400;
