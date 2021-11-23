@@ -15,7 +15,7 @@ const Panel = styled.div`
   height:600px;
 `;
 
-const RectDiaglog = styled.div`
+const RectDialog = styled.div`
   width:400px;
   height:400px;
   border:solid 1px black;
@@ -32,7 +32,7 @@ const Title = styled.h1`
   justify-content: center;
 `;
 
-const ButtomArea = styled.div`
+const BottomArea = styled.div`
   display:flex;
   flex-direction:column;
   align-items: center;
@@ -62,7 +62,7 @@ class MainPage extends React.Component<IProps, IState> {
   constructor (props:IProps) {
     super(props);
     props.getCurrentUser();
-    this.state.showRefresh = false;
+    this.state = {showRefresh:false}
   }
 
   public render() {
@@ -71,15 +71,13 @@ class MainPage extends React.Component<IProps, IState> {
       return <Redirect to='/dashboard'/>
     } else {
       return <Panel>
-        <RectDiaglog>
+        <RectDialog>
           <Title>CAILAB-EMMA</Title>
-          <ButtomArea>
+          <BottomArea>
           <Button variant='primary' onClick={this.onClickLogin}>Login to Cailab</Button>
-          {/* or
-          <Button variant='link' onClick={this.onClickLoginGuest}>Try as guest</Button> */}
-            {this.state.showRefresh && <a href="/">If no reponse after login, click here to refresh</a>}
-          </ButtomArea>
-        </RectDiaglog>
+            {this.state.showRefresh && <a href="/">If no response after login, click here to refresh</a>}
+          </BottomArea>
+        </RectDialog>
       </Panel>
     }
   }
