@@ -428,6 +428,9 @@ class PartSelector extends React.Component<IProps, IState> {
         <Link to={`/project/${(this.props.match.params as any).id}/step2`}>
           <Button type='primary' onClick={this.onClickNext}>next</Button>
         </Link>
+        <Link to={`/project/${(this.props.match.params as any).id}/step2B`}>
+          <Button type='primary' onClick={this.onClickNext}>next</Button>
+        </Link>
       </div>
       :
       <div style={{textAlign: 'left'}}>
@@ -486,6 +489,8 @@ class PartSelector extends React.Component<IProps, IState> {
           parts: this.state.partsProp
             .map((part, position) => ({activated: part.activated, selected: part.selected, position}))
             .filter((part)=>part.selected),
+          partsMultiIds:[[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],],
+          isMultiProject: false,
           permission: 0x600,
           connectors:usingConnectors,
           updatedAt: new Date(),
