@@ -3,7 +3,7 @@ import { Dispatch } from 'redux';
 import {connect} from 'react-redux';
 
 import styled from 'styled-components';
-import { RouteComponentProps, withRouter, Link } from 'react-router-dom';
+import { RouteComponentProps, withRouter, Link, Redirect } from 'react-router-dom';
 import { IUserInfo, IProject, IStoreState } from '../types';
 import {
   SHOW_LOGIN_WINDOW,
@@ -54,9 +54,9 @@ class MyComponent extends React.Component<IProps, IState> {
   }
   public render() {
     const {currentUser} = this.props;
-    // if(currentUser._id==='') {
-    //   return <Redirect to='/'/>
-    // }
+    if(currentUser._id==='') {
+      return <Redirect to='/'/>
+    }
     return (
       <UserBar>
         {
