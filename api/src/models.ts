@@ -57,6 +57,7 @@ export const ProjectSchema = new Schema({
   name: String,
   version: String,
   parts: [PartsSchema],
+  partsMultiIds: [[String]],
   connectors: [{
     type: Schema.Types.ObjectId,
     ref: 'Connector',

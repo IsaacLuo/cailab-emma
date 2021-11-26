@@ -65,6 +65,8 @@ export interface IProject {
   owner?:any;
   permission: number;
   parts: ISelectedPart[];
+  partsMultiIds: string[][];
+  isMultiProject?: boolean;
   ignorePos8?: boolean;
   connectors: IConnector[];
   history?: IProject[];
@@ -155,6 +157,10 @@ export interface IPartsTableState {
   categoryFilter: string|null;
 }
 
+export interface IPartsTransferState {
+  targetKeys: string[][];
+}
+
 export interface IPlatesTableState {
   plates: IPlateDefinition[];
   first:number;
@@ -170,6 +176,7 @@ export interface INewPartFormState {
 export interface IStoreState {
   app: IAppState;
   partSelector: IPartSelectorState;
+  partsTransfer: IPartsTransferState;
   partsTable: IPartsTableState;
   platesTable: IPlatesTableState;
   wizard: IWizardState;

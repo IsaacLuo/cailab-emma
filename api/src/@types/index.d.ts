@@ -48,6 +48,7 @@ declare interface IProject {
   name: string;
   version: string,
   parts: ISelectedPart[];
+  partsMultiIds: string[][];
   connectors: IConnector[];
   history: IProject[];
   owner: any;

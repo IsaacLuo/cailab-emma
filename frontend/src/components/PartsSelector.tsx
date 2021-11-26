@@ -428,8 +428,9 @@ class PartSelector extends React.Component<IProps, IState> {
         <Link to={`/project/${(this.props.match.params as any).id}/step2`}>
           <Button type='primary' onClick={this.onClickNext}>next</Button>
         </Link>
+        &nbsp;or&nbsp;
         <Link to={`/project/${(this.props.match.params as any).id}/step2B`}>
-          <Button type='primary' onClick={this.onClickNext}>next</Button>
+          <Button type='primary' onClick={this.onClickNext}>fill multiple parts</Button>
         </Link>
       </div>
       :

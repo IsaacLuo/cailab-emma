@@ -44,6 +44,8 @@ CLONE_PROJECT,
 SET_PROJECT_PERMISSION,
 DELAY_SHOW_TOOL_TIP,
 SHOW_TOOL_TIP,
+GO_TO_STEP_3B,
+DOWNLOAD_CSV_MULTI,
 } from './actions';
 
 import STORE_PARTS from '../parts.json';
@@ -207,6 +209,21 @@ export function* deleteProject(action: IAction) {
 }
 
 export function* gotoStep3(action:IAction) {
+  try {
+    const project:IProject = action.data.project;
+    const callback:()=>{} = action.data.callback;
+
+    //check position 9
+    // project.
+
+    yield call(axios.put, conf.serverURL + `/api/project/${project._id}`, project, {withCredentials: true});
+    callback();
+  } catch (error) {
+    console.warn('unable to logout');
+  }
+}
+
+export function* gotoStep3B(action:IAction) {
   try {
     const project:IProject = action.data.project;
     const callback:()=>{} = action.data.callback;
@@ -449,6 +466,16 @@ export function* setProjectPermission(action:IAction) {
   }
 }
 
+export function* downloadCsvMulti(action:IAction) {
+  const _id = action.data;
+  try {
+    const response = yield call(axios.get, conf.serverURL + `/api/project/${_id}/multiResults`, {withCredentials: true});
+    console.log(response);
+  } catch (error) {
+    console.warn('unable set permission', error);
+  }
+}
+
 export function* watchUsers() {
   yield takeLatest(CAILAB_INSTANCE_LOGIN, cailabInstanceLogin);
   yield takeLatest(GET_CURRENT_USER, getCurrentUser);
@@ -460,6 +487,7 @@ export function* watchUsers() {
   yield takeLatest(DELETE_HISTORY, deleteHistory);
   yield takeLatest(DELETE_PROJECT, deleteProject);
   yield takeLatest(GO_TO_STEP_3, gotoStep3);
+  yield takeLatest(GO_TO_STEP_3B, gotoStep3B);
   yield takeLatest(SAVE_ASSEMBLY, saveAssembly);
   yield takeLatest(GET_ASSEMBLY, getAssembly);
   yield takeLatest(POST_ASSEMBLY_LIST, postAssemblyList);
@@ -474,6 +502,7 @@ export function* watchUsers() {
   yield takeLatest(GET_SHARED_PROJECTS, getSharedProjects);
   yield takeLatest(CLONE_PROJECT, cloneProject);
   yield takeLatest(SET_PROJECT_PERMISSION, setProjectPermission);
+  yield takeLatest(DOWNLOAD_CSV_MULTI, downloadCsvMulti);
 }
 
 export function* delayShowTooltip(action:IAction) {

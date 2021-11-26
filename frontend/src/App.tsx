@@ -30,6 +30,8 @@ import Dashboard from './components/Dashboard';
 import styled from 'styled-components';
 import PartsDecisions from './components/PartsDecisions';
 import ProjectList from './components/ProjectList';
+import PartsTransfer from './components/PartsTransfer';
+import AssembleMulti from './components/AssembleMulti';
 
 const AppArea = styled.div`
   display:flex;
@@ -101,11 +103,21 @@ class App extends Component<any, IState> {
             path='/project/:id/step2'
             component = {PartsDropDown}
           />
+          <Route
+            path='/project/:id/step2B'
+            component = {PartsTransfer}
+          />
 
           <Route
             path='/project/:id/step3'
             component = {Assemble}
           />
+
+          <Route
+            path='/project/:id/step3B'
+            component = {AssembleMulti}
+          />
+
 
           <Route
             path='/project/:id/protocols/human/manual'

@@ -41,6 +41,8 @@ import newPartFormReducer from '../components/NewPartForm/reducer'
 import platesTableReducer from '../components/PlatesTable/reducer'
 import { PUT_PART_INTO_POSITION } from '../components/PartsDropDown/actions';
 import { wellIdToWellName } from '../utilities/wellIdConverter';
+import partsTransferReducer from '../components/PartsTransfer/reducer';
+import { PUT_PART_LIST_INTO_POSITION } from '../components/PartsTransfer/actions';
 
 const defaultUser: IUserInfo = {
     _id: '',
@@ -51,6 +53,7 @@ const defaultUser: IUserInfo = {
 const defaultCurrentProject: IProject = {
     name: `empty project`,
     parts: Array(26).fill(undefined).map((v,i)=>({activated: false, selected: false, position:i})),
+    partsMultiIds:[[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],],
     connectors: [],
     ignorePos8: false,
     permission: 0x600,
@@ -115,6 +118,25 @@ function appReducer(state: IAppState = DEFAULT_STATE, action: IAction) {
 
       return {...state, currentProject}
 
+    }
+    case PUT_PART_LIST_INTO_POSITION: {
+      const {position, ids}:{position: number, ids:string[]} = action.data;
+
+      const partDefinitions = ids.map((id)=>state.currentAvailableParts.find(v=>v._id === id));
+      console.log(partDefinitions);
+
+      const ignorePos8 = position === 7 ? (partDefinitions.some(def=>def?.part?.len === 2)) : !!state.currentProject.ignorePos8;
+      // console.log(partDefinition.part, ignorePos8);
+      const currentProject = {
+        ...state.currentProject,
+        parts: [...state.currentProject.parts],
+        partsMultiIds: state.currentProject.partsMultiIds ? [...state.currentProject.partsMultiIds]: [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],],
+      }
+      currentProject.parts[position].partDefinition = partDefinitions?.[0];
+      currentProject.ignorePos8 = ignorePos8;
+      currentProject.partsMultiIds[position] = ids;
+
+      return {...state, currentProject}
     }
       
     // case SET_PART_DETAIL:
@@ -297,6 +319,7 @@ export default combineReducers({
   partSelector: partSelectorReducer,
   partsTable: partsTableReducer,
   platesTable: platesTableReducer,
+  partsTransfer: partsTransferReducer,
   // wizard: wizardReducer,
   newPartForm: newPartFormReducer,
 });

@@ -21,6 +21,7 @@ export const RESET_HISTORY_0 = 'RESET_HISTORY_0';
 export const STASH_HISTORY = 'STASH_HISTORY';
 export const PROJECT_DELETED = 'PROJECT_DELETED';
 export const GO_TO_STEP_3 = 'GO_TO_STEP_3';
+export const GO_TO_STEP_3B = 'GO_TO_STEP_3B';
 export const SET_ASSEMBLY = 'SET_ASSEMBLY';
 export const SAVE_ASSEMBLY = 'SAVE_ASSEMBLY';
 export const GET_ASSEMBLY = 'GET_ASSEMBLY';
@@ -50,3 +51,5 @@ export const CLONE_PROJECT = 'CLONE_PROJECT';
 export const DELAY_SHOW_TOOL_TIP = 'DELAY_SHOW_TOOL_TIP';
 export const SHOW_TOOL_TIP = 'SHOW_TOOL_TIP';
 export const HIDE_TOOL_TIP = 'HIDE_TOOL_TIP';
+
+export const DOWNLOAD_CSV_MULTI = 'DOWNLOAD_CSV_MULTI';

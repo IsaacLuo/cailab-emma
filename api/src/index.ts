@@ -15,6 +15,9 @@ import mongoose from 'mongoose';
 // import { graphqlKoa, graphiqlKoa } from 'graphql-server-koa'
 import {ApolloServer} from 'apollo-server-koa'
 import GraphqlSchema from './graphql/schema'
+import { DNASeq } from './helpers/gbGenerator';
+import fs from "fs";
+import { zip } from 'zip-a-folder';
 
 const GUEST_ID = '000000000000000000000000';
 
@@ -206,7 +209,7 @@ async (ctx:Ctx, next:Next)=> {
     if (projectCount>0) {
       ctx.throw(401, 'unable to modify projects of other users');
     }
-    const {name, parts, connectors} = ctx.request.body;
+    const {name, parts, partsMultiIds, connectors} = ctx.request.body;
     
     const project = await Project.findOne({
       _id:ctx.params.id,
@@ -221,6 +224,7 @@ async (ctx:Ctx, next:Next)=> {
       name: project.name,
       version: project.version,
       parts: project.parts,
+      partsMultiIds: project.partsMultiIds,
       connectors: project.connectors,
       permission: project.permission,
       owner: project.owner,
@@ -243,6 +247,7 @@ async (ctx:Ctx, next:Next)=> {
       // save original to history
       project.name = name;
       project.parts = parts;
+      project.partsMultiIds = partsMultiIds;
       project.connectors = connectors;
       project.updatedAt= now;
       project.save();
@@ -250,6 +255,7 @@ async (ctx:Ctx, next:Next)=> {
     } else {
       project.name = name;
       project.parts = parts;
+      project.partsMultiIds = partsMultiIds;
       project.connectors = connectors;
       project.updatedAt= now;
       project.save();
@@ -554,6 +560,79 @@ async (ctx:Ctx, next:Next)=> {
   } else {
     ctx.throw(401, 'no permission of this plate');
   }
+});
+
+// -----------------------------------------------------------------------------------------------
+
+/** generate genbank in temp folder */
+async function generateGenbank(assembly:string[], folderName:string) {
+  const parts = await PartDefinition.find({_id:assembly}).exec();
+  const sequenceArr = [];
+  const features = [];
+  let from = 0;
+  let fileName = "";
+  for(const id of assembly) {
+    const part = parts.find((p)=>{return p._id.toString() === id});
+    const {sequence, name} = part.part;
+    fileName+=`[${name}]`;
+    const trimmedSequence = from===0?sequence:sequence.slice(4);
+    features.push({
+        from: from,
+        to: from + trimmedSequence.length,
+        strand: '.',
+        ctype: 'misc_feature',
+        label: name,
+      });
+    sequenceArr.push(trimmedSequence);
+    from += trimmedSequence.length;
+  }
+  const dna = new DNASeq({
+    sequence:sequenceArr.join(""),
+    features,
+  });
+  const gbFile = dna.toGenbank();
+  const fp = await fs.promises.open(`${folderName}/${fileName}.gb`,"w");
+  await fp.write(gbFile)
+  await fp.close();
+  
+}
+
+/** 
+ * @param pos, the position from 0-26
+ * @param itemIdx, the index of the selected items from 0 to len
+ */
+async function selectCombination(ids:string[][], pos:number, assembly:string[], folderName:string) {
+  if(pos>=ids.length) {
+    await generateGenbank(assembly, `${folderName}/`);
+    return;
+  }
+  const currentPostList = ids[pos];
+  if (currentPostList && currentPostList?.length>0) {
+    for(const id of currentPostList) {
+      await selectCombination(ids, pos+1, [...assembly, id], folderName);
+    }
+  } else {
+    await selectCombination(ids, pos+1, assembly, folderName);
+  }
+}
+
+router.get('/api/project/:id/multiResults',
+userMust(beUser, beAdmin),
+async (ctx:Ctx, next:Next)=> {
+  const project = await Project.findById(ctx.params.id).exec();
+  if(!project) {
+    ctx.throw(404, 'no project');
+  }
+  const {partsMultiIds} = project;
+  const folderName = `output/${Date.now().toString()}`;
+  fs.promises.mkdir(folderName, {recursive:true});
+  await selectCombination(partsMultiIds, 0, [], folderName);
+  await zip(folderName, `${folderName}.zip`);
+  console.log('file generated');
+  fs.promises.rmdir(folderName, {recursive:true});
+  ctx.body = fs.createReadStream(`${folderName}.zip`);
+  ctx.attachment(`${folderName}.zip`)
+  
 });
 
 router.post('/graphql', async (ctx:Ctx, next:Next)=> {
