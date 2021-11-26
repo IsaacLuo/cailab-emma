@@ -603,7 +603,7 @@ async function generateGenbank(assembly:string[], folderName:string) {
  */
 async function selectCombination(ids:string[][], pos:number, assembly:string[], folderName:string) {
   if(pos>=ids.length) {
-    await generateGenbank(assembly, `${folderName}/`);
+    await generateGenbank(assembly, folderName);
     return;
   }
   const currentPostList = ids[pos];
