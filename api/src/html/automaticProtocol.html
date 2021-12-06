@@ -1,0 +1,332 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <title>Cailab EMMA</title>
+    <style type="text/css">
+      body {
+        margin: 0;
+        padding: 10px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+          "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+          "Helvetica Neue", sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        word-break: break-word;
+      }
+      table {
+        border-collapse: collapse;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid black;
+      }
+      th,
+      td {
+        padding: 5px;
+        word-break: break-all;
+      }
+      li {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        word-break: break-word;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div class="sc-bYEvvW eUuJbj">
+        <h1 class="sc-kLgnNl iUhRqt">
+          EMMA - Assembly Golden Gate assembly reaction
+        </h1>
+        <h2 class="sc-iktFfs ipyzbg">Equipment/Reagents:</h2>
+        <ul>
+          <li class="sc-jJEKmz hKDqS">Echo 550 liquid handler (Labcyte)</li>
+          <li class="sc-jJEKmz hKDqS">
+            Echo 550 qualified 384-well polypropylene source plate (384PP,
+            Labycte LP-0200)
+          </li>
+          <li class="sc-jJEKmz hKDqS">
+            Echo 550 qualified 384-well low dead volume source plate (384LDV,
+            Labcyte PP-0200)
+          </li>
+          <li class="sc-jJEKmz hKDqS">
+            96-well PCR plate defined in the Echo labware list (e.g. Eppendorf,
+            Bio-rad)
+          </li>
+          <li class="sc-jJEKmz hKDqS">96-well thermocycler</li>
+          <li class="sc-jJEKmz hKDqS">T4 DNA ligase 400U/µL (NEB: M0202S)</li>
+          <li class="sc-jJEKmz hKDqS">
+            10X T4 ligase reaction buffer (included in NEB: M0202S)
+          </li>
+          <li class="sc-jJEKmz hKDqS">
+            Bovine serum albumin (BSA) (NEB: B9000S)
+          </li>
+          <li class="sc-jJEKmz hKDqS">
+            Fast digest Esp3I (Thermo Fisher Scientific: FD0454)
+          </li>
+          <li class="sc-jJEKmz hKDqS">
+            Plasmid-Safe™ ATP-dependent DNase 10 U/µL (Epicenter: E3110K)
+          </li>
+          <li class="sc-jJEKmz hKDqS">
+            ATP solution, 25 mM (included in Epicenter: E3110K)
+          </li>
+          <li class="sc-jJEKmz hKDqS">Part plasmids (50 ng/µL)</li>
+          <li class="sc-jJEKmz hKDqS">Receiver plasmid (10 ng/µL)</li>
+        </ul>
+        <ol>
+          <li class="sc-jJEKmz hKDqS">
+            On ice, prepare a Golden Gate assembly MM. For each reaction, mix
+            together 1 µL 10X T4 DNA Ligase Reaction Buffer, 0.1 µL BSA, 0.5 µL
+            FastDigest Esp3I and 0.25 µL T4 DNA ligase 400 U/µL. Multiply the
+            volume for each component by the number of reactions. Mix the final
+            solution gently.
+          </li>
+          <table class="table table-bordered table-hover">
+            <tbody>
+              <tr>
+                <th>Reagent</th>
+                <th>/10µL reaction</th>
+                <th>
+                  For <span class="sc-hiSbEG iXIvYW"><%=(sampleCount*1.85)%}µL</span> master mix
+                </th>
+              </tr>
+              <tr>
+                <td>T4 Ligase Reaction Buffer</td>
+                <td>1µL</td>
+                <td><span class="sc-hiSbEG iXIvYW"><%=echoVolume1%>μL</span></td>
+              </tr>
+              <tr>
+                <td>BSA</td>
+                <td>0.1µL</td>
+                <td><span class="sc-hiSbEG iXIvYW"><%=echoVolume0_1%>μL</span></td>
+              </tr>
+              <tr>
+                <td>Fast Digest Esp3I</td>
+                <td>0.5µL</td>
+                <td><span class="sc-hiSbEG iXIvYW"><%=echoVolume0_5%>μL</span></td>
+              </tr>
+              <tr>
+                <td>T4 DNA Ligase</td>
+                <td>0.25µL</td>
+                <td><span class="sc-hiSbEG iXIvYW"><%=echoVolume0_25%>μL</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <li class="sc-jJEKmz hKDqS">
+            Dispense 30-65µL of master mix into well A1 a 384PP Echo source
+            plate, and 15-65µL of nuclease-free water to well A2
+          </li>
+          <li class="sc-jJEKmz hKDqS">
+            Allow the source plates to adjust to room temperature and centrifuge
+            the DNA part (LDV) source plate e.g. 3000xg for 2-3 minutes,
+            checking that the meniscus is flat. The destination plate should be
+            kept on ice as far as possible to reduce evaporation.
+          </li>
+          <li class="sc-jJEKmz hKDqS">
+            Run a protocol to dispense
+            <span class="sc-hiSbEG iXIvYW"><%=masterMixVolumeNL%> nL</span> of master mix and
+            <span class="sc-hiSbEG iXIvYW"><%=(1000-masterMixVolumeNL)%> nL</span> of water into well of
+            the 96-well PCR destination plate to be used for an assembly. Spin
+            down the destination plate once the protocol has finished, and seal
+            and store the source plate at -20 °C.
+          </li>
+          <li class="sc-jJEKmz hKDqS">
+            5. Use the CAD-generated picklist to dispense an equimolar amount of
+            each part plasmid (1.3fmol), and 0.5 µL of the 10 ng/µL receiver
+            plasmid, into the destination well for each assembly. Seal the plate
+            and spin down. Seal the source plate and store.cfv fc6c77
+          </li>
+          <li class="sc-jJEKmz hKDqS">
+            Place the tubes into a thermocycler and run the following
+            program:<br />Step 1: 37 °C for 5 min<br />Step 2: 37 °C for 5
+            min<br />Step 3: 16 °C for 10 min (Go to step 2 and cycle 30
+            times)<br />Step 4: 16 °C for 20 min<br />Step 5: 37 °C for 30
+            min<br />Step 6: 75 °C for 6 min<br />Step 7: 4 °C hold<br />
+          </li>
+          <li class="sc-jJEKmz hKDqS">
+            Prepare 1x T4 ligase buffer from the 10x T4 ligase buffer, and add
+            to the assembly wells to a final volume of 2µL.
+          </li>
+          <li class="sc-jJEKmz hKDqS">
+            repare PlasmidSafe DNase mix:
+            <table class="table table-bordered table-hover">
+              <tbody>
+                <tr>
+                  <th>Reagent</th>
+                  <th>each</th>
+                  <th>
+                    for <span class="sc-hiSbEG iXIvYW">1</span> assemblies
+                  </th>
+                  <th>
+                    <span class="sc-hiSbEG iXIvYW"
+                      ><span
+                        class="react-numeric-input"
+                        style="position: relative; display: inline-block"
+                        ><input
+                          type="text"
+                          size="1"
+                          value="1.5"
+                          pattern=".*"
+                          style="
+                            padding-right: 3ex;
+                            box-sizing: border-box;
+                            font-size: inherit;
+                            border: 1px solid rgb(204, 204, 204);
+                            border-radius: 2px;
+                            padding-left: 4px;
+                            display: block;
+                            appearance: none;
+                            line-height: normal;
+                          " /><b
+                          style="
+                            position: absolute;
+                            right: 2px;
+                            width: 2.26ex;
+                            border-color: rgba(0, 0, 0, 0.1);
+                            border-style: solid;
+                            text-align: center;
+                            cursor: default;
+                            transition: all 0.1s ease 0s;
+                            background: rgba(0, 0, 0, 0.1);
+                            box-shadow: rgba(0, 0, 0, 0.1) -1px -1px 3px inset,
+                              rgba(255, 255, 255, 0.7) 1px 1px 3px inset;
+                            top: 2px;
+                            bottom: 50%;
+                            border-radius: 2px 2px 0px 0px;
+                            border-width: 1px 1px 0px;
+                          "
+                          ><i
+                            style="
+                              position: absolute;
+                              top: 50%;
+                              left: 50%;
+                              width: 0px;
+                              height: 0px;
+                              border-width: 0px 0.6ex 0.6ex;
+                              border-color: transparent transparent
+                                rgba(0, 0, 0, 0.7);
+                              border-style: solid;
+                              margin: -0.3ex 0px 0px -0.56ex;
+                            "
+                          ></i></b
+                        ><b
+                          style="
+                            position: absolute;
+                            right: 2px;
+                            width: 2.26ex;
+                            border-color: rgba(0, 0, 0, 0.1);
+                            border-style: solid;
+                            text-align: center;
+                            cursor: default;
+                            transition: all 0.1s ease 0s;
+                            background: rgba(0, 0, 0, 0.1);
+                            box-shadow: rgba(0, 0, 0, 0.1) -1px -1px 3px inset,
+                              rgba(255, 255, 255, 0.7) 1px 1px 3px inset;
+                            top: 50%;
+                            bottom: 2px;
+                            border-radius: 0px 0px 2px 2px;
+                            border-width: 0px 1px 1px;
+                          "
+                          ><i
+                            style="
+                              position: absolute;
+                              top: 50%;
+                              left: 50%;
+                              width: 0px;
+                              height: 0px;
+                              border-width: 0.6ex 0.6ex 0px;
+                              border-color: rgba(0, 0, 0, 0.7) transparent
+                                transparent;
+                              border-style: solid;
+                              margin: -0.3ex 0px 0px -0.56ex;
+                            "
+                          ></i></b></span
+                    ></span>
+                  </th>
+                </tr>
+                <tr>
+                  <td>1x T4 ligase buffer</td>
+                  <td>3µL</td>
+                  <td><span class="sc-hiSbEG iXIvYW">3.000µL</span></td>
+                  <td><span class="sc-hiSbEG iXIvYW">4.500µL</span></td>
+                </tr>
+                <tr>
+                  <td>25 mM ATP</td>
+                  <td>0.25µL</td>
+                  <td><span class="sc-hiSbEG iXIvYW">0.250µL</span></td>
+                  <td><span class="sc-hiSbEG iXIvYW">0.375µL</span></td>
+                </tr>
+                <tr>
+                  <td>PlasmidSafe DNase</td>
+                  <td>0.125µL</td>
+                  <td><span class="sc-hiSbEG iXIvYW">0.125µL</span></td>
+                  <td><span class="sc-hiSbEG iXIvYW">0.190µL</span></td>
+                </tr>
+                <tr>
+                  <td>Total</td>
+                  <td>3.375µL</td>
+                  <td><span class="sc-hiSbEG iXIvYW">3.375µL</span></td>
+                  <td><span class="sc-hiSbEG iXIvYW">5.065µL</span></td>
+                </tr>
+              </tbody>
+            </table>
+            Dispense 3 µL PlasmidSafe DNase mix into each assembly reaction
+            well, mix gently and incubate at 37 °C for 15 minutes
+          </li>
+          <li class="sc-jJEKmz hKDqS">
+            Place the tubes on ice and proceeded with bacterial transformation,
+            plating on LB+Amp (add 20 µL of competent cells to the well
+            containing the assembly reaction).
+          </li>
+        </ol>
+        <div
+          class="
+            ant-select ant-select-lg ant-select-auto-complete
+            auto-complete
+            ant-select-single ant-select-customize-input ant-select-show-search
+          "
+          style="width: 100%"
+        >
+          <div class="ant-select-selector">
+            <span class="ant-select-selection-search"
+              ><span
+                class="
+                  ant-input-affix-wrapper ant-select-selection-search-input
+                "
+                ><input
+                  autocomplete="off"
+                  type="search"
+                  class="ant-input"
+                  role="combobox"
+                  aria-haspopup="listbox"
+                  aria-owns="rc_select_5_list"
+                  aria-autocomplete="list"
+                  aria-controls="rc_select_5_list"
+                  aria-activedescendant="rc_select_5_list_0"
+                  value=""
+                  id="rc_select_5" /><span class="ant-input-suffix"
+                  ><span
+                    role="img"
+                    aria-label="search"
+                    class="anticon anticon-search certain-category-icon"
+                    ><svg
+                      viewBox="64 64 896 896"
+                      focusable="false"
+                      data-icon="search"
+                      width="1em"
+                      height="1em"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M909.6 854.5L649.9 594.8C690.2 542.7 712 479 712 412c0-80.2-31.3-155.4-87.9-212.1-56.6-56.7-132-87.9-212.1-87.9s-155.5 31.3-212.1 87.9C143.2 256.5 112 331.8 112 412c0 80.1 31.3 155.5 87.9 212.1C256.5 680.8 331.8 712 412 712c67 0 130.6-21.8 182.7-62l259.7 259.6a8.2 8.2 0 0011.6 0l43.6-43.5a8.2 8.2 0 000-11.6zM570.4 570.4C528 612.7 471.8 636 412 636s-116-23.3-158.4-65.6C211.3 528 188 471.8 188 412s23.3-116.1 65.6-158.4C296 211.3 352.2 188 412 188s116.1 23.2 158.4 65.6S636 352.2 636 412s-23.3 116.1-65.6 158.4z"
+                      ></path></svg></span></span></span></span
+            ><span class="ant-select-selection-placeholder">input here</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

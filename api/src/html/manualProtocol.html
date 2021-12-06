@@ -1,0 +1,218 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="theme-color" content="#000000" />
+    <!--
+        manifest.json provides metadata used when your web app is installed on a
+        user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+      -->
+    <link rel="manifest" href="/manifest.json" />
+    <!--
+        Notice the use of  in the tags above.
+        It will be replaced with the URL of the `public` folder during the build.
+        Only files inside the `public` folder can be referenced from the HTML.
+  
+        Unlike "/favicon.ico" or "favicon.ico", "/favicon.ico" will
+        work correctly both with client-side routing and a non-root public URL.
+        Learn how to configure a non-root public URL by running `npm run build`.
+      -->
+    <title>Cailab EMMA</title>
+    <style type="text/css">
+      body {
+        margin: 0;
+        padding: 10px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+          "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+          "Helvetica Neue", sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        word-break: break-word;
+      }
+      table
+{
+    border-collapse:collapse;
+}
+table,th, td
+{
+    border: 1px solid black;
+}
+th, td {
+  padding: 5px;
+  word-break: break-all;
+}
+li {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  word-break: break-word;
+}
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div class="sc-dvQaRk dJZNVO">
+          <div class="sc-TBWPX cbYNMl">
+          
+          <div class="sc-cxpSdN kXWnZy">
+            <h1 class="sc-iJKOTD weFKk">
+              EMMA - Assembly Golden Gate assembly reaction
+            </h1>
+            <p>
+              assembly
+              <ul>
+                <% for(var i=0; i<parts.length; i++) {%>
+                  <li>
+                      <%= parts[i].name%>
+                  </li>
+                <% } %>
+              </ul>
+            </p>
+            <h2 class="sc-giYglK fDcdTw">Equipment/Reagents:</h2>
+            <ul>
+              <li class="sc-ezbkAF dDIomw">Thermocycler</li>
+              <li class="sc-ezbkAF dDIomw">
+                T4 DNA ligase 400U/µL (NEB: M0202S)
+              </li>
+              <li class="sc-ezbkAF dDIomw">
+                10X T4 ligase reaction buffer (included in NEB: M0202S)
+              </li>
+              <li class="sc-ezbkAF dDIomw">
+                Bovine serum albumin (BSA) (NEB: B9000S)
+              </li>
+              <li class="sc-ezbkAF dDIomw">
+                Fast digest Esp3I (Thermo Fisher Scientific: FD0454)
+              </li>
+              <li class="sc-ezbkAF dDIomw">
+                Plasmid-Safe™ ATP-dependent DNase 10 U/µL (Epicenter: E3110K)
+              </li>
+              <li class="sc-ezbkAF dDIomw">
+                ATP solution, 25 mM (included in Epicenter: E3110K)
+              </li>
+              <li class="sc-ezbkAF dDIomw">Part plasmids (50 ng/µL)</li>
+              <li class="sc-ezbkAF dDIomw">Receiver plasmid (10 ng/µL)</li>
+            </ul>
+            <ol>
+              <li class="sc-ezbkAF dDIomw">
+                On ice, prepare a Golden Gate assembly MM. For each reaction,
+                mix together 1 µL 10X T4 DNA Ligase Reaction Buffer, 0.1 µL BSA,
+                0.5 µL FastDigest Esp3I and 0.3 µL T4 DNA ligase 400 U/µL.
+                Multiply the volume for each component by the number of
+                reactions. Mix the final solution gently.
+              </li>
+              <table class="table table-bordered table-hover">
+                <tr>
+                  <th>Reagent</th>
+                  <th>10μL reaction</th>
+                </tr>
+                <tr>
+                  <th>T4 Ligase Reaction Buffer</th>
+                  <td>1µL</td>
+                </tr>
+                <tr>
+                  <th>BSA</th>
+                  <td>0.1µL</td>
+                </tr>
+                <tr>
+                  <th>Fast Digest Esp3I</th>
+                  <td>0.5µL</td>
+                </tr>
+                <tr>
+                  <th>T4 DNA Ligase</th>
+                  <td>0.3µL</td>
+                </tr>
+              </table>
+              <li class="sc-ezbkAF dDIomw">
+                Next, place on ice 0.2mL PCR tubes. Add an equimolar amount of
+                each part plasmid (13fmol) and 0.5µL of the receiver vector (10
+                ng/µL). Add nuclease-free water to a final volume of 8.2µL.
+              </li>
+              <table class="table table-bordered table-hover">
+                <tr>
+                  <th></th>
+                  <th>part</th>
+                  <th>length(bp)</th>
+                  <th>ng</th>
+                  <th>µL</th>
+                </tr>
+                <% for(var i=0; i<parts.length; i++) {%>
+                  <tr>
+                    <td>
+                      <%=i%>
+                    </td>
+                    <td>
+                      <%=parts[i].name%>
+                    </td>
+                    <td>
+                      <%=parts[i].vectorLen%>
+                    </td>
+                    <td>
+                      <%=parts[i].mass%>ng
+                    </td>
+                    <td>
+                      <%=parts[i].volume%>µL
+                    </td>
+                  </tr>
+               <% } %>
+                <tr>
+                  <td></td>
+                  <td>receiver vector</td>
+                  <td></td>
+                  <td></td>
+                  <td>50µL</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>water</td>
+                  <td></td>
+                  <td></td>
+                  <td><%=waterVolume%>µL</td>
+                </tr>
+              </table>
+              <li class="sc-ezbkAF dDIomw">
+                Distribute 1.85 µL of the Golden Gate MM into each of the tubes
+                containing the parts and the receiver vector to a final volume
+                of 10 µL. Mix gently.
+              </li>
+              <li class="sc-ezbkAF dDIomw">
+                Place the tubes into a thermocycler and run the following
+                program:<br />Step 1: 37 °C for 5 min<br />Step 2: 37 °C for 5
+                min<br />Step 3: 16 °C for 10 min (Go to step 2 and cycle 30
+                times)<br />Step 4: 16 °C for 20 min<br />Step 5: 37 °C for 30
+                min<br />Step 6: 75 °C for 6 min<br />Step 7: 4 °C hold<br />
+              </li>
+              <li class="sc-ezbkAF dDIomw">
+                Next, on ice prepare a Plasmid-Safe™ ATP-Dependent DNase mix.
+                For each sample, mix together 0.3 µL of Plasmid-Safe™
+                ATP-Dependent DNase 10 U/µL and 0.5 µL of 25 mM ATP solution.
+                Distribute 0.8µL in each Golden Gate reaction tube. Mix gently
+                and incubate at 37 °C for 15 min.
+              </li>
+              <table class="table table-bordered table-hover">
+                <tr>
+                  <th>Reagent</th>
+                  <th>/ manual 10µL reaction</th>
+                </tr>
+                <tr>
+                  <td>Plasmid-Safe™ ATP-Dependent DNase 10 U/µL</td>
+                  <td>0.3µL</td>
+                </tr>
+                <tr>
+                  <td>25 mM ATP solution</td>
+                  <td>0.5µL</td>
+                </tr>
+              </table>
+              <li class="sc-ezbkAF dDIomw">
+                Place the tubes on ice and proceeded with bacterial
+                transformation, plating on LB+Amp.
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

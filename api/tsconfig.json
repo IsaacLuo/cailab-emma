@@ -10,6 +10,7 @@
       "resolveJsonModule": true,
       "esModuleInterop": true,
       "skipLibCheck": true,
+      "jsx":"react",
   },
   "exclude": [
       "**/node_modules",
@@ -20,6 +21,7 @@
   ],
   "include": [
       "src/**/*.ts",
+      "src/**/*.tsx",
       "**/*.json", "conf.ts"
-  ]
+, "src/renderManualProtocols.tsx"  ]
 }

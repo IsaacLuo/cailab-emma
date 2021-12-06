@@ -98,17 +98,14 @@ class Assemble extends React.Component<IProps, IState> {
         &nbsp;
         <Button variant="primary" size="lg" onClick={this.onClickAutoProtocol}>Automatic Protocol</Button>
         &nbsp; */}
-        <a href={`${conf.serverURL}/api/project/${this.props.project._id}/multiResults`}><Button variant="primary" size="lg">Download CSV</Button></a>
+        <a href={`${conf.serverURL}/api/project/${this.props.project._id}/multiResults`}><Button variant="primary" size="lg">Download Genbank Files</Button></a>
+        &nbsp;
+        <a href={`${conf.serverURL}/api/project/${this.props.project._id}/multiResultsManualProtocols`}><Button variant="primary" size="lg">Download Manual Protocols</Button></a>
+        &nbsp;
+        <a href={`${conf.serverURL}/api/project/${this.props.project._id}/multiResultsAutomaticProtocols`}><Button variant="primary" size="lg">Download Automatic Protocols</Button></a>
       </div>
     </Panel>
     </React.Fragment>
-  }
-
-  private generateGenbank (parts:any[]) {
-  }
-
-  private downloadGenbank = () => {
-    
   }
 
   private onClickManualProtocol = () => {

@@ -18,11 +18,18 @@ import GraphqlSchema from './graphql/schema'
 import { DNASeq } from './helpers/gbGenerator';
 import fs from "fs";
 import { zip } from 'zip-a-folder';
+import vectorReceiver from '../vectorReceiver.json';
+import views from 'koa-views';
+import ejs from "ejs";
+import pdf from "html-pdf";
 
 const GUEST_ID = '000000000000000000000000';
 
 const app = new koa();
 const router = new Router();
+
+const render = views(__dirname + '/html', {map:{html: 'ejs'}});
+app.use(render);
 
 type Ctx = koa.ParameterizedContext<ICustomState>;
 type Next = ()=>Promise<any>;
@@ -569,13 +576,13 @@ async function generateGenbank(assembly:string[], folderName:string) {
   const parts = await PartDefinition.find({_id:assembly}).exec();
   const sequenceArr = [];
   const features = [];
-  let from = 0;
+  let from = vectorReceiver.sequence.length;
   let fileName = "";
   for(const id of assembly) {
     const part = parts.find((p)=>{return p._id.toString() === id});
     const {sequence, name} = part.part;
     fileName+=`[${name}]`;
-    const trimmedSequence = from===0?sequence:sequence.slice(4);
+    const trimmedSequence = sequence.substr(0,sequence.length-4);
     features.push({
         from: from,
         to: from + trimmedSequence.length,
@@ -586,9 +593,10 @@ async function generateGenbank(assembly:string[], folderName:string) {
     sequenceArr.push(trimmedSequence);
     from += trimmedSequence.length;
   }
-  const dna = new DNASeq({
-    sequence:sequenceArr.join(""),
-    features,
+
+  const dna = new DNASeq({    
+    sequence:vectorReceiver.sequence + sequenceArr.join(""),
+    features: [...vectorReceiver.features, ...features],
   });
   const gbFile = dna.toGenbank();
   const fp = await fs.promises.open(`${folderName}/${fileName}.gb`,"w");
@@ -597,22 +605,76 @@ async function generateGenbank(assembly:string[], folderName:string) {
   
 }
 
+function calcDNAMass(fmol:number, dnaLen:number) {
+  return fmol * (dnaLen * 0.00061796 + 0.00003604);
+}
+
+function calcDNAVolume(mass:number) {
+  return mass / 50;
+}
+
+const toCeilFixed = (x:number, digits:number)=>(Math.ceil(x*Math.pow(10,digits))/Math.pow(10,digits)).toFixed(digits)
+
+const manualProtocolTemplateHtml = fs.readFileSync(__dirname+"/html/manualProtocol.html", 'utf-8');
+const manualProtocolTemplate = ejs.compile(manualProtocolTemplateHtml, {async:true, client:false});
+
+
+async function generateManualProtocols(assembly:string[], folderName:string) {
+  const backboneLength = 1840;
+  const parts = await PartDefinition.find({_id:assembly}).exec();
+  let len = vectorReceiver.sequence.length;
+  let partsInfo:any[] = [];
+  let dnaVolumeSum = 0;
+  // let fileName = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
+  let fileName = "";
+  for(const id of assembly) {
+    const part = parts.find((p)=>{return p._id.toString() === id});
+    const {sequence, name} = part.part;
+    const vectorLen = sequence.length+backboneLength;
+    const mass = calcDNAMass(13, vectorLen);
+    const volume = calcDNAVolume(mass);
+    dnaVolumeSum += volume;
+    partsInfo.push({name, vectorLen, mass:mass.toFixed(2), volume:toCeilFixed(volume,1)});
+    fileName+=`[${name}]`
+    // len += sequence.length -4;
+  }
+
+  const waterVolume = toCeilFixed(10-1.85-dnaVolumeSum-0.5, 1);
+
+  const fileContent = await manualProtocolTemplate({parts:partsInfo, waterVolume});
+  await new Promise((resolve, reject)=> {
+    pdf.create(fileContent, {format:"A4"}).toFile(`${folderName}/${fileName}.pdf`, (err, res) => {
+      if (err) {
+        console.error(err);
+        reject(err);
+      }
+      else{
+        resolve(res)
+      }
+    });
+  });
+  
+  // const fp = await fs.promises.open(`${folderName}/${fileName}.html`,"w");
+  // await fp.write(fileContent)
+  // await fp.close();
+}
+
 /** 
  * @param pos, the position from 0-26
  * @param itemIdx, the index of the selected items from 0 to len
  */
-async function selectCombination(ids:string[][], pos:number, assembly:string[], folderName:string) {
+async function selectCombination(ids:string[][], pos:number, assembly:string[], folderName:string, generateFileFunction:(assembly:string[], folderName:string)=>Promise<void>) {
   if(pos>=ids.length) {
-    await generateGenbank(assembly, folderName);
+    await generateFileFunction(assembly, folderName);
     return;
   }
   const currentPostList = ids[pos];
   if (currentPostList && currentPostList?.length>0) {
     for(const id of currentPostList) {
-      await selectCombination(ids, pos+1, [...assembly, id], folderName);
+      await selectCombination(ids, pos+1, [...assembly, id], folderName, generateFileFunction);
     }
   } else {
-    await selectCombination(ids, pos+1, assembly, folderName);
+    await selectCombination(ids, pos+1, assembly, folderName, generateFileFunction);
   }
 }
 
@@ -626,14 +688,55 @@ async (ctx:Ctx, next:Next)=> {
   const {partsMultiIds} = project;
   const folderName = `output/${Date.now().toString()}`;
   fs.promises.mkdir(folderName, {recursive:true});
-  await selectCombination(partsMultiIds, 0, [], folderName);
+  await selectCombination(partsMultiIds, 0, [], folderName, generateGenbank);
   await zip(folderName, `${folderName}.zip`);
   console.log('file generated');
   fs.promises.rmdir(folderName, {recursive:true});
   ctx.body = fs.createReadStream(`${folderName}.zip`);
   ctx.attachment(`${folderName}.zip`)
-  
 });
+
+router.get('/api/project/:id/multiResultsManualProtocols',
+userMust(beUser, beAdmin),
+async (ctx:Ctx, next:Next)=> {
+  const project = await Project.findById(ctx.params.id).exec();
+  if(!project) {
+    ctx.throw(404, 'no project');
+  }
+  const {partsMultiIds} = project;
+  const folderName = `output/${Date.now().toString()}`;
+  fs.promises.mkdir(folderName, {recursive:true});
+  await selectCombination(partsMultiIds, 0, [], folderName, generateManualProtocols);
+  await zip(folderName, `${folderName}.zip`);
+  console.log('file generated');
+  fs.promises.rmdir(folderName, {recursive:true});
+  ctx.body = fs.createReadStream(`${folderName}.zip`);
+  ctx.attachment(`${folderName}.zip`)
+});
+
+router.get('/api/project/:id/multiResultsAutomaticProtocols',
+userMust(beUser, beAdmin),
+async (ctx:Ctx, next:Next)=> {
+  const project = await Project.findById(ctx.params.id).exec();
+  if(!project) {
+    ctx.throw(404, 'no project');
+  }
+  const {partsMultiIds} = project;
+  const folderName = `output/${Date.now().toString()}`;
+  fs.promises.mkdir(folderName, {recursive:true});
+  await selectCombination(partsMultiIds, 0, [], folderName, generateManualProtocols);
+  await zip(folderName, `${folderName}.zip`);
+  console.log('file generated');
+  fs.promises.rmdir(folderName, {recursive:true});
+  ctx.body = fs.createReadStream(`${folderName}.zip`);
+  ctx.attachment(`${folderName}.zip`)
+});
+
+router.get('/api/project/:id/mmp/', async (ctx:Ctx, next:Next)=> {
+  console.log('testmmp')
+  await ctx.render('manualProtocol', {parts:[{name:"x", len:20, mass: 10, volume:10,}], waterVolume:100})
+});
+
 
 router.post('/graphql', async (ctx:Ctx, next:Next)=> {
   console.log(ctx.request.body);
